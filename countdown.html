@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全螢幕倒數計時器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* 確保字體等寬，數字跳動時不會左右晃動 */
+        .timer-font {
+            font-family: 'JetBrains Mono', monospace;
+            font-variant-numeric: tabular-nums;
+            line-height: 1;
+        }
+        
+        /* 隱藏數字輸入框的上下箭頭 */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* 閃爍動畫 */
+        @keyframes flash-red {
+            0%, 100% { background-color: #000; color: #ef4444; }
+            50% { background-color: #ef4444; color: #000; }
+        }
+        .animate-alarm {
+            animation: flash-red 1s infinite;
+        }
+    </style>
+</head>
+<body class="bg-black text-white h-screen flex flex-col overflow-hidden transition-colors duration-500" id="mainBody">
+
+    <!-- 頂部控制列 -->
+    <div id="controls" class="absolute top-0 left-0 w-full p-4 bg-gray-900/95 backdrop-blur-sm transform transition-transform duration-300 z-50 flex flex-wrap gap-4 items-center justify-center border-b border-gray-700 shadow-lg">
+        
+        <!-- 時間設定 -->
+        <div class="flex items-center gap-2 bg-gray-800 p-2 rounded-lg group relative">
+            <span class="text-gray-400 text-sm">總時間:</span>
+            <input type="number" id="inputMin" value="10" class="w-12 bg-gray-700 text-center rounded border border-gray-600 focus:outline-none focus:border-blue-500 text-white" placeholder="分">
+            <span class="text-gray-500">:</span>
+            <input type="number" id="inputSec" value="00" class="w-12 bg-gray-700 text-center rounded border border-gray-600 focus:outline-none focus:border-blue-500 text-white" placeholder="秒">
+        </div>
+
+        <!-- 預告設定與鈴聲選擇 -->
+        <div class="flex items-center gap-2 bg-gray-800 p-2 rounded-lg border-l-4 border-yellow-500">
+            <span class="text-gray-400 text-sm hidden sm:inline">預告:</span>
+            <input type="number" id="warnMin" value="2" class="w-12 bg-gray-700 text-center rounded border border-gray-600 focus:outline-none focus:border-yellow-500 text-white" placeholder="分">
+            <span class="text-gray-500">:</span>
+            <input type="number" id="warnSec" value="00" class="w-12 bg-gray-700 text-center rounded border border-gray-600 focus:outline-none focus:border-yellow-500 text-white" placeholder="秒">
+            
+            <!-- 鈴聲選擇 -->
+            <select id="soundSelect" class="bg-gray-700 text-xs text-white p-1 rounded border border-gray-600 focus:outline-none focus:border-yellow-500 ml-1">
+                <option value="standard">標準嗶聲</option>
+                <option value="gentle">柔和提醒</option>
+                <option value="urgent">急促警報</option>
+            </select>
+            <button onclick="previewSound()" class="text-gray-400 hover:text-white" title="試聽鈴聲">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            </button>
+        </div>
+
+        <!-- 按鈕群 -->
+        <div class="flex gap-2">
+            <button onclick="toggleTimer()" id="btnToggle" class="flex items-center gap-2 px-6 py-2 bg-green-600 hover:bg-green-700 rounded-lg font-bold transition-colors shadow-lg" title="快捷鍵: 空白鍵">
+                <svg id="iconPlay" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <svg id="iconPause" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                <span id="txtToggle">開始</span>
+            </button>
+
+            <button onclick="resetTimer()" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg font-bold transition-colors" title="快捷鍵: R">
+                重置
+            </button>
+            
+            <!-- 歷史紀錄按鈕 -->
+            <div class="relative">
+                <button onclick="toggleHistory()" class="px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg" title="歷史紀錄">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"></path><circle cx="12" cy="12" r="10"></circle></svg>
+                </button>
+                <!-- 歷史紀錄下拉選單 -->
+                <div id="historyDropdown" class="hidden absolute top-full right-0 mt-2 w-64 bg-gray-800 border border-gray-700 rounded-lg shadow-xl overflow-hidden z-50">
+                    <div class="p-2 bg-gray-900 text-xs text-gray-400 border-b border-gray-700">最近 5 次設定 (點擊套用)</div>
+                    <div id="historyList" class="max-h-60 overflow-y-auto">
+                        <!-- 歷史紀錄項目將由 JS 插入 -->
+                        <div class="p-4 text-center text-gray-500 text-sm">尚無紀錄</div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="toggleFullscreen()" class="px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg" title="全螢幕 (F)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            </button>
+        </div>
+        
+        <div class="ml-auto text-xs text-gray-500 hidden md:block">
+            快捷鍵: Space(開始/暫停), R(重置), F(全螢幕)
+        </div>
+    </div>
+
+    <!-- 主顯示區 -->
+    <div class="flex-1 flex items-center justify-center relative w-full h-full cursor-pointer" onclick="handleScreenClick(event)">
+        <!-- 進度條背景 -->
+        <div class="absolute bottom-0 left-0 h-2 bg-gray-800 w-full">
+            <div id="progressBar" class="h-full bg-green-500 transition-all duration-1000 ease-linear" style="width: 100%"></div>
+        </div>
+
+        <!-- 計時數字 -->
+        <div id="timerDisplay" class="timer-font font-bold text-center select-none transition-colors duration-300" style="font-size: 25vw;">
+            00:00
+        </div>
+
+        <!-- 狀態提示文字 (當進入預告時間顯示) -->
+        <div id="statusMessage" class="absolute bottom-10 text-2xl md:text-4xl font-bold text-yellow-500 opacity-0 transition-opacity duration-500">
+            即將結束
+        </div>
+    </div>
+
+    <script>
+        // --- 變數初始化 ---
+        let totalSeconds = 600;
+        let remainingSeconds = 600;
+        let warningSeconds = 120;
+        let timerInterval = null;
+        let isRunning = false;
+        let audioContext = null;
+        let timerHistory = []; // 儲存歷史紀錄
+
+        // --- DOM 元素 ---
+        const display = document.getElementById('timerDisplay');
+        const progressBar = document.getElementById('progressBar');
+        const controls = document.getElementById('controls');
+        const btnToggle = document.getElementById('btnToggle');
+        const txtToggle = document.getElementById('txtToggle');
+        const iconPlay = document.getElementById('iconPlay');
+        const iconPause = document.getElementById('iconPause');
+        const mainBody = document.getElementById('mainBody');
+        const statusMessage = document.getElementById('statusMessage');
+        const historyDropdown = document.getElementById('historyDropdown');
+        const historyList = document.getElementById('historyList');
+        const soundSelect = document.getElementById('soundSelect');
+
+        // 輸入欄位
+        const inputMin = document.getElementById('inputMin');
+        const inputSec = document.getElementById('inputSec');
+        const warnMin = document.getElementById('warnMin');
+        const warnSec = document.getElementById('warnSec');
+
+        // --- 初始化 ---
+        loadHistory(); // 載入歷史紀錄
+        updateDisplay();
+
+        // 監聽輸入改變
+        [inputMin, inputSec, warnMin, warnSec].forEach(input => {
+            input.addEventListener('change', () => {
+                if (!isRunning) resetTimer();
+            });
+        });
+        
+        // 點擊外部關閉歷史選單
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#historyDropdown') && !e.target.closest('button[onclick="toggleHistory()"]')) {
+                historyDropdown.classList.add('hidden');
+            }
+        });
+
+        // 鍵盤快捷鍵監聽
+        document.addEventListener('keydown', (e) => {
+            // 如果焦點在輸入框內，不觸發快捷鍵
+            if (e.target.tagName === 'INPUT') return;
+
+            switch(e.code) {
+                case 'Space':
+                    e.preventDefault(); // 防止空白鍵滾動頁面
+                    toggleTimer();
+                    break;
+                case 'KeyR':
+                    resetTimer();
+                    break;
+                case 'KeyF':
+                    toggleFullscreen();
+                    break;
+            }
+        });
+
+        // --- 核心邏輯 ---
+
+        function getSettings() {
+            const min = parseInt(inputMin.value) || 0;
+            const sec = parseInt(inputSec.value) || 0;
+            const wMin = parseInt(warnMin.value) || 0;
+            const wSec = parseInt(warnSec.value) || 0;
+            
+            return {
+                total: min * 60 + sec,
+                warning: wMin * 60 + wSec,
+                sound: soundSelect.value
+            };
+        }
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            if (m >= 60) {
+                const h = Math.floor(m / 60);
+                const rm = m % 60;
+                return `${h}:${rm.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function formatTimeText(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m}分${s > 0 ? s + '秒' : ''}`;
+        }
+
+        function updateDisplay() {
+            display.textContent = formatTime(remainingSeconds);
+            
+            // 計算進度條
+            if (totalSeconds > 0) {
+                const percent = (remainingSeconds / totalSeconds) * 100;
+                progressBar.style.width = `${percent}%`;
+            }
+
+            // 顏色與狀態邏輯
+            if (remainingSeconds === 0) {
+                // 時間到
+                display.classList.remove('text-white', 'text-yellow-400');
+                display.classList.add('text-red-500');
+                mainBody.classList.add('animate-alarm');
+                statusMessage.textContent = "時間到";
+                statusMessage.classList.replace('text-yellow-500', 'text-red-500');
+                statusMessage.classList.remove('opacity-0');
+            } else if (remainingSeconds <= warningSeconds) {
+                // 預告時間
+                display.classList.remove('text-white', 'text-red-500');
+                display.classList.add('text-yellow-400');
+                progressBar.classList.remove('bg-green-500');
+                progressBar.classList.add('bg-yellow-500');
+                statusMessage.textContent = "剩餘時間不多";
+                statusMessage.classList.remove('opacity-0');
+            } else {
+                // 正常時間
+                display.classList.remove('text-yellow-400', 'text-red-500');
+                display.classList.add('text-white');
+                progressBar.classList.remove('bg-yellow-500');
+                progressBar.classList.add('bg-green-500');
+                mainBody.classList.remove('animate-alarm');
+                statusMessage.classList.add('opacity-0');
+            }
+
+            // 動態字體大小調整
+            const charCount = display.textContent.length;
+            if (charCount > 5) {
+                display.style.fontSize = "18vw";
+            } else {
+                display.style.fontSize = "25vw";
+            }
+        }
+
+        // --- 音效邏輯 ---
+        function previewSound() {
+            playBeep('warning');
+        }
+
+        function playBeep(type = 'normal') {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+
+            const soundType = soundSelect.value;
+            
+            // 時間到 (結束) 音效 - 統一為長音警示，不受選擇影響，確保醒目
+            if (type === 'end') {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(440, audioContext.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(110, audioContext.currentTime + 1.5);
+                
+                gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.5);
+                
+                osc.start();
+                osc.stop(audioContext.currentTime + 1.5);
+                return;
+            }
+
+            // 預告音效 (根據選擇)
+            // 修改重點：延長至約 3 秒，並增強識別度
+            if (type === 'warning') {
+                const now = audioContext.currentTime;
+                
+                if (soundType === 'standard') {
+                    // 標準: 高穿透力方波，重複三組，確保被聽到 (總長約 3 秒)
+                    // 模式: 嗶嗶嗶 ... 嗶嗶嗶 ... 嗶嗶嗶
+                    for(let i=0; i<3; i++) {
+                        let base = i * 1.0; // 每秒一組
+                        playTone(880, 'square', 0.1, 0.1, base + 0);
+                        playTone(880, 'square', 0.1, 0.1, base + 0.15);
+                        playTone(880, 'square', 0.1, 0.1, base + 0.3);
+                    }
+                } else if (soundType === 'gentle') {
+                    // 柔和: 延長的悅耳提示 (總長約 3 秒)
+                    // 模式: Do-Mi-So-Do ... Do-Mi-So-Do (較慢)
+                    for(let i=0; i<2; i++) {
+                        let base = i * 1.5;
+                        playTone(523.25, 'triangle', 0.1, 0.3, base + 0);   // C5
+                        playTone(659.25, 'triangle', 0.1, 0.3, base + 0.3); // E5
+                        playTone(783.99, 'triangle', 0.1, 0.3, base + 0.6); // G5
+                        playTone(1046.50, 'triangle', 0.1, 0.6, base + 0.9); // C6
+                    }
+                } else if (soundType === 'urgent') {
+                    // 急促: 持續的高頻警報 (總長 3 秒)
+                    // 模式: 緊湊的高低音交替
+                    for(let i=0; i<12; i++) { // 12次循環 * 0.25s = 3秒
+                        let base = i * 0.25;
+                        playTone(880, 'sawtooth', 0.08, 0.1, base + 0);
+                        playTone(660, 'sawtooth', 0.08, 0.1, base + 0.12);
+                    }
+                }
+            }
+        }
+
+        function playTone(freq, type, vol, dur, delay) {
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+            
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioContext.currentTime + delay);
+            
+            const startTime = audioContext.currentTime + delay;
+            gain.gain.setValueAtTime(0, startTime);
+            gain.gain.linearRampToValueAtTime(vol, startTime + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + dur);
+            
+            osc.start(startTime);
+            osc.stop(startTime + dur);
+        }
+
+        // --- 計時器邏輯 ---
+
+        function startTimer() {
+            if (remainingSeconds <= 0) return;
+
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // 如果是從頭開始，記錄到歷史
+            if (remainingSeconds === totalSeconds && !isRunning) {
+                saveToHistory();
+            }
+
+            isRunning = true;
+            updateControlsState();
+            controls.classList.add('-translate-y-full');
+
+            timerInterval = setInterval(() => {
+                remainingSeconds--;
+                updateDisplay();
+
+                if (remainingSeconds === warningSeconds) {
+                    playBeep('warning');
+                }
+
+                if (remainingSeconds <= 0) {
+                    finishTimer();
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            isRunning = false;
+            clearInterval(timerInterval);
+            updateControlsState();
+            controls.classList.remove('-translate-y-full');
+        }
+
+        function toggleTimer() {
+            if (isRunning) {
+                pauseTimer();
+            } else {
+                startTimer();
+            }
+        }
+
+        function finishTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            remainingSeconds = 0;
+            updateDisplay();
+            updateControlsState();
+            playBeep('end');
+            controls.classList.remove('-translate-y-full');
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            const settings = getSettings();
+            totalSeconds = settings.total;
+            remainingSeconds = settings.total;
+            warningSeconds = settings.warning;
+            
+            mainBody.classList.remove('animate-alarm');
+            display.classList.remove('text-red-500', 'text-yellow-400');
+            display.classList.add('text-white');
+            statusMessage.classList.add('opacity-0');
+            
+            updateDisplay();
+        }
+
+        function updateControlsState() {
+            if (isRunning) {
+                iconPlay.classList.add('hidden');
+                iconPause.classList.remove('hidden');
+                txtToggle.textContent = "暫停";
+                btnToggle.classList.remove('bg-green-600', 'hover:bg-green-700');
+                btnToggle.classList.add('bg-yellow-600', 'hover:bg-yellow-700');
+                
+                [inputMin, inputSec, warnMin, warnSec, soundSelect].forEach(input => input.disabled = true);
+            } else {
+                iconPlay.classList.remove('hidden');
+                iconPause.classList.add('hidden');
+                txtToggle.textContent = "開始";
+                btnToggle.classList.remove('bg-yellow-600', 'hover:bg-yellow-700');
+                btnToggle.classList.add('bg-green-600', 'hover:bg-green-700');
+                
+                [inputMin, inputSec, warnMin, warnSec, soundSelect].forEach(input => input.disabled = false);
+            }
+        }
+
+        // --- 歷史紀錄邏輯 ---
+        function toggleHistory() {
+            historyDropdown.classList.toggle('hidden');
+        }
+
+        function saveToHistory() {
+            const settings = getSettings();
+            // 避免重複紀錄：如果最後一筆跟現在一樣就不存
+            if (timerHistory.length > 0) {
+                const last = timerHistory[0];
+                if (last.total === settings.total && last.warning === settings.warning && last.sound === settings.sound) {
+                    return;
+                }
+            }
+
+            const record = {
+                total: settings.total,
+                warning: settings.warning,
+                sound: settings.sound,
+                timestamp: new Date().getTime()
+            };
+
+            timerHistory.unshift(record); // 加到最前面
+            if (timerHistory.length > 5) timerHistory.pop(); // 保持 5 筆
+
+            localStorage.setItem('timerHistory', JSON.stringify(timerHistory));
+            renderHistory();
+        }
+
+        function loadHistory() {
+            const stored = localStorage.getItem('timerHistory');
+            if (stored) {
+                try {
+                    timerHistory = JSON.parse(stored);
+                    renderHistory();
+                } catch (e) { console.error("History parse error", e); }
+            }
+        }
+
+        function renderHistory() {
+            historyList.innerHTML = '';
+            if (timerHistory.length === 0) {
+                historyList.innerHTML = '<div class="p-4 text-center text-gray-500 text-sm">尚無紀錄</div>';
+                return;
+            }
+
+            timerHistory.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'p-3 hover:bg-gray-700 cursor-pointer border-b border-gray-700 last:border-0 transition-colors flex justify-between items-center group';
+                
+                // 鈴聲中文名稱對照
+                const soundNames = { 'standard': '標準', 'gentle': '柔和', 'urgent': '急促' };
+                const soundName = soundNames[item.sound] || '標準';
+
+                div.innerHTML = `
+                    <div class="flex flex-col text-sm">
+                        <span class="font-bold text-white">總長: ${formatTimeText(item.total)}</span>
+                        <span class="text-xs text-gray-400">預告: ${formatTimeText(item.warning)} (${soundName})</span>
+                    </div>
+                    <div class="text-xs text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                        點擊套用
+                    </div>
+                `;
+                div.onclick = () => applyHistory(item);
+                historyList.appendChild(div);
+            });
+        }
+
+        function applyHistory(item) {
+            // 設定值填回輸入框
+            inputMin.value = Math.floor(item.total / 60);
+            inputSec.value = item.total % 60;
+            warnMin.value = Math.floor(item.warning / 60);
+            warnSec.value = item.warning % 60;
+            soundSelect.value = item.sound || 'standard';
+            
+            historyDropdown.classList.add('hidden');
+            resetTimer(); // 套用並重置顯示
+        }
+
+        // --- 全螢幕與介面 ---
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.warn("無法啟用全螢幕:", err);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(err => {
+                        console.warn("無法退出全螢幕:", err);
+                    });
+                }
+            }
+        }
+
+        function handleScreenClick(event) {
+            if (controls.contains(event.target)) return;
+            toggleTimer();
+        }
+
+        let mouseTimer;
+        document.addEventListener('mousemove', (e) => {
+            controls.classList.remove('-translate-y-full');
+            clearTimeout(mouseTimer);
+            if (isRunning && e.clientY > 100) {
+                mouseTimer = setTimeout(() => {
+                    controls.classList.add('-translate-y-full');
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
