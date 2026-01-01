@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國立政治大學 EMBA 課程資訊</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #e8e8e8;
+        }
+        
+        .header {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 24px 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #8b1e3f 0%, #c62828 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            background: linear-gradient(90deg, #fff, #a8dadc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-top: 4px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .control-label {
+            font-size: 13px;
+            color: #aaa;
+            font-weight: 500;
+        }
+        
+        select, input {
+            padding: 10px 16px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        select:hover, input:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.12);
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #4dabf7;
+            box-shadow: 0 0 0 3px rgba(77,171,247,0.2);
+        }
+        
+        select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+        
+        .search-box {
+            min-width: 200px;
+        }
+        
+        .stats {
+            margin-left: auto;
+            display: flex;
+            gap: 24px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #4dabf7;
+        }
+        
+        .stat-value.selected {
+            color: #51cf66;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .main-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+        
+        /* View Toggle */
+        .view-toggle {
+            display: flex;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 4px;
+        }
+        
+        .view-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: #888;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .view-btn:hover {
+            color: #fff;
+        }
+        
+        .view-btn.active {
+            background: #4dabf7;
+            color: #fff;
+        }
+        
+        /* Course Grid */
+        .view-container {
+            display: none;
+        }
+        
+        .view-container.active {
+            display: block;
+        }
+        
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        
+        .course-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(77,171,247,0.4);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+        
+        .course-card.selected {
+            border-color: rgba(81, 207, 102, 0.6);
+            background: rgba(81, 207, 102, 0.08);
+        }
+        
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        
+        .course-card[data-group="全企組"]::before { background: linear-gradient(90deg, #e63946, #f77f00); }
+        .course-card[data-group="國金組"]::before { background: linear-gradient(90deg, #2a9d8f, #40916c); }
+        .course-card[data-group="生醫組"]::before { background: linear-gradient(90deg, #9d4edd, #c77dff); }
+        .course-card[data-group="文科資創組"]::before { background: linear-gradient(90deg, #0077b6, #00b4d8); }
+        .course-card[data-group="不分組"]::before { background: linear-gradient(90deg, #6c757d, #adb5bd); }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        
+        .card-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .checkbox-wrapper {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+        
+        .checkbox-wrapper input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 1;
+        }
+        
+        .checkbox-custom {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        
+        .checkbox-wrapper input:checked + .checkbox-custom {
+            background: #51cf66;
+            border-color: #51cf66;
+        }
+        
+        .checkbox-custom::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        
+        .checkbox-wrapper input:checked + .checkbox-custom::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .course-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.4;
+            flex: 1;
+            margin-right: 12px;
+        }
+        
+        .group-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .group-badge[data-group="全企組"] { background: rgba(230,57,70,0.2); color: #f77f00; }
+        .group-badge[data-group="國金組"] { background: rgba(42,157,143,0.2); color: #40916c; }
+        .group-badge[data-group="生醫組"] { background: rgba(157,78,221,0.2); color: #c77dff; }
+        .group-badge[data-group="文科資創組"] { background: rgba(0,119,182,0.2); color: #00b4d8; }
+        .group-badge[data-group="不分組"] { background: rgba(108,117,125,0.2); color: #adb5bd; }
+        
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .info-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .info-content {
+            flex: 1;
+        }
+        
+        .info-label {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        
+        .info-value {
+            font-size: 14px;
+            color: #e8e8e8;
+            line-height: 1.5;
+        }
+        
+        .credits-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: linear-gradient(135deg, #4dabf7, #339af0);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .syllabus-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: rgba(255,107,107,0.15);
+            border: 1px solid rgba(255,107,107,0.3);
+            border-radius: 8px;
+            color: #ff6b6b;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .syllabus-link:hover {
+            background: rgba(255,107,107,0.3);
+            border-color: rgba(255,107,107,0.6);
+            transform: translateY(-1px);
+        }
+        
+        .syllabus-link:active {
+            transform: translateY(0);
+        }
+        
+        .date-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        
+        .date-chip {
+            padding: 4px 10px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 6px;
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        .time-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        
+        .time-chip {
+            padding: 4px 10px;
+            background: rgba(77,171,247,0.15);
+            border-radius: 6px;
+            font-size: 12px;
+            color: #4dabf7;
+        }
+        
+        /* Time Slot View */
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .time-slot-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .time-slot-header {
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .time-slot-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .time-slot-icon {
+            font-size: 20px;
+        }
+        
+        .time-slot-count {
+            background: #4dabf7;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .time-slot-courses {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .time-course-item {
+            background: rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 14px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .time-course-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .time-course-item.selected {
+            background: rgba(81, 207, 102, 0.15);
+            border: 1px solid rgba(81, 207, 102, 0.3);
+        }
+        
+        .time-course-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        
+        .time-course-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 12px;
+        }
+        
+        .time-course-tag {
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.08);
+            color: #aaa;
+        }
+        
+        .time-course-tag.group {
+            background: rgba(77,171,247,0.2);
+            color: #4dabf7;
+        }
+        
+        /* Calendar View */
+        .calendar-container {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .calendar-header {
+            padding: 20px 24px;
+            background: rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .calendar-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .calendar-legend {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+        
+        .legend-dot[data-group="全企組"] { background: #f77f00; }
+        .legend-dot[data-group="國金組"] { background: #40916c; }
+        .legend-dot[data-group="生醫組"] { background: #c77dff; }
+        .legend-dot[data-group="文科資創組"] { background: #00b4d8; }
+        .legend-dot[data-group="不分組"] { background: #adb5bd; }
+        .legend-dot.selected { background: #51cf66; }
+        
+        .time-legend {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .time-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        .time-symbol {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .time-symbol.morning { color: #ffd43b; }
+        .time-symbol.afternoon { color: #ff922b; }
+        .time-symbol.evening { color: #845ef7; }
+        .time-symbol.allday { color: #20c997; }
+        
+        .calendar-body {
+            padding: 24px;
+            overflow-x: auto;
+        }
+        
+        .calendar-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 1200px;
+        }
+        
+        .calendar-row {
+            display: flex;
+            align-items: stretch;
+            min-height: 44px;
+            cursor: pointer;
+        }
+        
+        .calendar-row:hover {
+            background: rgba(255,255,255,0.02);
+        }
+        
+        .calendar-row-label {
+            width: 220px;
+            min-width: 220px;
+            padding: 8px 12px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #fff;
+            background: rgba(255,255,255,0.04);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .calendar-row-label .group-indicator {
+            width: 4px;
+            height: 100%;
+            min-height: 28px;
+            border-radius: 2px;
+        }
+        
+        .calendar-row-label .group-indicator[data-group="全企組"] { background: #f77f00; }
+        .calendar-row-label .group-indicator[data-group="國金組"] { background: #40916c; }
+        .calendar-row-label .group-indicator[data-group="生醫組"] { background: #c77dff; }
+        .calendar-row-label .group-indicator[data-group="文科資創組"] { background: #00b4d8; }
+        .calendar-row-label .group-indicator[data-group="不分組"] { background: #adb5bd; }
+        
+        .calendar-row-dates {
+            flex: 1;
+            display: flex;
+            position: relative;
+            background: rgba(255,255,255,0.02);
+        }
+        
+        .date-cell {
+            flex: 1;
+            min-width: 28px;
+            border-right: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .date-cell.weekend {
+            background: rgba(255,255,255,0.02);
+        }
+        
+        .date-cell.has-class {
+            background: rgba(77,171,247,0.15);
+        }
+        
+        .date-cell.has-class.selected {
+            background: rgba(81, 207, 102, 0.25);
+        }
+        
+        .date-marker {
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .date-marker.morning { color: #ffd43b; }
+        .date-marker.afternoon { color: #ff922b; }
+        .date-marker.evening { color: #845ef7; }
+        .date-marker.allday { color: #20c997; }
+        .date-marker.selected { filter: brightness(1.2); }
+        
+        .date-header-row {
+            display: flex;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 4px;
+        }
+        
+        .date-header-spacer {
+            width: 220px;
+            min-width: 220px;
+        }
+        
+        .date-headers {
+            flex: 1;
+            display: flex;
+        }
+        
+        .date-header {
+            flex: 1;
+            min-width: 28px;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+            padding: 4px 0;
+        }
+        
+        .date-header.weekend {
+            color: #888;
+        }
+        
+        .date-header .day-num {
+            font-weight: 600;
+            font-size: 11px;
+            color: #aaa;
+        }
+        
+        .date-header.weekend .day-num {
+            color: #f77f00;
+        }
+        
+        .month-divider {
+            position: relative;
+        }
+        
+        .month-divider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 2px;
+            background: rgba(77,171,247,0.5);
+        }
+        
+        .calendar-row.selected .calendar-row-label {
+            background: rgba(81, 207, 102, 0.1);
+        }
+        
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+        }
+        
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        
+        .filter-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(81, 207, 102, 0.1);
+            border: 1px solid rgba(81, 207, 102, 0.3);
+            border-radius: 8px;
+            color: #51cf66;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-toggle:hover {
+            background: rgba(81, 207, 102, 0.2);
+        }
+        
+        .filter-toggle.active {
+            background: #51cf66;
+            color: #fff;
+        }
+        
+        @media (max-width: 768px) {
+            .header { padding: 16px; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .stats { margin-left: 0; justify-content: center; margin-top: 16px; }
+            .main-content { padding: 16px; }
+            .course-grid { grid-template-columns: 1fr; }
+            .time-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">政大</div>
+                <div>
+                    <h1>國立政治大學 EMBA 課程資訊</h1>
+                    <div class="subtitle">Executive MBA Program Course Schedule 2026</div>
+                </div>
+            </div>
+            <div class="controls">
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="cards">
+                        <span>📋</span> 課程列表
+                    </button>
+                    <button class="view-btn" data-view="timeslots">
+                        <span>🕐</span> 時段總覽
+                    </button>
+                    <button class="view-btn" data-view="calendar">
+                        <span>📅</span> 學期行事曆
+                    </button>
+                </div>
+                <div class="control-group">
+                    <span class="control-label">組別</span>
+                    <select id="groupFilter">
+                        <option value="all">全部組別</option>
+                        <option value="全企組">全企組</option>
+                        <option value="國金組">國金組</option>
+                        <option value="生醫組">生醫組</option>
+                        <option value="文科資創組">文科資創組</option>
+                        <option value="不分組">不分組</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <span class="control-label">時段</span>
+                    <select id="timeFilter">
+                        <option value="all">全部時段</option>
+                        <option value="週六上午">週六上午 (08:30-12:30)</option>
+                        <option value="週六下午">週六下午 (13:30-17:30)</option>
+                        <option value="週日上午">週日上午 (08:30-12:30)</option>
+                        <option value="週日下午">週日下午 (13:30-17:30)</option>
+                        <option value="週一晚上">週一晚上 (18:30-22:30)</option>
+                        <option value="週四晚上">週四晚上 (18:30-22:30)</option>
+                        <option value="週五晚上">週五晚上 (18:30-22:30)</option>
+                        <option value="全天">全天課程</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <span class="control-label">排序</span>
+                    <select id="sortOrder">
+                        <option value="group">依組別</option>
+                        <option value="date">依開課日期</option>
+                        <option value="credits">依學分數</option>
+                        <option value="name">依課程名稱</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <input type="text" id="searchBox" class="search-box" placeholder="🔍 搜尋課程或老師...">
+                </div>
+                <button class="filter-toggle" id="showSelectedOnly">
+                    <span>✓</span> 僅顯示已選
+                </button>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="courseCount">18</div>
+                        <div class="stat-label">課程數</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value selected" id="selectedCount">0</div>
+                        <div class="stat-label">已勾選</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="totalCredits">0</div>
+                        <div class="stat-label">勾選學分</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="view-container active" id="cardsView">
+            <div class="course-grid" id="courseGrid"></div>
+        </div>
+        <div class="view-container" id="timeslotsView">
+            <div class="time-grid" id="timeGrid"></div>
+        </div>
+        <div class="view-container" id="calendarView">
+            <div class="calendar-container" id="calendarContainer"></div>
+        </div>
+    </main>
+
+    <script>
+        const courses = [
+            { id: 1, name: "全球經濟與企業", group: "不分組", teacher: "郭炳伸（教授）", credits: 2, dates: ["03/19", "03/20", "04/23", "04/24"], time: "全天 08:10-17:10", timeSlots: ["全天"], firstDate: "03/19", timeType: "allday", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/40.不分組_選修_932014501_全球經濟與企業_郭炳伸.pdf?20251231" },
+            { id: 2, name: "國學與領導力", group: "不分組", teacher: "李瑞華（榮譽教授）", credits: 2, dates: ["04/19", "04/20", "05/31", "06/01"], time: "全天 08:30-17:30", timeSlots: ["全天"], firstDate: "04/19", timeType: "allday", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/39.不分組_選修_932453001_國學與領導力_李瑞華.pdf?20251231" },
+            { id: 3, name: "數位與社群媒體行銷", group: "不分組", teacher: "陳冠儒（助理教授）", credits: 1, dates: ["03/12", "03/13"], time: "全天 08:30-17:30", timeSlots: ["全天"], firstDate: "03/12", timeType: "allday", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/41.不分組__選修_932012-401_數位與社群媒體行銷_陳冠儒.pdf?20251231" },
+            { id: 4, name: "銷售與顧客關係管理：策略觀", group: "全企組", teacher: "巫立宇（副教授）", credits: 2, dates: ["03/07", "03/21", "04/11", "04/25", "05/09", "05/23", "06/06", "06/27"], time: "週六 08:30-12:30", timeSlots: ["週六上午"], firstDate: "03/07", timeType: "morning", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/02.全企組_2025年班_選修_932444001_銷售與顧客關係管理_巫立宇老師.pdf?20251231" },
+            { id: 5, name: "策略行銷分析-全球觀點", group: "全企組", teacher: "邱志聖（教授）、蘇威傑（教授）", credits: 2, dates: ["03/14", "03/28", "04/18", "05/02", "05/16", "05/30", "06/13", "07/04"], time: "週六 08:30-12:30", timeSlots: ["週六上午"], firstDate: "03/14", timeType: "morning", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/05.全企組_2026年班_群修二_932072001_策略行銷分析-全球觀點_邱志聖、蘇威傑.pdf?20251231" },
+            { id: 6, name: "行為投資與公司評價", group: "生醫組", teacher: "周冠男（特聘教授）", credits: 2, dates: ["03/07", "03/21", "04/11", "04/25", "05/09", "05/18", "06/06", "06/27"], time: "週六 08:30-12:30、週一 18:30-22:30", timeSlots: ["週六上午", "週一晚上"], firstDate: "03/07", timeType: "morning", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/22.生醫組_2025年班_選修_932014-001_行為投資與公司評價_周冠男.pdf?20251231" },
+            { id: 7, name: "永續領導力與影響力投資", group: "國金組", teacher: "楊曉文（教授）", credits: 2, dates: ["03/07", "03/27", "04/11", "04/25", "05/09", "05/23", "06/06", "06/27"], time: "週六 08:30-12:30、週五 18:30-22:30", timeSlots: ["週六上午", "週五晚上"], firstDate: "03/07", timeType: "morning", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/16.國金組_2025年班_選修_932017201_永續領導力與影響力投資_楊曉文.pdf?20251231" },
+            { id: 8, name: "全球產業競爭分析", group: "全企組", teacher: "溫偉任（助理教授）、潘振宇（副教授）", credits: 2, dates: ["03/07", "03/21", "04/11", "04/25", "05/09", "05/23", "06/06", "06/27"], time: "週六 13:30-17:30", timeSlots: ["週六下午"], firstDate: "03/07", timeType: "afternoon", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/03.全企組_2025年班_選修_932802001_全球產業競爭分析_溫偉任、潘振宇.pdf?20251231" },
+            { id: 9, name: "競爭分析-對抗與合作", group: "全企組", teacher: "黃國峯（特聘教授）、彭朱如（教授）", credits: 2, dates: ["03/14", "03/28", "04/18", "05/02", "05/16", "05/30", "06/13", "07/04"], time: "週六 13:30-17:30", timeSlots: ["週六下午"], firstDate: "03/14", timeType: "afternoon", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/06.全企組_2026年班_群修二_932309001_競爭分析-對抗與合作_黃國峯、彭朱如.pdf?20251231" },
+            { id: 10, name: "銷售與顧客關係管理：策略觀", group: "國金組", teacher: "巫立宇（副教授）", credits: 2, dates: ["03/07", "03/21", "04/11", "04/25", "05/09", "05/23", "06/06", "06/27"], time: "週六 13:30-17:30", timeSlots: ["週六下午"], firstDate: "03/07", timeType: "afternoon", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/17.國金組_2025年班_選修_932439001_銷售與顧客關管理策略觀_巫立宇.pdf?20251231" },
+            { id: 11, name: "新常態下的數位轉型", group: "文科資創組", teacher: "詹文男（資深產業顧問）", credits: 2, dates: ["03/14", "03/28", "04/18", "05/02", "05/16", "05/30", "06/13", "07/04"], time: "週六 13:30-17:30", timeSlots: ["週六下午"], firstDate: "03/14", timeType: "afternoon", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/14.文科資創組_2026年班_群修二_932015901_新常態下的數位轉型_詹文男.pdf?20251231" },
+            { id: 12, name: "經濟分析與管理決策", group: "不分組", teacher: "溫偉任（助理教授）", credits: 2, dates: ["03/08", "03/22", "04/12", "05/10", "05/24", "06/07", "06/28", "07/19"], time: "週日 08:30-12:30", timeSlots: ["週日上午"], firstDate: "03/08", timeType: "morning", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/42.不分組_選修_932464-001_經濟分析與管理決策_溫偉任.pdf?20251231" },
+            { id: 13, name: "創業與新事業發展", group: "文科資創組", teacher: "鄭至甫（教授）", credits: 2, dates: ["03/09", "03/28", "04/18", "05/02", "05/16", "05/30", "06/22", "07/04"], time: "週六 08:30-12:30、週一 18:30-22:30", timeSlots: ["週六上午", "週一晚上"], firstDate: "03/09", timeType: "morning", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/13.文科資創組_2026年班_群修二_932303001_創業與新事業發展_鄭至甫.pdf?20251231" },
+            { id: 14, name: "策略永續經營", group: "全企組", teacher: "蘇威傑（教授）、潘振宇（副教授）", credits: 2, dates: ["03/08", "03/22", "04/12", "05/10", "05/24", "06/07", "06/28", "07/19"], time: "週日 13:30-17:30", timeSlots: ["週日下午"], firstDate: "03/08", timeType: "afternoon", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/04.全企組_2025班_選修_932011001_策略永續經營_蘇威傑、潘振宇.pdf?20251231" },
+            { id: 15, name: "區塊鏈與虛擬貨幣：商業創新與應用", group: "文科資創組", teacher: "陳恭（教授）", credits: 1, dates: ["05/24", "06/07", "06/28", "07/19"], time: "週日 13:30-17:30", timeSlots: ["週日下午"], firstDate: "05/24", timeType: "afternoon", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/11.文科資創組_2025年班_選修_932012701_區塊鏈與虛擬貨幣：商業創新與應用_陳恭(1學分).pdf?20251231" },
+            { id: 16, name: "跨國經營與國際財務策略", group: "國金組", teacher: "張元晨（教授）", credits: 2, dates: ["03/08", "03/22", "04/12", "05/04", "05/10", "05/24", "06/07", "06/28"], time: "週日 13:30-17:30、週一 18:30-22:30", timeSlots: ["週日下午", "週一晚上"], firstDate: "03/08", timeType: "afternoon", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/18.國金組_2025年班_選修_932498001_跨國經營與國際財務策略_張元晨.pdf?20251231" },
+            { id: 17, name: "商業資料分析與管理決策", group: "不分組", teacher: "余清祥（教授）", credits: 2, dates: ["03/08", "03/22", "04/12", "04/27", "05/10", "05/24", "06/07", "06/28"], time: "週日 13:30-17:30、週一 18:30-22:30", timeSlots: ["週日下午", "週一晚上"], firstDate: "03/08", timeType: "afternoon", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/43.不分組_選修_932465001_商業資料分析與管理決策_余清祥.pdf?20251231" },
+            { id: 18, name: "人工智慧與數位治理", group: "文科資創組", teacher: "莊弘鈺（副教授）", credits: 1, dates: ["03/08", "03/26", "04/12", "05/10"], time: "週日 13:30-17:30、週四 18:30-22:30", timeSlots: ["週日下午", "週四晚上"], firstDate: "03/08", timeType: "afternoon", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/10.文科資創組_2025年班_選修_932016901_人工智慧與數位治理_莊弘鈺.pdf?20251231" }
+        ];
+
+        const groupOrder = ["全企組", "國金組", "生醫組", "文科資創組", "不分組"];
+        
+        const timeSlotConfig = {
+            "週六上午": { icon: "🌅", label: "週六上午", time: "08:30-12:30" },
+            "週六下午": { icon: "☀️", label: "週六下午", time: "13:30-17:30" },
+            "週日上午": { icon: "🌅", label: "週日上午", time: "08:30-12:30" },
+            "週日下午": { icon: "☀️", label: "週日下午", time: "13:30-17:30" },
+            "週一晚上": { icon: "🌙", label: "週一晚上", time: "18:30-22:30" },
+            "週四晚上": { icon: "🌙", label: "週四晚上", time: "18:30-22:30" },
+            "週五晚上": { icon: "🌙", label: "週五晚上", time: "18:30-22:30" },
+            "全天": { icon: "📆", label: "全天課程", time: "08:00-17:30" }
+        };
+
+        const timeSlotOrder = ["週六上午", "週六下午", "週日上午", "週日下午", "週一晚上", "週四晚上", "週五晚上", "全天"];
+        
+        const timeSymbols = {
+            morning: { symbol: "△", class: "morning", label: "上午" },
+            afternoon: { symbol: "▲", class: "afternoon", label: "下午" },
+            evening: { symbol: "●", class: "evening", label: "晚上" },
+            allday: { symbol: "◆", class: "allday", label: "全天" }
+        };
+
+        let selectedCourses = new Set();
+        let showSelectedOnly = false;
+
+        function parseDateForSort(dateStr) {
+            const match = dateStr.match(/(\d{2})\/(\d{2})/);
+            if (match) {
+                return parseInt(match[1]) * 100 + parseInt(match[2]);
+            }
+            return 999;
+        }
+
+        function getFilteredCourses() {
+            const groupFilter = document.getElementById('groupFilter').value;
+            const timeFilter = document.getElementById('timeFilter').value;
+            const sortOrder = document.getElementById('sortOrder').value;
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+
+            let filtered = courses.filter(course => {
+                const matchGroup = groupFilter === 'all' || course.group === groupFilter;
+                const matchTime = timeFilter === 'all' || course.timeSlots.includes(timeFilter);
+                const matchSearch = !searchTerm || 
+                    course.name.toLowerCase().includes(searchTerm) ||
+                    course.teacher.toLowerCase().includes(searchTerm) ||
+                    course.group.toLowerCase().includes(searchTerm);
+                const matchSelected = !showSelectedOnly || selectedCourses.has(course.id);
+                return matchGroup && matchTime && matchSearch && matchSelected;
+            });
+
+            filtered.sort((a, b) => {
+                switch(sortOrder) {
+                    case 'date':
+                        return parseDateForSort(a.firstDate) - parseDateForSort(b.firstDate);
+                    case 'credits':
+                        return b.credits - a.credits;
+                    case 'name':
+                        return a.name.localeCompare(b.name, 'zh-TW');
+                    case 'group':
+                    default:
+                        return groupOrder.indexOf(a.group) - groupOrder.indexOf(b.group);
+                }
+            });
+
+            return filtered;
+        }
+
+        function toggleCourse(id) {
+            if (selectedCourses.has(id)) {
+                selectedCourses.delete(id);
+            } else {
+                selectedCourses.add(id);
+            }
+            filterAndRender();
+        }
+        
+        function openSyllabus(url, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            window.open(url, '_blank');
+        }
+
+        function renderCourseCards(filteredCourses) {
+            const grid = document.getElementById('courseGrid');
+            
+            if (filteredCourses.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📚</div>
+                        <div>沒有找到符合條件的課程</div>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredCourses.map(course => {
+                const dateChips = course.dates.map(d => 
+                    `<span class="date-chip">${d}</span>`
+                ).join('');
+                
+                const timeChips = course.timeSlots.map(t => 
+                    `<span class="time-chip">${t}</span>`
+                ).join('');
+                
+                const isSelected = selectedCourses.has(course.id);
+                
+                const referenceLink = course.reference ? 
+                    `<a href="${course.reference}" target="_blank" rel="noopener noreferrer" class="syllabus-link" onclick="openSyllabus('${course.reference}', event)">
+                        📄 課程大綱
+                    </a>` : '';
+
+                return `
+                    <div class="course-card ${isSelected ? 'selected' : ''}" data-group="${course.group}" data-id="${course.id}">
+                        <div class="card-header">
+                            <div class="card-checkbox">
+                                <div class="checkbox-wrapper">
+                                    <input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleCourse(${course.id})">
+                                    <div class="checkbox-custom"></div>
+                                </div>
+                                <div class="course-name">${course.name}</div>
+                            </div>
+                            <span class="group-badge" data-group="${course.group}">${course.group}</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <div class="info-icon">👨‍🏫</div>
+                                <div class="info-content">
+                                    <div class="info-label">授課教授</div>
+                                    <div class="info-value">${course.teacher}</div>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-icon">🎓</div>
+                                <div class="info-content">
+                                    <div class="info-label">學分數</div>
+                                    <div class="info-value" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                                        <span class="credits-badge">${course.credits} 學分</span>
+                                        ${referenceLink}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-icon">🕐</div>
+                                <div class="info-content">
+                                    <div class="info-label">上課時段</div>
+                                    <div class="time-chips">${timeChips}</div>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-icon">📅</div>
+                                <div class="info-content">
+                                    <div class="info-label">課程日期</div>
+                                    <div class="date-chips">${dateChips}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderTimeSlotView(filteredCourses) {
+            const grid = document.getElementById('timeGrid');
+            
+            const coursesBySlot = {};
+            timeSlotOrder.forEach(slot => {
+                coursesBySlot[slot] = [];
+            });
+            
+            filteredCourses.forEach(course => {
+                course.timeSlots.forEach(slot => {
+                    if (coursesBySlot[slot]) {
+                        coursesBySlot[slot].push(course);
+                    }
+                });
+            });
+
+            const slotsWithCourses = timeSlotOrder.filter(slot => coursesBySlot[slot].length > 0);
+            
+            if (slotsWithCourses.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🕐</div>
+                        <div>沒有找到符合條件的課程時段</div>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = slotsWithCourses.map(slot => {
+                const config = timeSlotConfig[slot];
+                const slotCourses = coursesBySlot[slot];
+                
+                const coursesHtml = slotCourses.map(course => {
+                    const isSelected = selectedCourses.has(course.id);
+                    return `
+                        <div class="time-course-item ${isSelected ? 'selected' : ''}" onclick="toggleCourse(${course.id})">
+                            <div class="time-course-name">${isSelected ? '✓ ' : ''}${course.name}</div>
+                            <div class="time-course-meta">
+                                <span class="time-course-tag group">${course.group}</span>
+                                <span class="time-course-tag">${course.credits} 學分</span>
+                                <span class="time-course-tag">${course.teacher.split('（')[0]}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="time-slot-card">
+                        <div class="time-slot-header">
+                            <div class="time-slot-title">
+                                <span class="time-slot-icon">${config.icon}</span>
+                                <span>${config.label}</span>
+                                <span style="color: #888; font-weight: 400; font-size: 14px;">${config.time}</span>
+                            </div>
+                            <span class="time-slot-count">${slotCourses.length} 門課</span>
+                        </div>
+                        <div class="time-slot-courses">
+                            ${coursesHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderCalendarView(filteredCourses) {
+            const container = document.getElementById('calendarContainer');
+            
+            const allDates = [];
+            const months = [
+                { month: 3, name: '三月', days: 31 },
+                { month: 4, name: '四月', days: 30 },
+                { month: 5, name: '五月', days: 31 },
+                { month: 6, name: '六月', days: 30 },
+                { month: 7, name: '七月', days: 31 }
+            ];
+            
+            months.forEach(m => {
+                for (let d = 1; d <= m.days; d++) {
+                    const dateStr = `${String(m.month).padStart(2, '0')}/${String(d).padStart(2, '0')}`;
+                    const date = new Date(2026, m.month - 1, d);
+                    const dayOfWeek = date.getDay();
+                    allDates.push({
+                        dateStr,
+                        day: d,
+                        month: m.month,
+                        monthName: m.name,
+                        isWeekend: dayOfWeek === 0 || dayOfWeek === 6,
+                        isMonthStart: d === 1,
+                        dayOfWeek
+                    });
+                }
+            });
+
+            const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
+            let dateHeaders = '';
+            allDates.forEach(d => {
+                const monthClass = d.isMonthStart && d.month > 3 ? 'month-divider' : '';
+                dateHeaders += `
+                    <div class="date-header ${d.isWeekend ? 'weekend' : ''} ${monthClass}">
+                        ${d.isMonthStart ? `<div style="font-size:9px;color:#4dabf7;">${d.monthName}</div>` : ''}
+                        <div class="day-num">${d.day}</div>
+                        <div style="font-size:9px;color:#666;">${weekDays[d.dayOfWeek]}</div>
+                    </div>
+                `;
+            });
+
+            const courseRows = filteredCourses.map(course => {
+                const isSelected = selectedCourses.has(course.id);
+                const courseDates = new Set(course.dates.map(d => d.replace(/\([^)]+\)/, '')));
+                const timeConfig = timeSymbols[course.timeType];
+                
+                const dateCells = allDates.map(d => {
+                    const hasClass = courseDates.has(d.dateStr);
+                    return `
+                        <div class="date-cell ${d.isWeekend ? 'weekend' : ''} ${hasClass ? 'has-class' : ''} ${hasClass && isSelected ? 'selected' : ''} ${d.isMonthStart && d.month > 3 ? 'month-divider' : ''}">
+                            ${hasClass ? `<span class="date-marker ${timeConfig.class} ${isSelected ? 'selected' : ''}">${timeConfig.symbol}</span>` : ''}
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="calendar-row ${isSelected ? 'selected' : ''}" onclick="toggleCourse(${course.id})">
+                        <div class="calendar-row-label">
+                            <div class="group-indicator" data-group="${course.group}"></div>
+                            <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${course.name}">${course.name}</span>
+                            ${isSelected ? '<span style="color:#51cf66;">✓</span>' : ''}
+                        </div>
+                        <div class="calendar-row-dates">
+                            ${dateCells}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="calendar-header">
+                    <div class="calendar-title">
+                        <span>📅</span> 2026 學期課程行事曆
+                    </div>
+                    <div class="calendar-legend">
+                        <div class="legend-item">
+                            <div class="legend-dot" data-group="全企組"></div>
+                            <span>全企組</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" data-group="國金組"></div>
+                            <span>國金組</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" data-group="生醫組"></div>
+                            <span>生醫組</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" data-group="文科資創組"></div>
+                            <span>文科資創組</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" data-group="不分組"></div>
+                            <span>不分組</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot selected"></div>
+                            <span>已勾選</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="time-legend">
+                    <span style="color:#888;font-size:12px;margin-right:8px;">時段符號：</span>
+                    <div class="time-legend-item">
+                        <span class="time-symbol morning">△</span>
+                        <span>上午</span>
+                    </div>
+                    <div class="time-legend-item">
+                        <span class="time-symbol afternoon">▲</span>
+                        <span>下午</span>
+                    </div>
+                    <div class="time-legend-item">
+                        <span class="time-symbol evening">●</span>
+                        <span>晚上</span>
+                    </div>
+                    <div class="time-legend-item">
+                        <span class="time-symbol allday">◆</span>
+                        <span>全天</span>
+                    </div>
+                </div>
+                <div class="calendar-body">
+                    <div class="calendar-timeline">
+                        <div class="date-header-row">
+                            <div class="date-header-spacer"></div>
+                            <div class="date-headers">
+                                ${dateHeaders}
+                            </div>
+                        </div>
+                        ${courseRows}
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateStats(filteredCourses) {
+            document.getElementById('courseCount').textContent = filteredCourses.length;
+            document.getElementById('selectedCount').textContent = selectedCourses.size;
+            
+            const selectedCredits = courses
+                .filter(c => selectedCourses.has(c.id))
+                .reduce((sum, c) => sum + c.credits, 0);
+            document.getElementById('totalCredits').textContent = selectedCredits;
+        }
+
+        function filterAndRender() {
+            const filtered = getFilteredCourses();
+            renderCourseCards(filtered);
+            renderTimeSlotView(filtered);
+            renderCalendarView(filtered);
+            updateStats(filtered);
+        }
+
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const view = btn.dataset.view;
+                document.querySelectorAll('.view-container').forEach(v => v.classList.remove('active'));
+                document.getElementById(view + 'View').classList.add('active');
+            });
+        });
+
+        document.getElementById('showSelectedOnly').addEventListener('click', function() {
+            showSelectedOnly = !showSelectedOnly;
+            this.classList.toggle('active', showSelectedOnly);
+            filterAndRender();
+        });
+
+        document.getElementById('groupFilter').addEventListener('change', filterAndRender);
+        document.getElementById('timeFilter').addEventListener('change', filterAndRender);
+        document.getElementById('sortOrder').addEventListener('change', filterAndRender);
+        document.getElementById('searchBox').addEventListener('input', filterAndRender);
+
+        filterAndRender();
+    </script>
+</body>
+</html>
