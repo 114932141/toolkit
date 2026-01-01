@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOOLKIT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: 12px;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(94, 129, 244, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #5e81f4, #1fcff1);
+            border-radius: 2px;
+        }
+
+        .subtitle {
+            color: #8892b0;
+            margin-top: 25px;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px 30px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(94, 129, 244, 0.1) 0%, rgba(31, 207, 241, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(94, 129, 244, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+                        0 0 30px rgba(94, 129, 244, 0.2);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-description {
+            color: #8892b0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-arrow {
+            position: absolute;
+            right: 25px;
+            bottom: 25px;
+            width: 40px;
+            height: 40px;
+            background: rgba(94, 129, 244, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-arrow {
+            background: linear-gradient(135deg, #5e81f4, #1fcff1);
+            transform: translateX(5px);
+        }
+
+        .card-arrow svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
+        /* Card color variants */
+        .card.timer .card-icon { color: #f97316; }
+        .card.timer:hover { border-color: rgba(249, 115, 22, 0.5); }
+        .card.timer:hover .card-arrow { background: linear-gradient(135deg, #f97316, #fb923c); }
+
+        .card.courses .card-icon { color: #10b981; }
+        .card.courses:hover { border-color: rgba(16, 185, 129, 0.5); }
+        .card.courses:hover .card-arrow { background: linear-gradient(135deg, #10b981, #34d399); }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TOOLKIT</h1>
+            <p class="subtitle">實用工具集合</p>
+        </header>
+
+        <div class="cards-grid">
+            <!-- 計時器 -->
+            <a href="countdown.html" class="card timer">
+                <span class="card-icon">⏱️</span>
+                <h2 class="card-title">計時器</h2>
+                <p class="card-description">倒數計時工具，適用於會議、活動、簡報等各種場合</p>
+                <div class="card-arrow">
+                    <svg viewBox="0 0 24 24"><path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/></svg>
+                </div>
+            </a>
+
+            <!-- 學期選課表 -->
+            <a href="nccu-emba-courses.html" class="card courses">
+                <span class="card-icon">📚</span>
+                <h2 class="card-title">學期選課表</h2>
+                <p class="card-description">NCCU EMBA 課程資訊查詢，支援篩選與衝堂檢測功能</p>
+                <div class="card-arrow">
+                    <svg viewBox="0 0 24 24"><path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/></svg>
+                </div>
+            </a>
+
+            <!-- 可以繼續添加更多工具卡片 -->
+            
+        </div>
+
+        <footer>
+            <p>© 2025 TOOLKIT - 您的實用工具箱</p>
+        </footer>
+    </div>
+</body>
+</html>
