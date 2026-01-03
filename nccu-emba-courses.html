@@ -269,6 +269,41 @@
             color: #fff;
         }
         
+        .clear-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 6px;
+            color: #ff6b6b;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .clear-btn:hover {
+            background: rgba(255, 107, 107, 0.2);
+        }
+        
+        .save-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            color: #888;
+            padding: 4px 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+        }
+        
+        .save-indicator.saved {
+            color: #51cf66;
+        }
+        
         .main-content {
             max-width: 1600px;
             margin: 0 auto;
@@ -1046,6 +1081,12 @@
                     <button class="filter-toggle" id="showSelectedOnly">
                         ✓ 僅顯示已選
                     </button>
+                    <button class="clear-btn" id="clearSelection">
+                        ✕ 清除選擇
+                    </button>
+                    <div class="save-indicator" id="saveIndicator">
+                        <span>💾</span> 已自動儲存
+                    </div>
                 </div>
             </div>
         </div>
@@ -1064,6 +1105,8 @@
     </main>
 
     <script>
+        const STORAGE_KEY = 'nccu_emba_selected_courses';
+        
         const courses = [
             { id: 1, name: "全球經濟與企業", group: "不分組", teacher: "郭炳伸（教授）", credits: 2, dates: ["03/19", "03/20", "04/23", "04/24"], time: "全天 08:10-17:10", timeSlots: ["全天"], firstDate: "03/19", timeType: "allday", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/40.不分組_選修_932014501_全球經濟與企業_郭炳伸.pdf?20251231" },
             { id: 2, name: "國學與領導力", group: "不分組", teacher: "李瑞華（榮譽教授）", credits: 2, dates: ["04/19", "04/20", "05/31", "06/01"], time: "全天 08:30-17:30", timeSlots: ["全天"], firstDate: "04/19", timeType: "allday", reference: "https://service.emba.nccu.edu.tw/syllabus/uploads/syllabus_115_springB/39.不分組_選修_932453001_國學與領導力_李瑞華.pdf?20251231" },
@@ -1107,8 +1150,47 @@
             allday: { symbol: "◆", class: "allday", label: "全天" }
         };
 
+        // Load from localStorage
         let selectedCourses = new Set();
         let showSelectedOnly = false;
+        
+        function loadFromStorage() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const ids = JSON.parse(saved);
+                    selectedCourses = new Set(ids);
+                }
+            } catch (e) {
+                console.log('無法讀取本地儲存');
+            }
+        }
+        
+        function saveToStorage() {
+            try {
+                const ids = Array.from(selectedCourses);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+                showSaveIndicator();
+            } catch (e) {
+                console.log('無法寫入本地儲存');
+            }
+        }
+        
+        function showSaveIndicator() {
+            const indicator = document.getElementById('saveIndicator');
+            indicator.classList.add('saved');
+            setTimeout(() => {
+                indicator.classList.remove('saved');
+            }, 2000);
+        }
+        
+        function clearSelection() {
+            if (confirm('確定要清除所有已選課程嗎？')) {
+                selectedCourses.clear();
+                saveToStorage();
+                filterAndRender();
+            }
+        }
 
         function parseDateForSort(dateStr) {
             const match = dateStr.match(/(\d{2})\/(\d{2})/);
@@ -1158,6 +1240,7 @@
             } else {
                 selectedCourses.add(id);
             }
+            saveToStorage();
             filterAndRender();
         }
         
@@ -1457,6 +1540,9 @@
             this.classList.toggle('active', showSelectedOnly);
             filterAndRender();
         });
+        
+        // Clear selection
+        document.getElementById('clearSelection').addEventListener('click', clearSelection);
 
         // Filter event listeners
         document.getElementById('groupFilter').addEventListener('change', filterAndRender);
@@ -1464,7 +1550,8 @@
         document.getElementById('sortOrder').addEventListener('change', filterAndRender);
         document.getElementById('searchBox').addEventListener('input', filterAndRender);
 
-        // Initial render
+        // Load saved data and initial render
+        loadFromStorage();
         filterAndRender();
     </script>
 </body>
