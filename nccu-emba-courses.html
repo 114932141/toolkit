@@ -18,7 +18,7 @@
             background: rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 24px 32px;
+            padding: 16px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -29,94 +29,61 @@
             margin: 0 auto;
         }
         
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 20px;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
         }
         
         .logo {
-            width: 56px;
-            height: 56px;
+            width: 44px;
+            height: 44px;
             background: linear-gradient(135deg, #8b1e3f 0%, #c62828 100%);
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 18px;
             font-weight: bold;
             color: white;
+            flex-shrink: 0;
+        }
+        
+        .title-wrap {
+            min-width: 0;
         }
         
         h1 {
-            font-size: 28px;
+            font-size: 18px;
             font-weight: 600;
             background: linear-gradient(90deg, #fff, #a8dadc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .subtitle {
-            font-size: 14px;
+            font-size: 11px;
             color: #888;
-            margin-top: 4px;
-        }
-        
-        .controls {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        
-        .control-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .control-label {
-            font-size: 13px;
-            color: #aaa;
-            font-weight: 500;
-        }
-        
-        select, input {
-            padding: 10px 16px;
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 8px;
-            background: rgba(255,255,255,0.08);
-            color: #fff;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        select:hover, input:hover {
-            border-color: rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.12);
-        }
-        
-        select:focus, input:focus {
-            outline: none;
-            border-color: #4dabf7;
-            box-shadow: 0 0 0 3px rgba(77,171,247,0.2);
-        }
-        
-        select option {
-            background: #1a1a2e;
-            color: #fff;
-        }
-        
-        .search-box {
-            min-width: 200px;
+            margin-top: 2px;
         }
         
         .stats {
-            margin-left: auto;
             display: flex;
-            gap: 24px;
+            gap: 16px;
+            flex-shrink: 0;
         }
         
         .stat {
@@ -124,7 +91,7 @@
         }
         
         .stat-value {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: #4dabf7;
         }
@@ -134,38 +101,43 @@
         }
         
         .stat-label {
-            font-size: 11px;
+            font-size: 10px;
             color: #888;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
-        .main-content {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 32px;
+        .view-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
         
-        /* View Toggle */
         .view-toggle {
             display: flex;
             background: rgba(255,255,255,0.08);
-            border-radius: 10px;
-            padding: 4px;
+            border-radius: 8px;
+            padding: 3px;
+            flex: 1;
+            min-width: 0;
         }
         
         .view-btn {
-            padding: 8px 16px;
+            flex: 1;
+            padding: 8px 10px;
             border: none;
             background: transparent;
             color: #888;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 6px;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            gap: 4px;
+            white-space: nowrap;
         }
         
         .view-btn:hover {
@@ -177,7 +149,132 @@
             color: #fff;
         }
         
-        /* Course Grid */
+        .filter-toggle-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: #aaa;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .filter-toggle-btn:hover, .filter-toggle-btn.active {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            border-color: rgba(255,255,255,0.3);
+        }
+        
+        .filter-toggle-btn .arrow {
+            transition: transform 0.3s;
+        }
+        
+        .filter-toggle-btn.active .arrow {
+            transform: rotate(180deg);
+        }
+        
+        .controls {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 12px;
+        }
+        
+        .controls.show {
+            display: flex;
+        }
+        
+        .control-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            min-width: 140px;
+        }
+        
+        .control-label {
+            font-size: 11px;
+            color: #aaa;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+        
+        select, input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 6px;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 0;
+        }
+        
+        select:hover, input:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.12);
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #4dabf7;
+        }
+        
+        select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+        
+        .search-box {
+            width: 100%;
+        }
+        
+        .filter-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(81, 207, 102, 0.1);
+            border: 1px solid rgba(81, 207, 102, 0.3);
+            border-radius: 6px;
+            color: #51cf66;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .filter-toggle:hover {
+            background: rgba(81, 207, 102, 0.2);
+        }
+        
+        .filter-toggle.active {
+            background: #51cf66;
+            color: #fff;
+        }
+        
+        .main-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        
         .view-container {
             display: none;
         }
@@ -188,24 +285,23 @@
         
         .course-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
         }
         
         .course-card {
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 24px;
+            border-radius: 12px;
+            padding: 16px;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
         
         .course-card:hover {
-            transform: translateY(-4px);
             border-color: rgba(77,171,247,0.4);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
         
         .course-card.selected {
@@ -219,7 +315,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
+            height: 3px;
         }
         
         .course-card[data-group="全企組"]::before { background: linear-gradient(90deg, #e63946, #f77f00); }
@@ -232,20 +328,24 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 16px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
         
         .card-checkbox {
             display: flex;
-            align-items: center;
-            gap: 12px;
+            align-items: flex-start;
+            gap: 10px;
+            flex: 1;
+            min-width: 0;
         }
         
         .checkbox-wrapper {
             position: relative;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             flex-shrink: 0;
+            margin-top: 2px;
         }
         
         .checkbox-wrapper input {
@@ -261,11 +361,11 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             background: rgba(255,255,255,0.1);
             border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 6px;
+            border-radius: 5px;
             transition: all 0.2s;
         }
         
@@ -281,7 +381,7 @@
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
             color: white;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             transition: transform 0.2s;
         }
@@ -291,20 +391,19 @@
         }
         
         .course-name {
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 600;
             color: #fff;
             line-height: 1.4;
-            flex: 1;
-            margin-right: 12px;
         }
         
         .group-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
             font-weight: 600;
             white-space: nowrap;
+            flex-shrink: 0;
         }
         
         .group-badge[data-group="全企組"] { background: rgba(230,57,70,0.2); color: #f77f00; }
@@ -316,33 +415,34 @@
         .card-info {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
         
         .info-row {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 10px;
         }
         
         .info-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
             background: rgba(255,255,255,0.08);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 12px;
             flex-shrink: 0;
         }
         
         .info-content {
             flex: 1;
+            min-width: 0;
         }
         
         .info-label {
-            font-size: 11px;
+            font-size: 10px;
             color: #888;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -350,9 +450,9 @@
         }
         
         .info-value {
-            font-size: 14px;
+            font-size: 13px;
             color: #e8e8e8;
-            line-height: 1.5;
+            line-height: 1.4;
         }
         
         .credits-badge {
@@ -360,9 +460,9 @@
             align-items: center;
             gap: 4px;
             background: linear-gradient(135deg, #4dabf7, #339af0);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 13px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 12px;
             font-weight: 600;
             color: #fff;
         }
@@ -370,14 +470,14 @@
         .syllabus-link {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
+            gap: 4px;
+            padding: 6px 12px;
             background: rgba(255,107,107,0.15);
             border: 1px solid rgba(255,107,107,0.3);
-            border-radius: 8px;
+            border-radius: 6px;
             color: #ff6b6b;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
             transition: all 0.2s;
             cursor: pointer;
@@ -388,58 +488,53 @@
         .syllabus-link:hover {
             background: rgba(255,107,107,0.3);
             border-color: rgba(255,107,107,0.6);
-            transform: translateY(-1px);
-        }
-        
-        .syllabus-link:active {
-            transform: translateY(0);
         }
         
         .date-chips {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 4px;
+            gap: 4px;
+            margin-top: 2px;
         }
         
         .date-chip {
-            padding: 4px 10px;
+            padding: 3px 8px;
             background: rgba(255,255,255,0.08);
-            border-radius: 6px;
-            font-size: 12px;
+            border-radius: 4px;
+            font-size: 11px;
             color: #aaa;
         }
         
         .time-chips {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 4px;
         }
         
         .time-chip {
-            padding: 4px 10px;
+            padding: 3px 8px;
             background: rgba(77,171,247,0.15);
-            border-radius: 6px;
-            font-size: 12px;
+            border-radius: 4px;
+            font-size: 11px;
             color: #4dabf7;
         }
         
         /* Time Slot View */
         .time-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
         }
         
         .time-slot-card {
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
         }
         
         .time-slot-header {
-            padding: 16px 20px;
+            padding: 12px 16px;
             background: rgba(255,255,255,0.06);
             border-bottom: 1px solid rgba(255,255,255,0.1);
             display: flex;
@@ -448,38 +543,38 @@
         }
         
         .time-slot-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             color: #fff;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .time-slot-icon {
-            font-size: 20px;
+            font-size: 16px;
         }
         
         .time-slot-count {
             background: #4dabf7;
             color: #fff;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 13px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 12px;
             font-weight: 600;
         }
         
         .time-slot-courses {
-            padding: 16px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
         
         .time-course-item {
             background: rgba(255,255,255,0.06);
-            border-radius: 10px;
-            padding: 14px;
+            border-radius: 8px;
+            padding: 12px;
             transition: all 0.2s;
             cursor: pointer;
         }
@@ -494,21 +589,21 @@
         }
         
         .time-course-name {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: #fff;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .time-course-meta {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            font-size: 12px;
+            gap: 6px;
+            font-size: 11px;
         }
         
         .time-course-tag {
-            padding: 3px 8px;
+            padding: 2px 6px;
             border-radius: 4px;
             background: rgba(255,255,255,0.08);
             color: #aaa;
@@ -523,48 +618,44 @@
         .calendar-container {
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
         }
         
         .calendar-header {
-            padding: 20px 24px;
+            padding: 12px 16px;
             background: rgba(255,255,255,0.06);
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
         }
         
         .calendar-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: #fff;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            margin-bottom: 10px;
         }
         
         .calendar-legend {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             flex-wrap: wrap;
         }
         
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 12px;
+            gap: 4px;
+            font-size: 11px;
             color: #aaa;
         }
         
         .legend-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
         }
         
         .legend-dot[data-group="全企組"] { background: #f77f00; }
@@ -576,9 +667,9 @@
         
         .time-legend {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             flex-wrap: wrap;
-            padding: 12px 24px;
+            padding: 10px 16px;
             background: rgba(255,255,255,0.03);
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
@@ -586,18 +677,13 @@
         .time-legend-item {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 12px;
+            gap: 4px;
+            font-size: 11px;
             color: #aaa;
         }
         
         .time-symbol {
-            width: 16px;
-            height: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
         }
         
@@ -607,21 +693,22 @@
         .time-symbol.allday { color: #20c997; }
         
         .calendar-body {
-            padding: 24px;
+            padding: 16px;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .calendar-timeline {
             display: flex;
             flex-direction: column;
             gap: 2px;
-            min-width: 1200px;
+            min-width: 900px;
         }
         
         .calendar-row {
             display: flex;
             align-items: stretch;
-            min-height: 44px;
+            min-height: 36px;
             cursor: pointer;
         }
         
@@ -630,23 +717,23 @@
         }
         
         .calendar-row-label {
-            width: 220px;
-            min-width: 220px;
-            padding: 8px 12px;
-            font-size: 13px;
+            width: 160px;
+            min-width: 160px;
+            padding: 6px 10px;
+            font-size: 11px;
             font-weight: 500;
             color: #fff;
             background: rgba(255,255,255,0.04);
             border-right: 1px solid rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         
         .calendar-row-label .group-indicator {
-            width: 4px;
+            width: 3px;
             height: 100%;
-            min-height: 28px;
+            min-height: 24px;
             border-radius: 2px;
         }
         
@@ -665,7 +752,7 @@
         
         .date-cell {
             flex: 1;
-            min-width: 28px;
+            min-width: 22px;
             border-right: 1px solid rgba(255,255,255,0.05);
             position: relative;
             display: flex;
@@ -686,7 +773,7 @@
         }
         
         .date-marker {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
         }
         
@@ -694,7 +781,6 @@
         .date-marker.afternoon { color: #ff922b; }
         .date-marker.evening { color: #845ef7; }
         .date-marker.allday { color: #20c997; }
-        .date-marker.selected { filter: brightness(1.2); }
         
         .date-header-row {
             display: flex;
@@ -703,8 +789,8 @@
         }
         
         .date-header-spacer {
-            width: 220px;
-            min-width: 220px;
+            width: 160px;
+            min-width: 160px;
         }
         
         .date-headers {
@@ -714,11 +800,11 @@
         
         .date-header {
             flex: 1;
-            min-width: 28px;
+            min-width: 22px;
             text-align: center;
-            font-size: 10px;
+            font-size: 9px;
             color: #666;
-            padding: 4px 0;
+            padding: 3px 0;
         }
         
         .date-header.weekend {
@@ -727,16 +813,12 @@
         
         .date-header .day-num {
             font-weight: 600;
-            font-size: 11px;
+            font-size: 10px;
             color: #aaa;
         }
         
         .date-header.weekend .day-num {
             color: #f77f00;
-        }
-        
-        .month-divider {
-            position: relative;
         }
         
         .month-divider::before {
@@ -756,125 +838,214 @@
         .empty-state {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             color: #888;
         }
         
         .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
+            font-size: 40px;
+            margin-bottom: 12px;
             opacity: 0.5;
         }
         
-        .filter-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(81, 207, 102, 0.1);
-            border: 1px solid rgba(81, 207, 102, 0.3);
-            border-radius: 8px;
-            color: #51cf66;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s;
+        /* Desktop styles */
+        @media (min-width: 769px) {
+            .header {
+                padding: 20px 24px;
+            }
+            
+            .logo {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .subtitle {
+                font-size: 13px;
+            }
+            
+            .stat-value {
+                font-size: 22px;
+            }
+            
+            .filter-toggle-btn {
+                display: none;
+            }
+            
+            .controls {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                border-top: none;
+                margin-top: 0;
+                padding-top: 0;
+            }
+            
+            .control-row {
+                flex: 1;
+            }
+            
+            .control-group {
+                flex: 0 1 auto;
+                min-width: auto;
+            }
+            
+            .search-box {
+                width: 180px;
+            }
+            
+            .course-grid {
+                grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+                gap: 20px;
+            }
+            
+            .course-card {
+                padding: 20px;
+            }
+            
+            .course-name {
+                font-size: 17px;
+            }
+            
+            .main-content {
+                padding: 24px;
+            }
         }
         
-        .filter-toggle:hover {
-            background: rgba(81, 207, 102, 0.2);
-        }
-        
-        .filter-toggle.active {
-            background: #51cf66;
-            color: #fff;
-        }
-        
+        /* Mobile styles */
         @media (max-width: 768px) {
-            .header { padding: 16px; }
-            .controls { flex-direction: column; align-items: stretch; }
-            .stats { margin-left: 0; justify-content: center; margin-top: 16px; }
-            .main-content { padding: 16px; }
-            .course-grid { grid-template-columns: 1fr; }
-            .time-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 22px; }
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .time-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                gap: 12px;
+            }
+            
+            .stat-value {
+                font-size: 18px;
+            }
+            
+            .stat-label {
+                font-size: 9px;
+            }
+            
+            .view-btn span:first-child {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 15px;
+            }
+            
+            .logo {
+                width: 38px;
+                height: 38px;
+                font-size: 14px;
+            }
+            
+            .subtitle {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="header-content">
-            <div class="logo-section">
-                <div class="logo">政大</div>
-                <div>
-                    <h1>國立政治大學 EMBA 課程資訊</h1>
-                    <div class="subtitle">Executive MBA Program Course Schedule 2026</div>
+            <div class="header-top">
+                <div class="logo-section">
+                    <div class="logo">政大</div>
+                    <div class="title-wrap">
+                        <h1>政治大學 EMBA 課程資訊</h1>
+                        <div class="subtitle">Course Schedule 2026</div>
+                    </div>
                 </div>
-            </div>
-            <div class="controls">
-                <div class="view-toggle">
-                    <button class="view-btn active" data-view="cards">
-                        <span>📋</span> 課程列表
-                    </button>
-                    <button class="view-btn" data-view="timeslots">
-                        <span>🕐</span> 時段總覽
-                    </button>
-                    <button class="view-btn" data-view="calendar">
-                        <span>📅</span> 學期行事曆
-                    </button>
-                </div>
-                <div class="control-group">
-                    <span class="control-label">組別</span>
-                    <select id="groupFilter">
-                        <option value="all">全部組別</option>
-                        <option value="全企組">全企組</option>
-                        <option value="國金組">國金組</option>
-                        <option value="生醫組">生醫組</option>
-                        <option value="文科資創組">文科資創組</option>
-                        <option value="不分組">不分組</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <span class="control-label">時段</span>
-                    <select id="timeFilter">
-                        <option value="all">全部時段</option>
-                        <option value="週六上午">週六上午 (08:30-12:30)</option>
-                        <option value="週六下午">週六下午 (13:30-17:30)</option>
-                        <option value="週日上午">週日上午 (08:30-12:30)</option>
-                        <option value="週日下午">週日下午 (13:30-17:30)</option>
-                        <option value="週一晚上">週一晚上 (18:30-22:30)</option>
-                        <option value="週四晚上">週四晚上 (18:30-22:30)</option>
-                        <option value="週五晚上">週五晚上 (18:30-22:30)</option>
-                        <option value="全天">全天課程</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <span class="control-label">排序</span>
-                    <select id="sortOrder">
-                        <option value="group">依組別</option>
-                        <option value="date">依開課日期</option>
-                        <option value="credits">依學分數</option>
-                        <option value="name">依課程名稱</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <input type="text" id="searchBox" class="search-box" placeholder="🔍 搜尋課程或老師...">
-                </div>
-                <button class="filter-toggle" id="showSelectedOnly">
-                    <span>✓</span> 僅顯示已選
-                </button>
                 <div class="stats">
                     <div class="stat">
                         <div class="stat-value" id="courseCount">18</div>
-                        <div class="stat-label">課程數</div>
+                        <div class="stat-label">課程</div>
                     </div>
                     <div class="stat">
                         <div class="stat-value selected" id="selectedCount">0</div>
-                        <div class="stat-label">已勾選</div>
+                        <div class="stat-label">已選</div>
                     </div>
                     <div class="stat">
                         <div class="stat-value" id="totalCredits">0</div>
-                        <div class="stat-label">勾選學分</div>
+                        <div class="stat-label">學分</div>
                     </div>
+                </div>
+            </div>
+            <div class="view-row">
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="cards">
+                        <span>📋</span> 列表
+                    </button>
+                    <button class="view-btn" data-view="timeslots">
+                        <span>🕐</span> 時段
+                    </button>
+                    <button class="view-btn" data-view="calendar">
+                        <span>📅</span> 行事曆
+                    </button>
+                </div>
+                <button class="filter-toggle-btn" id="filterToggleBtn">
+                    <span>🔍</span> 篩選
+                    <span class="arrow">▼</span>
+                </button>
+            </div>
+            <div class="controls" id="controlsPanel">
+                <div class="control-row">
+                    <div class="control-group">
+                        <span class="control-label">組別</span>
+                        <select id="groupFilter">
+                            <option value="all">全部組別</option>
+                            <option value="全企組">全企組</option>
+                            <option value="國金組">國金組</option>
+                            <option value="生醫組">生醫組</option>
+                            <option value="文科資創組">文科資創組</option>
+                            <option value="不分組">不分組</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <span class="control-label">時段</span>
+                        <select id="timeFilter">
+                            <option value="all">全部時段</option>
+                            <option value="週六上午">週六上午</option>
+                            <option value="週六下午">週六下午</option>
+                            <option value="週日上午">週日上午</option>
+                            <option value="週日下午">週日下午</option>
+                            <option value="週一晚上">週一晚上</option>
+                            <option value="週四晚上">週四晚上</option>
+                            <option value="週五晚上">週五晚上</option>
+                            <option value="全天">全天課程</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <span class="control-label">排序</span>
+                        <select id="sortOrder">
+                            <option value="group">依組別</option>
+                            <option value="date">依日期</option>
+                            <option value="credits">依學分</option>
+                            <option value="name">依名稱</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-row">
+                    <input type="text" id="searchBox" class="search-box" placeholder="🔍 搜尋課程或老師...">
+                    <button class="filter-toggle" id="showSelectedOnly">
+                        ✓ 僅顯示已選
+                    </button>
                 </div>
             </div>
         </div>
@@ -1049,7 +1220,7 @@
                                 <div class="info-icon">🎓</div>
                                 <div class="info-content">
                                     <div class="info-label">學分數</div>
-                                    <div class="info-value" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                                    <div class="info-value" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
                                         <span class="credits-badge">${course.credits} 學分</span>
                                         ${referenceLink}
                                     </div>
@@ -1127,9 +1298,9 @@
                             <div class="time-slot-title">
                                 <span class="time-slot-icon">${config.icon}</span>
                                 <span>${config.label}</span>
-                                <span style="color: #888; font-weight: 400; font-size: 14px;">${config.time}</span>
+                                <span style="color: #888; font-weight: 400; font-size: 12px;">${config.time}</span>
                             </div>
-                            <span class="time-slot-count">${slotCourses.length} 門課</span>
+                            <span class="time-slot-count">${slotCourses.length} 門</span>
                         </div>
                         <div class="time-slot-courses">
                             ${coursesHtml}
@@ -1144,11 +1315,11 @@
             
             const allDates = [];
             const months = [
-                { month: 3, name: '三月', days: 31 },
-                { month: 4, name: '四月', days: 30 },
-                { month: 5, name: '五月', days: 31 },
-                { month: 6, name: '六月', days: 30 },
-                { month: 7, name: '七月', days: 31 }
+                { month: 3, name: '3月', days: 31 },
+                { month: 4, name: '4月', days: 30 },
+                { month: 5, name: '5月', days: 31 },
+                { month: 6, name: '6月', days: 30 },
+                { month: 7, name: '7月', days: 31 }
             ];
             
             months.forEach(m => {
@@ -1174,9 +1345,8 @@
                 const monthClass = d.isMonthStart && d.month > 3 ? 'month-divider' : '';
                 dateHeaders += `
                     <div class="date-header ${d.isWeekend ? 'weekend' : ''} ${monthClass}">
-                        ${d.isMonthStart ? `<div style="font-size:9px;color:#4dabf7;">${d.monthName}</div>` : ''}
+                        ${d.isMonthStart ? `<div style="font-size:8px;color:#4dabf7;">${d.monthName}</div>` : ''}
                         <div class="day-num">${d.day}</div>
-                        <div style="font-size:9px;color:#666;">${weekDays[d.dayOfWeek]}</div>
                     </div>
                 `;
             });
@@ -1190,7 +1360,7 @@
                     const hasClass = courseDates.has(d.dateStr);
                     return `
                         <div class="date-cell ${d.isWeekend ? 'weekend' : ''} ${hasClass ? 'has-class' : ''} ${hasClass && isSelected ? 'selected' : ''} ${d.isMonthStart && d.month > 3 ? 'month-divider' : ''}">
-                            ${hasClass ? `<span class="date-marker ${timeConfig.class} ${isSelected ? 'selected' : ''}">${timeConfig.symbol}</span>` : ''}
+                            ${hasClass ? `<span class="date-marker ${timeConfig.class}">${timeConfig.symbol}</span>` : ''}
                         </div>
                     `;
                 }).join('');
@@ -1200,7 +1370,7 @@
                         <div class="calendar-row-label">
                             <div class="group-indicator" data-group="${course.group}"></div>
                             <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${course.name}">${course.name}</span>
-                            ${isSelected ? '<span style="color:#51cf66;">✓</span>' : ''}
+                            ${isSelected ? '<span style="color:#51cf66;flex-shrink:0;">✓</span>' : ''}
                         </div>
                         <div class="calendar-row-dates">
                             ${dateCells}
@@ -1215,50 +1385,20 @@
                         <span>📅</span> 2026 學期課程行事曆
                     </div>
                     <div class="calendar-legend">
-                        <div class="legend-item">
-                            <div class="legend-dot" data-group="全企組"></div>
-                            <span>全企組</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot" data-group="國金組"></div>
-                            <span>國金組</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot" data-group="生醫組"></div>
-                            <span>生醫組</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot" data-group="文科資創組"></div>
-                            <span>文科資創組</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot" data-group="不分組"></div>
-                            <span>不分組</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot selected"></div>
-                            <span>已勾選</span>
-                        </div>
+                        <div class="legend-item"><div class="legend-dot" data-group="全企組"></div><span>全企</span></div>
+                        <div class="legend-item"><div class="legend-dot" data-group="國金組"></div><span>國金</span></div>
+                        <div class="legend-item"><div class="legend-dot" data-group="生醫組"></div><span>生醫</span></div>
+                        <div class="legend-item"><div class="legend-dot" data-group="文科資創組"></div><span>文資</span></div>
+                        <div class="legend-item"><div class="legend-dot" data-group="不分組"></div><span>不分</span></div>
+                        <div class="legend-item"><div class="legend-dot selected"></div><span>已選</span></div>
                     </div>
                 </div>
                 <div class="time-legend">
-                    <span style="color:#888;font-size:12px;margin-right:8px;">時段符號：</span>
-                    <div class="time-legend-item">
-                        <span class="time-symbol morning">△</span>
-                        <span>上午</span>
-                    </div>
-                    <div class="time-legend-item">
-                        <span class="time-symbol afternoon">▲</span>
-                        <span>下午</span>
-                    </div>
-                    <div class="time-legend-item">
-                        <span class="time-symbol evening">●</span>
-                        <span>晚上</span>
-                    </div>
-                    <div class="time-legend-item">
-                        <span class="time-symbol allday">◆</span>
-                        <span>全天</span>
-                    </div>
+                    <span style="color:#888;font-size:11px;margin-right:6px;">時段：</span>
+                    <div class="time-legend-item"><span class="time-symbol morning">△</span><span>上午</span></div>
+                    <div class="time-legend-item"><span class="time-symbol afternoon">▲</span><span>下午</span></div>
+                    <div class="time-legend-item"><span class="time-symbol evening">●</span><span>晚上</span></div>
+                    <div class="time-legend-item"><span class="time-symbol allday">◆</span><span>全天</span></div>
                 </div>
                 <div class="calendar-body">
                     <div class="calendar-timeline">
@@ -1292,6 +1432,7 @@
             updateStats(filtered);
         }
 
+        // View toggle
         document.querySelectorAll('.view-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
@@ -1303,17 +1444,27 @@
             });
         });
 
+        // Filter toggle for mobile
+        document.getElementById('filterToggleBtn').addEventListener('click', function() {
+            const panel = document.getElementById('controlsPanel');
+            panel.classList.toggle('show');
+            this.classList.toggle('active');
+        });
+
+        // Show selected only toggle
         document.getElementById('showSelectedOnly').addEventListener('click', function() {
             showSelectedOnly = !showSelectedOnly;
             this.classList.toggle('active', showSelectedOnly);
             filterAndRender();
         });
 
+        // Filter event listeners
         document.getElementById('groupFilter').addEventListener('change', filterAndRender);
         document.getElementById('timeFilter').addEventListener('change', filterAndRender);
         document.getElementById('sortOrder').addEventListener('change', filterAndRender);
         document.getElementById('searchBox').addEventListener('input', filterAndRender);
 
+        // Initial render
         filterAndRender();
     </script>
 </body>
