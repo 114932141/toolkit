@@ -78,7 +78,15 @@
         import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
 
         // --- Configuration ---
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        //const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const firebaseConfig = {
+              apiKey: "AIzaSyDEg7Hfcc3lyQhHSv_F6CD_7GMUWfxit8Y",
+              authDomain: "nccu25gftyo.firebaseapp.com",
+              projectId: "nccu25gftyo",
+              storageBucket: "nccu25gftyo.firebasestorage.app",
+              messagingSenderId: "780094999226",
+              appId: "1:780094999226:web:80509ac5bb518fd52ed083"
+        };
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         
         const app = initializeApp(firebaseConfig);
