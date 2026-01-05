@@ -456,7 +456,14 @@
         .contact-info p { font-size: 16px; font-weight: 600; color: var(--primary); }
 
         /* FAQ Section */
+        .faq-categories { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .faq-cat-btn { padding: 10px 20px; border: 2px solid var(--border); border-radius: 25px; background: white; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; font-family: inherit; }
+        .faq-cat-btn:hover { border-color: var(--accent); }
+        .faq-cat-btn.active { background: var(--accent); border-color: var(--accent); color: var(--primary); }
         .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-group { margin-bottom: 32px; }
+        .faq-group-title { font-size: 18px; font-weight: 600; color: var(--primary); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 8px; }
+        .faq-group-badge { font-size: 12px; background: var(--bg); padding: 4px 10px; border-radius: 12px; color: var(--text-light); font-weight: 500; }
         .faq-item { background: var(--card-bg); border-radius: 12px; margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow-sm); }
         .faq-question {
             width: 100%; padding: 20px 24px;
@@ -824,6 +831,7 @@
             <h2 class="section-title">Q&A 問答集</h2>
             <p class="section-desc">參訪相關常見問題解答</p>
         </div>
+        <div class="faq-categories" id="faqCategories"></div>
         <div class="faq-container" id="faqContainer"></div>
     </section>
 
@@ -875,7 +883,7 @@
                         <h4>問答集管理</h4>
                         <button class="btn btn-primary btn-sm" onclick="openFaqModal()">+ 新增問答</button>
                     </div>
-                    <div style="overflow-x:auto"><table class="admin-table"><thead><tr><th style="width:35%">問題</th><th style="width:40%">答案</th><th style="width:25%">操作</th></tr></thead><tbody id="faqTableBody"></tbody></table></div>
+                    <div style="overflow-x:auto"><table class="admin-table"><thead><tr><th style="width:20%">分類</th><th style="width:30%">問題</th><th style="width:30%">答案</th><th style="width:20%">操作</th></tr></thead><tbody id="faqTableBody"></tbody></table></div>
                 </div>
                 <div class="admin-tab-content" id="itineraryTab" style="display:none">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
@@ -902,6 +910,7 @@
     <div class="modal" id="faqModal">
         <div class="modal-content">
             <div class="modal-header"><h3 class="modal-title" id="faqModalTitle">新增問答</h3><button class="modal-close" onclick="closeFaqModal()">&times;</button></div>
+            <div class="form-group"><label>分類</label><select class="form-input" id="faqCategory"></select></div>
             <div class="form-group"><label>問題</label><input type="text" class="form-input" id="faqQuestion" placeholder="請輸入問題"></div>
             <div class="form-group"><label>答案</label><textarea class="form-input form-textarea" id="faqAnswer" placeholder="請輸入答案"></textarea></div>
             <input type="hidden" id="faqEditId">
@@ -923,15 +932,27 @@
 
     <script>
         // Default Data
+        const faqCategories = [
+            { id: 'flight', name: '✈️ 機票與交通', color: '#1565c0', bg: '#e3f2fd' },
+            { id: 'hotel', name: '🏨 住宿相關', color: '#7b1fa2', bg: '#f3e5f5' },
+            { id: 'cost', name: '💰 費用與報名', color: '#e65100', bg: '#fff3e0' },
+            { id: 'course', name: '📚 課程與出席', color: '#2e7d32', bg: '#e8f5e9' },
+            { id: 'other', name: '❓ 其他問題', color: '#546e7a', bg: '#eceff1' }
+        ];
+
         const defaultFaqs = [
-            { id: 1, question: "可以自行購買機票嗎？", answer: "可以。若選擇機票自理，可從團費扣除 NT$ 18,000。但請注意需於大團抵達前到達並自行與大團會合。第一個參訪點起即視為課程開始。" },
-            { id: 2, question: "團體機票可以累積里程嗎？", answer: "團體機票無法累積航空公司里程。若需累積里程，建議選擇機票自理方案，自行購買個人機票。" },
-            { id: 3, question: "可以申請單人房嗎？", answer: "可以，單人房需加價 NT$ 16,000。請於報名時告知旅行社您的需求。" },
-            { id: 4, question: "境外參訪可以缺席嗎？", answer: "境外課程須全程參與，若有缺席情形，將依規定視為課程不及格。請務必安排好時間全程參加。" },
-            { id: 5, question: "訂金什麼時候要繳交？", answer: "訂金 NT$ 15,000 元，報名完成後將開始進行訂金收取作業。旅行社會在群組中說明刷卡方式與繳交期限。" },
-            { id: 6, question: "取消參加需要付費嗎？", answer: "是的。本團為獨立包團，取消需收取團體分攤費用 NT$ 6,000。若團體機票成行率未達9成，取消還需收取退票費 NT$ 5,000。3月初後取消，飯店費用不予退還。" },
-            { id: 7, question: "行前課程和回程課程是必須參加嗎？", answer: "是的，行前課程（5/11）和回程課程（5/25）都是課程的一部分，請務必出席。行前課程會說明行程細節，回程課程則進行心得分享與報告。" },
-            { id: 8, question: "其他班組的同學可以加選這門課嗎？", answer: "境外參訪課程可以加選，但需要班上同意加上授課老師同意。境外課程採灌檔作業，需要知會兩個班級的班主任。" }
+            { id: 1, category: 'flight', question: "可以自行購買機票嗎？", answer: "可以。若選擇機票自理，可從團費扣除 NT$ 18,000。但請注意需於大團抵達前到達並自行與大團會合。第一個參訪點起即視為課程開始。" },
+            { id: 2, category: 'flight', question: "團體機票可以累積里程嗎？", answer: "團體機票無法累積航空公司里程。若需累積里程，建議選擇機票自理方案，自行購買個人機票。" },
+            { id: 3, category: 'hotel', question: "可以申請單人房嗎？", answer: "可以，單人房需加價 NT$ 16,000。請於報名時告知旅行社您的需求。" },
+            { id: 4, category: 'course', question: "境外參訪可以缺席嗎？", answer: "境外課程須全程參與，若有缺席情形，將依規定視為課程不及格。請務必安排好時間全程參加。" },
+            { id: 5, category: 'cost', question: "訂金什麼時候要繳交？", answer: "訂金 NT$ 15,000 元，報名完成後將開始進行訂金收取作業。旅行社會在群組中說明刷卡方式與繳交期限。" },
+            { id: 6, category: 'cost', question: "取消參加需要付費嗎？", answer: "是的。本團為獨立包團，取消需收取團體分攤費用 NT$ 6,000。若團體機票成行率未達9成，取消還需收取退票費 NT$ 5,000。3月初後取消，飯店費用不予退還。" },
+            { id: 7, category: 'course', question: "行前課程和回程課程是必須參加嗎？", answer: "是的，行前課程（5/11）和回程課程（5/25）都是課程的一部分，請務必出席。行前課程會說明行程細節，回程課程則進行心得分享與報告。" },
+            { id: 8, category: 'course', question: "其他班組的同學可以加選這門課嗎？", answer: "境外參訪課程可以加選，但需要班上同意加上授課老師同意。境外課程採灌檔作業，需要知會兩個班級的班主任。" },
+            { id: 9, category: 'hotel', question: "住宿是如何安排的？", answer: "住宿為兩人一室，第一晚入住東京巨蛋飯店，後三晚入住東京萬豪酒店（升等不加價）。如需指定室友，請於報名時告知。" },
+            { id: 10, category: 'cost', question: "團費包含哪些項目？", answer: "團費 NT$ 63,500 包含：來回機票、四晚住宿（兩人一室）、行程所列車資、餐食、門票、司領小費、200萬履約責任險及20萬意外醫療險。" },
+            { id: 11, category: 'other', question: "需要準備什麼證件？", answer: "請準備有效期限六個月以上的護照。日本免簽證，但請確認護照效期。相關證件資料將由對內組統一收集。" },
+            { id: 12, category: 'other', question: "有什麼需要注意的行李限制？", answer: "團體經濟艙行李限重為 23 公斤（託運）+ 7 公斤（手提）。建議攜帶舒適的步行鞋，部分參訪地點需要步行較長距離。" }
         ];
 
         const defaultActivities = [
@@ -975,6 +996,20 @@
         let activities = JSON.parse(localStorage.getItem('embaActivities')) || [...defaultActivities];
         let isLoggedIn = sessionStorage.getItem('adminLoggedIn') === 'true';
 
+        // Migrate old FAQs without category
+        faqs = faqs.map(faq => {
+            if (!faq.category) {
+                // Try to auto-categorize based on keywords
+                const q = faq.question.toLowerCase();
+                if (q.includes('機票') || q.includes('航班') || q.includes('里程')) return { ...faq, category: 'flight' };
+                if (q.includes('住宿') || q.includes('房') || q.includes('飯店')) return { ...faq, category: 'hotel' };
+                if (q.includes('費') || q.includes('訂金') || q.includes('取消') || q.includes('報名')) return { ...faq, category: 'cost' };
+                if (q.includes('課程') || q.includes('出席') || q.includes('參加') || q.includes('加選')) return { ...faq, category: 'course' };
+                return { ...faq, category: 'other' };
+            }
+            return faq;
+        });
+
         const ADMIN_USERNAME = 'admin';
         const ADMIN_PASSWORD = 'Aa123456#';
 
@@ -983,6 +1018,7 @@
             // Check for shared data in URL first
             loadFromURL();
             
+            renderFaqCategories();
             renderFaqs();
             renderItinerary();
             renderFaqTable();
@@ -1036,6 +1072,13 @@
                         activities = data.activities;
                         localStorage.setItem('embaActivities', JSON.stringify(activities));
                     }
+                    
+                    // Re-render after loading
+                    setTimeout(() => {
+                        renderFaqCategories();
+                        renderFaqs();
+                        renderItinerary();
+                    }, 100);
                     
                     // Show notification
                     setTimeout(() => {
@@ -1092,16 +1135,65 @@
         }
 
         // Render FAQ
+        let currentFaqFilter = 'all';
+        
+        function renderFaqCategories() {
+            const container = document.getElementById('faqCategories');
+            let html = `<button class="faq-cat-btn ${currentFaqFilter === 'all' ? 'active' : ''}" onclick="filterFaqs('all')">📋 全部</button>`;
+            faqCategories.forEach(cat => {
+                const count = faqs.filter(f => f.category === cat.id).length;
+                if (count > 0) {
+                    html += `<button class="faq-cat-btn ${currentFaqFilter === cat.id ? 'active' : ''}" onclick="filterFaqs('${cat.id}')">${cat.name} <span style="opacity:0.6">(${count})</span></button>`;
+                }
+            });
+            container.innerHTML = html;
+        }
+
+        function filterFaqs(category) {
+            currentFaqFilter = category;
+            renderFaqCategories();
+            renderFaqs();
+        }
+
         function renderFaqs() {
-            document.getElementById('faqContainer').innerHTML = faqs.map(faq => `
-                <div class="faq-item" data-id="${faq.id}">
+            const container = document.getElementById('faqContainer');
+            
+            if (currentFaqFilter === 'all') {
+                // Group by category
+                let html = '';
+                faqCategories.forEach(cat => {
+                    const categoryFaqs = faqs.filter(f => f.category === cat.id);
+                    if (categoryFaqs.length === 0) return;
+                    
+                    html += `
+                        <div class="faq-group">
+                            <div class="faq-group-title" style="color:${cat.color}">
+                                ${cat.name}
+                                <span class="faq-group-badge">${categoryFaqs.length} 題</span>
+                            </div>
+                            ${categoryFaqs.map(faq => renderFaqItem(faq, cat)).join('')}
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            } else {
+                // Show filtered category
+                const cat = faqCategories.find(c => c.id === currentFaqFilter);
+                const filteredFaqs = faqs.filter(f => f.category === currentFaqFilter);
+                container.innerHTML = filteredFaqs.map(faq => renderFaqItem(faq, cat)).join('');
+            }
+        }
+
+        function renderFaqItem(faq, cat) {
+            return `
+                <div class="faq-item" data-id="${faq.id}" style="border-left: 3px solid ${cat ? cat.color : '#ccc'}">
                     <button class="faq-question" onclick="toggleFaq(this)">
                         <span>${faq.question}</span>
                         <span class="faq-question-icon">▼</span>
                     </button>
                     <div class="faq-answer"><div class="faq-answer-content">${faq.answer}</div></div>
                 </div>
-            `).join('');
+            `;
         }
 
         function toggleFaq(button) {
@@ -1188,24 +1280,36 @@
 
         // FAQ CRUD
         function renderFaqTable() {
-            document.getElementById('faqTableBody').innerHTML = faqs.map(faq => `
+            document.getElementById('faqTableBody').innerHTML = faqs.map(faq => {
+                const cat = faqCategories.find(c => c.id === faq.category) || { name: '未分類', color: '#999', bg: '#f5f5f5' };
+                return `
                 <tr>
-                    <td>${faq.question}</td>
-                    <td>${faq.answer.length > 50 ? faq.answer.substring(0, 50) + '...' : faq.answer}</td>
+                    <td><span style="background:${cat.bg};color:${cat.color};padding:4px 10px;border-radius:12px;font-size:12px;font-weight:500">${cat.name}</span></td>
+                    <td>${faq.question.length > 30 ? faq.question.substring(0, 30) + '...' : faq.question}</td>
+                    <td>${faq.answer.length > 30 ? faq.answer.substring(0, 30) + '...' : faq.answer}</td>
                     <td><div class="admin-actions"><button class="btn btn-sm btn-edit" onclick="editFaq(${faq.id})">編輯</button><button class="btn btn-sm btn-delete" onclick="deleteFaq(${faq.id})">刪除</button></div></td>
                 </tr>
-            `).join('');
+            `}).join('');
         }
 
         function openFaqModal(id = null) {
             document.getElementById('faqModal').classList.add('active');
             document.getElementById('faqModalTitle').textContent = id ? '編輯問答' : '新增問答';
             document.getElementById('faqEditId').value = id || '';
+            
+            // Populate category dropdown
+            const catSelect = document.getElementById('faqCategory');
+            catSelect.innerHTML = faqCategories.map(cat => 
+                `<option value="${cat.id}">${cat.name}</option>`
+            ).join('');
+            
             if (id) {
                 const faq = faqs.find(f => f.id === id);
+                document.getElementById('faqCategory').value = faq.category || 'other';
                 document.getElementById('faqQuestion').value = faq.question;
                 document.getElementById('faqAnswer').value = faq.answer;
             } else {
+                document.getElementById('faqCategory').value = 'other';
                 document.getElementById('faqQuestion').value = '';
                 document.getElementById('faqAnswer').value = '';
             }
@@ -1216,12 +1320,13 @@
 
         function saveFaq() {
             const id = document.getElementById('faqEditId').value;
+            const category = document.getElementById('faqCategory').value;
             const question = document.getElementById('faqQuestion').value.trim();
             const answer = document.getElementById('faqAnswer').value.trim();
             if (!question || !answer) { alert('請填寫完整資料'); return; }
-            if (id) { const index = faqs.findIndex(f => f.id === parseInt(id)); faqs[index] = { ...faqs[index], question, answer }; }
-            else { faqs.push({ id: Math.max(...faqs.map(f => f.id), 0) + 1, question, answer }); }
-            saveData(); renderFaqs(); renderFaqTable(); closeFaqModal();
+            if (id) { const index = faqs.findIndex(f => f.id === parseInt(id)); faqs[index] = { ...faqs[index], category, question, answer }; }
+            else { faqs.push({ id: Math.max(...faqs.map(f => f.id), 0) + 1, category, question, answer }); }
+            saveData(); renderFaqCategories(); renderFaqs(); renderFaqTable(); closeFaqModal();
             updateLastUpdateDisplay();
             showToast('問答已儲存並更新至網頁！');
         }
@@ -1229,7 +1334,7 @@
         function deleteFaq(id) {
             if (confirm('確定要刪除這個問答嗎？')) {
                 faqs = faqs.filter(f => f.id !== id);
-                saveData(); renderFaqs(); renderFaqTable();
+                saveData(); renderFaqCategories(); renderFaqs(); renderFaqTable();
                 showToast('問答已刪除');
             }
         }
@@ -1340,7 +1445,7 @@
                     const data = JSON.parse(e.target.result);
                     if (data.faqs && Array.isArray(data.faqs)) faqs = data.faqs;
                     if (data.activities && Array.isArray(data.activities)) activities = data.activities;
-                    saveData(); renderFaqs(); renderItinerary(); renderFaqTable(); renderActivityTable();
+                    saveData(); renderFaqCategories(); renderFaqs(); renderItinerary(); renderFaqTable(); renderActivityTable();
                     showToast('資料匯入成功！網頁已更新');
                 } catch (err) { alert('匯入失敗：檔案格式不正確'); console.error(err); }
             };
@@ -1352,7 +1457,7 @@
             if (confirm('確定要重置所有資料為預設值嗎？此操作無法復原。')) {
                 faqs = [...defaultFaqs];
                 activities = [...defaultActivities];
-                saveData(); renderFaqs(); renderItinerary(); renderFaqTable(); renderActivityTable();
+                saveData(); renderFaqCategories(); renderFaqs(); renderItinerary(); renderFaqTable(); renderActivityTable();
                 showToast('已重置為預設資料');
             }
         }
