@@ -3,1711 +3,376 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2025級 政大EMBA 國金組 東京企業參訪</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@400;600;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>2026 政大EMBA 東京參訪</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
     <style>
-        :root {
-            --primary: #1a1a2e;
-            --secondary: #16213e;
-            --accent: #c9a227;
-            --accent-light: #e8d5a3;
-            --text: #2d2d2d;
-            --text-light: #6b6b6b;
-            --bg: #faf9f7;
-            --card-bg: #ffffff;
-            --border: #e8e6e3;
-            --success: #2e7d32;
-            --warning: #ed6c02;
-            --error: #d32f2f;
-            --gradient-1: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            --gradient-2: linear-gradient(135deg, #c9a227 0%, #e8d5a3 100%);
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-            --shadow-md: 0 4px 20px rgba(0,0,0,0.12);
-            --shadow-lg: 0 8px 40px rgba(0,0,0,0.16);
-        }
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #FFFBEB; color: #334155; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .slide-up { animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.8;
-            overflow-x: hidden;
-        }
-
-        .pattern-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; opacity: 0.03; z-index: -1;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a227' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-
-        /* Navigation */
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0;
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 1000; padding: 0 40px;
-            transition: all 0.3s ease;
-        }
-        .navbar.scrolled { box-shadow: var(--shadow-md); }
-        .nav-content {
-            max-width: 1400px; margin: 0 auto;
-            display: flex; justify-content: space-between;
-            align-items: center; height: 70px;
-        }
-        .nav-brand {
-            display: flex; align-items: center; gap: 12px;
-            color: white; text-decoration: none;
-        }
-        .nav-brand-icon {
-            width: 40px; height: 40px;
-            background: var(--gradient-2);
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; color: var(--primary); font-size: 14px;
-        }
-        .nav-brand-text {
-            font-family: 'Noto Serif TC', serif;
-            font-size: 18px; font-weight: 600;
-        }
-        .nav-links { display: flex; gap: 8px; }
-        .nav-link {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 14px; font-weight: 500;
-            transition: all 0.2s ease;
-        }
-        .nav-link:hover { color: white; background: rgba(201, 162, 39, 0.2); }
-        .nav-link.active { color: var(--accent); }
-        .nav-admin {
-            background: var(--accent);
-            color: var(--primary) !important;
-            font-weight: 600;
-        }
-        .nav-admin:hover { background: var(--accent-light) !important; }
-        .mobile-menu-btn {
-            display: none; background: none; border: none;
-            color: white; font-size: 24px; cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            background: var(--gradient-1);
-            position: relative;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-        }
-        .hero::before {
-            content: ''; position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23c9a227' stop-opacity='0.1'/%3E%3Cstop offset='100%25' stop-color='%23c9a227' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='300' fill='url(%23a)'/%3E%3Ccircle cx='1100' cy='700' r='400' fill='url(%23a)'/%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
-        .hero-content {
-            position: relative; text-align: center;
-            color: white; padding: 40px; max-width: 900px;
-        }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(201, 162, 39, 0.2);
-            border: 1px solid rgba(201, 162, 39, 0.4);
-            color: var(--accent);
-            padding: 8px 20px; border-radius: 30px;
-            font-size: 14px; font-weight: 500;
-            margin-bottom: 24px;
-            animation: fadeInUp 0.8s ease;
-        }
-        .hero-title {
-            font-family: 'Noto Serif TC', serif;
-            font-size: clamp(36px, 6vw, 72px);
-            font-weight: 700; line-height: 1.2;
-            margin-bottom: 16px;
-            animation: fadeInUp 0.8s ease 0.1s both;
-        }
-        .hero-title span {
-            display: block;
-            background: var(--gradient-2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .hero-subtitle {
-            font-family: 'Zen Maru Gothic', sans-serif;
-            font-size: clamp(18px, 2.5vw, 28px);
-            font-weight: 400; opacity: 0.9;
-            margin-bottom: 12px;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-        .hero-date {
-            font-size: 20px; color: var(--accent);
-            font-weight: 600; margin-bottom: 40px;
-            animation: fadeInUp 0.8s ease 0.3s both;
-        }
-        .hero-cta {
-            display: flex; gap: 16px;
-            justify-content: center; flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        .btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 14px 32px; border-radius: 8px;
-            font-size: 16px; font-weight: 600;
-            text-decoration: none; transition: all 0.3s ease;
-            cursor: pointer; border: none; font-family: inherit;
-        }
-        .btn-primary { background: var(--accent); color: var(--primary); }
-        .btn-primary:hover {
-            background: var(--accent-light);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(201, 162, 39, 0.4);
-        }
-        .btn-outline {
-            background: transparent; color: white;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-        .btn-outline:hover {
-            border-color: white;
-            background: rgba(255,255,255,0.1);
-        }
-        .btn-sm { padding: 6px 12px; font-size: 13px; border-radius: 6px; }
-        .btn-edit { background: #e3f2fd; color: #1565c0; }
-        .btn-delete { background: #ffebee; color: #c62828; }
-        .btn-secondary { background: var(--border); color: var(--text); }
-        .btn-info { background: #e3f2fd; color: #1565c0; }
-
-        .scroll-indicator {
-            position: absolute; bottom: 40px; left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-        .scroll-indicator svg { width: 30px; height: 30px; stroke: rgba(255,255,255,0.5); }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Section Styles */
-        .section { padding: 100px 40px; max-width: 1400px; margin: 0 auto; }
-        .section-header { text-align: center; margin-bottom: 60px; }
-        .section-tag {
-            display: inline-block; background: var(--accent);
-            color: var(--primary); padding: 6px 16px;
-            border-radius: 20px; font-size: 12px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 1px;
-            margin-bottom: 16px;
-        }
-        .section-title {
-            font-family: 'Noto Serif TC', serif;
-            font-size: clamp(28px, 4vw, 42px);
-            font-weight: 700; color: var(--primary);
-            margin-bottom: 16px;
-        }
-        .section-desc {
-            font-size: 18px; color: var(--text-light);
-            max-width: 600px; margin: 0 auto;
-        }
-
-        /* Info Cards */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-        .info-card {
-            background: var(--card-bg);
-            border-radius: 16px; overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
-        }
-        .info-card:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-4px);
-        }
-        .info-card-header {
-            background: var(--gradient-1); color: white;
-            padding: 24px;
-            display: flex; align-items: center; gap: 16px;
-        }
-        .info-card-icon {
-            width: 50px; height: 50px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 24px;
-        }
-        .info-card-title { font-size: 20px; font-weight: 600; }
-        .info-card-body { padding: 24px; }
-
-        /* Flight Info */
-        .flight-item {
-            display: flex; align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .flight-item:last-child { border-bottom: none; }
-        .flight-direction { width: 60px; text-align: center; }
-        .flight-direction-label { font-size: 12px; color: var(--text-light); text-transform: uppercase; }
-        .flight-direction-icon { font-size: 24px; margin-top: 4px; }
-        .flight-details {
-            flex: 1; display: flex; align-items: center;
-            justify-content: space-between; gap: 20px;
-        }
-        .flight-time { text-align: center; }
-        .flight-time-value { font-size: 24px; font-weight: 700; color: var(--primary); }
-        .flight-time-label { font-size: 13px; color: var(--text-light); }
-        .flight-line { flex: 1; display: flex; align-items: center; gap: 8px; }
-        .flight-line-bar {
-            flex: 1; height: 2px; background: var(--border);
-            position: relative;
-        }
-        .flight-line-bar::after {
-            content: ''; position: absolute;
-            right: 0; top: 50%; transform: translateY(-50%);
-            width: 0; height: 0;
-            border-left: 6px solid var(--accent);
-            border-top: 4px solid transparent;
-            border-bottom: 4px solid transparent;
-        }
-        .flight-duration { font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap; }
-        .flight-number {
-            background: var(--primary); color: white;
-            padding: 4px 12px; border-radius: 4px;
-            font-size: 13px; font-weight: 600;
-        }
-
-        /* Hotel Info */
-        .hotel-item {
-            display: flex; gap: 20px;
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .hotel-item:last-child { border-bottom: none; }
-        .hotel-image {
-            width: 120px; height: 80px;
-            background: linear-gradient(135deg, #ddd 0%, #eee 100%);
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--text-light); font-size: 32px;
-        }
-        .hotel-info h4 { font-size: 16px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
-        .hotel-info p { font-size: 14px; color: var(--text-light); margin-bottom: 8px; }
-        .hotel-badge {
-            display: inline-block;
-            background: rgba(201, 162, 39, 0.15);
-            color: var(--accent);
-            padding: 4px 10px; border-radius: 4px;
-            font-size: 12px; font-weight: 600;
-        }
-
-        /* Itinerary Timeline */
-        .itinerary-bg { background: linear-gradient(180deg, var(--bg) 0%, #f0efe9 100%); }
-        .timeline { position: relative; max-width: 900px; margin: 0 auto; }
-        .timeline::before {
-            content: ''; position: absolute;
-            left: 24px; top: 0; bottom: 0; width: 3px;
-            background: linear-gradient(180deg, var(--accent) 0%, var(--accent-light) 100%);
-            border-radius: 3px;
-        }
-        .timeline-item { position: relative; padding-left: 70px; padding-bottom: 40px; }
-        .timeline-item:last-child { padding-bottom: 0; }
-        .timeline-marker {
-            position: absolute; left: 0; top: 0;
-            width: 50px; height: 50px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--primary); font-weight: 700; font-size: 14px;
-            box-shadow: 0 4px 15px rgba(201, 162, 39, 0.4);
-        }
-        .timeline-date { font-size: 14px; color: var(--accent); font-weight: 600; margin-bottom: 8px; }
-        .timeline-content {
-            background: var(--card-bg);
-            border-radius: 16px; padding: 24px;
-            box-shadow: var(--shadow-sm);
-        }
-        .timeline-title {
-            font-size: 20px; font-weight: 700;
-            color: var(--primary); margin-bottom: 16px;
-            display: flex; align-items: center; gap: 12px;
-        }
-        .timeline-title-icon {
-            width: 36px; height: 36px;
-            background: rgba(201, 162, 39, 0.15);
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px;
-        }
-        .activity-list { display: flex; flex-direction: column; gap: 12px; }
-        .activity-item {
-            display: flex; gap: 16px; padding: 16px;
-            background: var(--bg); border-radius: 12px;
-            transition: all 0.2s ease;
-        }
-        .activity-item:hover { background: rgba(201, 162, 39, 0.08); }
-        .activity-time { min-width: 70px; font-size: 14px; font-weight: 600; color: var(--accent); }
-        .activity-name { flex: 1; }
-        .activity-name strong { display: block; color: var(--primary); margin-bottom: 4px; }
-        .activity-name span { font-size: 14px; color: var(--text-light); }
-        .activity-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-        .activity-tag.academic { background: #e3f2fd; color: #1565c0; }
-        .activity-tag.finance { background: #fff3e0; color: #e65100; }
-        .activity-tag.sustainability { background: #e8f5e9; color: #2e7d32; }
-        .activity-tag.innovation { background: #f3e5f5; color: #7b1fa2; }
-        .activity-tag.sightseeing { background: #fce4ec; color: #c2185b; }
-
-        /* Cost Section */
-        .cost-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1000px; margin: 0 auto; }
-        .cost-main { background: var(--gradient-1); border-radius: 20px; padding: 40px; color: white; }
-        .cost-price { margin-bottom: 30px; }
-        .cost-price-label { font-size: 14px; opacity: 0.8; margin-bottom: 8px; }
-        .cost-price-value { font-size: 48px; font-weight: 700; }
-        .cost-price-value span { font-size: 20px; font-weight: 400; opacity: 0.8; }
-        .cost-price-note { font-size: 14px; opacity: 0.7; margin-top: 8px; }
-        .cost-includes { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 24px; }
-        .cost-includes h4 { font-size: 16px; margin-bottom: 16px; }
-        .cost-includes-list { display: flex; flex-wrap: wrap; gap: 8px; }
-        .cost-includes-item { background: rgba(255,255,255,0.15); padding: 8px 14px; border-radius: 6px; font-size: 13px; }
-        .cost-details { display: flex; flex-direction: column; gap: 16px; }
-        .cost-detail-card {
-            background: var(--card-bg); border-radius: 12px;
-            padding: 20px; box-shadow: var(--shadow-sm);
-            display: flex; align-items: center; gap: 16px;
-        }
-        .cost-detail-icon {
-            width: 44px; height: 44px;
-            background: rgba(201, 162, 39, 0.15);
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px;
-        }
-        .cost-detail-info h5 { font-size: 14px; color: var(--text-light); font-weight: 400; margin-bottom: 4px; }
-        .cost-detail-info p { font-size: 18px; font-weight: 700; color: var(--primary); }
-        .cost-excludes {
-            background: #fff8e7;
-            border: 1px solid rgba(201, 162, 39, 0.3);
-            border-radius: 12px; padding: 20px;
-        }
-        .cost-excludes h5 { font-size: 14px; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .cost-excludes p { font-size: 14px; color: var(--text-light); }
-
-        /* Academic Section */
-        .academic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-        .academic-card { background: var(--card-bg); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm); }
-        .academic-card-header { padding: 20px 24px; background: var(--bg); border-bottom: 1px solid var(--border); }
-        .academic-card-header h4 { font-size: 18px; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 10px; }
-        .academic-card-body { padding: 24px; }
-        .course-info-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
-        .course-info-item:last-child { border-bottom: none; }
-        .course-info-label { color: var(--text-light); font-size: 14px; }
-        .course-info-value { font-weight: 600; color: var(--primary); }
-        .evaluation-item { display: flex; align-items: center; margin-bottom: 16px; }
-        .evaluation-bar { flex: 1; height: 8px; background: var(--border); border-radius: 4px; margin: 0 12px; overflow: hidden; }
-        .evaluation-fill { height: 100%; background: var(--accent); border-radius: 4px; }
-        .evaluation-label { font-size: 14px; min-width: 120px; }
-        .evaluation-value { font-weight: 600; color: var(--accent); min-width: 50px; text-align: right; }
-        .requirements-list { list-style: none; }
-        .requirements-list li { padding: 12px 0; padding-left: 28px; position: relative; border-bottom: 1px solid var(--border); }
-        .requirements-list li:last-child { border-bottom: none; }
-        .requirements-list li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
-
-        /* Team Section */
-        .team-bg { background: var(--gradient-1); }
-        .team-bg .section-title, .team-bg .section-desc { color: white; }
-        .team-bg .section-tag { background: rgba(201, 162, 39, 0.3); color: var(--accent-light); }
-        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-        .team-card {
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px; padding: 24px;
-            text-align: center;
-        }
-        .team-role { font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-        .team-name { font-size: 18px; font-weight: 600; color: white; margin-bottom: 4px; }
-        .team-group { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 16px; }
-        .team-tasks { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-        .team-task { background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 20px; font-size: 12px; color: rgba(255,255,255,0.8); }
-        .contact-card {
-            background: var(--card-bg); border-radius: 16px;
-            padding: 32px; margin-top: 40px;
-            display: flex; justify-content: center; gap: 60px;
-            flex-wrap: wrap;
-        }
-        .contact-item { display: flex; align-items: center; gap: 16px; }
-        .contact-icon {
-            width: 50px; height: 50px;
-            background: var(--gradient-1);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px;
-        }
-        .contact-info h5 { font-size: 14px; color: var(--text-light); margin-bottom: 4px; }
-        .contact-info p { font-size: 16px; font-weight: 600; color: var(--primary); }
-
-        /* FAQ Section */
-        .faq-categories { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; max-width: 800px; margin-left: auto; margin-right: auto; }
-        .faq-cat-btn { padding: 10px 20px; border: 2px solid var(--border); border-radius: 25px; background: white; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; font-family: inherit; }
-        .faq-cat-btn:hover { border-color: var(--accent); }
-        .faq-cat-btn.active { background: var(--accent); border-color: var(--accent); color: var(--primary); }
-        .faq-container { max-width: 800px; margin: 0 auto; }
-        .faq-group { margin-bottom: 32px; }
-        .faq-group-title { font-size: 18px; font-weight: 600; color: var(--primary); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 8px; }
-        .faq-group-badge { font-size: 12px; background: var(--bg); padding: 4px 10px; border-radius: 12px; color: var(--text-light); font-weight: 500; }
-        .faq-item { background: var(--card-bg); border-radius: 12px; margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow-sm); }
-        .faq-question {
-            width: 100%; padding: 20px 24px;
-            background: none; border: none;
-            text-align: left; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 16px; font-weight: 600;
-            color: var(--primary); transition: all 0.2s ease;
-            font-family: inherit;
-        }
-        .faq-question:hover { background: var(--bg); }
-        .faq-question-icon {
-            width: 28px; height: 28px;
-            background: var(--bg); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s ease; flex-shrink: 0;
-        }
-        .faq-item.active .faq-question-icon { transform: rotate(180deg); background: var(--accent); color: var(--primary); }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .faq-answer-content { padding: 0 24px 20px; color: var(--text-light); line-height: 1.8; }
-
-        /* Admin Section */
-        .admin-section { background: #f5f5f5; }
-        .admin-container { max-width: 1000px; margin: 0 auto; }
-        .admin-login { background: var(--card-bg); border-radius: 16px; padding: 40px; max-width: 400px; margin: 0 auto; box-shadow: var(--shadow-md); }
-        .admin-login h3 { text-align: center; margin-bottom: 24px; color: var(--primary); }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
-        .form-input { width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: 8px; font-size: 16px; transition: all 0.2s ease; font-family: inherit; }
-        .form-input:focus { outline: none; border-color: var(--accent); }
-        .form-textarea { min-height: 100px; resize: vertical; }
-        .admin-panel { display: none; }
-        .admin-panel.active { display: block; }
-        .admin-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
-        .admin-tab { padding: 12px 24px; background: var(--card-bg); border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; font-family: inherit; }
-        .admin-tab.active { background: var(--accent); color: var(--primary); }
-        .admin-tab-content { background: var(--card-bg); border-radius: 16px; padding: 32px; box-shadow: var(--shadow-sm); }
-        .admin-table { width: 100%; border-collapse: collapse; }
-        .admin-table th, .admin-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
-        .admin-table th { background: var(--bg); font-weight: 600; font-size: 14px; color: var(--text-light); }
-        .admin-table td { font-size: 14px; }
-        .admin-actions { display: flex; gap: 8px; }
-
-        .data-tools {
-            display: flex; gap: 12px; margin-bottom: 24px;
-            flex-wrap: wrap; padding: 16px;
-            background: #f8f9fa; border-radius: 12px;
-        }
-        .data-tools-title { width: 100%; font-size: 14px; font-weight: 600; color: var(--text-light); margin-bottom: 8px; }
-
-        .modal {
-            display: none; position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            align-items: center; justify-content: center;
-        }
-        .modal.active { display: flex; }
-        .modal-content { background: var(--card-bg); border-radius: 16px; padding: 32px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .modal-title { font-size: 20px; font-weight: 700; color: var(--primary); }
-        .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-light); }
-
-        .alert { padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 14px; }
-        .alert-success { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
-        .alert-error { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
-
-        /* Toast */
-        .toast {
-            position: fixed; bottom: 20px; right: 20px;
-            padding: 16px 24px;
-            background: var(--primary); color: white;
-            border-radius: 8px; box-shadow: var(--shadow-lg);
-            z-index: 3000;
-            animation: slideIn 0.3s ease;
-        }
-        .toast.success { background: var(--success); }
-        .toast.error { background: var(--error); }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
-        /* Footer */
-        .footer { background: var(--primary); color: white; padding: 60px 40px 30px; }
-        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
-        .footer-brand h3 { font-family: 'Noto Serif TC', serif; font-size: 24px; margin-bottom: 16px; }
-        .footer-brand p { opacity: 0.7; font-size: 14px; line-height: 1.8; }
-        .footer-links h4 { font-size: 16px; margin-bottom: 16px; color: var(--accent); }
-        .footer-links ul { list-style: none; }
-        .footer-links li { margin-bottom: 8px; }
-        .footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; transition: color 0.2s ease; }
-        .footer-links a:hover { color: white; }
-        .footer-bottom { max-width: 1200px; margin: 40px auto 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 14px; opacity: 0.6; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .navbar { padding: 0 20px; }
-            .nav-links { display: none; position: absolute; top: 70px; left: 0; right: 0; background: var(--primary); flex-direction: column; padding: 20px; }
-            .nav-links.active { display: flex; }
-            .mobile-menu-btn { display: block; }
-            .section { padding: 60px 20px; }
-            .cost-container { grid-template-columns: 1fr; }
-            .timeline::before { left: 16px; }
-            .timeline-item { padding-left: 50px; }
-            .timeline-marker { width: 36px; height: 36px; font-size: 12px; }
-            .contact-card { flex-direction: column; gap: 24px; }
-            .flight-details { flex-direction: column; gap: 12px; }
-            .flight-line { width: 100%; }
-            .admin-table { font-size: 12px; }
-            .admin-table th, .admin-table td { padding: 8px; }
-        }
-
-        .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        /* Custom Timeline Styles */
+        .timeline-line { position: absolute; left: 24px; top: 0; bottom: 0; width: 4px; background: #e2e8f0; border-radius: 2px; }
+        .timeline-item:last-child .timeline-line { bottom: auto; height: 100%; }
     </style>
 </head>
-<body>
-    <div class="pattern-overlay"></div>
+<body class="min-h-screen flex flex-col">
+
+    <!-- 錯誤提示區 -->
+    <div id="error-banner" class="hidden fixed top-0 left-0 w-full bg-red-600 text-white text-center p-4 z-[100] font-bold shadow-lg"></div>
 
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-content">
-            <a href="#hero" class="nav-brand">
-                <div class="nav-brand-icon">政大</div>
-                <span class="nav-brand-text">EMBA 東京參訪</span>
-            </a>
-            <div class="nav-links" id="navLinks">
-                <a href="#flight-hotel" class="nav-link">航班住宿</a>
-                <a href="#itinerary" class="nav-link">行程安排</a>
-                <a href="#cost" class="nav-link">費用資訊</a>
-                <a href="#academic" class="nav-link">課程要求</a>
-                <a href="#team" class="nav-link">籌備團隊</a>
-                <a href="#faq" class="nav-link">常見問題</a>
-                <a href="#admin" class="nav-link nav-admin">管理後台</a>
+    <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm border-b border-orange-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="window.switchTab('home')">
+                    <div class="w-9 h-9 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-bold shadow-md">JP</div>
+                    <span class="font-bold text-teal-800 tracking-wide text-lg hidden md:block hover:text-teal-600 transition">2026 政大EMBA 東京行</span>
+                </div>
+                <div class="flex space-x-1 overflow-x-auto no-scrollbar py-2" id="nav-items"></div>
             </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         </div>
     </nav>
 
-    <!-- Data Update Banner -->
-    <div id="dataUpdateBanner" style="display:none;position:fixed;top:70px;left:0;right:0;background:linear-gradient(90deg,#2e7d32,#43a047);color:white;padding:12px 20px;text-align:center;z-index:999;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,0.2)">
-        <span>📢 此頁面顯示的是管理員分享的最新資料</span>
-        <button onclick="document.getElementById('dataUpdateBanner').style.display='none'" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:4px 12px;border-radius:4px;margin-left:16px;cursor:pointer">✕ 關閉</button>
-    </div>
-
-    <!-- Hero -->
-    <section class="hero" id="hero">
-        <div class="hero-content">
-            <div class="hero-badge">2025級 國際金融組</div>
-            <h1 class="hero-title">政大 EMBA<span>東京企業參訪</span></h1>
-            <p class="hero-subtitle">東京心節奏：一場知性與感性的深度探索</p>
-            <div class="hero-date">📅 2026.05.13 - 05.17</div>
-            <div class="hero-cta">
-                <a href="#itinerary" class="btn btn-primary"><span>查看行程</span><span>→</span></a>
-                <a href="#cost" class="btn btn-outline">費用資訊</a>
-            </div>
+    <!-- Main Content -->
+    <main id="app" class="flex-grow pb-12">
+        <div class="flex flex-col justify-center items-center h-64 space-y-4">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500"></div>
+            <p class="text-slate-500 animate-pulse">正在連線至 Firebase 資料庫...</p>
         </div>
-        <div class="scroll-indicator">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
-        </div>
-    </section>
-
-    <!-- Flight & Hotel -->
-    <section class="section" id="flight-hotel">
-        <div class="section-header fade-in">
-            <div class="section-tag">交通與住宿</div>
-            <h2 class="section-title">航班與飯店資訊</h2>
-            <p class="section-desc">中華航空團體機位，入住東京精選酒店</p>
-        </div>
-        <div class="info-grid">
-            <div class="info-card fade-in">
-                <div class="info-card-header">
-                    <div class="info-card-icon">✈️</div>
-                    <div><div class="info-card-title">航班資訊</div><div style="font-size:13px;opacity:0.8">中華航空 團體經濟艙</div></div>
-                </div>
-                <div class="info-card-body">
-                    <div class="flight-item">
-                        <div class="flight-direction"><div class="flight-direction-label">去程</div><div class="flight-direction-icon">🛫</div></div>
-                        <div class="flight-details">
-                            <div class="flight-time"><div class="flight-time-value">08:55</div><div class="flight-time-label">桃園機場 T2</div></div>
-                            <div class="flight-line"><div class="flight-line-bar"></div><div class="flight-duration">3小時20分</div></div>
-                            <div class="flight-time"><div class="flight-time-value">13:15</div><div class="flight-time-label">成田機場 T2</div></div>
-                            <div class="flight-number">CI100</div>
-                        </div>
-                    </div>
-                    <div class="flight-item">
-                        <div class="flight-direction"><div class="flight-direction-label">回程</div><div class="flight-direction-icon">🛬</div></div>
-                        <div class="flight-details">
-                            <div class="flight-time"><div class="flight-time-value">17:55</div><div class="flight-time-label">成田機場 T2</div></div>
-                            <div class="flight-line"><div class="flight-line-bar"></div><div class="flight-duration">3小時40分</div></div>
-                            <div class="flight-time"><div class="flight-time-value">20:35</div><div class="flight-time-label">桃園機場 T2</div></div>
-                            <div class="flight-number">CI105</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="info-card fade-in">
-                <div class="info-card-header">
-                    <div class="info-card-icon">🏨</div>
-                    <div><div class="info-card-title">住宿安排</div><div style="font-size:13px;opacity:0.8">精選東京市區飯店</div></div>
-                </div>
-                <div class="info-card-body">
-                    <div class="hotel-item">
-                        <div class="hotel-image">🏢</div>
-                        <div class="hotel-info"><h4>東京巨蛋飯店</h4><p>Tokyo Dome Hotel · 1 晚</p><span class="hotel-badge">5/13 入住</span></div>
-                    </div>
-                    <div class="hotel-item">
-                        <div class="hotel-image">⭐</div>
-                        <div class="hotel-info"><h4>東京萬豪酒店</h4><p>Tokyo Marriott Hotel · 3 晚</p><span class="hotel-badge" style="background:rgba(201,162,39,0.3)">★ 升等不加價</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Itinerary -->
-    <section class="itinerary-bg" id="itinerary">
-        <div class="section">
-            <div class="section-header fade-in">
-                <div class="section-tag">行程安排</div>
-                <h2 class="section-title">五天四夜精彩行程</h2>
-                <p class="section-desc">結合學術交流、企業參訪與文化體驗</p>
-            </div>
-            <div class="timeline" id="itineraryTimeline"></div>
-        </div>
-    </section>
-
-    <!-- Cost -->
-    <section class="section" id="cost">
-        <div class="section-header fade-in">
-            <div class="section-tag">費用資訊</div>
-            <h2 class="section-title">團費與行政須知</h2>
-            <p class="section-desc">35人成團，全程高品質安排</p>
-        </div>
-        <div class="cost-container fade-in">
-            <div class="cost-main">
-                <div class="cost-price">
-                    <div class="cost-price-label">每人團費</div>
-                    <div class="cost-price-value">NT$ 63,500 <span>/人</span></div>
-                    <div class="cost-price-note">35人成團</div>
-                </div>
-                <div class="cost-includes">
-                    <h4>✓ 費用包含</h4>
-                    <div class="cost-includes-list">
-                        <div class="cost-includes-item">來回機票</div>
-                        <div class="cost-includes-item">四晚住宿（兩人一室）</div>
-                        <div class="cost-includes-item">行程所列車資</div>
-                        <div class="cost-includes-item">餐食</div>
-                        <div class="cost-includes-item">門票</div>
-                        <div class="cost-includes-item">司領小費</div>
-                        <div class="cost-includes-item">200萬履約責任險</div>
-                        <div class="cost-includes-item">20萬意外醫療險</div>
-                    </div>
-                </div>
-            </div>
-            <div class="cost-details">
-                <div class="cost-detail-card"><div class="cost-detail-icon">💰</div><div class="cost-detail-info"><h5>訂金</h5><p>NT$ 15,000</p></div></div>
-                <div class="cost-detail-card"><div class="cost-detail-icon">🛏️</div><div class="cost-detail-info"><h5>單人房加價</h5><p>NT$ 16,000</p></div></div>
-                <div class="cost-detail-card"><div class="cost-detail-icon">🎫</div><div class="cost-detail-info"><h5>機票自理可扣除</h5><p>NT$ 18,000</p></div></div>
-                <div class="cost-excludes"><h5>⚠️ 費用未含</h5><p>個人消費、私人行程費用、個人旅遊平安保險</p></div>
-            </div>
-        </div>
-        <div class="info-grid" style="margin-top:60px">
-            <div class="info-card fade-in">
-                <div class="info-card-header" style="background:#2e7d32"><div class="info-card-icon">📋</div><div class="info-card-title">報名須知</div></div>
-                <div class="info-card-body">
-                    <ul class="requirements-list">
-                        <li>集合時間：2026年5月13日（三）</li>
-                        <li>集合地點：桃園國際機場第二航廈（詳細時間於行前手冊說明）</li>
-                        <li>團體機位須團進團出，無法累積里程</li>
-                        <li>尾款將於出團前通知繳付完畢</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="info-card fade-in">
-                <div class="info-card-header" style="background:#c62828"><div class="info-card-icon">⚠️</div><div class="info-card-title">取消規定</div></div>
-                <div class="info-card-body">
-                    <ul class="requirements-list">
-                        <li>本團為獨立包團，取消需收取團體分攤費用 NT$ 6,000</li>
-                        <li>團體機票成行率9成，未達成行率取消須收退票費 NT$ 5,000</li>
-                        <li>3月初後取消，飯店不予退費</li>
-                        <li>依照旅遊定型化契約書第十三條辦理</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Academic -->
-    <section class="section" id="academic" style="background:linear-gradient(180deg,#f5f5f5 0%,var(--bg) 100%)">
-        <div class="section-header fade-in">
-            <div class="section-tag">課程要求</div>
-            <h2 class="section-title">學術課程資訊</h2>
-            <p class="section-desc">高階主管投資與理財（境外參訪）</p>
-        </div>
-        <div class="academic-grid">
-            <div class="academic-card fade-in">
-                <div class="academic-card-header"><h4>📚 課程基本資訊</h4></div>
-                <div class="academic-card-body">
-                    <div class="course-info-item"><span class="course-info-label">課程代號</span><span class="course-info-value">932252-001</span></div>
-                    <div class="course-info-item"><span class="course-info-label">學分數</span><span class="course-info-value">2 學分</span></div>
-                    <div class="course-info-item"><span class="course-info-label">修別</span><span class="course-info-value">群修二</span></div>
-                    <div class="course-info-item"><span class="course-info-label">授課教師</span><span class="course-info-value">陳鴻毅 教授</span></div>
-                    <div class="course-info-item"><span class="course-info-label">修課人數上限</span><span class="course-info-value">40 人</span></div>
-                </div>
-            </div>
-            <div class="academic-card fade-in">
-                <div class="academic-card-header"><h4>📅 上課時間</h4></div>
-                <div class="academic-card-body">
-                    <div class="course-info-item"><span class="course-info-label">行前課程</span><span class="course-info-value">5/11（一）18:30-22:30</span></div>
-                    <div class="course-info-item"><span class="course-info-label">參訪日期</span><span class="course-info-value">5/13 - 5/17</span></div>
-                    <div class="course-info-item"><span class="course-info-label">回程課程</span><span class="course-info-value">5/25（一）18:30-22:30</span></div>
-                </div>
-            </div>
-            <div class="academic-card fade-in">
-                <div class="academic-card-header"><h4>📊 評分標準</h4></div>
-                <div class="academic-card-body">
-                    <div class="evaluation-item"><span class="evaluation-label">課程出席與參訪</span><div class="evaluation-bar"><div class="evaluation-fill" style="width:60%"></div></div><span class="evaluation-value">60%</span></div>
-                    <div class="evaluation-item"><span class="evaluation-label">課程參與討論</span><div class="evaluation-bar"><div class="evaluation-fill" style="width:20%"></div></div><span class="evaluation-value">20%</span></div>
-                    <div class="evaluation-item"><span class="evaluation-label">期末報告</span><div class="evaluation-bar"><div class="evaluation-fill" style="width:20%"></div></div><span class="evaluation-value">20%</span></div>
-                </div>
-            </div>
-            <div class="academic-card fade-in">
-                <div class="academic-card-header"><h4>📝 上課規範</h4></div>
-                <div class="academic-card-body">
-                    <ul class="requirements-list">
-                        <li>積極參與、力求表現</li>
-                        <li>小組成員 5-8 人，務請確實進行小組討論</li>
-                        <li>課前熟讀參訪公司資料</li>
-                        <li>課程中積極參與訪問</li>
-                        <li>課後心得交流討論</li>
-                        <li><strong style="color:#c62828">境外參訪行程，所有修課學生務必全程參與</strong></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team -->
-    <section class="team-bg" id="team">
-        <div class="section">
-            <div class="section-header fade-in">
-                <div class="section-tag">籌備團隊</div>
-                <h2 class="section-title">工作分組與聯絡資訊</h2>
-                <p class="section-desc" style="color:rgba(255,255,255,0.7)">感謝所有參與籌備的學長姊</p>
-            </div>
-            <div class="team-grid" id="teamGrid"></div>
-            <div class="contact-card fade-in" id="contactCard"></div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section" id="faq">
-        <div class="section-header fade-in">
-            <div class="section-tag">常見問題</div>
-            <h2 class="section-title">Q&A 問答集</h2>
-            <p class="section-desc">參訪相關常見問題解答</p>
-        </div>
-        <div class="faq-categories" id="faqCategories"></div>
-        <div class="faq-container" id="faqContainer"></div>
-    </section>
-
-    <!-- Admin -->
-    <section class="section admin-section" id="admin">
-        <div class="admin-container">
-            <div class="section-header fade-in">
-                <div class="section-tag">系統管理</div>
-                <h2 class="section-title">管理後台</h2>
-            </div>
-            <div class="admin-login" id="adminLogin">
-                <h3>🔐 管理員登入</h3>
-                <div id="loginAlert"></div>
-                <div class="form-group"><label>帳號</label><input type="text" class="form-input" id="adminUsername" placeholder="請輸入帳號"></div>
-                <div class="form-group"><label>密碼</label><input type="password" class="form-input" id="adminPassword" placeholder="請輸入密碼"></div>
-                <button class="btn btn-primary" style="width:100%" onclick="adminLogin()">登入</button>
-            </div>
-            <div class="admin-panel" id="adminPanel">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
-                    <div>
-                        <h3>👋 歡迎，管理員</h3>
-                        <div id="lastUpdateInfo" style="font-size:13px;color:#666;margin-top:4px"></div>
-                    </div>
-                    <button class="btn btn-outline" style="color:var(--text);border-color:var(--border)" onclick="adminLogout()">登出</button>
-                </div>
-                <div class="data-tools">
-                    <div class="data-tools-title">🔗 快速分享（產生連結讓所有使用者查看最新資料）</div>
-                    <button class="btn btn-sm btn-primary" onclick="generateShareLink()">📎 產生分享連結</button>
-                    <button class="btn btn-sm btn-info" onclick="copyShareLink()">📋 複製連結</button>
-                </div>
-                <div class="data-tools" style="margin-top:12px">
-                    <div class="data-tools-title">📦 進階資料管理（匯出/匯入 JSON 檔案）</div>
-                    <button class="btn btn-sm btn-secondary" onclick="exportData()">📤 匯出 JSON</button>
-                    <button class="btn btn-sm btn-secondary" onclick="document.getElementById('importFile').click()">📥 匯入 JSON</button>
-                    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
-                    <button class="btn btn-sm btn-delete" onclick="resetToDefault()">🔄 重置為預設</button>
-                </div>
-                <div id="shareLinkBox" style="display:none;margin-top:12px;padding:16px;background:#e8f5e9;border-radius:8px;border:1px solid #a5d6a7">
-                    <div style="font-size:14px;font-weight:600;color:#2e7d32;margin-bottom:8px">✅ 分享連結已產生！</div>
-                    <input type="text" id="shareLinkInput" readonly style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;font-size:13px;margin-bottom:8px">
-                    <div style="font-size:12px;color:#666">將此連結分享給其他使用者，他們開啟後即可看到最新資料</div>
-                </div>
-                <div class="admin-tabs">
-                    <button class="admin-tab active" onclick="switchAdminTab('faq',this)">Q&A 管理</button>
-                    <button class="admin-tab" onclick="switchAdminTab('itinerary',this)">行程管理</button>
-                    <button class="admin-tab" onclick="switchAdminTab('team',this)">團隊管理</button>
-                </div>
-                <div class="admin-tab-content" id="faqTab">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-                        <h4>問答集管理</h4>
-                        <button class="btn btn-primary btn-sm" onclick="openFaqModal()">+ 新增問答</button>
-                    </div>
-                    <div style="overflow-x:auto"><table class="admin-table"><thead><tr><th style="width:20%">分類</th><th style="width:30%">問題</th><th style="width:30%">答案</th><th style="width:20%">操作</th></tr></thead><tbody id="faqTableBody"></tbody></table></div>
-                </div>
-                <div class="admin-tab-content" id="itineraryTab" style="display:none">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-                        <h4>行程管理</h4>
-                        <button class="btn btn-primary btn-sm" onclick="openItineraryModal()">+ 新增活動</button>
-                    </div>
-                    <div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>日期</th><th>時間</th><th>活動名稱</th><th>類型</th><th>操作</th></tr></thead><tbody id="itineraryTableBody"></tbody></table></div>
-                </div>
-                <div class="admin-tab-content" id="teamTab" style="display:none">
-                    <div style="margin-bottom:32px">
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-                            <h4>👥 團隊成員</h4>
-                            <button class="btn btn-primary btn-sm" onclick="openTeamModal()">+ 新增成員</button>
-                        </div>
-                        <div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>分組</th><th>家別</th><th>姓名</th><th>代理人</th><th>負責事項</th><th>操作</th></tr></thead><tbody id="teamTableBody"></tbody></table></div>
-                    </div>
-                    <div>
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-                            <h4>📞 聯絡資訊</h4>
-                            <button class="btn btn-primary btn-sm" onclick="openContactModal()">+ 新增聯絡</button>
-                        </div>
-                        <div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>圖示</th><th>標籤</th><th>內容</th><th>操作</th></tr></thead><tbody id="contactTableBody"></tbody></table></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-brand"><h3>政大 EMBA 東京參訪</h3><p>2025級 國際金融組<br>高階主管投資與理財（境外參訪）<br>2026.05.13 - 05.17</p></div>
-            <div class="footer-links"><h4>快速連結</h4><ul><li><a href="#flight-hotel">航班住宿</a></li><li><a href="#itinerary">行程安排</a></li><li><a href="#cost">費用資訊</a></li><li><a href="#academic">課程要求</a></li></ul></div>
-            <div class="footer-links"><h4>相關資源</h4><ul><li><a href="#team">籌備團隊</a></li><li><a href="#faq">常見問題</a></li><li><a href="#admin">管理後台</a></li></ul></div>
+    <footer class="bg-white border-t border-orange-100 py-10 text-center text-sm text-slate-400 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p class="font-bold text-slate-600">NCCU EMBA Tokyo Trip 2026</p>
+            <p>Designed for Global Finance Group</p>
+            <p class="text-xs opacity-60">系統開發測試中 | 此為教學演示網站</p>
         </div>
-        <div class="footer-bottom"><p>© 2025 國立政治大學 EMBA 國際金融組. All rights reserved.</p></div>
     </footer>
 
-    <!-- Modals -->
-    <div class="modal" id="faqModal">
-        <div class="modal-content">
-            <div class="modal-header"><h3 class="modal-title" id="faqModalTitle">新增問答</h3><button class="modal-close" onclick="closeFaqModal()">&times;</button></div>
-            <div class="form-group"><label>分類</label><select class="form-input" id="faqCategory"></select></div>
-            <div class="form-group"><label>問題</label><input type="text" class="form-input" id="faqQuestion" placeholder="請輸入問題"></div>
-            <div class="form-group"><label>答案</label><textarea class="form-input form-textarea" id="faqAnswer" placeholder="請輸入答案"></textarea></div>
-            <input type="hidden" id="faqEditId">
-            <button class="btn btn-primary" style="width:100%" onclick="saveFaq()">儲存</button>
-        </div>
-    </div>
-    <div class="modal" id="itineraryModal">
-        <div class="modal-content">
-            <div class="modal-header"><h3 class="modal-title" id="itineraryModalTitle">新增活動</h3><button class="modal-close" onclick="closeItineraryModal()">&times;</button></div>
-            <div class="form-group"><label>日期 (Day)</label><select class="form-input" id="activityDay"><option value="1">Day 1 - 5/13（三）</option><option value="2">Day 2 - 5/14（四）</option><option value="3">Day 3 - 5/15（五）</option><option value="4">Day 4 - 5/16（六）</option><option value="5">Day 5 - 5/17（日）</option></select></div>
-            <div class="form-group"><label>時間</label><input type="text" class="form-input" id="activityTime" placeholder="例：09:30 或 上午"></div>
-            <div class="form-group"><label>活動名稱</label><input type="text" class="form-input" id="activityName" placeholder="請輸入活動名稱"></div>
-            <div class="form-group"><label>活動說明</label><input type="text" class="form-input" id="activityDesc" placeholder="請輸入活動說明"></div>
-            <div class="form-group"><label>類型標籤</label><select class="form-input" id="activityTag"><option value="">無標籤</option><option value="academic">學術交流</option><option value="finance">金融/政治</option><option value="sustainability">永續ESG</option><option value="innovation">創新</option><option value="sightseeing">景點</option></select></div>
-            <input type="hidden" id="activityEditId">
-            <button class="btn btn-primary" style="width:100%" onclick="saveActivity()">儲存</button>
-        </div>
-    </div>
-    <div class="modal" id="teamModal">
-        <div class="modal-content">
-            <div class="modal-header"><h3 class="modal-title" id="teamModalTitle">新增成員</h3><button class="modal-close" onclick="closeTeamModal()">&times;</button></div>
-            <div class="form-group"><label>分組</label><select class="form-input" id="memberGroup"><option value="admin">總召組</option><option value="internal">對內組</option><option value="external">對外組</option></select></div>
-            <div class="form-group"><label>家別（數字）</label><input type="number" class="form-input" id="memberFamily" min="1" max="20" placeholder="例：1"></div>
-            <div class="form-group"><label>姓名</label><input type="text" class="form-input" id="memberName" placeholder="請輸入姓名"></div>
-            <div class="form-group"><label>角色</label><input type="text" class="form-input" id="memberRole" value="家長" placeholder="例：家長"></div>
-            <div class="form-group"><label>代理人</label><input type="text" class="form-input" id="memberDeputy" placeholder="請輸入代理人姓名"></div>
-            <div class="form-group"><label>負責事項（逗號分隔）</label><input type="text" class="form-input" id="memberTasks" placeholder="例：行政對接, 學校聯繫"></div>
-            <input type="hidden" id="memberEditId">
-            <button class="btn btn-primary" style="width:100%" onclick="saveTeamMember()">儲存</button>
-        </div>
-    </div>
-    <div class="modal" id="contactModal">
-        <div class="modal-content">
-            <div class="modal-header"><h3 class="modal-title" id="contactModalTitle">新增聯絡資訊</h3><button class="modal-close" onclick="closeContactModal()">&times;</button></div>
-            <div class="form-group"><label>圖示（Emoji）</label><input type="text" class="form-input" id="contactIcon" placeholder="例：📞 👤 ✉️ 🏢"></div>
-            <div class="form-group"><label>標籤</label><input type="text" class="form-input" id="contactLabel" placeholder="例：聯絡電話"></div>
-            <div class="form-group"><label>內容</label><input type="text" class="form-input" id="contactValue" placeholder="請輸入聯絡資訊內容"></div>
-            <input type="hidden" id="contactEditId">
-            <button class="btn btn-primary" style="width:100%" onclick="saveContact()">儲存</button>
-        </div>
-    </div>
+    <!-- Logic -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+        import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+        import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
 
-    <script>
-        // Default Data
-        const faqCategories = [
-            { id: 'flight', name: '✈️ 機票與交通', color: '#1565c0', bg: '#e3f2fd' },
-            { id: 'hotel', name: '🏨 住宿相關', color: '#7b1fa2', bg: '#f3e5f5' },
-            { id: 'cost', name: '💰 費用與報名', color: '#e65100', bg: '#fff3e0' },
-            { id: 'course', name: '📚 課程與出席', color: '#2e7d32', bg: '#e8f5e9' },
-            { id: 'other', name: '❓ 其他問題', color: '#546e7a', bg: '#eceff1' }
-        ];
+        // --- 1. 請在此填入您的 Firebase 設定 ---
+            const firebaseConfig = {
+            apiKey: "AIzaSyDEg7Hfcc3lyQhHSv_F6CD_7GMUWfxit8Y",
+            authDomain: "nccu25gftyo.firebaseapp.com",
+            projectId: "nccu25gftyo",
+            storageBucket: "nccu25gftyo.firebasestorage.app",
+            messagingSenderId: "780094999226",
+            appId: "1:780094999226:web:80509ac5bb518fd52ed083"
+            };
+        const appId = 'tokyo-trip-2026-prod'; 
+        
+        // --- 初始化檢測 ---
+        function showError(msg) {
+            const el = document.getElementById('error-banner');
+            el.innerText = `⚠️ 錯誤: ${msg}`;
+            el.classList.remove('hidden');
+            console.error(msg);
+        }
 
-        const defaultFaqs = [
-            { id: 1, category: 'flight', question: "可以自行購買機票嗎？", answer: "可以。若選擇機票自理，可從團費扣除 NT$ 18,000。但請注意需於大團抵達前到達並自行與大團會合。第一個參訪點起即視為課程開始。" },
-            { id: 2, category: 'flight', question: "團體機票可以累積里程嗎？", answer: "團體機票無法累積航空公司里程。若需累積里程，建議選擇機票自理方案，自行購買個人機票。" },
-            { id: 3, category: 'hotel', question: "可以申請單人房嗎？", answer: "可以，單人房需加價 NT$ 16,000。請於報名時告知旅行社您的需求。" },
-            { id: 4, category: 'course', question: "境外參訪可以缺席嗎？", answer: "境外課程須全程參與，若有缺席情形，將依規定視為課程不及格。請務必安排好時間全程參加。" },
-            { id: 5, category: 'cost', question: "訂金什麼時候要繳交？", answer: "訂金 NT$ 15,000 元，報名完成後將開始進行訂金收取作業。旅行社會在群組中說明刷卡方式與繳交期限。" },
-            { id: 6, category: 'cost', question: "取消參加需要付費嗎？", answer: "是的。本團為獨立包團，取消需收取團體分攤費用 NT$ 6,000。若團體機票成行率未達9成，取消還需收取退票費 NT$ 5,000。3月初後取消，飯店費用不予退還。" },
-            { id: 7, category: 'course', question: "行前課程和回程課程是必須參加嗎？", answer: "是的，行前課程（5/11）和回程課程（5/25）都是課程的一部分，請務必出席。行前課程會說明行程細節，回程課程則進行心得分享與報告。" },
-            { id: 8, category: 'course', question: "其他班組的同學可以加選這門課嗎？", answer: "境外參訪課程可以加選，但需要班上同意加上授課老師同意。境外課程採灌檔作業，需要知會兩個班級的班主任。" },
-            { id: 9, category: 'hotel', question: "住宿是如何安排的？", answer: "住宿為兩人一室，第一晚入住東京巨蛋飯店，後三晚入住東京萬豪酒店（升等不加價）。如需指定室友，請於報名時告知。" },
-            { id: 10, category: 'cost', question: "團費包含哪些項目？", answer: "團費 NT$ 63,500 包含：來回機票、四晚住宿（兩人一室）、行程所列車資、餐食、門票、司領小費、200萬履約責任險及20萬意外醫療險。" },
-            { id: 11, category: 'other', question: "需要準備什麼證件？", answer: "請準備有效期限六個月以上的護照。日本免簽證，但請確認護照效期。相關證件資料將由對內組統一收集。" },
-            { id: 12, category: 'other', question: "有什麼需要注意的行李限制？", answer: "團體經濟艙行李限重為 23 公斤（託運）+ 7 公斤（手提）。建議攜帶舒適的步行鞋，部分參訪地點需要步行較長距離。" }
-        ];
+        if (firebaseConfig.apiKey.includes("貼在這裡")) {
+            showError("請用文字編輯器打開 index.html，並填入正確的 Firebase Config！");
+            document.getElementById('app').innerHTML = `<div class="p-10 text-center text-red-500 font-bold">尚未設定 Firebase Config，請修改程式碼。</div>`;
+            throw new Error("Config missing");
+        }
 
-        const defaultActivities = [
-            { id: 1, day: 1, time: "08:55", name: "桃園機場出發", desc: "CI100 航班前往東京", tag: "" },
-            { id: 2, day: 1, time: "13:15", name: "抵達成田機場", desc: "通關、領取行李", tag: "" },
-            { id: 3, day: 1, time: "下午", name: "成田山新勝寺", desc: "日本著名佛教寺院參觀", tag: "sightseeing" },
-            { id: 4, day: 1, time: "傍晚", name: "表參道散策", desc: "體驗東京時尚街區", tag: "sightseeing" },
-            { id: 5, day: 1, time: "晚餐", name: "和牛霜降肉壽喜燒", desc: "JPY 6,000", tag: "" },
-            { id: 6, day: 2, time: "09:30", name: "早稻田商學院", desc: "認識教學特色與產學合作模式，討論管理理論之實務應用", tag: "academic" },
-            { id: 7, day: 2, time: "14:00", name: "東京證券交易所", desc: "認識市場制度與核心功能，討論公司治理與資本效率", tag: "finance" },
-            { id: 8, day: 2, time: "下午", name: "日本橋日枝神社", desc: "東京著名神社參拜", tag: "sightseeing" },
-            { id: 9, day: 2, time: "晚餐", name: "馴斗銘柄豚涮涮鍋", desc: "JPY 8,500", tag: "" },
-            { id: 10, day: 3, time: "10:00", name: "芝浦水再生中心", desc: "東京都下水道局見學，認識水資源循環與永續管理", tag: "sustainability" },
-            { id: 11, day: 3, time: "15:00", name: "日本國會參議院", desc: "認識制度架構與立法職能，討論政策環境對企業之影響", tag: "finance" },
-            { id: 12, day: 3, time: "傍晚", name: "麻布台之丘", desc: "東京新地標體驗", tag: "sightseeing" },
-            { id: 13, day: 3, time: "晚餐", name: "居酒屋料理", desc: "JPY 6,000", tag: "" },
-            { id: 14, day: 4, time: "上午", name: "資生堂全球創新中心 S/PARK", desc: "認識研發創新與品牌策略，討論創新管理與競爭優勢", tag: "innovation" },
-            { id: 15, day: 4, time: "下午", name: "鎌倉高德院・青銅大佛", desc: "日本國寶級文化遺產", tag: "sightseeing" },
-            { id: 16, day: 4, time: "下午", name: "鶴岡八幡宮", desc: "鎌倉代表性神社", tag: "sightseeing" },
-            { id: 17, day: 4, time: "傍晚", name: "鎌倉小町通", desc: "傳統商店街散策", tag: "sightseeing" },
-            { id: 18, day: 4, time: "晚餐", name: "螃蟹道樂晚宴", desc: "包廂 + 特別升等 + 酒水暢飲 · JPY 11,000", tag: "" },
-            { id: 19, day: 5, time: "上午", name: "小江戶川越", desc: "藏造傳統建築・藏造老街", tag: "sightseeing" },
-            { id: 20, day: 5, time: "上午", name: "結緣聖地・冰川神社", desc: "日本著名結緣神社", tag: "sightseeing" },
-            { id: 21, day: 5, time: "午餐", name: "川越鰻魚飯御膳", desc: "JPY 4,300", tag: "" },
-            { id: 22, day: 5, time: "17:55", name: "成田機場出發", desc: "CI105 航班返回台北", tag: "" },
-            { id: 23, day: 5, time: "20:35", name: "抵達桃園機場", desc: "溫暖的家 🏠", tag: "" }
-        ];
-
-        const dayConfigs = [
-            { day: 1, date: "5月13日（三）", title: "抵達東京・文化巡禮", icon: "🛬" },
-            { day: 2, date: "5月14日（四）", title: "學術交流・金融參訪", icon: "🎓" },
-            { day: 3, date: "5月15日（五）", title: "永續環保・政治見學", icon: "🌿" },
-            { day: 4, date: "5月16日（六）", title: "創新參訪・鎌倉巡禮", icon: "💄" },
-            { day: 5, date: "5月17日（日）", title: "川越老街・返回台北", icon: "🏯" }
-        ];
-
-        const tagLabels = { '': '', 'academic': '學術交流', 'finance': '金融/政治', 'sustainability': '永續ESG', 'innovation': '創新', 'sightseeing': '景點' };
-
-        // Team default data
-        const teamGroups = [
-            { id: 'internal', name: '對內組', desc: '行政對接、學校聯繫、證件蒐集' },
-            { id: 'external', name: '對外組', desc: '活動規劃、旅行社聯絡、企業參訪' }
-        ];
-
-        const defaultTeamMembers = [
-            { id: 1, group: 'internal', family: 1, name: 'Jay', role: '家長', deputy: 'Jenny', tasks: ['行政對接', '學校聯繫'] },
-            { id: 2, group: 'internal', family: 2, name: 'Tracey', role: '家長', deputy: 'Randy K', tasks: ['蒐集證件', '向各班組說明'] },
-            { id: 3, group: 'external', family: 3, name: '宗翰', role: '家長', deputy: '承昌', tasks: ['活動規劃', '聯繫參訪企業'] },
-            { id: 4, group: 'external', family: 4, name: '景方', role: '家長', deputy: '幸慧', tasks: ['聯絡旅行社', '行程協調'] },
-            { id: 5, group: 'external', family: 5, name: 'Sandy', role: '家長', deputy: '坤傑', tasks: ['企業聯繫', 'NTT聯絡'] },
-            { id: 6, group: 'internal', family: 6, name: 'M.SHEN', role: '家長', deputy: 'Judy', tasks: ['信義房屋聯絡', '行政支援'] }
-        ];
-
-        const defaultContacts = [
-            { id: 1, icon: '👤', label: '旅行社聯絡人', value: '雄獅旅遊 林采欣 (Linda Lin)' },
-            { id: 2, icon: '📞', label: '聯絡電話', value: '(02) 8793-9000 分機 1691' },
-            { id: 3, icon: '✉️', label: '電子郵件', value: 'lindalin@liontravel.com' }
-        ];
+        // Initialize
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
         // State
-        let faqs = JSON.parse(localStorage.getItem('embaFaqs')) || [...defaultFaqs];
-        let activities = JSON.parse(localStorage.getItem('embaActivities')) || [...defaultActivities];
-        let isLoggedIn = sessionStorage.getItem('adminLoggedIn') === 'true';
-
-        // Migrate old FAQs without category
-        faqs = faqs.map(faq => {
-            if (!faq.category) {
-                // Try to auto-categorize based on keywords
-                const q = faq.question.toLowerCase();
-                if (q.includes('機票') || q.includes('航班') || q.includes('里程')) return { ...faq, category: 'flight' };
-                if (q.includes('住宿') || q.includes('房') || q.includes('飯店')) return { ...faq, category: 'hotel' };
-                if (q.includes('費') || q.includes('訂金') || q.includes('取消') || q.includes('報名')) return { ...faq, category: 'cost' };
-                if (q.includes('課程') || q.includes('出席') || q.includes('參加') || q.includes('加選')) return { ...faq, category: 'course' };
-                return { ...faq, category: 'other' };
+        const state = {
+            user: null, isAdmin: false, activeTab: 'home',
+            data: { itinerary: [], qa: [], team: [] },
+            ui: { 
+                openQaIndex: null, categoryFilter: 'all', qaSearch: '',
+                editingId: null, deletingId: null,
+                teamModal: { open: false, id: null },
+                qaModal: { open: false, id: null }
             }
-            return faq;
-        });
+        };
 
-        // Team state
-        let teamMembers = JSON.parse(localStorage.getItem('embaTeamMembers')) || [...defaultTeamMembers];
-        let contacts = JSON.parse(localStorage.getItem('embaContacts')) || [...defaultContacts];
+        const NAV_ITEMS = [
+            { id: 'home', label: '首頁', icon: 'home' },
+            { id: 'itinerary', label: '行程', icon: 'map' },
+            { id: 'info', label: '費用', icon: 'credit-card' },
+            { id: 'academic', label: '學術', icon: 'graduation-cap' },
+            { id: 'qa', label: '問答', icon: 'help-circle' },
+            { id: 'team', label: '團隊', icon: 'users' },
+        ];
 
-        const ADMIN_USERNAME = 'admin';
-        const ADMIN_PASSWORD = 'Aa123456#';
-
-        // Init
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check for shared data in URL first
-            loadFromURL();
-            
-            renderFaqCategories();
-            renderFaqs();
-            renderItinerary();
-            renderFaqTable();
-            renderActivityTable();
-            renderTeam();
-            renderContacts();
-            renderTeamTable();
-            renderContactTable();
-            
-            if (isLoggedIn) {
-                document.getElementById('adminLogin').style.display = 'none';
-                document.getElementById('adminPanel').classList.add('active');
-                updateLastUpdateDisplay();
-            }
-
-            const fadeElements = document.querySelectorAll('.fade-in');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-            }, { threshold: 0.1 });
-            fadeElements.forEach(el => observer.observe(el));
-
-            window.addEventListener('scroll', () => {
-                document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-            });
-
-            document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-                document.getElementById('navLinks').classList.toggle('active');
-            });
-
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active'));
-            });
-
-            document.getElementById('adminPassword').addEventListener('keypress', (e) => { if (e.key === 'Enter') adminLogin(); });
-
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
-            });
-        });
-
-        // Load data from URL (for shared links)
-        function loadFromURL() {
+        // --- Auth & Listeners ---
+        async function init() {
             try {
-                const hash = window.location.hash.substring(1);
-                if (hash && hash.startsWith('data=')) {
-                    const encodedData = hash.substring(5);
-                    const jsonStr = decodeURIComponent(atob(encodedData));
-                    const data = JSON.parse(jsonStr);
-                    
-                    if (data.faqs && Array.isArray(data.faqs)) {
-                        faqs = data.faqs;
-                        localStorage.setItem('embaFaqs', JSON.stringify(faqs));
-                    }
-                    if (data.activities && Array.isArray(data.activities)) {
-                        activities = data.activities;
-                        localStorage.setItem('embaActivities', JSON.stringify(activities));
-                    }
-                    if (data.teamMembers && Array.isArray(data.teamMembers)) {
-                        teamMembers = data.teamMembers;
-                        localStorage.setItem('embaTeamMembers', JSON.stringify(teamMembers));
-                    }
-                    if (data.contacts && Array.isArray(data.contacts)) {
-                        contacts = data.contacts;
-                        localStorage.setItem('embaContacts', JSON.stringify(contacts));
-                    }
-                    
-                    // Re-render after loading
-                    setTimeout(() => {
-                        renderFaqCategories();
-                        renderFaqs();
-                        renderItinerary();
-                        renderTeam();
-                        renderContacts();
-                    }, 100);
-                    
-                    // Show notification
-                    setTimeout(() => {
-                        showToast('已載入分享的最新資料！', 'success');
-                        document.getElementById('dataUpdateBanner').style.display = 'block';
-                    }, 500);
-                    
-                    // Clear the hash to clean up URL
-                    history.replaceState(null, null, window.location.pathname + window.location.search);
-                }
-            } catch (err) {
-                console.log('No shared data in URL or invalid format');
-            }
+                await signInAnonymously(auth);
+                onAuthStateChanged(auth, (user) => {
+                    state.user = user;
+                    if (user) setupListeners();
+                    render();
+                });
+            } catch (error) { showError(`登入失敗: ${error.message}`); }
         }
 
-        // Generate share link with current data
-        function generateShareLink() {
-            try {
-                const data = { faqs, activities, teamMembers, contacts };
-                const jsonStr = JSON.stringify(data);
-                const encoded = btoa(encodeURIComponent(jsonStr));
-                const baseUrl = window.location.origin + window.location.pathname;
-                const shareUrl = baseUrl + '#data=' + encoded;
-                
-                document.getElementById('shareLinkInput').value = shareUrl;
-                document.getElementById('shareLinkBox').style.display = 'block';
-                
-                showToast('分享連結已產生！');
-            } catch (err) {
-                alert('產生連結失敗：' + err.message);
-            }
-        }
-
-        // Copy share link to clipboard
-        function copyShareLink() {
-            const input = document.getElementById('shareLinkInput');
-            if (!input.value) {
-                generateShareLink();
-            }
-            input.select();
-            document.execCommand('copy');
-            showToast('連結已複製到剪貼簿！');
-        }
-
-        // Toast
-        function showToast(message, type = 'success') {
-            const existing = document.querySelector('.toast');
-            if (existing) existing.remove();
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-
-        // Render FAQ
-        let currentFaqFilter = 'all';
-        
-        function renderFaqCategories() {
-            const container = document.getElementById('faqCategories');
-            let html = `<button class="faq-cat-btn ${currentFaqFilter === 'all' ? 'active' : ''}" onclick="filterFaqs('all')">📋 全部</button>`;
-            faqCategories.forEach(cat => {
-                const count = faqs.filter(f => f.category === cat.id).length;
-                if (count > 0) {
-                    html += `<button class="faq-cat-btn ${currentFaqFilter === cat.id ? 'active' : ''}" onclick="filterFaqs('${cat.id}')">${cat.name} <span style="opacity:0.6">(${count})</span></button>`;
-                }
+        function setupListeners() {
+            onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'itinerary_v2'), orderBy('order')), (snap) => {
+                state.data.itinerary = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                if (state.activeTab === 'itinerary') render();
             });
+            onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'qa_v2'), orderBy('timestamp', 'desc')), (snap) => {
+                state.data.qa = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                if (state.activeTab === 'qa') render();
+            });
+            onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'team_contacts_v2')), (snap) => {
+                state.data.team = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                if (state.activeTab === 'team') render();
+            });
+        }
+
+        // --- Seeding ---
+        window.initializeData = async () => {
+            if(!confirm("確定要寫入預設資料嗎？這將會新增多筆測試數據。")) return;
+            try {
+                const itinData = [
+                    { order: 1, date: '5/13 (三)', title: '啟程與文化體驗', events: [{ type: 'transport', content: '桃園機場 (CI100 08:55) → 成田機場 (13:15)' }, { type: 'attraction', content: '成田山新勝寺 (表參道散策)', mapUrl: 'https://maps.app.goo.gl/example' }, { type: 'meal', content: '晚餐：和牛霜降肉壽喜燒 (JPY 6000)' }], hotel: '東京巨蛋飯店 Tokyo Dome Hotel' },
+                    { order: 2, date: '5/14 (四)', title: '學術與金融巡禮', events: [{ type: 'visit', content: '09:30 早稻田大學見學 (學術交流)' }, { type: 'meal', content: '午餐：叙叙苑燒肉套餐' }, { type: 'visit', content: '14:00 東京證交所 (金融)', mapUrl: 'https://maps.app.goo.gl/example2' }, { type: 'attraction', content: '日本橋日枝神社' }, { type: 'meal', content: '晚餐：瓢斗銘柄豚涮涮鍋' }], hotel: '東京萬豪酒店 Tokyo Marriott Hotel' },
+                    { order: 3, date: '5/15 (五)', title: '公共治理與永續', events: [{ type: 'visit', content: '10:00 東京都下水道局見學 (芝浦再生中心 - 環保ESG)' }, { type: 'visit', content: '15:00 國會參議院見學 (政治經濟)' }, { type: 'attraction', content: '麻布台之丘 (新地標)' }, { type: 'meal', content: '晚餐：居酒屋料理' }], hotel: '東京萬豪酒店 Tokyo Marriott Hotel' },
+                    { order: 4, date: '5/16 (六)', title: '企業創新與古都', events: [{ type: 'visit', content: '橫濱資生堂全球創新中心 S/PARK (創新)' }, { type: 'attraction', content: '高德院 (鎌倉青銅大佛)' }, { type: 'attraction', content: '鶴岡八幡宮 & 小町通' }, { type: 'meal', content: '晚餐：螃蟹道樂晚宴包廂 (酒水暢飲)' }], hotel: '東京萬豪酒店 Tokyo Marriott Hotel' },
+                    { order: 5, date: '5/17 (日)', title: '江戶風情與返程', events: [{ type: 'attraction', content: '小江戶川越 (藏造老街、時光鐘)' }, { type: 'attraction', content: '川越冰川神社 (體驗釣鯛魚籤)' }, { type: 'meal', content: '午餐：川越鰻魚飯御膳' }, { type: 'transport', content: '成田機場 (CI105 17:55) → 桃園機場 (20:35)' }], hotel: '溫暖的家' }
+                ];
+                for (const item of itinData) await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'itinerary_v2'), item);
+
+                const qaData = [
+                    { category: '交通', question: '我可以自行購買機票嗎？', answer: '可以。自行購票可扣團費 NT$18,000，但需自行前往第一個參訪點與團隊會合。', timestamp: Date.now() },
+                    { category: '住宿', question: '住宿可以安排單人房嗎？', answer: '可以。全程單人房需加價 NT$16,000。', timestamp: Date.now() },
+                    { category: '費用', question: '如果報名後需要取消怎麼辦？', answer: '依照旅遊契約書規定辦理。如未達成行率取消，收取退票費$5000；3月初後飯店不退費。', timestamp: Date.now() },
+                    { category: '學術', question: '課程學分如何計算？', answer: '本課程為「高階主管投資與理財」，屬於群修二，2學分。需全程參與才能獲得學分。', timestamp: Date.now() }
+                ];
+                for (const item of qaData) await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'qa_v2'), item);
+
+                const teamData = [
+                    { name: '林采欣 (Linda)', role: '雄獅旅遊 專案窗口', phone: '(02) 8793-9000 #1691', email: 'lindalin@liontravel.com', type: 'agency', task: '行程總籌、機票住宿' },
+                    { name: '愛喻', role: '總召', phone: '', email: '', type: 'student', task: '活動總籌與決策' },
+                    { name: '淑卿、幸慧', role: '副總召', phone: '', email: '', type: 'student', task: '協助總召、進度控管' }
+                ];
+                for (const item of teamData) await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'team_contacts_v2'), item);
+
+                alert("資料初始化成功！請重新整理頁面。");
+                location.reload();
+            } catch (err) { showError(`寫入資料失敗: ${err.message}`); }
+        };
+
+        // --- Render Logic ---
+        function render() {
+            renderNav();
+            const app = document.getElementById('app');
+            app.innerHTML = '';
+            
+            const isEmpty = state.data.itinerary.length === 0;
+
+            switch(state.activeTab) {
+                case 'home': app.innerHTML = renderHero() + renderInfo(); break;
+                case 'itinerary': isEmpty ? app.innerHTML = renderEmptyState() : renderItinerary(app); break;
+                case 'info': app.innerHTML = renderCost(); break;
+                case 'academic': app.innerHTML = renderAcademic(); break;
+                case 'qa': state.data.qa.length === 0 ? app.innerHTML = renderEmptyState() : renderQA(app); break;
+                case 'team': state.data.team.length === 0 ? app.innerHTML = renderEmptyState() : renderTeam(app); break;
+                case 'admin': renderAdmin(app); break;
+                default: app.innerHTML = renderHero();
+            }
+            lucide.createIcons();
+        }
+
+        function renderNav() {
+            const nav = document.getElementById('nav-items');
+            nav.innerHTML = NAV_ITEMS.map(item => `
+                <button onclick="window.switchTab('${item.id}')" 
+                    class="px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 whitespace-nowrap transition-all duration-300
+                    ${state.activeTab === item.id ? 'bg-teal-600 text-white shadow-lg scale-105' : 'text-slate-500 bg-white/50 hover:bg-orange-50 hover:text-orange-600'}">
+                    <i data-lucide="${item.icon}" class="w-4 h-4"></i><span class="hidden sm:inline">${item.label}</span>
+                </button>`).join('');
+            nav.innerHTML += state.isAdmin ? 
+                `<button onclick="window.handleLogout()" class="ml-2 px-3 py-2 rounded-full text-sm text-red-500 hover:bg-red-50"><i data-lucide="log-out" class="w-4 h-4"></i></button>` :
+                `<button onclick="window.switchTab('admin')" class="ml-2 px-3 py-2 rounded-full text-sm text-slate-400 hover:text-teal-600"><i data-lucide="settings" class="w-4 h-4"></i></button>`;
+        }
+
+        function renderEmptyState() {
+            return `<div class="flex flex-col items-center justify-center py-20 text-center px-4 fade-in">
+                <div class="bg-gray-100 p-6 rounded-full mb-6"><i data-lucide="database" class="w-12 h-12 text-slate-400"></i></div>
+                <h3 class="text-xl font-bold text-slate-700 mb-2">目前沒有資料</h3>
+                <p class="text-slate-500 mb-6 max-w-md">資料庫為空，若是初次使用，請點擊下方按鈕初始化。</p>
+                <button onclick="window.initializeData()" class="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition flex items-center"><i data-lucide="download-cloud" class="w-5 h-5 mr-2"></i> 寫入範例資料</button>
+            </div>`;
+        }
+
+        // --- Content Templates ---
+        function renderHero() {
+            return `<div class="relative h-[420px] md:h-[500px] rounded-b-[50px] overflow-hidden shadow-2xl mx-0 md:mx-4 mt-0 md:mt-2 fade-in group">
+                <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1920&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[20s] group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-teal-900/90 via-teal-900/40 to-transparent"></div>
+                <div class="relative max-w-7xl mx-auto px-6 h-full flex flex-col justify-end pb-20 text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 bg-yellow-400 text-teal-900 px-5 py-2 rounded-full font-bold text-sm mb-6 w-fit mx-auto md:mx-0 shadow-lg animate-bounce"><span class="bg-white/30 rounded-full p-1"><i data-lucide="star" class="w-3 h-3 text-teal-900"></i></span>Lion, Enriching Life!</div>
+                    <h1 class="text-4xl md:text-7xl font-black text-white mb-4 drop-shadow-xl tracking-tight leading-tight">重塑<span class="text-orange-400">日本競爭力</span></h1>
+                    <p class="text-xl md:text-2xl text-orange-50 font-medium mb-8 max-w-2xl mx-auto md:mx-0 leading-relaxed text-shadow">深入東京核心，探討資本、人才與產業的<br class="md:hidden">數位轉型及永續革新</p>
+                    <div class="bg-white/10 backdrop-blur-md px-6 py-3 rounded-2xl text-white text-base flex items-center border border-white/20 shadow-sm w-fit mx-auto md:mx-0"><i data-lucide="calendar" class="mr-3 w-5 h-5 text-orange-400"></i> 2026/05/13 (三) - 05/17 (日)</div>
+                </div>
+            </div>`;
+        }
+
+        function renderInfo() {
+            return `<div class="max-w-6xl mx-auto px-4 py-16 fade-in space-y-16">
+                <!-- Hotel -->
+                <div><div class="flex items-center mb-8"><div class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 mr-4"><i data-lucide="hotel" class="w-6 h-6"></i></div><h2 class="text-3xl font-bold text-slate-800">精選住宿安排</h2></div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
+                        <div class="h-56 relative"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover"><div class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">第 1 晚 (5/13)</div></div>
+                        <div class="p-8"><h4 class="text-2xl font-bold text-slate-800 mb-2">東京巨蛋飯店</h4><div class="space-y-4 text-sm text-slate-600"><div class="flex items-start"><i data-lucide="map-pin" class="w-5 h-5 mr-3 text-teal-500 shrink-0"></i><span>東京都文京区後楽 1-3-61</span></div><div class="flex items-center"><i data-lucide="phone" class="w-5 h-5 mr-3 text-teal-500 shrink-0"></i>+81-3-5805-2111</div><a href="https://maps.google.com/?q=Tokyo+Dome+Hotel" target="_blank" class="inline-flex items-center text-orange-500 text-xs font-bold hover:underline">開啟地圖 <i data-lucide="external-link" class="w-3 h-3 ml-1"></i></a></div></div>
+                    </div>
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
+                        <div class="h-56 relative"><img src="https://images.unsplash.com/photo-1561501900-3701fa6a0864?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover"><div class="absolute top-4 left-4 bg-teal-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">第 2-4 晚 (5/14-16)</div><div class="absolute top-4 right-4 bg-yellow-400 text-teal-900 text-xs font-bold px-3 py-1.5 rounded-full">★ 特別升等</div></div>
+                        <div class="p-8"><h4 class="text-2xl font-bold text-slate-800 mb-2">東京萬豪酒店</h4><div class="space-y-4 text-sm text-slate-600"><div class="flex items-start"><i data-lucide="map-pin" class="w-5 h-5 mr-3 text-teal-500 shrink-0"></i><span>東京都品川区北品川 4-7-36</span></div><div class="flex items-center"><i data-lucide="phone" class="w-5 h-5 mr-3 text-teal-500 shrink-0"></i>+81-3-5488-3911</div><a href="https://maps.google.com/?q=Tokyo+Marriott+Hotel" target="_blank" class="inline-flex items-center text-orange-500 text-xs font-bold hover:underline">開啟地圖 <i data-lucide="external-link" class="w-3 h-3 ml-1"></i></a></div></div>
+                    </div>
+                </div></div>
+                <!-- Flight -->
+                <div class="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden"><div class="bg-slate-800 px-8 py-4 flex flex-col md:flex-row justify-between items-center text-white"><h3 class="text-lg font-bold flex items-center gap-2"><i data-lucide="plane" class="text-orange-400"></i> 航班資訊 (中華航空)</h3><span class="bg-white/10 px-3 py-1 rounded-full text-xs">團體經濟艙 | 需團進團出</span></div>
+                <div class="p-8 grid md:grid-cols-2 gap-12 relative"><div class="hidden md:block absolute left-1/2 top-8 bottom-8 w-px bg-slate-100"></div><div class="text-center"><div class="inline-block bg-orange-50 text-orange-600 px-3 py-1 rounded text-xs font-bold mb-4">去程 5/13 (三)</div><div class="flex justify-between items-center mb-2 px-4"><div class="text-left"><div class="text-3xl font-black text-slate-800">08:55</div><div class="text-xs text-slate-400 font-bold">桃園 T2</div></div><div class="flex flex-col items-center mx-4 flex-1"><span class="text-xs text-slate-400 mb-1">3h 20m</span><div class="w-full h-0.5 bg-slate-200 relative"><i data-lucide="plane" class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 text-orange-400 fill-current rotate-90"></i></div><span class="text-xs font-mono text-slate-500 mt-1">CI 100</span></div><div class="text-right"><div class="text-3xl font-black text-slate-800">13:15</div><div class="text-xs text-slate-400 font-bold">成田 T2</div></div></div></div><div class="text-center"><div class="inline-block bg-teal-50 text-teal-600 px-3 py-1 rounded text-xs font-bold mb-4">回程 5/17 (日)</div><div class="flex justify-between items-center mb-2 px-4"><div class="text-left"><div class="text-3xl font-black text-slate-800">17:55</div><div class="text-xs text-slate-400 font-bold">成田 T2</div></div><div class="flex flex-col items-center mx-4 flex-1"><span class="text-xs text-slate-400 mb-1">3h 40m</span><div class="w-full h-0.5 bg-slate-200 relative"><i data-lucide="plane" class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 text-teal-500 fill-current rotate-90"></i></div><span class="text-xs font-mono text-slate-500 mt-1">CI 105</span></div><div class="text-right"><div class="text-3xl font-black text-slate-800">20:35</div><div class="text-xs text-slate-400 font-bold">桃園 T2</div></div></div></div></div></div>
+            </div>`;
+        }
+
+        function renderCost() {
+            return `<div class="max-w-4xl mx-auto px-4 py-12 slide-up"><div class="flex items-center mb-8"><div class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 mr-4"><i data-lucide="dollar-sign" class="w-6 h-6"></i></div><h2 class="text-3xl font-bold text-slate-800">費用說明與須知</h2></div>
+            <div class="bg-white rounded-[30px] shadow-xl overflow-hidden mb-10 border-2 border-orange-100 relative"><div class="absolute top-0 right-0 w-32 h-32 bg-orange-400/10 rounded-full blur-3xl -mr-10 -mt-10"></div><div class="p-10 text-center"><p class="text-slate-500 font-medium mb-2 tracking-wide">每人團費 (以35人成團計算)</p><div class="flex justify-center items-baseline gap-2 mb-4"><span class="text-2xl text-slate-400 font-bold">NT$</span><span class="text-6xl font-black text-slate-800 tracking-tight">63,500</span></div><div class="inline-flex items-center gap-2 bg-orange-50 text-orange-700 px-4 py-2 rounded-full text-sm font-bold border border-orange-100">訂金 NT$ 15,000</div></div><div class="bg-slate-50 p-8 grid md:grid-cols-2 gap-10 border-t border-slate-100"><div><h4 class="font-bold text-teal-800 mb-4 flex items-center gap-2"><i data-lucide="check-circle-2" class="text-teal-500 w-5 h-5"></i> 費用包含</h4><ul class="space-y-3">${['台北/東京 團體來回經濟艙機票','行程表列之餐食、景點門票、交通','表列住宿 (二人一室)','兩地機場稅、燃油附加費','履約責任險 500萬 + 醫療險 20萬','司機、領隊、導遊小費'].map(i=>`<li class="flex items-start text-sm text-slate-600"><span class="mr-2 text-teal-500">•</span>${i}</li>`).join('')}</ul></div><div><h4 class="font-bold text-orange-700 mb-4 flex items-center gap-2"><i data-lucide="plus-circle" class="text-orange-500 w-5 h-5"></i> 自理與加價項目</h4><ul class="space-y-3"><li class="flex items-start text-sm text-slate-600"><span class="mr-2 text-orange-400">×</span>個人護照新辦費用 ($1,600)</li><li class="flex items-start text-sm text-slate-600"><span class="mr-2 text-orange-400">×</span>純係私人之消費</li><li class="mt-4 pt-4 border-t border-slate-200"><div class="flex justify-between items-center text-sm font-bold text-slate-700 mb-2"><span>指定單人房</span><span class="text-orange-600">+ NT$ 16,000</span></div><div class="flex justify-between items-center text-sm font-bold text-slate-700"><span>機票自理扣除</span><span class="text-teal-600">- NT$ 18,000</span></div></li></ul></div></div></div>
+            <div class="bg-red-50 rounded-2xl p-6 border border-red-100 flex gap-4"><div class="shrink-0"><i data-lucide="alert-triangle" class="text-red-500 w-6 h-6 mt-1"></i></div><div><h4 class="font-bold text-red-800 mb-2">取消規定與注意事項</h4><ul class="space-y-1 text-sm text-red-700/80 list-disc pl-4"><li>若報名後因故取消，將收取行政手續費與退票費用 (依旅遊契約書辦理)。</li><li>未達成行率若取消，將收取退票作業費 NT$5,000。</li><li><strong>3月初後</strong> 若取消行程，飯店費用將無法退還 (全額沒收)。</li><li>請確認護照效期需在回國日 (2026/5/17) 後 6 個月以上。</li></ul></div></div></div>`;
+        }
+
+        function renderAcademic() {
+            return `<div class="max-w-5xl mx-auto px-4 py-12 slide-up"><div class="flex items-center mb-8"><div class="w-10 h-10 bg-teal-100 rounded-xl flex items-center justify-center text-teal-600 mr-4"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div><h2 class="text-3xl font-bold text-slate-800">學術任務與課綱</h2></div>
+            <div class="bg-gradient-to-br from-teal-600 to-teal-800 rounded-3xl p-8 md:p-10 text-white shadow-xl mb-10 relative overflow-hidden"><div class="absolute right-0 top-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16"></div><div class="relative z-10 grid md:grid-cols-3 gap-8"><div class="md:col-span-2"><div class="inline-flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-4 border border-white/20"><span>114學年第二學期</span><span class="w-1 h-1 bg-white rounded-full"></span><span>群修二</span></div><h3 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">高階主管投資與理財<br><span class="text-teal-200 text-2xl">(境外參訪)</span></h3><div class="flex flex-wrap gap-4 text-sm opacity-90"><div class="flex items-center"><i data-lucide="user" class="w-4 h-4 mr-2"></i>授課教師：陳鴻毅 教授</div><div class="flex items-center"><i data-lucide="award" class="w-4 h-4 mr-2"></i>2 學分</div></div></div><div class="bg-white/10 rounded-2xl p-6 backdrop-blur-sm border border-white/10 flex flex-col justify-center"><h4 class="font-bold mb-2 flex items-center"><i data-lucide="target" class="w-4 h-4 mr-2 text-yellow-300"></i> 課程目標</h4><p class="text-xs leading-relaxed opacity-90">聚焦於從學術創新到企業實踐，探討日本在資源受限與結構轉型挑戰下，如何透過產官學研協作，形成可落實的轉型路徑。</p></div></div></div>
+            <div class="grid md:grid-cols-3 gap-6 mb-12"><div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center"><div class="text-xs font-bold text-slate-400 uppercase mb-2">Pre-Trip</div><div class="text-lg font-bold text-slate-800 mb-1">行前課程</div><div class="text-3xl font-black text-teal-600 mb-2">5/11 <span class="text-base font-normal text-slate-500">(一)</span></div><div class="text-sm text-slate-500 bg-slate-50 py-1 px-3 rounded-full inline-block">18:30 - 22:30</div></div><div class="bg-orange-50 p-6 rounded-2xl shadow-md border-2 border-orange-200 text-center transform md:-translate-y-2 relative"><div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">Main Event</div><div class="text-xs font-bold text-orange-800/60 uppercase mb-2">Tokyo Trip</div><div class="text-lg font-bold text-orange-900 mb-1">日本東京參訪</div><div class="text-3xl font-black text-orange-600 mb-2">5/13 - 17</div><div class="text-sm text-orange-800/70">全程參與 (缺席視為不及格)</div></div><div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center"><div class="text-xs font-bold text-slate-400 uppercase mb-2">Post-Trip</div><div class="text-lg font-bold text-slate-800 mb-1">回程課程</div><div class="text-3xl font-black text-teal-600 mb-2">5/25 <span class="text-base font-normal text-slate-500">(一)</span></div><div class="text-sm text-slate-500 bg-slate-50 py-1 px-3 rounded-full inline-block">18:30 - 22:30</div></div></div>
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden mb-12"><div class="bg-slate-50 px-8 py-4 border-b border-slate-100 font-bold text-slate-700 flex items-center"><i data-lucide="book-open-check" class="w-5 h-5 mr-2 text-teal-500"></i> 重點參訪主題與學習成效</div><div class="divide-y divide-slate-100">${[{ date: '5/13', title: '早稻田商學院', tag: '學術交流', color: 'blue', desc: '認識早稻田之教學特色與產學合作模式，討論管理理論之實務應用。' }, { date: '5/14', title: '東京證券交易所', tag: '金融', color: 'indigo', desc: '認識市場制度與核心功能，討論公司治理與資本效率。' }, { date: '5/15', title: '東京都下水道局', tag: '環保 ESG', color: 'green', desc: '參訪芝浦再生中心，認識水資源循環，討論公共治理與永續管理。' }, { date: '5/15', title: '日本國會參議院', tag: '政治經濟', color: 'purple', desc: '認識制度架構與立法職能，討論政策環境對企業之影響。' }, { date: '5/16', title: '資生堂 S/PARK', tag: '創新', color: 'pink', desc: '橫濱全球創新中心，認識研發創新與品牌策略，討論競爭優勢。' }].map(item => `<div class="p-6 flex flex-col md:flex-row gap-4 hover:bg-slate-50 transition"><div class="md:w-32 shrink-0 flex md:flex-col items-center md:items-start gap-2"><span class="font-bold text-slate-400 text-sm">${item.date}</span><span class="bg-${item.color}-100 text-${item.color}-700 text-xs font-bold px-2 py-1 rounded border border-${item.color}-200">${item.tag}</span></div><div><h4 class="font-bold text-slate-800 text-lg mb-1">${item.title}</h4><p class="text-sm text-slate-600 leading-relaxed">${item.desc}</p></div></div>`).join('')}</div></div>
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8"><h4 class="font-bold text-teal-800 mb-6 flex items-center"><i data-lucide="clipboard-list" class="w-5 h-5 mr-2"></i> 評分標準</h4><div class="space-y-6"><div><div class="flex justify-between items-end mb-2"><span class="font-bold text-slate-700">出席與參訪參與</span><span class="text-2xl font-black text-orange-500">60%</span></div><div class="w-full bg-gray-100 rounded-full h-3"><div class="bg-orange-500 h-3 rounded-full" style="width: 60%"></div></div></div><div class="grid grid-cols-2 gap-8"><div><div class="flex justify-between items-end mb-2"><span class="font-bold text-slate-700">課程參與討論</span><span class="text-xl font-black text-teal-500">20%</span></div><div class="w-full bg-gray-100 rounded-full h-3"><div class="bg-teal-500 h-3 rounded-full" style="width: 20%"></div></div></div><div><div class="flex justify-between items-end mb-2"><span class="font-bold text-slate-700">期末報告</span><span class="text-xl font-black text-blue-500">20%</span></div><div class="w-full bg-gray-100 rounded-full h-3"><div class="bg-blue-500 h-3 rounded-full" style="width: 20%"></div></div></div></div></div></div></div>`;
+        }
+
+        function renderItinerary(container) {
+            let html = `<div class="max-w-4xl mx-auto px-4 py-12 fade-in"><div class="flex items-center justify-between mb-10"><div class="flex items-center"><div class="w-10 h-10 bg-teal-100 rounded-xl flex items-center justify-center text-teal-600 mr-4"><i data-lucide="map" class="w-6 h-6"></i></div><h2 class="text-3xl font-bold text-slate-800">每日行程安排</h2></div>${state.isAdmin ? `<div class="flex gap-2"><button onclick="window.addItineraryDay()" class="bg-teal-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md hover:bg-teal-700 flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> 新增天數</button></div>` : ''}</div><div class="space-y-12 relative"><div class="timeline-line bg-slate-200 hidden md:block" style="left: 2rem;"></div>`;
+            state.data.itinerary.forEach((day) => {
+                const isEditing = state.ui.editingId === day.id;
+                html += `<div class="relative pl-0 md:pl-16 timeline-item"><div class="hidden md:flex absolute left-0 top-0 w-16 h-16 justify-center items-start z-10"><div class="w-4 h-4 rounded-full bg-teal-500 border-4 border-white shadow-md mt-6"></div></div><div class="bg-white rounded-[2rem] shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300"><div class="bg-slate-50 px-6 py-4 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-2"><div class="flex items-center gap-3"><span class="bg-teal-600 text-white font-black text-sm px-3 py-1 rounded-lg shadow-sm">DAY ${day.order}</span>${isEditing ? `<input id="edit-date-${day.id}" value="${day.date}" class="border-b border-slate-300 bg-transparent px-1 text-sm font-bold text-slate-500 w-32" placeholder="日期">` : `<span class="font-bold text-slate-400 text-sm">${day.date}</span>`}</div><div class="flex-1">${isEditing ? `<input id="edit-title-${day.id}" value="${day.title}" class="w-full border-b-2 border-teal-500 bg-transparent focus:outline-none font-bold text-lg text-slate-800 px-2">` : `<h3 class="font-bold text-xl text-slate-800">${day.title}</h3>`}</div>${state.isAdmin ? (isEditing ? `<div class="flex gap-2 shrink-0"><button onclick="window.saveItinerary('${day.id}')" class="bg-teal-500 text-white px-3 py-1 rounded text-xs">儲存</button><button onclick="window.setEditingId(null)" class="bg-gray-200 text-slate-600 px-3 py-1 rounded text-xs">取消</button><button onclick="window.deleteItineraryDay('${day.id}')" class="bg-red-100 text-red-500 px-3 py-1 rounded text-xs ml-2">刪除</button></div>` : `<button onclick="window.setEditingId('${day.id}')" class="text-slate-300 hover:text-teal-500 p-1"><i data-lucide="edit-3" class="w-4 h-4"></i></button>`) : ''}</div><div class="p-6 md:p-8"><div class="space-y-6 relative" id="events-container-${day.id}">${!isEditing ? `<div class="absolute left-[19px] top-3 bottom-3 w-0.5 bg-slate-100"></div>` : ''}${day.events.map((ev) => { if(isEditing) { return `<div class="flex gap-2 items-start event-row bg-slate-50 p-3 rounded-lg border border-slate-200"><select class="event-type border border-slate-300 rounded p-2 text-sm bg-white shrink-0"><option value="visit" ${ev.type=='visit'?'selected':''}>參訪</option><option value="attraction" ${ev.type=='attraction'?'selected':''}>景點</option><option value="meal" ${ev.type=='meal'?'selected':''}>餐食</option><option value="transport" ${ev.type=='transport'?'selected':''}>交通</option></select><div class="flex-1 space-y-2"><input class="event-content w-full border border-slate-300 rounded p-2 text-sm" value="${ev.content}"><div class="flex items-center gap-2"><i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i><input class="event-map w-full border border-slate-300 rounded p-1 text-xs text-slate-500" value="${ev.mapUrl||''}" placeholder="Google Map URL"></div></div><button onclick="this.closest('.event-row').remove()" class="text-red-400 hover:text-red-600 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div>`; } else { let typeConfig = { 'visit': { color: 'blue', icon: 'briefcase', label: '參訪' }, 'attraction': { color: 'orange', icon: 'camera', label: '景點' }, 'meal': { color: 'emerald', icon: 'utensils', label: '餐食' }, 'transport': { color: 'slate', icon: 'plane', label: '交通' } }[ev.type] || { color: 'slate', icon: 'circle', label: '其他' }; return `<div class="flex gap-4 relative z-10"><div class="w-10 h-10 shrink-0 bg-white border border-slate-100 rounded-full flex items-center justify-center shadow-sm"><i data-lucide="${typeConfig.icon}" class="w-4 h-4 text-${typeConfig.color}-500"></i></div><div class="py-2 flex-1"><div class="flex flex-wrap items-center gap-2 mb-1"><span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-${typeConfig.color}-50 text-${typeConfig.color}-600 border border-${typeConfig.color}-100">${typeConfig.label}</span></div><p class="text-slate-700 text-base leading-relaxed ${ev.type === 'visit' ? 'font-bold' : ''}">${ev.content}${ev.mapUrl ? `<a href="${ev.mapUrl}" target="_blank" class="inline-flex items-center text-orange-500 hover:text-orange-600 ml-2"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i></a>` : ''}</p></div></div>`; } }).join('')}</div>${isEditing ? `<button onclick="window.appendEventRow('${day.id}')" class="w-full mt-4 py-2 border-2 border-dashed border-slate-300 text-slate-400 rounded-xl hover:border-teal-400 hover:text-teal-500 transition text-sm font-bold flex items-center justify-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> 新增行程細項</button>` : ''}<div class="mt-8 pt-4 border-t border-slate-100 flex items-center gap-3 text-sm text-slate-500 bg-slate-50/50 -mx-6 -mb-6 p-6"><div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-500 shrink-0"><i data-lucide="moon" class="w-4 h-4"></i></div><div class="flex-1"><span class="text-xs font-bold text-slate-400 uppercase block">Accommodation</span>${isEditing ? `<input id="edit-hotel-${day.id}" value="${day.hotel}" class="w-full bg-white border border-slate-200 rounded px-2 py-1 text-slate-800">` : `<span class="font-bold text-slate-700 text-base">${day.hotel}</span>`}</div></div></div></div></div>`;
+            });
+            container.innerHTML = html + `</div></div>`;
+        }
+
+        function renderQA(container) {
+             const search = state.ui.qaSearch.toLowerCase();
+             const filtered = state.data.qa.filter(item => { return (state.ui.categoryFilter === 'all' || item.category === state.ui.categoryFilter) && (!search || item.question.toLowerCase().includes(search) || item.answer.toLowerCase().includes(search)); });
+             let html = `<div class="max-w-3xl mx-auto px-4 py-12 fade-in"><div class="flex items-center justify-between mb-8"><div class="flex items-center"><div class="w-10 h-10 bg-teal-100 rounded-xl flex items-center justify-center text-teal-600 mr-4"><i data-lucide="help-circle" class="w-6 h-6"></i></div><h2 class="text-3xl font-bold text-slate-800">旅遊問答集</h2></div>${state.isAdmin ? `<button onclick="window.openQaModal()" class="bg-teal-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md hover:bg-teal-700 flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> 新增問答</button>` : ''}</div><div class="relative mb-6"><input type="text" oninput="window.setQaSearch(this.value)" placeholder="輸入關鍵字搜尋問題..." class="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 shadow-sm text-sm" value="${state.ui.qaSearch}"><i data-lucide="search" class="absolute left-4 top-3.5 w-5 h-5 text-slate-400"></i></div><div class="flex flex-wrap gap-2 mb-8"><button onclick="window.setCategory('all')" class="px-5 py-2 rounded-full text-sm font-bold transition-all shadow-sm ${state.ui.categoryFilter==='all' ? 'bg-orange-500 text-white ring-2 ring-orange-200' : 'bg-white text-slate-500 border border-slate-200 hover:border-orange-300'}">全部</button>${['一般','住宿','交通','學術','費用'].map(c => `<button onclick="window.setCategory('${c}')" class="px-5 py-2 rounded-full text-sm font-bold transition-all shadow-sm ${state.ui.categoryFilter===c ? 'bg-teal-600 text-white ring-2 ring-teal-200' : 'bg-white text-slate-500 border border-slate-200 hover:border-teal-300'}">${c}</button>`).join('')}</div><div class="space-y-4">${filtered.length === 0 ? `<div class="text-center text-slate-400 py-8">沒有找到相關問題</div>` : filtered.map((item, idx) => `<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition"><div onclick="window.toggleQA(${idx})" class="p-5 flex justify-between items-center cursor-pointer select-none"><div class="flex items-center gap-4"><span class="text-xs font-bold px-2 py-1 rounded bg-slate-100 text-slate-500 min-w-[3rem] text-center shrink-0">${item.category||'一般'}</span><h3 class="font-bold text-slate-700 text-lg">${item.question}</h3></div><div class="bg-slate-50 p-1 rounded-full text-slate-400 shrink-0 ml-2"><i data-lucide="${state.ui.openQaIndex===idx ? 'chevron-up' : 'chevron-down'}" class="w-5 h-5"></i></div></div>${state.ui.openQaIndex === idx ? `<div class="px-5 pb-6 pl-[4.5rem] text-slate-600 leading-relaxed text-base border-t border-slate-50 pt-4 bg-slate-50/30">${item.answer}${state.isAdmin ? `<div class="mt-4 pt-2 border-t border-slate-200/50 text-right flex justify-end gap-3"><button onclick="window.openQaModal('${item.id}')" class="text-teal-500 text-xs hover:underline flex items-center gap-1"><i data-lucide="pencil" class="w-3 h-3"></i> 編輯</button><button onclick="window.deleteDoc('qa_v2','${item.id}')" class="text-red-400 text-xs hover:text-red-600 hover:underline flex items-center gap-1"><i data-lucide="trash-2" class="w-3 h-3"></i> 刪除</button></div>` : ''}</div>` : ''}</div>`).join('')}</div></div>`;
+             if (state.isAdmin && state.ui.qaModal.open) {
+                const isEdit = state.ui.qaModal.id;
+                const data = isEdit ? state.data.qa.find(q => q.id === isEdit) : {};
+                html += `<div class="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4 fade-in"><div class="bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl relative"><h3 class="text-xl font-bold text-slate-800 mb-4">${isEdit ? '編輯問答' : '新增問答'}</h3><div class="space-y-4"><div><label class="block text-xs font-bold text-slate-500 mb-1">分類</label><select id="modal-qa-cat" class="w-full border p-3 rounded-lg text-sm bg-slate-50">${['一般','住宿','交通','學術','費用'].map(c => `<option value="${c}" ${data.category === c ? 'selected' : ''}>${c}</option>`).join('')}</select></div><div><label class="block text-xs font-bold text-slate-500 mb-1">問題</label><input id="modal-qa-q" value="${data.question || ''}" class="w-full border p-3 rounded-lg text-sm" placeholder="問題"></div><div><label class="block text-xs font-bold text-slate-500 mb-1">回答</label><textarea id="modal-qa-a" class="w-full border p-3 rounded-lg text-sm h-32" placeholder="回答">${data.answer || ''}</textarea></div></div><div class="flex gap-3 mt-6"><button onclick="window.saveQaModal()" class="flex-1 bg-teal-600 text-white py-2 rounded-xl font-bold shadow-md hover:bg-teal-700">儲存</button><button onclick="window.closeQaModal()" class="flex-1 bg-gray-100 text-slate-600 py-2 rounded-xl font-bold hover:bg-gray-200">取消</button></div></div></div>`;
+             }
+             container.innerHTML = html;
+        }
+
+        function renderTeam(container) {
+            const agencies = state.data.team.filter(c => c.type === 'agency');
+            const students = state.data.team.filter(c => c.type !== 'agency');
+            const rolePriority = (role) => { if (role && role.includes('總召') && !role.includes('副')) return 1; if (role && role.includes('副總召')) return 2; return 3; };
+            students.sort((a, b) => rolePriority(a.role) - rolePriority(b.role));
+            const renderCard = (c) => {
+                const isAgency = c.type === 'agency';
+                const confirmDelete = state.ui.deletingId === c.id;
+                return `<div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 relative group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">${state.isAdmin ? `<div class="absolute top-4 right-4 flex gap-2 z-10">${confirmDelete ? `<button onclick="window.deleteDoc('team_contacts_v2','${c.id}')" class="bg-red-500 text-white text-xs px-2 py-1 rounded shadow">確認</button><button onclick="window.setDeletingTeam(null)" class="bg-gray-200 text-slate-600 text-xs px-2 py-1 rounded shadow">取消</button>` : `<button onclick="window.openTeamModal('${c.id}')" class="text-slate-300 hover:text-teal-500 transition"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="window.setDeletingTeam('${c.id}')" class="text-slate-300 hover:text-red-400 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>`}</div>` : ''}<div class="flex items-center gap-4 mb-4"><div class="w-14 h-14 rounded-2xl flex items-center justify-center text-xl font-bold shadow-inner ${isAgency ? 'bg-orange-100 text-orange-600' : 'bg-teal-50 text-teal-600'}">${c.name[0]}</div><div><h4 class="font-bold text-lg text-slate-800">${c.name}</h4><span class="text-xs font-bold px-2 py-0.5 rounded ${isAgency ? 'bg-orange-50 text-orange-600' : 'bg-slate-100 text-slate-500'}">${c.role}</span></div></div>${c.task ? `<div class="mb-4 bg-slate-50 rounded-xl p-3 border border-slate-100"><div class="text-[10px] font-bold text-slate-400 uppercase mb-1">負責項目</div><div class="text-sm font-medium text-slate-700">${c.task}</div></div>` : ''}<div class="space-y-2 pt-2 border-t border-slate-50">${c.phone ? `<div class="flex items-center text-sm text-slate-500 hover:text-teal-600 transition"><i data-lucide="phone" class="w-3.5 h-3.5 mr-3 opacity-50"></i>${c.phone}</div>` : ''}${c.email ? `<div class="flex items-center text-sm text-slate-500 hover:text-teal-600 transition truncate" title="${c.email}"><i data-lucide="mail" class="w-3.5 h-3.5 mr-3 opacity-50"></i>${c.email}</div>` : ''}</div></div>`;
+            };
+            let html = `<div class="max-w-5xl mx-auto px-4 py-12 fade-in"><div class="flex items-center justify-between mb-10"><div class="flex items-center"><div class="w-10 h-10 bg-teal-100 rounded-xl flex items-center justify-center text-teal-600 mr-4"><i data-lucide="users" class="w-6 h-6"></i></div><h2 class="text-3xl font-bold text-slate-800">籌備團隊與聯絡</h2></div>${state.isAdmin ? `<button onclick="window.openTeamModal()" class="bg-teal-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md hover:bg-teal-700 flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> 新增成員</button>` : ''}</div>`;
+            if (agencies.length > 0) html += `<h3 class="text-lg font-bold text-slate-500 mb-4 border-l-4 border-orange-400 pl-3">旅行社 / 廠商窗口</h3><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">${agencies.map(renderCard).join('')}</div>`;
+            if (students.length > 0 || state.isAdmin) html += `<h3 class="text-lg font-bold text-slate-500 mb-4 border-l-4 border-teal-500 pl-3">學生籌備團隊</h3><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">${students.map(renderCard).join('')}</div>`;
+            html += `</div>`;
+            if (state.isAdmin && state.ui.teamModal.open) {
+                const isEdit = state.ui.teamModal.id;
+                const data = isEdit ? state.data.team.find(t => t.id === isEdit) : {};
+                html += `<div class="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4 fade-in"><div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative"><h3 class="text-xl font-bold text-slate-800 mb-4">${isEdit ? '編輯成員' : '新增成員'}</h3><div class="space-y-3"><div><label class="block text-xs font-bold text-slate-500 mb-1">姓名</label><input id="tm-name" value="${data.name || ''}" class="w-full border p-2 rounded-lg text-sm" placeholder="姓名"></div><div><label class="block text-xs font-bold text-slate-500 mb-1">職稱/角色</label><input id="tm-role" value="${data.role || ''}" class="w-full border p-2 rounded-lg text-sm" placeholder="例如: 總召"></div><div><label class="block text-xs font-bold text-slate-500 mb-1">負責任務</label><input id="tm-task" value="${data.task || ''}" class="w-full border p-2 rounded-lg text-sm" placeholder="例如: 行程規劃"></div><div class="grid grid-cols-2 gap-2"><div><label class="block text-xs font-bold text-slate-500 mb-1">電話</label><input id="tm-phone" value="${data.phone || ''}" class="w-full border p-2 rounded-lg text-sm"></div><div><label class="block text-xs font-bold text-slate-500 mb-1">Email</label><input id="tm-email" value="${data.email || ''}" class="w-full border p-2 rounded-lg text-sm"></div></div><div><label class="block text-xs font-bold text-slate-500 mb-1">類型</label><select id="tm-type" class="w-full border p-2 rounded-lg text-sm"><option value="student" ${data.type !== 'agency' ? 'selected' : ''}>學生團隊</option><option value="agency" ${data.type === 'agency' ? 'selected' : ''}>旅行社/廠商</option></select></div></div><div class="flex gap-3 mt-6"><button onclick="window.saveTeamMember()" class="flex-1 bg-teal-600 text-white py-2 rounded-xl font-bold shadow-md hover:bg-teal-700">儲存</button><button onclick="window.closeTeamModal()" class="flex-1 bg-gray-100 text-slate-600 py-2 rounded-xl font-bold hover:bg-gray-200">取消</button></div></div></div>`;
+            }
             container.innerHTML = html;
         }
 
-        function filterFaqs(category) {
-            currentFaqFilter = category;
-            renderFaqCategories();
-            renderFaqs();
+        function renderAdmin(container) {
+            container.innerHTML = `<div class="min-h-[60vh] flex items-center justify-center bg-orange-50/50 px-4 fade-in">${state.isAdmin ? `<div class="text-center bg-white p-10 rounded-3xl shadow-xl border border-orange-100 max-w-lg w-full"><div class="w-16 h-16 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center mx-auto mb-6"><i data-lucide="shield-check" class="w-8 h-8"></i></div><h2 class="text-2xl font-bold mb-2 text-slate-800">已登入管理後台</h2><p class="mb-8 text-slate-500">現在您擁有編輯權限，請點選上方選單 (行程、QA、團隊) 直接在頁面上進行編輯操作。</p><button onclick="window.handleLogout()" class="bg-slate-200 text-slate-600 px-8 py-3 rounded-xl font-bold hover:bg-red-50 hover:text-red-500 transition w-full">登出系統</button></div>` : `<div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl w-full max-w-md border border-white"><div class="text-center mb-8"><h2 class="text-3xl font-black text-slate-800 mb-2">團隊登入</h2><p class="text-slate-400 text-sm">請輸入管理密碼以存取編輯功能</p></div><form onsubmit="event.preventDefault(); window.login();" class="space-y-4"><div><label class="block text-xs font-bold text-slate-500 mb-1 ml-1">帳號</label><input id="login-user" type="text" placeholder="admin" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:bg-white outline-none transition font-bold text-slate-700"></div><div><label class="block text-xs font-bold text-slate-500 mb-1 ml-1">密碼</label><input id="login-pass" type="password" placeholder="••••••••" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:bg-white outline-none transition font-bold text-slate-700"></div><button type="submit" class="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white py-4 rounded-xl font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] transition transform">確認登入</button></form></div>`}</div>`;
         }
 
-        function renderFaqs() {
-            const container = document.getElementById('faqContainer');
-            
-            if (currentFaqFilter === 'all') {
-                // Group by category
-                let html = '';
-                faqCategories.forEach(cat => {
-                    const categoryFaqs = faqs.filter(f => f.category === cat.id);
-                    if (categoryFaqs.length === 0) return;
-                    
-                    html += `
-                        <div class="faq-group">
-                            <div class="faq-group-title" style="color:${cat.color}">
-                                ${cat.name}
-                                <span class="faq-group-badge">${categoryFaqs.length} 題</span>
-                            </div>
-                            ${categoryFaqs.map(faq => renderFaqItem(faq, cat)).join('')}
-                        </div>
-                    `;
-                });
-                container.innerHTML = html;
-            } else {
-                // Show filtered category
-                const cat = faqCategories.find(c => c.id === currentFaqFilter);
-                const filteredFaqs = faqs.filter(f => f.category === currentFaqFilter);
-                container.innerHTML = filteredFaqs.map(faq => renderFaqItem(faq, cat)).join('');
-            }
-        }
+        // --- Actions ---
+        window.switchTab = (t) => { state.activeTab = t; render(); window.scrollTo({top:0, behavior:'smooth'}); };
+        window.login = () => { if(document.getElementById('login-user').value==='admin' && document.getElementById('login-pass').value==='Aa123456#') { state.isAdmin = true; state.activeTab='itinerary'; render(); } else alert('帳號密碼錯誤'); };
+        window.handleLogout = () => { state.isAdmin=false; state.activeTab='home'; render(); };
+        window.setEditingId = (id) => { state.ui.editingId = id; render(); };
+        window.deleteDoc = async (col, id) => { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', col, id)); state.ui.deletingId = null; render(); };
+        
+        // Itinerary Actions
+        window.saveItinerary = async (id) => { 
+            const title = document.getElementById(`edit-title-${id}`).value;
+            const date = document.getElementById(`edit-date-${id}`).value;
+            const hotel = document.getElementById(`edit-hotel-${id}`).value;
+            const eventRows = document.querySelectorAll(`#events-container-${id} .event-row`);
+            const events = Array.from(eventRows).map(row => ({ type: row.querySelector('.event-type').value, content: row.querySelector('.event-content').value, mapUrl: row.querySelector('.event-map').value }));
+            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'itinerary_v2', id), { title, date, hotel, events });
+            state.ui.editingId = null; render(); 
+        };
+        window.appendEventRow = (id) => {
+            const container = document.getElementById(`events-container-${id}`);
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 items-start event-row bg-slate-50 p-3 rounded-lg border border-slate-200';
+            div.innerHTML = `<select class="event-type border border-slate-300 rounded p-2 text-sm bg-white shrink-0"><option value="visit">參訪</option><option value="attraction" selected>景點</option><option value="meal">餐食</option><option value="transport">交通</option></select><div class="flex-1 space-y-2"><input class="event-content w-full border border-slate-300 rounded p-2 text-sm" placeholder="行程內容"><div class="flex items-center gap-2"><i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i><input class="event-map w-full border border-slate-300 rounded p-1 text-xs text-slate-500" placeholder="Google Map URL"></div></div><button onclick="this.closest('.event-row').remove()" class="text-red-400 hover:text-red-600 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>`;
+            container.appendChild(div); lucide.createIcons();
+        };
+        window.addItineraryDay = async () => { const lastOrder = state.data.itinerary.length > 0 ? Math.max(...state.data.itinerary.map(d => d.order)) : 0; await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'itinerary_v2'), { order: lastOrder + 1, date: '日期', title: '新行程', hotel: '住宿', events: [] }); };
+        window.deleteItineraryDay = async (id) => { if(confirm('確定要刪除整天的行程嗎？')) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'itinerary_v2', id)); };
 
-        function renderFaqItem(faq, cat) {
-            return `
-                <div class="faq-item" data-id="${faq.id}" style="border-left: 3px solid ${cat ? cat.color : '#ccc'}">
-                    <button class="faq-question" onclick="toggleFaq(this)">
-                        <span>${faq.question}</span>
-                        <span class="faq-question-icon">▼</span>
-                    </button>
-                    <div class="faq-answer"><div class="faq-answer-content">${faq.answer}</div></div>
-                </div>
-            `;
-        }
+        // QA Actions
+        window.setCategory = (c) => { state.ui.categoryFilter = c; render(); };
+        window.toggleQA = (i) => { state.ui.openQaIndex = state.ui.openQaIndex===i?null:i; render(); };
+        window.setQaSearch = (val) => { state.ui.qaSearch = val; render(); };
+        window.openQaModal = (id = null) => { state.ui.qaModal = { open: true, id: id }; render(); };
+        window.closeQaModal = () => { state.ui.qaModal = { open: false, id: null }; render(); };
+        window.saveQaModal = async () => {
+            const id = state.ui.qaModal.id;
+            const data = { category: document.getElementById('modal-qa-cat').value, question: document.getElementById('modal-qa-q').value, answer: document.getElementById('modal-qa-a').value, timestamp: Date.now() };
+            if (!data.question || !data.answer) { alert('請填寫完整內容'); return; }
+            id ? await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'qa_v2', id), data) : await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'qa_v2'), data);
+            window.closeQaModal();
+        };
 
-        function toggleFaq(button) {
-            const item = button.parentElement;
-            const answer = item.querySelector('.faq-answer');
-            const isActive = item.classList.contains('active');
-            document.querySelectorAll('.faq-item').forEach(i => { i.classList.remove('active'); i.querySelector('.faq-answer').style.maxHeight = '0'; });
-            if (!isActive) { item.classList.add('active'); answer.style.maxHeight = answer.scrollHeight + 'px'; }
-        }
+        // Team Modal Actions
+        window.openTeamModal = (id = null) => { state.ui.teamModal = { open: true, id: id }; render(); };
+        window.closeTeamModal = () => { state.ui.teamModal = { open: false, id: null }; render(); };
+        window.setDeletingTeam = (id) => { state.ui.deletingId = id; render(); };
+        window.saveTeamMember = async () => {
+            const id = state.ui.teamModal.id;
+            const data = { name: document.getElementById('tm-name').value, role: document.getElementById('tm-role').value, task: document.getElementById('tm-task').value, phone: document.getElementById('tm-phone').value, email: document.getElementById('tm-email').value, type: document.getElementById('tm-type').value };
+            if (!data.name) { alert('請輸入姓名'); return; }
+            id ? await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'team_contacts_v2', id), data) : await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'team_contacts_v2'), data);
+            window.closeTeamModal();
+        };
 
-        // Render Itinerary
-        function renderItinerary() {
-            const timeline = document.getElementById('itineraryTimeline');
-            let html = '';
-            dayConfigs.forEach(config => {
-                const dayActivities = activities.filter(a => a.day === config.day).sort((a, b) => {
-                    const timeOrder = ['早餐', '上午', '09:', '10:', '11:', '午餐', '12:', '13:', '14:', '15:', '下午', '16:', '17:', '傍晚', '18:', '晚餐', '19:', '20:', '21:'];
-                    const getOrder = (time) => { for (let i = 0; i < timeOrder.length; i++) if (time.includes(timeOrder[i])) return i; return 99; };
-                    return getOrder(a.time) - getOrder(b.time);
-                });
-                if (dayActivities.length === 0) return;
-                html += `
-                    <div class="timeline-item fade-in visible">
-                        <div class="timeline-marker">D${config.day}</div>
-                        <div class="timeline-date">${config.date}</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-title"><div class="timeline-title-icon">${config.icon}</div>${config.title}</h3>
-                            <div class="activity-list">
-                                ${dayActivities.map(act => `
-                                    <div class="activity-item">
-                                        <div class="activity-time">${act.time}</div>
-                                        <div class="activity-name"><strong>${act.name}</strong><span>${act.desc}</span></div>
-                                        ${act.tag ? `<span class="activity-tag ${act.tag}">${tagLabels[act.tag]}</span>` : ''}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            timeline.innerHTML = html;
-        }
-
-        // Admin
-        function adminLogin() {
-            const username = document.getElementById('adminUsername').value;
-            const password = document.getElementById('adminPassword').value;
-            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-                sessionStorage.setItem('adminLoggedIn', 'true');
-                isLoggedIn = true;
-                document.getElementById('adminLogin').style.display = 'none';
-                document.getElementById('adminPanel').classList.add('active');
-                document.getElementById('loginAlert').innerHTML = '';
-                updateLastUpdateDisplay();
-                showToast('登入成功！');
-            } else {
-                document.getElementById('loginAlert').innerHTML = '<div class="alert alert-error">帳號或密碼錯誤</div>';
-            }
-        }
-
-        function updateLastUpdateDisplay() {
-            const info = document.getElementById('lastUpdateInfo');
-            if (info) {
-                info.innerHTML = '📅 資料最後更新：' + getLastUpdateTime();
-            }
-        }
-
-        function adminLogout() {
-            sessionStorage.removeItem('adminLoggedIn');
-            isLoggedIn = false;
-            document.getElementById('adminLogin').style.display = 'block';
-            document.getElementById('adminPanel').classList.remove('active');
-            document.getElementById('adminUsername').value = '';
-            document.getElementById('adminPassword').value = '';
-            showToast('已登出');
-        }
-
-        function switchAdminTab(tab, btn) {
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none');
-            btn.classList.add('active');
-            document.getElementById(tab + 'Tab').style.display = 'block';
-        }
-
-        // FAQ CRUD
-        function renderFaqTable() {
-            document.getElementById('faqTableBody').innerHTML = faqs.map(faq => {
-                const cat = faqCategories.find(c => c.id === faq.category) || { name: '未分類', color: '#999', bg: '#f5f5f5' };
-                return `
-                <tr>
-                    <td><span style="background:${cat.bg};color:${cat.color};padding:4px 10px;border-radius:12px;font-size:12px;font-weight:500">${cat.name}</span></td>
-                    <td>${faq.question.length > 30 ? faq.question.substring(0, 30) + '...' : faq.question}</td>
-                    <td>${faq.answer.length > 30 ? faq.answer.substring(0, 30) + '...' : faq.answer}</td>
-                    <td><div class="admin-actions"><button class="btn btn-sm btn-edit" onclick="editFaq(${faq.id})">編輯</button><button class="btn btn-sm btn-delete" onclick="deleteFaq(${faq.id})">刪除</button></div></td>
-                </tr>
-            `}).join('');
-        }
-
-        function openFaqModal(id = null) {
-            document.getElementById('faqModal').classList.add('active');
-            document.getElementById('faqModalTitle').textContent = id ? '編輯問答' : '新增問答';
-            document.getElementById('faqEditId').value = id || '';
-            
-            // Populate category dropdown
-            const catSelect = document.getElementById('faqCategory');
-            catSelect.innerHTML = faqCategories.map(cat => 
-                `<option value="${cat.id}">${cat.name}</option>`
-            ).join('');
-            
-            if (id) {
-                const faq = faqs.find(f => f.id === id);
-                document.getElementById('faqCategory').value = faq.category || 'other';
-                document.getElementById('faqQuestion').value = faq.question;
-                document.getElementById('faqAnswer').value = faq.answer;
-            } else {
-                document.getElementById('faqCategory').value = 'other';
-                document.getElementById('faqQuestion').value = '';
-                document.getElementById('faqAnswer').value = '';
-            }
-        }
-
-        function closeFaqModal() { document.getElementById('faqModal').classList.remove('active'); }
-        function editFaq(id) { openFaqModal(id); }
-
-        function saveFaq() {
-            const id = document.getElementById('faqEditId').value;
-            const category = document.getElementById('faqCategory').value;
-            const question = document.getElementById('faqQuestion').value.trim();
-            const answer = document.getElementById('faqAnswer').value.trim();
-            if (!question || !answer) { alert('請填寫完整資料'); return; }
-            if (id) { const index = faqs.findIndex(f => f.id === parseInt(id)); faqs[index] = { ...faqs[index], category, question, answer }; }
-            else { faqs.push({ id: Math.max(...faqs.map(f => f.id), 0) + 1, category, question, answer }); }
-            saveData(); renderFaqCategories(); renderFaqs(); renderFaqTable(); closeFaqModal();
-            updateLastUpdateDisplay();
-            showToast('問答已儲存並更新至網頁！');
-        }
-
-        function deleteFaq(id) {
-            if (confirm('確定要刪除這個問答嗎？')) {
-                faqs = faqs.filter(f => f.id !== id);
-                saveData(); renderFaqCategories(); renderFaqs(); renderFaqTable();
-                showToast('問答已刪除');
-            }
-        }
-
-        // Activity CRUD
-        function renderActivityTable() {
-            const dayLabels = ['', '5/13（三）', '5/14（四）', '5/15（五）', '5/16（六）', '5/17（日）'];
-            document.getElementById('itineraryTableBody').innerHTML = activities.sort((a, b) => a.day - b.day || a.id - b.id).map(act => `
-                <tr>
-                    <td>Day ${act.day}<br><small>${dayLabels[act.day]}</small></td>
-                    <td>${act.time}</td>
-                    <td>${act.name}</td>
-                    <td>${act.tag ? `<span class="activity-tag ${act.tag}">${tagLabels[act.tag]}</span>` : '-'}</td>
-                    <td><div class="admin-actions"><button class="btn btn-sm btn-edit" onclick="editActivity(${act.id})">編輯</button><button class="btn btn-sm btn-delete" onclick="deleteActivity(${act.id})">刪除</button></div></td>
-                </tr>
-            `).join('');
-        }
-
-        function openItineraryModal(id = null) {
-            document.getElementById('itineraryModal').classList.add('active');
-            document.getElementById('itineraryModalTitle').textContent = id ? '編輯活動' : '新增活動';
-            document.getElementById('activityEditId').value = id || '';
-            if (id) {
-                const act = activities.find(a => a.id === id);
-                document.getElementById('activityDay').value = act.day;
-                document.getElementById('activityTime').value = act.time;
-                document.getElementById('activityName').value = act.name;
-                document.getElementById('activityDesc').value = act.desc;
-                document.getElementById('activityTag').value = act.tag;
-            } else {
-                document.getElementById('activityDay').value = '1';
-                document.getElementById('activityTime').value = '';
-                document.getElementById('activityName').value = '';
-                document.getElementById('activityDesc').value = '';
-                document.getElementById('activityTag').value = '';
-            }
-        }
-
-        function closeItineraryModal() { document.getElementById('itineraryModal').classList.remove('active'); }
-        function editActivity(id) { openItineraryModal(id); }
-
-        function saveActivity() {
-            const id = document.getElementById('activityEditId').value;
-            const day = parseInt(document.getElementById('activityDay').value);
-            const time = document.getElementById('activityTime').value.trim();
-            const name = document.getElementById('activityName').value.trim();
-            const desc = document.getElementById('activityDesc').value.trim();
-            const tag = document.getElementById('activityTag').value;
-            if (!time || !name) { alert('請填寫時間和活動名稱'); return; }
-            if (id) { const index = activities.findIndex(a => a.id === parseInt(id)); activities[index] = { ...activities[index], day, time, name, desc, tag }; }
-            else { activities.push({ id: Math.max(...activities.map(a => a.id), 0) + 1, day, time, name, desc, tag }); }
-            saveData(); renderItinerary(); renderActivityTable(); closeItineraryModal();
-            updateLastUpdateDisplay();
-            showToast('行程已儲存並更新至網頁！');
-        }
-
-        function deleteActivity(id) {
-            if (confirm('確定要刪除這個活動嗎？')) {
-                activities = activities.filter(a => a.id !== id);
-                saveData(); renderItinerary(); renderActivityTable();
-                showToast('活動已刪除');
-            }
-        }
-
-        // Render Team (Front-end)
-        function renderTeam() {
-            const grid = document.getElementById('teamGrid');
-            const sortedMembers = [...teamMembers].sort((a, b) => a.family - b.family);
-            
-            grid.innerHTML = sortedMembers.map(member => {
-                const groupInfo = teamGroups.find(g => g.id === member.group) || { name: '未分組' };
-                return `
-                    <div class="team-card fade-in visible">
-                        <div class="team-role">${groupInfo.name} · 第${member.family}家</div>
-                        <div class="team-name">${member.name}（${member.role}）</div>
-                        <div class="team-group">代理人：${member.deputy || '無'}</div>
-                        <div class="team-tasks">
-                            ${(member.tasks || []).map(task => `<span class="team-task">${task}</span>`).join('')}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function renderContacts() {
-            const card = document.getElementById('contactCard');
-            card.innerHTML = contacts.map(c => `
-                <div class="contact-item">
-                    <div class="contact-icon">${c.icon}</div>
-                    <div class="contact-info">
-                        <h5>${c.label}</h5>
-                        <p>${c.value}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Team Admin Table
-        function renderTeamTable() {
-            const tbody = document.getElementById('teamTableBody');
-            const sortedMembers = [...teamMembers].sort((a, b) => a.family - b.family);
-            
-            tbody.innerHTML = sortedMembers.map(member => {
-                const groupInfo = teamGroups.find(g => g.id === member.group) || { name: '未分組' };
-                return `
-                    <tr>
-                        <td><span style="background:${member.group === 'internal' ? '#e3f2fd' : '#fff3e0'};color:${member.group === 'internal' ? '#1565c0' : '#e65100'};padding:4px 10px;border-radius:12px;font-size:12px">${groupInfo.name}</span></td>
-                        <td>第${member.family}家</td>
-                        <td>${member.name}（${member.role}）</td>
-                        <td>${member.deputy || '-'}</td>
-                        <td>${(member.tasks || []).join(', ')}</td>
-                        <td><div class="admin-actions"><button class="btn btn-sm btn-edit" onclick="editTeamMember(${member.id})">編輯</button><button class="btn btn-sm btn-delete" onclick="deleteTeamMember(${member.id})">刪除</button></div></td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function renderContactTable() {
-            const tbody = document.getElementById('contactTableBody');
-            tbody.innerHTML = contacts.map(c => `
-                <tr>
-                    <td style="font-size:24px">${c.icon}</td>
-                    <td>${c.label}</td>
-                    <td>${c.value}</td>
-                    <td><div class="admin-actions"><button class="btn btn-sm btn-edit" onclick="editContact(${c.id})">編輯</button><button class="btn btn-sm btn-delete" onclick="deleteContact(${c.id})">刪除</button></div></td>
-                </tr>
-            `).join('');
-        }
-
-        // Team Modal
-        function openTeamModal(id = null) {
-            document.getElementById('teamModal').classList.add('active');
-            document.getElementById('teamModalTitle').textContent = id ? '編輯成員' : '新增成員';
-            document.getElementById('memberEditId').value = id || '';
-            
-            if (id) {
-                const member = teamMembers.find(m => m.id === id);
-                document.getElementById('memberGroup').value = member.group;
-                document.getElementById('memberFamily').value = member.family;
-                document.getElementById('memberName').value = member.name;
-                document.getElementById('memberRole').value = member.role;
-                document.getElementById('memberDeputy').value = member.deputy || '';
-                document.getElementById('memberTasks').value = (member.tasks || []).join(', ');
-            } else {
-                document.getElementById('memberGroup').value = 'internal';
-                document.getElementById('memberFamily').value = '';
-                document.getElementById('memberName').value = '';
-                document.getElementById('memberRole').value = '家長';
-                document.getElementById('memberDeputy').value = '';
-                document.getElementById('memberTasks').value = '';
-            }
-        }
-
-        function closeTeamModal() { document.getElementById('teamModal').classList.remove('active'); }
-        function editTeamMember(id) { openTeamModal(id); }
-
-        function saveTeamMember() {
-            const id = document.getElementById('memberEditId').value;
-            const group = document.getElementById('memberGroup').value;
-            const family = parseInt(document.getElementById('memberFamily').value);
-            const name = document.getElementById('memberName').value.trim();
-            const role = document.getElementById('memberRole').value.trim();
-            const deputy = document.getElementById('memberDeputy').value.trim();
-            const tasksStr = document.getElementById('memberTasks').value.trim();
-            const tasks = tasksStr ? tasksStr.split(/[,，]/).map(t => t.trim()).filter(t => t) : [];
-
-            if (!name || !family) { alert('請填寫姓名和家別'); return; }
-
-            if (id) {
-                const index = teamMembers.findIndex(m => m.id === parseInt(id));
-                teamMembers[index] = { ...teamMembers[index], group, family, name, role, deputy, tasks };
-            } else {
-                teamMembers.push({ id: Math.max(...teamMembers.map(m => m.id), 0) + 1, group, family, name, role, deputy, tasks });
-            }
-
-            saveData(); renderTeam(); renderTeamTable(); closeTeamModal();
-            updateLastUpdateDisplay();
-            showToast('團隊成員已儲存並更新至網頁！');
-        }
-
-        function deleteTeamMember(id) {
-            if (confirm('確定要刪除這個成員嗎？')) {
-                teamMembers = teamMembers.filter(m => m.id !== id);
-                saveData(); renderTeam(); renderTeamTable();
-                showToast('成員已刪除');
-            }
-        }
-
-        // Contact Modal
-        function openContactModal(id = null) {
-            document.getElementById('contactModal').classList.add('active');
-            document.getElementById('contactModalTitle').textContent = id ? '編輯聯絡資訊' : '新增聯絡資訊';
-            document.getElementById('contactEditId').value = id || '';
-            
-            if (id) {
-                const contact = contacts.find(c => c.id === id);
-                document.getElementById('contactIcon').value = contact.icon;
-                document.getElementById('contactLabel').value = contact.label;
-                document.getElementById('contactValue').value = contact.value;
-            } else {
-                document.getElementById('contactIcon').value = '';
-                document.getElementById('contactLabel').value = '';
-                document.getElementById('contactValue').value = '';
-            }
-        }
-
-        function closeContactModal() { document.getElementById('contactModal').classList.remove('active'); }
-        function editContact(id) { openContactModal(id); }
-
-        function saveContact() {
-            const id = document.getElementById('contactEditId').value;
-            const icon = document.getElementById('contactIcon').value.trim() || '📌';
-            const label = document.getElementById('contactLabel').value.trim();
-            const value = document.getElementById('contactValue').value.trim();
-
-            if (!label || !value) { alert('請填寫標籤和內容'); return; }
-
-            if (id) {
-                const index = contacts.findIndex(c => c.id === parseInt(id));
-                contacts[index] = { ...contacts[index], icon, label, value };
-            } else {
-                contacts.push({ id: Math.max(...contacts.map(c => c.id), 0) + 1, icon, label, value });
-            }
-
-            saveData(); renderContacts(); renderContactTable(); closeContactModal();
-            updateLastUpdateDisplay();
-            showToast('聯絡資訊已儲存並更新至網頁！');
-        }
-
-        function deleteContact(id) {
-            if (confirm('確定要刪除這個聯絡資訊嗎？')) {
-                contacts = contacts.filter(c => c.id !== id);
-                saveData(); renderContacts(); renderContactTable();
-                showToast('聯絡資訊已刪除');
-            }
-        }
-
-        // Data persistence
-        function saveData() {
-            localStorage.setItem('embaFaqs', JSON.stringify(faqs));
-            localStorage.setItem('embaActivities', JSON.stringify(activities));
-            localStorage.setItem('embaTeamMembers', JSON.stringify(teamMembers));
-            localStorage.setItem('embaContacts', JSON.stringify(contacts));
-            localStorage.setItem('embaLastUpdate', new Date().toISOString());
-            
-            // Auto-regenerate share link if box is visible
-            if (document.getElementById('shareLinkBox').style.display !== 'none') {
-                generateShareLink();
-            }
-        }
-
-        // Get last update time
-        function getLastUpdateTime() {
-            const timestamp = localStorage.getItem('embaLastUpdate');
-            if (timestamp) {
-                const date = new Date(timestamp);
-                return date.toLocaleString('zh-TW');
-            }
-            return '尚未更新';
-        }
-
-        // Export/Import
-        function exportData() {
-            const data = { version: '1.1', exportDate: new Date().toISOString(), faqs, activities, teamMembers, contacts };
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `emba-tokyo-trip-data-${new Date().toISOString().slice(0,10)}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showToast('資料已匯出！請將此檔案分享給其他使用者');
-        }
-
-        function importData(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    if (data.faqs && Array.isArray(data.faqs)) faqs = data.faqs;
-                    if (data.activities && Array.isArray(data.activities)) activities = data.activities;
-                    if (data.teamMembers && Array.isArray(data.teamMembers)) teamMembers = data.teamMembers;
-                    if (data.contacts && Array.isArray(data.contacts)) contacts = data.contacts;
-                    saveData(); renderFaqCategories(); renderFaqs(); renderItinerary(); renderFaqTable(); renderActivityTable(); renderTeam(); renderContacts(); renderTeamTable(); renderContactTable();
-                    showToast('資料匯入成功！網頁已更新');
-                } catch (err) { alert('匯入失敗：檔案格式不正確'); console.error(err); }
-            };
-            reader.readAsText(file);
-            event.target.value = '';
-        }
-
-        function resetToDefault() {
-            if (confirm('確定要重置所有資料為預設值嗎？此操作無法復原。')) {
-                faqs = [...defaultFaqs];
-                activities = [...defaultActivities];
-                teamMembers = [...defaultTeamMembers];
-                contacts = [...defaultContacts];
-                saveData(); renderFaqCategories(); renderFaqs(); renderItinerary(); renderFaqTable(); renderActivityTable(); renderTeam(); renderContacts(); renderTeamTable(); renderContactTable();
-                showToast('已重置為預設資料');
-            }
-        }
+        init();
     </script>
 </body>
 </html>
