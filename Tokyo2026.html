@@ -808,19 +808,8 @@
                 <h2 class="section-title">工作分組與聯絡資訊</h2>
                 <p class="section-desc" style="color:rgba(255,255,255,0.7)">感謝所有參與籌備的學長姊</p>
             </div>
-            <div class="team-grid">
-                <div class="team-card fade-in"><div class="team-role">對內組 · 第1家</div><div class="team-name">Jay（家長）</div><div class="team-group">代理人：Jenny</div><div class="team-tasks"><span class="team-task">行政對接</span><span class="team-task">學校聯繫</span></div></div>
-                <div class="team-card fade-in"><div class="team-role">對內組 · 第2家</div><div class="team-name">Tracey（家長）</div><div class="team-group">代理人：Randy K</div><div class="team-tasks"><span class="team-task">蒐集證件</span><span class="team-task">向各班組說明</span></div></div>
-                <div class="team-card fade-in"><div class="team-role">對外組 · 第3家</div><div class="team-name">宗翰（家長）</div><div class="team-group">代理人：承昌</div><div class="team-tasks"><span class="team-task">活動規劃</span><span class="team-task">聯繫參訪企業</span></div></div>
-                <div class="team-card fade-in"><div class="team-role">對外組 · 第4家</div><div class="team-name">景方（家長）</div><div class="team-group">代理人：幸慧</div><div class="team-tasks"><span class="team-task">聯絡旅行社</span><span class="team-task">行程協調</span></div></div>
-                <div class="team-card fade-in"><div class="team-role">對外組 · 第5家</div><div class="team-name">Sandy（家長）</div><div class="team-group">代理人：坤傑</div><div class="team-tasks"><span class="team-task">企業聯繫</span><span class="team-task">NTT聯絡</span></div></div>
-                <div class="team-card fade-in"><div class="team-role">對內組 · 第6家</div><div class="team-name">M.SHEN（家長）</div><div class="team-group">代理人：Judy</div><div class="team-tasks"><span class="team-task">信義房屋聯絡</span><span class="team-task">行政支援</span></div></div>
-            </div>
-            <div class="contact-card fade-in">
-                <div class="contact-item"><div class="contact-icon">👤</div><div class="contact-info"><h5>旅行社聯絡人</h5><p>雄獅旅遊 林采欣 (Linda Lin)</p></div></div>
-                <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-info"><h5>聯絡電話</h5><p>(02) 8793-9000 分機 1691</p></div></div>
-                <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-info"><h5>電子郵件</h5><p>lindalin@liontravel.com</p></div></div>
-            </div>
+            <div class="team-grid" id="teamGrid"></div>
+            <div class="contact-card fade-in" id="contactCard"></div>
         </div>
     </section>
 
@@ -877,6 +866,7 @@
                 <div class="admin-tabs">
                     <button class="admin-tab active" onclick="switchAdminTab('faq',this)">Q&A 管理</button>
                     <button class="admin-tab" onclick="switchAdminTab('itinerary',this)">行程管理</button>
+                    <button class="admin-tab" onclick="switchAdminTab('team',this)">團隊管理</button>
                 </div>
                 <div class="admin-tab-content" id="faqTab">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
@@ -892,6 +882,22 @@
                     </div>
                     <div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>日期</th><th>時間</th><th>活動名稱</th><th>類型</th><th>操作</th></tr></thead><tbody id="itineraryTableBody"></tbody></table></div>
                 </div>
+                <div class="admin-tab-content" id="teamTab" style="display:none">
+                    <div style="margin-bottom:32px">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                            <h4>👥 團隊成員</h4>
+                            <button class="btn btn-primary btn-sm" onclick="openTeamModal()">+ 新增成員</button>
+                        </div>
+                        <div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>分組</th><th>家別</th><th>姓名</th><th>代理人</th><th>負責事項</th><th>操作</th></tr></thead><tbody id="teamTableBody"></tbody></table></div>
+                    </div>
+                    <div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                            <h4>📞 聯絡資訊</h4>
+                            <button class="btn btn-primary btn-sm" onclick="openContactModal()">+ 新增聯絡</button>
+                        </div>
+                        <div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>圖示</th><th>標籤</th><th>內容</th><th>操作</th></tr></thead><tbody id="contactTableBody"></tbody></table></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -903,7 +909,7 @@
             <div class="footer-links"><h4>快速連結</h4><ul><li><a href="#flight-hotel">航班住宿</a></li><li><a href="#itinerary">行程安排</a></li><li><a href="#cost">費用資訊</a></li><li><a href="#academic">課程要求</a></li></ul></div>
             <div class="footer-links"><h4>相關資源</h4><ul><li><a href="#team">籌備團隊</a></li><li><a href="#faq">常見問題</a></li><li><a href="#admin">管理後台</a></li></ul></div>
         </div>
-        <div class="footer-bottom"><p>© 2026 國立政治大學 EMBA 國際金融組. All rights reserved.</p></div>
+        <div class="footer-bottom"><p>© 2025 國立政治大學 EMBA 國際金融組. All rights reserved.</p></div>
     </footer>
 
     <!-- Modals -->
@@ -927,6 +933,29 @@
             <div class="form-group"><label>類型標籤</label><select class="form-input" id="activityTag"><option value="">無標籤</option><option value="academic">學術交流</option><option value="finance">金融/政治</option><option value="sustainability">永續ESG</option><option value="innovation">創新</option><option value="sightseeing">景點</option></select></div>
             <input type="hidden" id="activityEditId">
             <button class="btn btn-primary" style="width:100%" onclick="saveActivity()">儲存</button>
+        </div>
+    </div>
+    <div class="modal" id="teamModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 class="modal-title" id="teamModalTitle">新增成員</h3><button class="modal-close" onclick="closeTeamModal()">&times;</button></div>
+            <div class="form-group"><label>分組</label><select class="form-input" id="memberGroup"><option value="internal">對內組</option><option value="external">對外組</option></select></div>
+            <div class="form-group"><label>家別（數字）</label><input type="number" class="form-input" id="memberFamily" min="1" max="20" placeholder="例：1"></div>
+            <div class="form-group"><label>姓名</label><input type="text" class="form-input" id="memberName" placeholder="請輸入姓名"></div>
+            <div class="form-group"><label>角色</label><input type="text" class="form-input" id="memberRole" value="家長" placeholder="例：家長"></div>
+            <div class="form-group"><label>代理人</label><input type="text" class="form-input" id="memberDeputy" placeholder="請輸入代理人姓名"></div>
+            <div class="form-group"><label>負責事項（逗號分隔）</label><input type="text" class="form-input" id="memberTasks" placeholder="例：行政對接, 學校聯繫"></div>
+            <input type="hidden" id="memberEditId">
+            <button class="btn btn-primary" style="width:100%" onclick="saveTeamMember()">儲存</button>
+        </div>
+    </div>
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 class="modal-title" id="contactModalTitle">新增聯絡資訊</h3><button class="modal-close" onclick="closeContactModal()">&times;</button></div>
+            <div class="form-group"><label>圖示（Emoji）</label><input type="text" class="form-input" id="contactIcon" placeholder="例：📞 👤 ✉️ 🏢"></div>
+            <div class="form-group"><label>標籤</label><input type="text" class="form-input" id="contactLabel" placeholder="例：聯絡電話"></div>
+            <div class="form-group"><label>內容</label><input type="text" class="form-input" id="contactValue" placeholder="請輸入聯絡資訊內容"></div>
+            <input type="hidden" id="contactEditId">
+            <button class="btn btn-primary" style="width:100%" onclick="saveContact()">儲存</button>
         </div>
     </div>
 
@@ -991,6 +1020,27 @@
 
         const tagLabels = { '': '', 'academic': '學術交流', 'finance': '金融/政治', 'sustainability': '永續ESG', 'innovation': '創新', 'sightseeing': '景點' };
 
+        // Team default data
+        const teamGroups = [
+            { id: 'internal', name: '對內組', desc: '行政對接、學校聯繫、證件蒐集' },
+            { id: 'external', name: '對外組', desc: '活動規劃、旅行社聯絡、企業參訪' }
+        ];
+
+        const defaultTeamMembers = [
+            { id: 1, group: 'internal', family: 1, name: 'Jay', role: '家長', deputy: 'Jenny', tasks: ['行政對接', '學校聯繫'] },
+            { id: 2, group: 'internal', family: 2, name: 'Tracey', role: '家長', deputy: 'Randy K', tasks: ['蒐集證件', '向各班組說明'] },
+            { id: 3, group: 'external', family: 3, name: '宗翰', role: '家長', deputy: '承昌', tasks: ['活動規劃', '聯繫參訪企業'] },
+            { id: 4, group: 'external', family: 4, name: '景方', role: '家長', deputy: '幸慧', tasks: ['聯絡旅行社', '行程協調'] },
+            { id: 5, group: 'external', family: 5, name: 'Sandy', role: '家長', deputy: '坤傑', tasks: ['企業聯繫', 'NTT聯絡'] },
+            { id: 6, group: 'internal', family: 6, name: 'M.SHEN', role: '家長', deputy: 'Judy', tasks: ['信義房屋聯絡', '行政支援'] }
+        ];
+
+        const defaultContacts = [
+            { id: 1, icon: '👤', label: '旅行社聯絡人', value: '雄獅旅遊 林采欣 (Linda Lin)' },
+            { id: 2, icon: '📞', label: '聯絡電話', value: '(02) 8793-9000 分機 1691' },
+            { id: 3, icon: '✉️', label: '電子郵件', value: 'lindalin@liontravel.com' }
+        ];
+
         // State
         let faqs = JSON.parse(localStorage.getItem('embaFaqs')) || [...defaultFaqs];
         let activities = JSON.parse(localStorage.getItem('embaActivities')) || [...defaultActivities];
@@ -1010,6 +1060,10 @@
             return faq;
         });
 
+        // Team state
+        let teamMembers = JSON.parse(localStorage.getItem('embaTeamMembers')) || [...defaultTeamMembers];
+        let contacts = JSON.parse(localStorage.getItem('embaContacts')) || [...defaultContacts];
+
         const ADMIN_USERNAME = 'admin';
         const ADMIN_PASSWORD = 'Aa123456#';
 
@@ -1023,6 +1077,10 @@
             renderItinerary();
             renderFaqTable();
             renderActivityTable();
+            renderTeam();
+            renderContacts();
+            renderTeamTable();
+            renderContactTable();
             
             if (isLoggedIn) {
                 document.getElementById('adminLogin').style.display = 'none';
@@ -1072,12 +1130,22 @@
                         activities = data.activities;
                         localStorage.setItem('embaActivities', JSON.stringify(activities));
                     }
+                    if (data.teamMembers && Array.isArray(data.teamMembers)) {
+                        teamMembers = data.teamMembers;
+                        localStorage.setItem('embaTeamMembers', JSON.stringify(teamMembers));
+                    }
+                    if (data.contacts && Array.isArray(data.contacts)) {
+                        contacts = data.contacts;
+                        localStorage.setItem('embaContacts', JSON.stringify(contacts));
+                    }
                     
                     // Re-render after loading
                     setTimeout(() => {
                         renderFaqCategories();
                         renderFaqs();
                         renderItinerary();
+                        renderTeam();
+                        renderContacts();
                     }, 100);
                     
                     // Show notification
@@ -1097,7 +1165,7 @@
         // Generate share link with current data
         function generateShareLink() {
             try {
-                const data = { faqs, activities };
+                const data = { faqs, activities, teamMembers, contacts };
                 const jsonStr = JSON.stringify(data);
                 const encoded = btoa(encodeURIComponent(jsonStr));
                 const baseUrl = window.location.origin + window.location.pathname;
@@ -1399,10 +1467,185 @@
             }
         }
 
+        // Render Team (Front-end)
+        function renderTeam() {
+            const grid = document.getElementById('teamGrid');
+            const sortedMembers = [...teamMembers].sort((a, b) => a.family - b.family);
+            
+            grid.innerHTML = sortedMembers.map(member => {
+                const groupInfo = teamGroups.find(g => g.id === member.group) || { name: '未分組' };
+                return `
+                    <div class="team-card fade-in visible">
+                        <div class="team-role">${groupInfo.name} · 第${member.family}家</div>
+                        <div class="team-name">${member.name}（${member.role}）</div>
+                        <div class="team-group">代理人：${member.deputy || '無'}</div>
+                        <div class="team-tasks">
+                            ${(member.tasks || []).map(task => `<span class="team-task">${task}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderContacts() {
+            const card = document.getElementById('contactCard');
+            card.innerHTML = contacts.map(c => `
+                <div class="contact-item">
+                    <div class="contact-icon">${c.icon}</div>
+                    <div class="contact-info">
+                        <h5>${c.label}</h5>
+                        <p>${c.value}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Team Admin Table
+        function renderTeamTable() {
+            const tbody = document.getElementById('teamTableBody');
+            const sortedMembers = [...teamMembers].sort((a, b) => a.family - b.family);
+            
+            tbody.innerHTML = sortedMembers.map(member => {
+                const groupInfo = teamGroups.find(g => g.id === member.group) || { name: '未分組' };
+                return `
+                    <tr>
+                        <td><span style="background:${member.group === 'internal' ? '#e3f2fd' : '#fff3e0'};color:${member.group === 'internal' ? '#1565c0' : '#e65100'};padding:4px 10px;border-radius:12px;font-size:12px">${groupInfo.name}</span></td>
+                        <td>第${member.family}家</td>
+                        <td>${member.name}（${member.role}）</td>
+                        <td>${member.deputy || '-'}</td>
+                        <td>${(member.tasks || []).join(', ')}</td>
+                        <td><div class="admin-actions"><button class="btn btn-sm btn-edit" onclick="editTeamMember(${member.id})">編輯</button><button class="btn btn-sm btn-delete" onclick="deleteTeamMember(${member.id})">刪除</button></div></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderContactTable() {
+            const tbody = document.getElementById('contactTableBody');
+            tbody.innerHTML = contacts.map(c => `
+                <tr>
+                    <td style="font-size:24px">${c.icon}</td>
+                    <td>${c.label}</td>
+                    <td>${c.value}</td>
+                    <td><div class="admin-actions"><button class="btn btn-sm btn-edit" onclick="editContact(${c.id})">編輯</button><button class="btn btn-sm btn-delete" onclick="deleteContact(${c.id})">刪除</button></div></td>
+                </tr>
+            `).join('');
+        }
+
+        // Team Modal
+        function openTeamModal(id = null) {
+            document.getElementById('teamModal').classList.add('active');
+            document.getElementById('teamModalTitle').textContent = id ? '編輯成員' : '新增成員';
+            document.getElementById('memberEditId').value = id || '';
+            
+            if (id) {
+                const member = teamMembers.find(m => m.id === id);
+                document.getElementById('memberGroup').value = member.group;
+                document.getElementById('memberFamily').value = member.family;
+                document.getElementById('memberName').value = member.name;
+                document.getElementById('memberRole').value = member.role;
+                document.getElementById('memberDeputy').value = member.deputy || '';
+                document.getElementById('memberTasks').value = (member.tasks || []).join(', ');
+            } else {
+                document.getElementById('memberGroup').value = 'internal';
+                document.getElementById('memberFamily').value = '';
+                document.getElementById('memberName').value = '';
+                document.getElementById('memberRole').value = '家長';
+                document.getElementById('memberDeputy').value = '';
+                document.getElementById('memberTasks').value = '';
+            }
+        }
+
+        function closeTeamModal() { document.getElementById('teamModal').classList.remove('active'); }
+        function editTeamMember(id) { openTeamModal(id); }
+
+        function saveTeamMember() {
+            const id = document.getElementById('memberEditId').value;
+            const group = document.getElementById('memberGroup').value;
+            const family = parseInt(document.getElementById('memberFamily').value);
+            const name = document.getElementById('memberName').value.trim();
+            const role = document.getElementById('memberRole').value.trim();
+            const deputy = document.getElementById('memberDeputy').value.trim();
+            const tasksStr = document.getElementById('memberTasks').value.trim();
+            const tasks = tasksStr ? tasksStr.split(/[,，]/).map(t => t.trim()).filter(t => t) : [];
+
+            if (!name || !family) { alert('請填寫姓名和家別'); return; }
+
+            if (id) {
+                const index = teamMembers.findIndex(m => m.id === parseInt(id));
+                teamMembers[index] = { ...teamMembers[index], group, family, name, role, deputy, tasks };
+            } else {
+                teamMembers.push({ id: Math.max(...teamMembers.map(m => m.id), 0) + 1, group, family, name, role, deputy, tasks });
+            }
+
+            saveData(); renderTeam(); renderTeamTable(); closeTeamModal();
+            updateLastUpdateDisplay();
+            showToast('團隊成員已儲存並更新至網頁！');
+        }
+
+        function deleteTeamMember(id) {
+            if (confirm('確定要刪除這個成員嗎？')) {
+                teamMembers = teamMembers.filter(m => m.id !== id);
+                saveData(); renderTeam(); renderTeamTable();
+                showToast('成員已刪除');
+            }
+        }
+
+        // Contact Modal
+        function openContactModal(id = null) {
+            document.getElementById('contactModal').classList.add('active');
+            document.getElementById('contactModalTitle').textContent = id ? '編輯聯絡資訊' : '新增聯絡資訊';
+            document.getElementById('contactEditId').value = id || '';
+            
+            if (id) {
+                const contact = contacts.find(c => c.id === id);
+                document.getElementById('contactIcon').value = contact.icon;
+                document.getElementById('contactLabel').value = contact.label;
+                document.getElementById('contactValue').value = contact.value;
+            } else {
+                document.getElementById('contactIcon').value = '';
+                document.getElementById('contactLabel').value = '';
+                document.getElementById('contactValue').value = '';
+            }
+        }
+
+        function closeContactModal() { document.getElementById('contactModal').classList.remove('active'); }
+        function editContact(id) { openContactModal(id); }
+
+        function saveContact() {
+            const id = document.getElementById('contactEditId').value;
+            const icon = document.getElementById('contactIcon').value.trim() || '📌';
+            const label = document.getElementById('contactLabel').value.trim();
+            const value = document.getElementById('contactValue').value.trim();
+
+            if (!label || !value) { alert('請填寫標籤和內容'); return; }
+
+            if (id) {
+                const index = contacts.findIndex(c => c.id === parseInt(id));
+                contacts[index] = { ...contacts[index], icon, label, value };
+            } else {
+                contacts.push({ id: Math.max(...contacts.map(c => c.id), 0) + 1, icon, label, value });
+            }
+
+            saveData(); renderContacts(); renderContactTable(); closeContactModal();
+            updateLastUpdateDisplay();
+            showToast('聯絡資訊已儲存並更新至網頁！');
+        }
+
+        function deleteContact(id) {
+            if (confirm('確定要刪除這個聯絡資訊嗎？')) {
+                contacts = contacts.filter(c => c.id !== id);
+                saveData(); renderContacts(); renderContactTable();
+                showToast('聯絡資訊已刪除');
+            }
+        }
+
         // Data persistence
         function saveData() {
             localStorage.setItem('embaFaqs', JSON.stringify(faqs));
             localStorage.setItem('embaActivities', JSON.stringify(activities));
+            localStorage.setItem('embaTeamMembers', JSON.stringify(teamMembers));
+            localStorage.setItem('embaContacts', JSON.stringify(contacts));
             localStorage.setItem('embaLastUpdate', new Date().toISOString());
             
             // Auto-regenerate share link if box is visible
@@ -1423,7 +1666,7 @@
 
         // Export/Import
         function exportData() {
-            const data = { version: '1.0', exportDate: new Date().toISOString(), faqs, activities };
+            const data = { version: '1.1', exportDate: new Date().toISOString(), faqs, activities, teamMembers, contacts };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -1445,7 +1688,9 @@
                     const data = JSON.parse(e.target.result);
                     if (data.faqs && Array.isArray(data.faqs)) faqs = data.faqs;
                     if (data.activities && Array.isArray(data.activities)) activities = data.activities;
-                    saveData(); renderFaqCategories(); renderFaqs(); renderItinerary(); renderFaqTable(); renderActivityTable();
+                    if (data.teamMembers && Array.isArray(data.teamMembers)) teamMembers = data.teamMembers;
+                    if (data.contacts && Array.isArray(data.contacts)) contacts = data.contacts;
+                    saveData(); renderFaqCategories(); renderFaqs(); renderItinerary(); renderFaqTable(); renderActivityTable(); renderTeam(); renderContacts(); renderTeamTable(); renderContactTable();
                     showToast('資料匯入成功！網頁已更新');
                 } catch (err) { alert('匯入失敗：檔案格式不正確'); console.error(err); }
             };
@@ -1457,7 +1702,9 @@
             if (confirm('確定要重置所有資料為預設值嗎？此操作無法復原。')) {
                 faqs = [...defaultFaqs];
                 activities = [...defaultActivities];
-                saveData(); renderFaqCategories(); renderFaqs(); renderItinerary(); renderFaqTable(); renderActivityTable();
+                teamMembers = [...defaultTeamMembers];
+                contacts = [...defaultContacts];
+                saveData(); renderFaqCategories(); renderFaqs(); renderItinerary(); renderFaqTable(); renderActivityTable(); renderTeam(); renderContacts(); renderTeamTable(); renderContactTable();
                 showToast('已重置為預設資料');
             }
         }
