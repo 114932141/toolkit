@@ -71,15 +71,14 @@
         import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
 
         // --- 1. 請在此填入您的 Firebase 設定 ---
-        const firebaseConfig = {
+            const firebaseConfig = {
             apiKey: "AIzaSyDEg7Hfcc3lyQhHSv_F6CD_7GMUWfxit8Y",
             authDomain: "nccu25gftyo.firebaseapp.com",
             projectId: "nccu25gftyo",
             storageBucket: "nccu25gftyo.firebasestorage.app",
             messagingSenderId: "780094999226",
             appId: "1:780094999226:web:80509ac5bb518fd52ed083"
-        };
-
+            };
         
         const appId = 'tokyo-trip-2026-prod'; 
         
@@ -109,10 +108,10 @@
             ui: { 
                 openQaIndex: null, 
                 categoryFilter: 'all',
-                qaSearch: '', // 搜尋關鍵字
+                qaSearch: '',
                 editingId: null, 
                 teamModal: { open: false, id: null },
-                qaModal: { open: false, id: null } // 問答編輯 Modal 狀態
+                qaModal: { open: false, id: null }
             }
         };
 
@@ -168,8 +167,8 @@
             try {
                 // Itinerary based on PPT/PDF
                 const itinData = [
-                    { order: 1, date: '5/13 (三)', title: '啟程與文化體驗', events: [{ type: 'transport', content: '桃園機場 (CI100 08:55) → 成田機場 (13:15)' }, { type: 'attraction', content: '成田山新勝寺 (表參道散策)' }, { type: 'meal', content: '晚餐：和牛霜降肉壽喜燒 (JPY 6000)' }], hotel: '東京巨蛋飯店 Tokyo Dome Hotel' },
-                    { order: 2, date: '5/14 (四)', title: '學術與金融巡禮', events: [{ type: 'visit', content: '09:30 早稻田大學見學 (學術交流)' }, { type: 'meal', content: '午餐：叙叙苑燒肉套餐' }, { type: 'visit', content: '14:00 東京證交所 (金融)' }, { type: 'attraction', content: '日本橋日枝神社' }, { type: 'meal', content: '晚餐：瓢斗銘柄豚涮涮鍋' }], hotel: '東京萬豪酒店 Tokyo Marriott Hotel' },
+                    { order: 1, date: '5/13 (三)', title: '啟程與文化體驗', events: [{ type: 'transport', content: '桃園機場 (CI100 08:55) → 成田機場 (13:15)' }, { type: 'attraction', content: '成田山新勝寺 (表參道散策)', mapUrl: 'https://maps.app.goo.gl/example' }, { type: 'meal', content: '晚餐：和牛霜降肉壽喜燒 (JPY 6000)' }], hotel: '東京巨蛋飯店 Tokyo Dome Hotel' },
+                    { order: 2, date: '5/14 (四)', title: '學術與金融巡禮', events: [{ type: 'visit', content: '09:30 早稻田大學見學 (學術交流)' }, { type: 'meal', content: '午餐：叙叙苑燒肉套餐' }, { type: 'visit', content: '14:00 東京證交所 (金融)', mapUrl: 'https://maps.app.goo.gl/example2' }, { type: 'attraction', content: '日本橋日枝神社' }, { type: 'meal', content: '晚餐：瓢斗銘柄豚涮涮鍋' }], hotel: '東京萬豪酒店 Tokyo Marriott Hotel' },
                     { order: 3, date: '5/15 (五)', title: '公共治理與永續', events: [{ type: 'visit', content: '10:00 東京都下水道局見學 (芝浦再生中心 - 環保ESG)' }, { type: 'visit', content: '15:00 國會參議院見學 (政治經濟)' }, { type: 'attraction', content: '麻布台之丘 (新地標)' }, { type: 'meal', content: '晚餐：居酒屋料理' }], hotel: '東京萬豪酒店 Tokyo Marriott Hotel' },
                     { order: 4, date: '5/16 (六)', title: '企業創新與古都', events: [{ type: 'visit', content: '橫濱資生堂全球創新中心 S/PARK (創新)' }, { type: 'attraction', content: '高德院 (鎌倉青銅大佛)' }, { type: 'attraction', content: '鶴岡八幡宮 & 小町通' }, { type: 'meal', content: '晚餐：螃蟹道樂晚宴包廂 (酒水暢飲)' }], hotel: '東京萬豪酒店 Tokyo Marriott Hotel' },
                     { order: 5, date: '5/17 (日)', title: '江戶風情與返程', events: [{ type: 'attraction', content: '小江戶川越 (藏造老街、時光鐘)' }, { type: 'attraction', content: '川越冰川神社 (體驗釣鯛魚籤)' }, { type: 'meal', content: '午餐：川越鰻魚飯御膳' }, { type: 'transport', content: '成田機場 (CI105 17:55) → 桃園機場 (20:35)' }], hotel: '溫暖的家' }
@@ -289,7 +288,6 @@
         function renderInfo() {
             return `
             <div class="max-w-6xl mx-auto px-4 py-16 fade-in space-y-16">
-                
                 <!-- Hotel Section -->
                 <div>
                     <div class="flex items-center mb-8">
@@ -297,7 +295,6 @@
                         <h2 class="text-3xl font-bold text-slate-800">精選住宿安排</h2>
                     </div>
                     <div class="grid md:grid-cols-2 gap-8">
-                        <!-- Hotel 1 -->
                         <div class="bg-white rounded-3xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300 border border-slate-100">
                             <div class="h-56 relative overflow-hidden">
                                 <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
@@ -308,22 +305,12 @@
                                 <h4 class="text-2xl font-bold text-slate-800 mb-2">東京巨蛋飯店</h4>
                                 <p class="text-sm text-slate-400 font-medium mb-6 uppercase tracking-wider">Tokyo Dome Hotel</p>
                                 <div class="space-y-4 text-sm text-slate-600">
-                                    <div class="flex items-start">
-                                        <i data-lucide="map-pin" class="w-5 h-5 mr-3 text-teal-500 shrink-0 mt-0.5"></i>
-                                        <span>東京都文京区後楽 1-3-61<br><span class="text-xs text-slate-400">便利交通，盡覽東京巨蛋城美景</span></span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <i data-lucide="phone" class="w-5 h-5 mr-3 text-teal-500 shrink-0"></i>
-                                        <span class="font-mono tracking-wide">+81-3-5805-2111</span>
-                                    </div>
-                                    <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Dome+Hotel" target="_blank" class="inline-flex items-center text-orange-500 text-xs font-bold hover:underline mt-2">
-                                        開啟 Google 地圖 <i data-lucide="external-link" class="w-3 h-3 ml-1"></i>
-                                    </a>
+                                    <div class="flex items-start"><i data-lucide="map-pin" class="w-5 h-5 mr-3 text-teal-500 shrink-0 mt-0.5"></i><span>東京都文京区後楽 1-3-61<br><span class="text-xs text-slate-400">便利交通，盡覽東京巨蛋城美景</span></span></div>
+                                    <div class="flex items-center"><i data-lucide="phone" class="w-5 h-5 mr-3 text-teal-500 shrink-0"></i><span class="font-mono tracking-wide">+81-3-5805-2111</span></div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Dome+Hotel" target="_blank" class="inline-flex items-center text-orange-500 text-xs font-bold hover:underline mt-2">開啟 Google 地圖 <i data-lucide="external-link" class="w-3 h-3 ml-1"></i></a>
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- Hotel 2 -->
                         <div class="bg-white rounded-3xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300 border border-slate-100">
                             <div class="h-56 relative overflow-hidden">
                                 <img src="https://images.unsplash.com/photo-1561501900-3701fa6a0864?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
@@ -334,151 +321,12 @@
                                 <h4 class="text-2xl font-bold text-slate-800 mb-2">東京萬豪酒店</h4>
                                 <p class="text-sm text-slate-400 font-medium mb-6 uppercase tracking-wider">Tokyo Marriott Hotel</p>
                                 <div class="space-y-4 text-sm text-slate-600">
-                                    <div class="flex items-start">
-                                        <i data-lucide="map-pin" class="w-5 h-5 mr-3 text-teal-500 shrink-0 mt-0.5"></i>
-                                        <span>東京都品川区北品川 4-7-36<br><span class="text-xs text-slate-400">緊鄰御殿山庭園，享受靜謐奢華</span></span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <i data-lucide="phone" class="w-5 h-5 mr-3 text-teal-500 shrink-0"></i>
-                                        <span class="font-mono tracking-wide">+81-3-5488-3911</span>
-                                    </div>
-                                    <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Marriott+Hotel" target="_blank" class="inline-flex items-center text-orange-500 text-xs font-bold hover:underline mt-2">
-                                        開啟 Google 地圖 <i data-lucide="external-link" class="w-3 h-3 ml-1"></i>
-                                    </a>
+                                    <div class="flex items-start"><i data-lucide="map-pin" class="w-5 h-5 mr-3 text-teal-500 shrink-0 mt-0.5"></i><span>東京都品川区北品川 4-7-36<br><span class="text-xs text-slate-400">緊鄰御殿山庭園，享受靜謐奢華</span></span></div>
+                                    <div class="flex items-center"><i data-lucide="phone" class="w-5 h-5 mr-3 text-teal-500 shrink-0"></i><span class="font-mono tracking-wide">+81-3-5488-3911</span></div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Marriott+Hotel" target="_blank" class="inline-flex items-center text-orange-500 text-xs font-bold hover:underline mt-2">開啟 Google 地圖 <i data-lucide="external-link" class="w-3 h-3 ml-1"></i></a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Flight Info -->
-                <div class="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden">
-                    <div class="bg-slate-800 px-8 py-4 flex flex-col md:flex-row justify-between items-center text-white">
-                        <h3 class="text-lg font-bold flex items-center gap-2"><i data-lucide="plane" class="text-orange-400"></i> 航班資訊 (中華航空)</h3>
-                        <span class="bg-white/10 px-3 py-1 rounded-full text-xs mt-2 md:mt-0">團體經濟艙 | 需團進團出</span>
-                    </div>
-                    <div class="p-8 grid md:grid-cols-2 gap-12 relative">
-                        <div class="hidden md:block absolute left-1/2 top-8 bottom-8 w-px bg-slate-100"></div>
-                        
-                        <!-- Outbound -->
-                        <div class="text-center relative">
-                            <div class="inline-block bg-orange-50 text-orange-600 px-3 py-1 rounded text-xs font-bold mb-4">去程 5/13 (三)</div>
-                            <div class="flex justify-between items-center mb-2 px-4">
-                                <div class="text-left">
-                                    <div class="text-3xl font-black text-slate-800">08:55</div>
-                                    <div class="text-xs text-slate-400 font-bold">TPE 桃園 T2</div>
-                                </div>
-                                <div class="flex flex-col items-center mx-4 flex-1">
-                                    <span class="text-xs text-slate-400 mb-1">3h 20m</span>
-                                    <div class="w-full h-0.5 bg-slate-200 relative">
-                                        <i data-lucide="plane" class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 text-orange-400 fill-current rotate-90"></i>
-                                    </div>
-                                    <span class="text-xs font-mono text-slate-500 mt-1">CI 100</span>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-3xl font-black text-slate-800">13:15</div>
-                                    <div class="text-xs text-slate-400 font-bold">NRT 成田 T2</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Inbound -->
-                        <div class="text-center">
-                            <div class="inline-block bg-teal-50 text-teal-600 px-3 py-1 rounded text-xs font-bold mb-4">回程 5/17 (日)</div>
-                            <div class="flex justify-between items-center mb-2 px-4">
-                                <div class="text-left">
-                                    <div class="text-3xl font-black text-slate-800">17:55</div>
-                                    <div class="text-xs text-slate-400 font-bold">NRT 成田 T2</div>
-                                </div>
-                                <div class="flex flex-col items-center mx-4 flex-1">
-                                    <span class="text-xs text-slate-400 mb-1">3h 40m</span>
-                                    <div class="w-full h-0.5 bg-slate-200 relative">
-                                        <i data-lucide="plane" class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 text-teal-500 fill-current rotate-90"></i>
-                                    </div>
-                                    <span class="text-xs font-mono text-slate-500 mt-1">CI 105</span>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-3xl font-black text-slate-800">20:35</div>
-                                    <div class="text-xs text-slate-400 font-bold">TPE 桃園 T2</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-        }
-
-        function renderCost() {
-            return `
-            <div class="max-w-4xl mx-auto px-4 py-12 slide-up">
-                <div class="flex items-center mb-8">
-                     <div class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 mr-4"><i data-lucide="dollar-sign" class="w-6 h-6"></i></div>
-                     <h2 class="text-3xl font-bold text-slate-800">費用說明與須知</h2>
-                </div>
-
-                <!-- Price Card -->
-                <div class="bg-white rounded-[30px] shadow-xl overflow-hidden mb-10 border-2 border-orange-100 relative">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-orange-400/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
-                    <div class="p-10 text-center">
-                        <p class="text-slate-500 font-medium mb-2 tracking-wide">每人團費 (以35人成團計算)</p>
-                        <div class="flex justify-center items-baseline gap-2 mb-4">
-                            <span class="text-2xl text-slate-400 font-bold">NT$</span>
-                            <span class="text-6xl font-black text-slate-800 tracking-tight">63,500</span>
-                        </div>
-                        <div class="inline-flex items-center gap-2 bg-orange-50 text-orange-700 px-4 py-2 rounded-full text-sm font-bold border border-orange-100">
-                            <span class="w-2 h-2 bg-orange-500 rounded-full"></span>
-                            訂金 NT$ 15,000
-                        </div>
-                    </div>
-                    
-                    <!-- Details Grid -->
-                    <div class="bg-slate-50 p-8 grid md:grid-cols-2 gap-10 border-t border-slate-100">
-                        <!-- Included -->
-                        <div>
-                            <h4 class="font-bold text-teal-800 mb-4 flex items-center gap-2">
-                                <i data-lucide="check-circle-2" class="text-teal-500 w-5 h-5"></i> 費用包含
-                            </h4>
-                            <ul class="space-y-3">
-                                ${['台北/東京 團體來回經濟艙機票', '行程表列之餐食、景點門票、交通', '表列住宿 (二人一室)', '兩地機場稅、燃油附加費', '履約責任險 500萬 + 醫療險 20萬', '司機、領隊、導遊小費'].map(i => 
-                                    `<li class="flex items-start text-sm text-slate-600"><span class="mr-2 text-teal-500">•</span>${i}</li>`
-                                ).join('')}
-                            </ul>
-                        </div>
-                        
-                        <!-- Not Included / Options -->
-                        <div>
-                            <h4 class="font-bold text-orange-700 mb-4 flex items-center gap-2">
-                                <i data-lucide="plus-circle" class="text-orange-500 w-5 h-5"></i> 自理與加價項目
-                            </h4>
-                            <ul class="space-y-3">
-                                <li class="flex items-start text-sm text-slate-600"><span class="mr-2 text-orange-400">×</span>個人護照新辦費用 ($1,600)</li>
-                                <li class="flex items-start text-sm text-slate-600"><span class="mr-2 text-orange-400">×</span>純係私人之消費 (如行李超重、飲料酒類等)</li>
-                                <li class="mt-4 pt-4 border-t border-slate-200">
-                                    <div class="flex justify-between items-center text-sm font-bold text-slate-700 mb-2">
-                                        <span>指定單人房</span>
-                                        <span class="text-orange-600">+ NT$ 16,000</span>
-                                    </div>
-                                    <div class="flex justify-between items-center text-sm font-bold text-slate-700">
-                                        <span>機票自理扣除</span>
-                                        <span class="text-teal-600">- NT$ 18,000</span>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cancellation Policy -->
-                <div class="bg-red-50 rounded-2xl p-6 border border-red-100 flex gap-4">
-                    <div class="shrink-0"><i data-lucide="alert-triangle" class="text-red-500 w-6 h-6 mt-1"></i></div>
-                    <div>
-                        <h4 class="font-bold text-red-800 mb-2">取消規定與注意事項</h4>
-                        <ul class="space-y-1 text-sm text-red-700/80 list-disc pl-4">
-                            <li>若報名後因故取消，將收取行政手續費與退票費用 (依旅遊契約書辦理)。</li>
-                            <li>未達成行率若取消，將收取退票作業費 NT$5,000。</li>
-                            <li><strong>3月初後</strong> 若取消行程，飯店費用將無法退還 (全額沒收)。</li>
-                            <li>請確認護照效期需在回國日 (2026/5/17) 後 6 個月以上。</li>
-                        </ul>
                     </div>
                 </div>
             </div>`;
@@ -491,79 +339,15 @@
                      <div class="w-10 h-10 bg-teal-100 rounded-xl flex items-center justify-center text-teal-600 mr-4"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
                      <h2 class="text-3xl font-bold text-slate-800">學術任務與課綱</h2>
                 </div>
-
-                <!-- Course Header Card -->
                 <div class="bg-gradient-to-br from-teal-600 to-teal-800 rounded-3xl p-8 md:p-10 text-white shadow-xl mb-10 relative overflow-hidden">
                     <div class="absolute right-0 top-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
                     <div class="relative z-10 grid md:grid-cols-3 gap-8">
                         <div class="md:col-span-2">
-                            <div class="inline-flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-4 border border-white/20">
-                                <span>114學年第二學期</span>
-                                <span class="w-1 h-1 bg-white rounded-full"></span>
-                                <span>群修二</span>
-                            </div>
+                            <div class="inline-flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-4 border border-white/20"><span>114學年第二學期</span><span class="w-1 h-1 bg-white rounded-full"></span><span>群修二</span></div>
                             <h3 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">高階主管投資與理財<br><span class="text-teal-200 text-2xl">(境外參訪)</span></h3>
-                            <div class="flex flex-wrap gap-4 text-sm opacity-90">
-                                <div class="flex items-center"><i data-lucide="user" class="w-4 h-4 mr-2"></i>授課教師：陳鴻毅 教授</div>
-                                <div class="flex items-center"><i data-lucide="award" class="w-4 h-4 mr-2"></i>2 學分</div>
-                            </div>
+                            <div class="flex flex-wrap gap-4 text-sm opacity-90"><div class="flex items-center"><i data-lucide="user" class="w-4 h-4 mr-2"></i>授課教師：陳鴻毅 教授</div><div class="flex items-center"><i data-lucide="award" class="w-4 h-4 mr-2"></i>2 學分</div></div>
                         </div>
-                        <div class="bg-white/10 rounded-2xl p-6 backdrop-blur-sm border border-white/10 flex flex-col justify-center">
-                            <h4 class="font-bold mb-2 flex items-center"><i data-lucide="target" class="w-4 h-4 mr-2 text-yellow-300"></i> 課程目標</h4>
-                            <p class="text-xs leading-relaxed opacity-90">
-                                聚焦於從學術創新到企業實踐，探討日本在資源受限與結構轉型挑戰下，如何透過產官學研協作，形成可落實的轉型路徑。
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Timeline Schedule -->
-                <div class="grid md:grid-cols-3 gap-6 mb-12">
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center group hover:border-teal-200 transition">
-                        <div class="text-xs font-bold text-slate-400 uppercase mb-2">Pre-Trip</div>
-                        <div class="text-lg font-bold text-slate-800 mb-1">行前課程</div>
-                        <div class="text-3xl font-black text-teal-600 mb-2">5/11 <span class="text-base font-normal text-slate-500">(一)</span></div>
-                        <div class="text-sm text-slate-500 bg-slate-50 py-1 px-3 rounded-full inline-block">18:30 - 22:30</div>
-                    </div>
-                    <div class="bg-orange-50 p-6 rounded-2xl shadow-md border-2 border-orange-200 text-center transform md:-translate-y-2 relative">
-                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">Main Event</div>
-                        <div class="text-xs font-bold text-orange-800/60 uppercase mb-2">Tokyo Trip</div>
-                        <div class="text-lg font-bold text-orange-900 mb-1">日本東京參訪</div>
-                        <div class="text-3xl font-black text-orange-600 mb-2">5/13 - 17</div>
-                        <div class="text-sm text-orange-800/70">全程參與 (缺席視為不及格)</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center group hover:border-teal-200 transition">
-                        <div class="text-xs font-bold text-slate-400 uppercase mb-2">Post-Trip</div>
-                        <div class="text-lg font-bold text-slate-800 mb-1">回程課程</div>
-                        <div class="text-3xl font-black text-teal-600 mb-2">5/25 <span class="text-base font-normal text-slate-500">(一)</span></div>
-                        <div class="text-sm text-slate-500 bg-slate-50 py-1 px-3 rounded-full inline-block">18:30 - 22:30</div>
-                    </div>
-                </div>
-
-                <!-- Learning Topics -->
-                <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
-                    <div class="bg-slate-50 px-8 py-4 border-b border-slate-100 font-bold text-slate-700 flex items-center">
-                        <i data-lucide="book-open-check" class="w-5 h-5 mr-2 text-teal-500"></i> 重點參訪主題與學習成效
-                    </div>
-                    <div class="divide-y divide-slate-100">
-                        ${[
-                            { date: '5/13', title: '早稻田商學院', tag: '學術交流', color: 'blue', desc: '認識早稻田之教學特色與產學合作模式，討論管理理論之實務應用。' },
-                            { date: '5/14', title: '東京證券交易所', tag: '金融', color: 'indigo', desc: '認識市場制度與核心功能，討論公司治理與資本效率。' },
-                            { date: '5/15', title: '東京都下水道局', tag: '環保 ESG', color: 'green', desc: '參訪芝浦再生中心，認識水資源循環，討論公共治理與永續管理。' },
-                            { date: '5/15', title: '日本國會參議院', tag: '政治經濟', color: 'purple', desc: '認識制度架構與立法職能，討論政策環境對企業之影響。' },
-                            { date: '5/16', title: '資生堂 S/PARK', tag: '創新', color: 'pink', desc: '橫濱全球創新中心，認識研發創新與品牌策略，討論競爭優勢。' },
-                        ].map(item => `
-                            <div class="p-6 flex flex-col md:flex-row gap-4 hover:bg-slate-50 transition">
-                                <div class="md:w-32 shrink-0 flex md:flex-col items-center md:items-start gap-2">
-                                    <span class="font-bold text-slate-400 text-sm">${item.date}</span>
-                                    <span class="bg-${item.color}-100 text-${item.color}-700 text-xs font-bold px-2 py-1 rounded border border-${item.color}-200">${item.tag}</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg mb-1">${item.title}</h4>
-                                    <p class="text-sm text-slate-600 leading-relaxed">${item.desc}</p>
-                                </div>
-                            </div>
-                        `).join('')}
+                        <div class="bg-white/10 rounded-2xl p-6 backdrop-blur-sm border border-white/10 flex flex-col justify-center"><h4 class="font-bold mb-2 flex items-center"><i data-lucide="target" class="w-4 h-4 mr-2 text-yellow-300"></i> 課程目標</h4><p class="text-xs leading-relaxed opacity-90">聚焦於從學術創新到企業實踐，探討日本在資源受限與結構轉型挑戰下，如何透過產官學研協作，形成可落實的轉型路徑。</p></div>
                     </div>
                 </div>
             </div>`;
@@ -577,36 +361,39 @@
                         <div class="w-10 h-10 bg-teal-100 rounded-xl flex items-center justify-center text-teal-600 mr-4"><i data-lucide="map" class="w-6 h-6"></i></div>
                         <h2 class="text-3xl font-bold text-slate-800">每日行程安排</h2>
                     </div>
-                    ${state.isAdmin ? `<div class="text-xs bg-slate-100 text-slate-500 px-3 py-1 rounded-full">管理員模式：點選標題可編輯</div>` : ''}
+                    ${state.isAdmin ? 
+                        `<div class="flex gap-2">
+                            <button onclick="window.addItineraryDay()" class="bg-teal-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md hover:bg-teal-700 flex items-center gap-2">
+                                <i data-lucide="plus" class="w-4 h-4"></i> 新增天數
+                            </button>
+                        </div>` : ''}
                 </div>
                 
                 <div class="space-y-12 relative">
-                    <!-- Global Timeline Line -->
-                    <div class="timeline-line bg-slate-200 hidden md:block" style="left: 2rem;"></div>
-
-                    `;
+                    <div class="timeline-line bg-slate-200 hidden md:block" style="left: 2rem;"></div>`;
 
             state.data.itinerary.forEach((day, index) => {
                 const isEditing = state.ui.editingId === day.id;
                 
                 html += `
                 <div class="relative pl-0 md:pl-16 timeline-item">
-                    <!-- Timeline Dot (Desktop) -->
                     <div class="hidden md:flex absolute left-0 top-0 w-16 h-16 justify-center items-start z-10">
                         <div class="w-4 h-4 rounded-full bg-teal-500 border-4 border-white shadow-md mt-6"></div>
                     </div>
 
-                    <!-- Day Card -->
                     <div class="bg-white rounded-[2rem] shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300">
                         <!-- Header -->
                         <div class="bg-slate-50 px-6 py-4 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-2">
                             <div class="flex items-center gap-3">
                                 <span class="bg-teal-600 text-white font-black text-sm px-3 py-1 rounded-lg shadow-sm">DAY ${day.order}</span>
-                                <span class="font-bold text-slate-400 text-sm">${day.date.split(' ')[0]}</span>
+                                ${isEditing ? 
+                                    `<input id="edit-date-${day.id}" value="${day.date}" class="border-b border-slate-300 bg-transparent px-1 text-sm font-bold text-slate-500 w-32" placeholder="日期 (如 5/13)">` :
+                                    `<span class="font-bold text-slate-400 text-sm">${day.date}</span>`
+                                }
                             </div>
                             <div class="flex-1">
                                 ${isEditing ? 
-                                    `<input id="edit-title-${day.id}" value="${day.title}" class="w-full border-b-2 border-teal-500 bg-transparent focus:outline-none font-bold text-lg text-slate-800 px-2">` : 
+                                    `<input id="edit-title-${day.id}" value="${day.title}" class="w-full border-b-2 border-teal-500 bg-transparent focus:outline-none font-bold text-lg text-slate-800 px-2 placeholder-slate-300" placeholder="行程標題">` : 
                                     `<h3 class="font-bold text-xl text-slate-800">${day.title}</h3>`
                                 }
                             </div>
@@ -614,42 +401,69 @@
                                 `<div class="flex gap-2 shrink-0">
                                     <button onclick="window.saveItinerary('${day.id}')" class="bg-teal-500 text-white px-3 py-1 rounded text-xs hover:bg-teal-600">儲存</button>
                                     <button onclick="window.setEditingId(null)" class="bg-gray-200 text-slate-600 px-3 py-1 rounded text-xs hover:bg-gray-300">取消</button>
+                                    <button onclick="window.deleteItineraryDay('${day.id}')" class="bg-red-100 text-red-500 px-3 py-1 rounded text-xs hover:bg-red-200 ml-2">刪除整天</button>
                                 </div>` : 
                                 `<button onclick="window.setEditingId('${day.id}')" class="text-slate-300 hover:text-teal-500 transition p-1"><i data-lucide="edit-3" class="w-4 h-4"></i></button>`
                             ) : ''}
                         </div>
 
                         <div class="p-6 md:p-8">
-                            <!-- Events Timeline -->
-                            <div class="space-y-6 relative">
-                                <div class="absolute left-[19px] top-3 bottom-3 w-0.5 bg-slate-100"></div>
+                            <!-- Events -->
+                            <div class="space-y-6 relative" id="events-container-${day.id}">
+                                ${!isEditing ? `<div class="absolute left-[19px] top-3 bottom-3 w-0.5 bg-slate-100"></div>` : ''}
                                 
-                                ${day.events.map(ev => {
-                                    let typeConfig = {
-                                        'visit': { color: 'blue', icon: 'briefcase', label: '參訪' },
-                                        'attraction': { color: 'orange', icon: 'camera', label: '景點' },
-                                        'meal': { color: 'emerald', icon: 'utensils', label: '餐食' },
-                                        'transport': { color: 'slate', icon: 'plane', label: '交通' }
-                                    }[ev.type] || { color: 'slate', icon: 'circle', label: '其他' };
-
-                                    return `
-                                    <div class="flex gap-4 relative z-10">
-                                        <div class="w-10 h-10 shrink-0 bg-white border border-slate-100 rounded-full flex items-center justify-center shadow-sm">
-                                            <i data-lucide="${typeConfig.icon}" class="w-4 h-4 text-${typeConfig.color}-500"></i>
-                                        </div>
-                                        <div class="py-2 flex-1">
-                                            <div class="flex flex-wrap items-center gap-2 mb-1">
-                                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-${typeConfig.color}-50 text-${typeConfig.color}-600 border border-${typeConfig.color}-100">
-                                                    ${typeConfig.label}
-                                                </span>
+                                ${day.events.map((ev, evIdx) => {
+                                    if(isEditing) {
+                                        return `
+                                        <div class="flex gap-2 items-start event-row bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                            <select class="event-type border border-slate-300 rounded p-2 text-sm bg-white shrink-0">
+                                                <option value="visit" ${ev.type=='visit'?'selected':''}>參訪</option>
+                                                <option value="attraction" ${ev.type=='attraction'?'selected':''}>景點</option>
+                                                <option value="meal" ${ev.type=='meal'?'selected':''}>餐食</option>
+                                                <option value="transport" ${ev.type=='transport'?'selected':''}>交通</option>
+                                            </select>
+                                            <div class="flex-1 space-y-2">
+                                                <input class="event-content w-full border border-slate-300 rounded p-2 text-sm" value="${ev.content}" placeholder="行程內容">
+                                                <div class="flex items-center gap-2">
+                                                    <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
+                                                    <input class="event-map w-full border border-slate-300 rounded p-1 text-xs text-slate-500" value="${ev.mapUrl||''}" placeholder="Google Map 網址 (選填)">
+                                                </div>
                                             </div>
-                                            <p class="text-slate-700 text-base leading-relaxed ${ev.type === 'visit' ? 'font-bold' : ''}">
-                                                ${ev.content}
-                                            </p>
-                                        </div>
-                                    </div>`;
+                                            <button onclick="this.closest('.event-row').remove()" class="text-red-400 hover:text-red-600 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                        </div>`;
+                                    } else {
+                                        let typeConfig = {
+                                            'visit': { color: 'blue', icon: 'briefcase', label: '參訪' },
+                                            'attraction': { color: 'orange', icon: 'camera', label: '景點' },
+                                            'meal': { color: 'emerald', icon: 'utensils', label: '餐食' },
+                                            'transport': { color: 'slate', icon: 'plane', label: '交通' }
+                                        }[ev.type] || { color: 'slate', icon: 'circle', label: '其他' };
+
+                                        return `
+                                        <div class="flex gap-4 relative z-10">
+                                            <div class="w-10 h-10 shrink-0 bg-white border border-slate-100 rounded-full flex items-center justify-center shadow-sm group">
+                                                <i data-lucide="${typeConfig.icon}" class="w-4 h-4 text-${typeConfig.color}-500"></i>
+                                            </div>
+                                            <div class="py-2 flex-1">
+                                                <div class="flex flex-wrap items-center gap-2 mb-1">
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-${typeConfig.color}-50 text-${typeConfig.color}-600 border border-${typeConfig.color}-100">
+                                                        ${typeConfig.label}
+                                                    </span>
+                                                </div>
+                                                <p class="text-slate-700 text-base leading-relaxed ${ev.type === 'visit' ? 'font-bold' : ''}">
+                                                    ${ev.content}
+                                                    ${ev.mapUrl ? `<a href="${ev.mapUrl}" target="_blank" class="inline-flex items-center text-orange-500 hover:text-orange-600 ml-2" title="開啟地圖"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i></a>` : ''}
+                                                </p>
+                                            </div>
+                                        </div>`;
+                                    }
                                 }).join('')}
                             </div>
+                            
+                            ${isEditing ? 
+                                `<button onclick="window.appendEventRow('${day.id}')" class="w-full mt-4 py-2 border-2 border-dashed border-slate-300 text-slate-400 rounded-xl hover:border-teal-400 hover:text-teal-500 transition text-sm font-bold flex items-center justify-center gap-2">
+                                    <i data-lucide="plus" class="w-4 h-4"></i> 新增行程細項
+                                </button>` : ''}
 
                             <!-- Hotel Footer -->
                             <div class="mt-8 pt-4 border-t border-slate-100 flex items-center gap-3 text-sm text-slate-500 bg-slate-50/50 -mx-6 -mb-6 p-6">
@@ -659,7 +473,7 @@
                                 <div class="flex-1">
                                     <span class="text-xs font-bold text-slate-400 uppercase block">Accommodation</span>
                                     ${isEditing ? 
-                                        `<input id="edit-hotel-${day.id}" value="${day.hotel}" class="w-full bg-white border border-slate-200 rounded px-2 py-1 text-slate-800">` : 
+                                        `<input id="edit-hotel-${day.id}" value="${day.hotel}" class="w-full bg-white border border-slate-200 rounded px-2 py-1 text-slate-800 placeholder-slate-300" placeholder="住宿飯店">` : 
                                         `<span class="font-bold text-slate-700 text-base">${day.hotel}</span>`
                                     }
                                 </div>
@@ -693,7 +507,6 @@
                         </button>` : ''}
                 </div>
 
-                <!-- Search Bar -->
                 <div class="relative mb-6">
                     <input type="text" 
                         oninput="window.setQaSearch(this.value)" 
@@ -739,7 +552,6 @@
                 </div>
              </div>`;
 
-             // QA Modal
              if (state.isAdmin && state.ui.qaModal.open) {
                 const isEdit = state.ui.qaModal.id;
                 const data = isEdit ? state.data.qa.find(q => q.id === isEdit) : {};
@@ -830,7 +642,6 @@
 
             html += `</div></div>`;
 
-            // Modal
             if (state.isAdmin && state.ui.teamModal.open) {
                 const isEdit = state.ui.teamModal.id;
                 const data = isEdit ? state.data.team.find(t => t.id === isEdit) : {};
@@ -917,14 +728,63 @@
         window.login = () => { if(document.getElementById('login-user').value==='admin' && document.getElementById('login-pass').value==='Aa123456#') { state.isAdmin = true; state.activeTab='itinerary'; render(); } else alert('帳號密碼錯誤'); };
         window.handleLogout = () => { state.isAdmin=false; state.activeTab='home'; render(); };
         window.setEditingId = (id) => { state.ui.editingId = id; render(); };
-        window.saveItinerary = async (id) => { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'itinerary_v2', id), { title: document.getElementById(`edit-title-${id}`).value, hotel: document.getElementById(`edit-hotel-${id}`).value }); state.ui.editingId = null; render(); };
+        window.deleteDoc = async (col, id) => { if(confirm('確定要刪除嗎？此動作無法復原。')) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', col, id)); };
         
+        // Itinerary Actions
+        window.saveItinerary = async (id) => { 
+            const title = document.getElementById(`edit-title-${id}`).value;
+            const date = document.getElementById(`edit-date-${id}`).value;
+            const hotel = document.getElementById(`edit-hotel-${id}`).value;
+            const eventRows = document.querySelectorAll(`#events-container-${id} .event-row`);
+            const events = Array.from(eventRows).map(row => ({
+                type: row.querySelector('.event-type').value,
+                content: row.querySelector('.event-content').value,
+                mapUrl: row.querySelector('.event-map').value
+            }));
+            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'itinerary_v2', id), { title, date, hotel, events });
+            state.ui.editingId = null; 
+            render(); 
+        };
+        window.appendEventRow = (id) => {
+            const container = document.getElementById(`events-container-${id}`);
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 items-start event-row bg-slate-50 p-3 rounded-lg border border-slate-200';
+            div.innerHTML = `
+                <select class="event-type border border-slate-300 rounded p-2 text-sm bg-white shrink-0">
+                    <option value="visit">參訪</option>
+                    <option value="attraction" selected>景點</option>
+                    <option value="meal">餐食</option>
+                    <option value="transport">交通</option>
+                </select>
+                <div class="flex-1 space-y-2">
+                    <input class="event-content w-full border border-slate-300 rounded p-2 text-sm" placeholder="行程內容">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
+                        <input class="event-map w-full border border-slate-300 rounded p-1 text-xs text-slate-500" placeholder="Google Map 網址 (選填)">
+                    </div>
+                </div>
+                <button onclick="this.closest('.event-row').remove()" class="text-red-400 hover:text-red-600 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            `;
+            container.appendChild(div);
+            lucide.createIcons();
+        };
+        window.addItineraryDay = async () => {
+            const lastOrder = state.data.itinerary.length > 0 ? Math.max(...state.data.itinerary.map(d => d.order)) : 0;
+            await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'itinerary_v2'), {
+                order: lastOrder + 1,
+                date: '日期',
+                title: '新行程',
+                hotel: '住宿',
+                events: []
+            });
+        };
+        window.deleteItineraryDay = async (id) => {
+            if(confirm('確定要刪除整天的行程嗎？此動作無法復原。')) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'itinerary_v2', id));
+        };
+
         // QA Actions
         window.setCategory = (c) => { state.ui.categoryFilter = c; render(); };
         window.toggleQA = (i) => { state.ui.openQaIndex = state.ui.openQaIndex===i?null:i; render(); };
-        window.deleteDoc = async (col, id) => { if(confirm('確定要刪除嗎？此動作無法復原。')) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', col, id)); };
-        
-        // QA Search & Modal
         window.setQaSearch = (val) => { state.ui.qaSearch = val; render(); };
         window.openQaModal = (id = null) => { state.ui.qaModal = { open: true, id: id }; render(); };
         window.closeQaModal = () => { state.ui.qaModal = { open: false, id: null }; render(); };
