@@ -268,10 +268,10 @@
                 <div class="relative max-w-7xl mx-auto px-6 h-full flex flex-col justify-end pb-20 text-center md:text-left">
                     <div class="inline-flex items-center gap-2 bg-yellow-400 text-teal-900 px-5 py-2 rounded-full font-bold text-sm mb-6 w-fit mx-auto md:mx-0 shadow-lg animate-bounce">
                         <span class="bg-white/30 rounded-full p-1"><i data-lucide="star" class="w-3 h-3 text-teal-900"></i></span>
-                        Lion, Enriching Life!
+                        Enriching Life!
                     </div>
                     <h1 class="text-4xl md:text-7xl font-black text-white mb-4 drop-shadow-xl tracking-tight leading-tight">
-                        重塑<span class="text-orange-400">日本競爭力</span>
+                        探訪<span class="text-orange-400">日本競爭力</span>
                     </h1>
                     <p class="text-xl md:text-2xl text-orange-50 font-medium mb-8 max-w-2xl mx-auto md:mx-0 leading-relaxed text-shadow">
                         深入東京核心，探討資本、人才與產業的<br class="md:hidden">數位轉型及永續革新
@@ -547,7 +547,7 @@ function renderAcademic() {
                         <div class="flex items-center">
                             <i data-lucide="book-open-check" class="w-5 h-5 mr-2 text-teal-500"></i> 重點參訪主題與學習成效
                         </div>
-                        <span class="text-[10px] text-slate-400 font-normal bg-white border border-slate-200 px-3 py-1 rounded-full self-start md:self-auto">
+                        <span class="text-[12px] text-slate-400 font-normal bg-white border border-slate-200 px-3 py-1 rounded-full self-start md:self-auto">
                             ※ 參訪地點依實際行程安排
                         </span>
                     </div>
@@ -664,7 +664,11 @@ function renderAcademic() {
         function renderItinerary(container) {
             let html = `
             <div class="max-w-4xl mx-auto px-4 py-12 fade-in">
-                <div class="flex items-center justify-between mb-10">
+                <span class="text-[14px] text-darkgray-400 font-normal bg-white border border-slate-200 px-3 py-1 rounded-full self-start md:self-auto">
+                    ※ 參訪企業及景點:規劃小組討論中....
+                </span>
+                
+                <div class="flex items-center justify-between mb-10">                    
                     <div class="flex items-center">
                         <div class="w-10 h-10 bg-teal-100 rounded-xl flex items-center justify-center text-teal-600 mr-4"><i data-lucide="map" class="w-6 h-6"></i></div>
                         <h2 class="text-3xl font-bold text-slate-800">每日行程安排</h2>
@@ -676,9 +680,8 @@ function renderAcademic() {
                             </button>
                         </div>` : ''}
                 </div>
-                
                 <div class="space-y-12 relative">
-                    <div class="timeline-line bg-slate-200 hidden md:block" style="left: 2rem;"></div>`;
+                <div class="timeline-line bg-slate-200 hidden md:block" style="left: 2rem;"></div>`;
 
             state.data.itinerary.forEach((day, index) => {
                 const isEditing = state.ui.editingId === day.id;
