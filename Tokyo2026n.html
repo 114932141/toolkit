@@ -106,7 +106,7 @@
             user: null, 
             isAdmin: false, 
             role: 'guest', 
-            adminId: null, // ★ 新增：記錄當前登入者的 ID
+            adminId: null,
             activeTab: 'home',
             data: { itinerary: [], qa: [], team: [], messages: [], admins: [] },
             ui: { 
@@ -117,7 +117,8 @@
                 teamModal: { open: false, id: null },
                 qaModal: { open: false, id: null },
                 msgModal: { open: false },
-                adminModal: { open: false, id: null }
+                adminModal: { open: false, id: null },
+                msgProcessModal: { open: false, id: null } // ★ 新增：留言處理視窗狀態
             }
         };
 
@@ -1158,29 +1159,66 @@ function renderTeam(container) {
                 </div>`;
             } else {
                 // 已登入狀態
+
+                // 1. 定義狀態顏色與文字對照
+                const statusMap = {
+                    'new': { label: '未處理', color: 'red' },
+                    'processing': { label: '處理中', color: 'blue' },
+                    'done': { label: '已結案', color: 'green' },
+                    'spam': { label: '垃圾訊息', color: 'gray' }
+                };
+
+                // 2. 渲染留言列表 (加入狀態標籤與備註顯示)
                 const messagesHtml = state.data.messages.length === 0 
                     ? `<div class="text-center text-slate-400 py-10">目前沒有新留言</div>`
-                    : state.data.messages.map(msg => `
-                        <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col gap-2">
-                            <div class="flex justify-between items-start">
-                                <div class="flex items-center gap-2">
-                                    <span class="font-bold text-slate-700">${msg.name}</span>
-                                    ${msg.contact ? `<span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded">${msg.contact}</span>` : ''}
+                    : state.data.messages.map(msg => {
+                        const cat = msg.category || 'new'; // 預設為 new
+                        const status = statusMap[cat] || statusMap['new'];
+                        
+                        return `
+                        <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm flex flex-col gap-3 relative overflow-hidden group hover:shadow-md transition">
+                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-${status.color}-500"></div>
+                            
+                            <div class="flex justify-between items-start pl-2">
+                                <div class="flex flex-col gap-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-bold text-slate-700 text-lg">${msg.name}</span>
+                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-${status.color}-100 text-${status.color}-600 border border-${status.color}-200">
+                                            ${status.label}
+                                        </span>
+                                    </div>
+                                    ${msg.contact ? `<div class="flex items-center text-xs text-slate-500"><i data-lucide="contact" class="w-3 h-3 mr-1"></i>${msg.contact}</div>` : ''}
                                 </div>
-                                <span class="text-[10px] text-slate-400">${new Date(msg.timestamp).toLocaleString()}</span>
+                                <span class="text-[10px] text-slate-400 font-mono">${new Date(msg.timestamp).toLocaleString()}</span>
                             </div>
-                            <p class="text-sm text-slate-600 bg-slate-50 p-3 rounded-lg">${msg.content}</p>
-                            <div class="flex justify-end pt-2">
-                                <button onclick="window.deleteDoc('inquiries', '${msg.id}')" class="text-red-400 text-xs hover:text-red-600 flex items-center gap-1">
-                                    <i data-lucide="trash-2" class="w-3 h-3"></i> 刪除留言
+                            
+                            <div class="pl-2">
+                                <p class="text-sm text-slate-700 leading-relaxed bg-slate-50 p-3 rounded-lg border border-slate-100">${msg.content}</p>
+                            </div>
+
+                            ${msg.note ? `
+                            <div class="pl-2 mt-1">
+                                <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-100 text-xs text-slate-600 relative">
+                                    <div class="absolute -top-2 left-4 bg-yellow-100 text-yellow-700 px-1.5 rounded text-[10px] font-bold">內部備註</div>
+                                    ${msg.note}
+                                </div>
+                            </div>` : ''}
+
+                            <div class="flex justify-end gap-2 pt-2 border-t border-slate-50 pl-2">
+                                <button onclick="window.openMsgProcessModal('${msg.id}')" class="bg-teal-50 text-teal-600 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-teal-100 flex items-center gap-1 transition">
+                                    <i data-lucide="clipboard-edit" class="w-3.5 h-3.5"></i> 處理/紀錄
+                                </button>
+                                <button onclick="window.deleteDoc('inquiries', '${msg.id}')" class="bg-red-50 text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-100 hover:text-red-500 flex items-center gap-1 transition">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> 刪除
                                 </button>
                             </div>
                         </div>
-                    `).join('');
+                    `}).join('');
 
-                // 帳號列表 (只有 Super Admin 看得到)
+                // 3. 帳號列表 (Super Admin Only) - 保持不變
                 let accountsHtml = '';
                 if (state.role === 'super') {
+                    // ... (保持原本的 accountsHtml 生成邏輯) ...
                     const adminsList = state.data.admins.map(adm => `
                         <div class="flex items-center justify-between p-4 bg-white border border-slate-100 rounded-xl">
                             <div class="flex items-center gap-3">
@@ -1216,6 +1254,7 @@ function renderTeam(container) {
                     </div>`;
                 }
 
+                // 4. 渲染主結構
                 container.innerHTML = `
                 <div class="max-w-4xl mx-auto px-4 py-12 fade-in">
                     <div class="bg-white p-8 rounded-3xl shadow-xl border border-orange-100 mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -1252,42 +1291,84 @@ function renderTeam(container) {
                     ${accountsHtml}
                 </div>`;
 
-                // Modal 渲染 (修正 Username 輸入框邏輯)
+                // 5. 渲染 Admin Modal (帳號管理 - 保持不變)
                 if (state.ui.adminModal.open) {
-                    const isEdit = state.ui.adminModal.id;
-                    const data = isEdit ? state.data.admins.find(a => a.id === isEdit) : {};
-                    const isSuper = state.role === 'super';
-                    
-                    container.innerHTML += `
-                    <div class="fixed inset-0 bg-black/50 z-[70] flex items-center justify-center p-4 fade-in">
-                        <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl relative">
-                            <h3 class="text-xl font-bold text-slate-800 mb-4">${isEdit ? (isSuper ? '編輯帳號' : '變更個人密碼') : '新增管理帳號'}</h3>
-                            <div class="space-y-3">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-500 mb-1">姓名/稱呼</label>
-                                    <input id="adm-name" value="${data.name || ''}" class="w-full border p-2 rounded-lg text-sm" placeholder="例如: 小編A">
+                     const isEdit = state.ui.adminModal.id;
+                     const data = isEdit ? state.data.admins.find(a => a.id === isEdit) : {};
+                     const isSuper = state.role === 'super';
+                     container.innerHTML += `
+                        <div class="fixed inset-0 bg-black/50 z-[70] flex items-center justify-center p-4 fade-in">
+                            <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl relative">
+                                <h3 class="text-xl font-bold text-slate-800 mb-4">${isEdit ? (isSuper ? '編輯帳號' : '變更個人密碼') : '新增管理帳號'}</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-500 mb-1">姓名/稱呼</label>
+                                        <input id="adm-name" value="${data.name || ''}" class="w-full border p-2 rounded-lg text-sm" placeholder="例如: 小編A">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-500 mb-1">帳號 (Username)</label>
+                                        <input id="adm-user" value="${data.username || ''}" ${isEdit ? 'disabled' : ''} class="w-full border p-2 rounded-lg text-sm ${isEdit ? 'bg-slate-100 text-slate-500' : 'bg-white text-slate-700'}" placeholder="登入用帳號">
+                                        ${!isEdit ? '<p class="text-[10px] text-red-500 mt-1">* 新增後帳號無法修改</p>' : ''}
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-500 mb-1">密碼 (Password)</label>
+                                        <input id="adm-pass" value="${data.password || ''}" class="w-full border p-2 rounded-lg text-sm" placeholder="請設定密碼">
+                                    </div>
+                                    <div>
+                                         <label class="block text-xs font-bold text-slate-500 mb-1">權限角色</label>
+                                         <select id="adm-role" class="w-full border p-2 rounded-lg text-sm disabled:bg-slate-100 disabled:text-slate-400" ${!isSuper ? 'disabled' : ''}>
+                                            <option value="editor" ${data.role !== 'super' ? 'selected' : ''}>Editor (僅編輯內容)</option>
+                                            <option value="super" ${data.role === 'super' ? 'selected' : ''}>Super Admin (可管理帳號)</option>
+                                         </select>
+                                         ${!isSuper ? '<p class="text-[10px] text-slate-400 mt-1">* 您的權限無法變更角色</p>' : ''}
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-500 mb-1">帳號 (Username)</label>
-                                    <input id="adm-user" value="${data.username || ''}" ${isEdit ? 'disabled' : ''} class="w-full border p-2 rounded-lg text-sm ${isEdit ? 'bg-slate-100 text-slate-500' : 'bg-white text-slate-700'}" placeholder="登入用帳號">
-                                    ${!isEdit ? '<p class="text-[10px] text-red-500 mt-1">* 新增後帳號無法修改</p>' : ''}
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-500 mb-1">密碼 (Password)</label>
-                                    <input id="adm-pass" value="${data.password || ''}" class="w-full border p-2 rounded-lg text-sm" placeholder="請設定密碼">
-                                </div>
-                                <div>
-                                     <label class="block text-xs font-bold text-slate-500 mb-1">權限角色</label>
-                                     <select id="adm-role" class="w-full border p-2 rounded-lg text-sm disabled:bg-slate-100 disabled:text-slate-400" ${!isSuper ? 'disabled' : ''}>
-                                        <option value="editor" ${data.role !== 'super' ? 'selected' : ''}>Editor (僅編輯內容)</option>
-                                        <option value="super" ${data.role === 'super' ? 'selected' : ''}>Super Admin (可管理帳號)</option>
-                                     </select>
-                                     ${!isSuper ? '<p class="text-[10px] text-slate-400 mt-1">* 您的權限無法變更角色</p>' : ''}
+                                <div class="flex gap-3 mt-6">
+                                    <button onclick="window.saveAdmin()" class="flex-1 bg-purple-600 text-white py-2 rounded-xl font-bold shadow-md hover:bg-purple-700">儲存變更</button>
+                                    <button onclick="window.closeAdminModal()" class="flex-1 bg-gray-100 text-slate-600 py-2 rounded-xl font-bold hover:bg-gray-200">取消</button>
                                 </div>
                             </div>
-                            <div class="flex gap-3 mt-6">
-                                <button onclick="window.saveAdmin()" class="flex-1 bg-purple-600 text-white py-2 rounded-xl font-bold shadow-md hover:bg-purple-700">儲存變更</button>
-                                <button onclick="window.closeAdminModal()" class="flex-1 bg-gray-100 text-slate-600 py-2 rounded-xl font-bold hover:bg-gray-200">取消</button>
+                        </div>`;
+                }
+
+                // 6. ★ 新增：渲染 Message Process Modal (留言處理)
+                if (state.ui.msgProcessModal.open) {
+                    const msgId = state.ui.msgProcessModal.id;
+                    const msgData = state.data.messages.find(m => m.id === msgId) || {};
+                    
+                    container.innerHTML += `
+                    <div class="fixed inset-0 bg-black/50 z-[80] flex items-center justify-center p-4 fade-in">
+                        <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative slide-up">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-bold text-slate-800">留言處理紀錄</h3>
+                                <button onclick="window.closeMsgProcessModal()" class="p-1 rounded-full hover:bg-slate-100 text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button>
+                            </div>
+                            
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4">
+                                <p class="text-xs text-slate-400 mb-1">來自：${msgData.name}</p>
+                                <p class="text-sm text-slate-700 font-medium line-clamp-3">${msgData.content}</p>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1">處理狀態 (分類)</label>
+                                    <select id="msg-cat" class="w-full border p-3 rounded-xl text-sm bg-white focus:outline-none focus:border-teal-500">
+                                        <option value="new" ${(!msgData.category || msgData.category==='new') ? 'selected' : ''}>🔴 未處理 (New)</option>
+                                        <option value="processing" ${msgData.category==='processing' ? 'selected' : ''}>🔵 處理中 (Processing)</option>
+                                        <option value="done" ${msgData.category==='done' ? 'selected' : ''}>🟢 已結案 (Done)</option>
+                                        <option value="spam" ${msgData.category==='spam' ? 'selected' : ''}>⚪ 垃圾訊息 (Spam)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1">內部處理紀錄 / 備註</label>
+                                    <textarea id="msg-note" class="w-full border p-3 rounded-xl text-sm h-32 focus:outline-none focus:border-teal-500 placeholder-slate-300" placeholder="請填寫處理進度、回覆摘要或備註...">${msgData.note || ''}</textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6">
+                                <button onclick="window.saveMsgProcess()" class="w-full bg-teal-600 text-white py-3 rounded-xl font-bold shadow-md hover:bg-teal-700 transition">
+                                    更新處理進度
+                                </button>
                             </div>
                         </div>
                     </div>`;
@@ -1499,6 +1580,32 @@ function renderTeam(container) {
             state.role = 'guest'; 
             state.activeTab = 'home'; 
             render(); 
+        };
+        
+        // --- Message Processing Logic ---
+        window.openMsgProcessModal = (id) => { 
+            state.ui.msgProcessModal = { open: true, id: id }; 
+            render(); 
+        };
+        
+        window.closeMsgProcessModal = () => { 
+            state.ui.msgProcessModal = { open: false, id: null }; 
+            render(); 
+        };
+        
+        window.saveMsgProcess = async () => {
+            const id = state.ui.msgProcessModal.id;
+            const category = document.getElementById('msg-cat').value;
+            const note = document.getElementById('msg-note').value;
+
+            try {
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'inquiries', id), {
+                    category, note
+                });
+                window.closeMsgProcessModal();
+            } catch(e) {
+                alert('更新失敗: ' + e.message);
+            }
         };
 
         init();
