@@ -103,15 +103,21 @@
 
         // State
         const state = {
-            user: null, isAdmin: false, activeTab: 'home',
-            data: { itinerary: [], qa: [], team: [] },
+            user: null, 
+            isAdmin: false, 
+            role: 'guest', 
+            adminId: null, // ★ 新增：記錄當前登入者的 ID
+            activeTab: 'home',
+            data: { itinerary: [], qa: [], team: [], messages: [], admins: [] },
             ui: { 
                 openQaIndex: null, 
                 categoryFilter: 'all',
                 qaSearch: '',
                 editingId: null, 
                 teamModal: { open: false, id: null },
-                qaModal: { open: false, id: null }
+                qaModal: { open: false, id: null },
+                msgModal: { open: false },
+                adminModal: { open: false, id: null }
             }
         };
 
@@ -141,22 +147,40 @@
         }
 
         function setupListeners() {
+            // ... (原本的 itinerary 監聽器)
             onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'itinerary_v2'), orderBy('order')), 
                 (snap) => {
                     state.data.itinerary = snap.docs.map(d => ({id: d.id, ...d.data()}));
                     if (state.activeTab === 'itinerary') render();
                 }
             );
+            // ... (原本的 qa 監聽器)
             onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'qa_v2'), orderBy('timestamp', 'desc')), 
                 (snap) => {
                     state.data.qa = snap.docs.map(d => ({id: d.id, ...d.data()}));
                     if (state.activeTab === 'qa') render();
                 }
             );
+            // ... (原本的 team 監聽器)
             onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'team_contacts_v2')), 
                 (snap) => {
                     state.data.team = snap.docs.map(d => ({id: d.id, ...d.data()}));
                     if (state.activeTab === 'team') render();
+                }
+            );
+
+            // ★ 新增：留言板監聽器 (即時更新)
+            onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'inquiries'), orderBy('timestamp', 'desc')), 
+                (snap) => {
+                    state.data.messages = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                    if (state.activeTab === 'admin') render(); // 管理員在後台時即時刷新
+                }
+            );
+            // ★ 新增：管理員帳號監聽 (用於後台列表顯示)
+            onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'admins'), orderBy('timestamp', 'desc')), 
+                (snap) => {
+                    state.data.admins = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                    if (state.activeTab === 'admin') render();
                 }
             );
         }
@@ -165,6 +189,7 @@
         window.initializeData = async () => {
             if(!confirm("確定要寫入預設資料嗎？這將會新增多筆測試數據。")) return;
             try {
+            /*
                 // Itinerary based on PPT/PDF
                 const itinData = [
                     { order: 1, date: '5/13 (三)', title: '啟程與文化體驗', events: [{ type: 'transport', content: '桃園機場 (CI100 08:55) → 成田機場 (13:15)' }, { type: 'attraction', content: '成田山新勝寺 (表參道散策)', mapUrl: 'https://maps.app.goo.gl/example' }, { type: 'meal', content: '晚餐：和牛霜降肉壽喜燒 (JPY 6000)' }], hotel: '東京巨蛋飯店 Tokyo Dome Hotel' },
@@ -191,6 +216,17 @@
                     { name: '淑卿、幸慧', role: '副總召', phone: '', email: '', type: 'student', task: '協助總召、進度控管' }
                 ];
                 for (const item of teamData) await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'team_contacts_v2'), item);
+            */
+           
+                // Admins (預設超級管理員)
+                const adminData = [
+                    { username: 'admin', password: 'password123', name: '超級管理員', role: 'super', timestamp: Date.now() },
+                    { username: 'editor', password: 'editor123', name: '活動小編', role: 'editor', timestamp: Date.now() }
+                ];
+                for (const item of adminData) await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'admins'), item);
+
+                alert("資料初始化成功！預設帳號: admin / password123 (超級管理員), editor / editor123 (一般小編)");
+                location.reload();
 
                 alert("資料初始化成功！請重新整理頁面。");
                 location.reload();
@@ -226,10 +262,40 @@
                 case 'admin': renderAdmin(app); break;
                 default: app.innerHTML = renderHero();
             }
+
+            // ★ 新增：在所有頁面底部加入懸浮按鈕與彈窗
+            app.innerHTML += renderFloatingWidget();
             lucide.createIcons();
         }
-
         function renderNav() {
+            const nav = document.getElementById('nav-items');
+            nav.innerHTML = NAV_ITEMS.map(item => `
+                <button onclick="window.switchTab('${item.id}')" 
+                    class="px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 whitespace-nowrap transition-all duration-300
+                    ${state.activeTab === item.id 
+                        ? 'bg-teal-600 text-white shadow-lg scale-105' 
+                        : 'text-slate-500 bg-white/50 hover:bg-orange-50 hover:text-orange-600 border border-transparent hover:border-orange-200'}">
+                    <i data-lucide="${item.icon}" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">${item.label}</span>
+                </button>
+            `).join('');
+            
+            // ★ 修改處：登入後顯示「後台」與「登出」按鈕
+            if (state.isAdmin) {
+                nav.innerHTML += `
+                    <button onclick="window.switchTab('admin')" class="ml-2 px-4 py-2 rounded-full text-sm font-bold bg-slate-800 text-white shadow-md hover:bg-slate-700 transition flex items-center gap-2">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> 後台
+                    </button>
+                    <button onclick="window.handleLogout()" class="ml-1 px-3 py-2 rounded-full text-sm text-red-500 hover:bg-red-50 transition" title="登出">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                    </button>
+                `;
+            } else {
+                nav.innerHTML += `<button onclick="window.switchTab('admin')" class="ml-2 px-3 py-2 rounded-full text-sm text-slate-400 hover:text-teal-600 transition"><i data-lucide="settings" class="w-4 h-4"></i></button>`;
+            }
+        }
+
+/*        function renderNav() {
             const nav = document.getElementById('nav-items');
             nav.innerHTML = NAV_ITEMS.map(item => `
                 <button onclick="window.switchTab('${item.id}')" 
@@ -246,6 +312,7 @@
                 `<button onclick="window.handleLogout()" class="ml-2 px-3 py-2 rounded-full text-sm text-red-500 hover:bg-red-50 transition"><i data-lucide="log-out" class="w-4 h-4"></i></button>` :
                 `<button onclick="window.switchTab('admin')" class="ml-2 px-3 py-2 rounded-full text-sm text-slate-400 hover:text-teal-600 transition"><i data-lucide="settings" class="w-4 h-4"></i></button>`;
         }
+*/
 
         function renderEmptyState() {
             return `
@@ -554,16 +621,16 @@ function renderAcademic() {
                     <div class="divide-y divide-slate-100">
                         ${[
                             { 
+                                title: '飯沼本家 (Iinuma Honke)', 
+                                tag: '傳承轉型', color: 'amber', 
+                                core: '體驗百年長壽企業的傳承與六級產業化轉型。',
+                                issue: '探究 300 年家族企業如何處理接班傳承問題，並觀察傳統製造業如何結合農業、生產與觀光（六級產業化），創造高附加價值的新商業模式。' 
+                            },
+                            { 
                                 title: '東京證券交易所 (TSE)', 
                                 tag: '資本市場', color: 'indigo', 
                                 core: '掌握資本市場制度變革與監管趨勢。',
                                 issue: '深入了解市場板塊重組（Prime/Standard/Growth）、公司治理守則，以及近期針對「股價淨值比 (PBR) 低於一倍」企業的改善要求與提升資本效率之政策。' 
-                            },
-                            { 
-                                title: '三井不動產 (Mitsui Fudosan)', 
-                                tag: '都市再生', color: 'orange', 
-                                core: '考察大型資產活化與都市再生金融模型。',
-                                issue: '分析大型都市更新案（如東京中城、日本橋再生）的開發策略，探討不動產證券化（J-REITs）的資金運作，以及如何透過混合開發提升土地資產價值。' 
                             },
                             { 
                                 title: '早稻田大學 (Waseda)', 
@@ -578,28 +645,28 @@ function renderAcademic() {
                                 issue: '探討「No Brand」策略如何創造高品牌溢價，以及在全球展店策略中，如何平衡 ESG（環境與社會責任）實踐與營運成本控制，實現永續獲利。' 
                             },
                             { 
-                                title: '日本信義房屋', 
-                                tag: '跨國管理', color: 'red', 
-                                core: '研析服務業跨國落地管理與跨境資產配置。',
-                                issue: '作為台灣企業出海典範，討論如何克服文化差異進行「在地化」管理與團隊建設，並從金融角度分析日本不動產市場的投報趨勢與華人資金流向。' 
+                                title: 'NTT (Nippon Telegraph and Telephone)', 
+                                tag: '科技巨頭', color: 'cyan', 
+                                core: '科技基礎建設轉型與全球併購整合。',
+                                issue: '分析 NTT 將旗下 NTT DATA 與海外事業整合的策略（One NTT），探討其如何透過併購（M&A）擴張海外版圖，並在控股公司層級進行資源配置與財務綜效管理。' 
                             },
                             { 
                                 title: 'ANA 全日空航空', 
                                 tag: '數位轉型', color: 'sky', 
                                 core: '探討企業營運韌性與數位轉型多角化。',
                                 issue: '分析航空業在後疫情時代的財務結構重整與風險管理，並觀察其如何利用數位轉型（DX）拓展非航空收入，建構具韌性的商業模式。' 
+                            },                        
+                            { 
+                                title: '三井不動產 (Mitsui Fudosan)', 
+                                tag: '都市再生', color: 'orange', 
+                                core: '考察大型資產活化與都市再生金融模型。',
+                                issue: '分析大型都市更新案（如東京中城、日本橋再生）的開發策略，探討不動產證券化（J-REITs）的資金運作，以及如何透過混合開發提升土地資產價值。' 
                             },
                             { 
-                                title: '飯沼本家 (Iinuma Honke)', 
-                                tag: '傳承轉型', color: 'amber', 
-                                core: '體驗百年長壽企業的傳承與六級產業化轉型。',
-                                issue: '探究 300 年家族企業如何處理接班傳承問題，並觀察傳統製造業如何結合農業、生產與觀光（六級產業化），創造高附加價值的新商業模式。' 
-                            },
-                            { 
-                                title: 'NTT (Nippon Telegraph and Telephone)', 
-                                tag: '科技巨頭', color: 'cyan', 
-                                core: '科技基礎建設轉型與全球併購整合。',
-                                issue: '分析 NTT 將旗下 NTT DATA 與海外事業整合的策略（One NTT），探討其如何透過併購（M&A）擴張海外版圖，並在控股公司層級進行資源配置與財務綜效管理。' 
+                                title: '日本信義房屋', 
+                                tag: '跨國管理', color: 'red', 
+                                core: '研析服務業跨國落地管理與跨境資產配置。',
+                                issue: '作為台灣企業出海典範，討論如何克服文化差異進行「在地化」管理與團隊建設，並從金融角度分析日本不動產市場的投報趨勢與華人資金流向。' 
                             },
                         ].map(item => `
                             <div class="p-6 flex flex-col md:flex-row gap-4 hover:bg-slate-50 transition">
@@ -1024,41 +1091,249 @@ function renderTeam(container) {
             container.innerHTML = html;
         }
 
+        function renderFloatingWidget() {
+            // 懸浮按鈕 HTML
+            const btnHtml = `
+                <div class="fixed bottom-6 right-6 z-40 animate-bounce">
+                    <button onclick="window.toggleMsgModal()" class="bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center gap-2 group">
+                        <i data-lucide="message-circle" class="w-6 h-6"></i>
+                        <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 whitespace-nowrap font-bold">提問留言</span>
+                    </button>
+                </div>
+            `;
+
+            // 彈窗 HTML (根據 state.ui.msgModal.open 決定是否顯示)
+            if (!state.ui.msgModal.open) return btnHtml;
+
+            return btnHtml + `
+                <div class="fixed inset-0 bg-black/50 z-[60] flex items-end sm:items-center justify-center p-4 sm:p-0 fade-in">
+                    <div class="bg-white w-full sm:w-[400px] sm:rounded-2xl rounded-t-2xl shadow-2xl overflow-hidden relative slide-up">
+                        <div class="bg-gradient-to-r from-orange-500 to-red-500 p-4 flex justify-between items-center text-white">
+                            <h3 class="font-bold flex items-center gap-2"><i data-lucide="message-square" class="w-5 h-5"></i> 訪客留言</h3>
+                            <button onclick="window.toggleMsgModal()" class="hover:bg-white/20 p-1 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <p class="text-xs text-slate-400 mb-2">對行程有疑問？歡迎留下訊息，我們會盡快回覆！</p>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1">您的稱呼 *</label>
+                                <input id="msg-name" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-orange-200 focus:outline-none" placeholder="例如：王小明">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1">聯絡方式 (選填)</label>
+                                <input id="msg-contact" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-orange-200 focus:outline-none" placeholder="Email 或 Line ID">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1">想問的問題/內容 *</label>
+                                <textarea id="msg-content" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-orange-200 focus:outline-none" placeholder="請輸入您的問題..."></textarea>
+                            </div>
+                            <button onclick="window.submitMessage()" class="w-full bg-slate-800 text-white font-bold py-3 rounded-xl hover:bg-slate-700 transition shadow-lg">送出留言</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         function renderAdmin(container) {
-            container.innerHTML = `
-            <div class="min-h-[60vh] flex items-center justify-center bg-orange-50/50 px-4 fade-in">
-                ${state.isAdmin ? 
-                    `<div class="text-center bg-white p-10 rounded-3xl shadow-xl border border-orange-100 max-w-lg w-full">
-                        <div class="w-16 h-16 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center mx-auto mb-6"><i data-lucide="shield-check" class="w-8 h-8"></i></div>
-                        <h2 class="text-2xl font-bold mb-2 text-slate-800">已登入管理後台</h2>
-                        <p class="mb-8 text-slate-500">現在您擁有編輯權限，請點選上方選單 (行程、QA、團隊) 直接在頁面上進行編輯操作。</p>
-                        <button onclick="window.handleLogout()" class="bg-slate-200 text-slate-600 px-8 py-3 rounded-xl font-bold hover:bg-red-50 hover:text-red-500 transition w-full">登出系統</button>
-                     </div>` :
-                    `<div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl w-full max-w-md border border-white">
+            if (!state.isAdmin) {
+                // ... (保留原本的登入表單 HTML，不需變動) ...
+                container.innerHTML = `
+                <div class="min-h-[60vh] flex items-center justify-center bg-orange-50/50 px-4 fade-in">
+                    <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl w-full max-w-md border border-white">
                         <div class="text-center mb-8">
                             <h2 class="text-3xl font-black text-slate-800 mb-2">團隊登入</h2>
-                            <p class="text-slate-400 text-sm">請輸入管理密碼以存取編輯功能</p>
+                            <p class="text-slate-400 text-sm">請輸入帳號密碼以存取權限</p>
                         </div>
                         <form onsubmit="event.preventDefault(); window.login();" class="space-y-4">
                             <div>
                                 <label class="block text-xs font-bold text-slate-500 mb-1 ml-1">帳號</label>
-                                <input id="login-user" type="text" placeholder="admin" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:bg-white outline-none transition font-bold text-slate-700">
+                                <input id="login-user" type="text" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:bg-white outline-none transition font-bold text-slate-700">
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-slate-500 mb-1 ml-1">密碼</label>
-                                <input id="login-pass" type="password" placeholder="••••••••" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:bg-white outline-none transition font-bold text-slate-700">
+                                <input id="login-pass" type="password" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:bg-white outline-none transition font-bold text-slate-700">
                             </div>
                             <button type="submit" class="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white py-4 rounded-xl font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] transition transform">確認登入</button>
                         </form>
-                    </div>`
+                    </div>
+                </div>`;
+            } else {
+                // 已登入狀態
+                const messagesHtml = state.data.messages.length === 0 
+                    ? `<div class="text-center text-slate-400 py-10">目前沒有新留言</div>`
+                    : state.data.messages.map(msg => `
+                        <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col gap-2">
+                            <div class="flex justify-between items-start">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-slate-700">${msg.name}</span>
+                                    ${msg.contact ? `<span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded">${msg.contact}</span>` : ''}
+                                </div>
+                                <span class="text-[10px] text-slate-400">${new Date(msg.timestamp).toLocaleString()}</span>
+                            </div>
+                            <p class="text-sm text-slate-600 bg-slate-50 p-3 rounded-lg">${msg.content}</p>
+                            <div class="flex justify-end pt-2">
+                                <button onclick="window.deleteDoc('inquiries', '${msg.id}')" class="text-red-400 text-xs hover:text-red-600 flex items-center gap-1">
+                                    <i data-lucide="trash-2" class="w-3 h-3"></i> 刪除留言
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+
+                // 帳號列表 (只有 Super Admin 看得到)
+                let accountsHtml = '';
+                if (state.role === 'super') {
+                    const adminsList = state.data.admins.map(adm => `
+                        <div class="flex items-center justify-between p-4 bg-white border border-slate-100 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold ${adm.role==='super'?'bg-purple-100 text-purple-600':'bg-blue-50 text-blue-500'}">
+                                    ${adm.name[0]}
+                                </div>
+                                <div>
+                                    <div class="font-bold text-slate-700 text-sm">${adm.name}</div>
+                                    <div class="text-xs text-slate-400">@${adm.username} • ${adm.role==='super'?'超級管理員':'一般小編'}</div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="window.openAdminModal('${adm.id}')" class="text-slate-400 hover:text-teal-600 p-1" title="重設密碼/編輯"><i data-lucide="key" class="w-4 h-4"></i></button>
+                                ${adm.username !== 'admin' ? `<button onclick="window.deleteDoc('admins', '${adm.id}')" class="text-slate-400 hover:text-red-500 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>` : ''}
+                            </div>
+                        </div>
+                    `).join('');
+
+                    accountsHtml = `
+                    <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200/60 mt-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center"><i data-lucide="users-2" class="w-4 h-4"></i></div>
+                                <h3 class="font-bold text-xl text-slate-700">帳號權限管理</h3>
+                            </div>
+                            <button onclick="window.openAdminModal()" class="bg-purple-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-purple-700 flex items-center gap-1 shadow-md">
+                                <i data-lucide="plus" class="w-3 h-3"></i> 新增帳號
+                            </button>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            ${adminsList}
+                        </div>
+                    </div>`;
                 }
-            </div>`;
+
+                container.innerHTML = `
+                <div class="max-w-4xl mx-auto px-4 py-12 fade-in">
+                    <div class="bg-white p-8 rounded-3xl shadow-xl border border-orange-100 mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center"><i data-lucide="shield-check" class="w-8 h-8"></i></div>
+                            <div>
+                                <h2 class="text-2xl font-bold text-slate-800">管理員控制台</h2>
+                                <p class="text-slate-500 text-sm">
+                                    當前身份: <span class="font-bold text-teal-600">${state.role === 'super' ? '超級管理員 (完整權限)' : '網站編輯 (內容管理)'}</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="window.openAdminModal('${state.adminId}')" class="bg-white border border-slate-200 text-slate-600 px-4 py-3 rounded-xl font-bold hover:bg-slate-50 transition flex items-center gap-2">
+                                <i data-lucide="user-cog" class="w-4 h-4"></i> 個人設定
+                            </button>
+                            <button onclick="window.handleLogout()" class="bg-slate-100 text-slate-600 px-6 py-3 rounded-xl font-bold hover:bg-red-50 hover:text-red-500 transition flex items-center gap-2">
+                                <i data-lucide="log-out" class="w-4 h-4"></i> 登出
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-2 mb-4 px-2">
+                            <div class="w-8 h-8 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center"><i data-lucide="message-square" class="w-4 h-4"></i></div>
+                            <h3 class="font-bold text-xl text-slate-700">訪客留言板</h3>
+                            <span class="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">${state.data.messages.length}</span>
+                        </div>
+                        <div class="space-y-4">
+                            ${messagesHtml}
+                        </div>
+                    </div>
+
+                    ${accountsHtml}
+                </div>`;
+
+                // Modal 渲染 (修正 Username 輸入框邏輯)
+                if (state.ui.adminModal.open) {
+                    const isEdit = state.ui.adminModal.id;
+                    const data = isEdit ? state.data.admins.find(a => a.id === isEdit) : {};
+                    const isSuper = state.role === 'super';
+                    
+                    container.innerHTML += `
+                    <div class="fixed inset-0 bg-black/50 z-[70] flex items-center justify-center p-4 fade-in">
+                        <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl relative">
+                            <h3 class="text-xl font-bold text-slate-800 mb-4">${isEdit ? (isSuper ? '編輯帳號' : '變更個人密碼') : '新增管理帳號'}</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1">姓名/稱呼</label>
+                                    <input id="adm-name" value="${data.name || ''}" class="w-full border p-2 rounded-lg text-sm" placeholder="例如: 小編A">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1">帳號 (Username)</label>
+                                    <input id="adm-user" value="${data.username || ''}" ${isEdit ? 'disabled' : ''} class="w-full border p-2 rounded-lg text-sm ${isEdit ? 'bg-slate-100 text-slate-500' : 'bg-white text-slate-700'}" placeholder="登入用帳號">
+                                    ${!isEdit ? '<p class="text-[10px] text-red-500 mt-1">* 新增後帳號無法修改</p>' : ''}
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1">密碼 (Password)</label>
+                                    <input id="adm-pass" value="${data.password || ''}" class="w-full border p-2 rounded-lg text-sm" placeholder="請設定密碼">
+                                </div>
+                                <div>
+                                     <label class="block text-xs font-bold text-slate-500 mb-1">權限角色</label>
+                                     <select id="adm-role" class="w-full border p-2 rounded-lg text-sm disabled:bg-slate-100 disabled:text-slate-400" ${!isSuper ? 'disabled' : ''}>
+                                        <option value="editor" ${data.role !== 'super' ? 'selected' : ''}>Editor (僅編輯內容)</option>
+                                        <option value="super" ${data.role === 'super' ? 'selected' : ''}>Super Admin (可管理帳號)</option>
+                                     </select>
+                                     ${!isSuper ? '<p class="text-[10px] text-slate-400 mt-1">* 您的權限無法變更角色</p>' : ''}
+                                </div>
+                            </div>
+                            <div class="flex gap-3 mt-6">
+                                <button onclick="window.saveAdmin()" class="flex-1 bg-purple-600 text-white py-2 rounded-xl font-bold shadow-md hover:bg-purple-700">儲存變更</button>
+                                <button onclick="window.closeAdminModal()" class="flex-1 bg-gray-100 text-slate-600 py-2 rounded-xl font-bold hover:bg-gray-200">取消</button>
+                            </div>
+                        </div>
+                    </div>`;
+                }
+            }
         }
 
         // --- Global Actions ---
         window.switchTab = (t) => { state.activeTab = t; render(); window.scrollTo({top:0, behavior:'smooth'}); };
-        window.login = () => { if(document.getElementById('login-user').value==='admin' && document.getElementById('login-pass').value==='Aa123456#') { state.isAdmin = true; state.activeTab='itinerary'; render(); } else alert('帳號密碼錯誤'); };
-        window.handleLogout = () => { state.isAdmin=false; state.activeTab='home'; render(); };
+        //window.login = () => { if(document.getElementById('login-user').value==='admin' && document.getElementById('login-pass').value==='Aa123456#') { state.isAdmin = true; state.activeTab='itinerary'; render(); } else alert('帳號密碼錯誤'); };
+        // 修改這一行
+        window.login = () => {
+            const userIn = document.getElementById('login-user').value;
+            const passIn = document.getElementById('login-pass').value;
+            
+            const loginProcess = async () => {
+                const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'admins'));
+                onSnapshot(q, (snap) => {
+                    const admins = snap.docs.map(d => ({id: d.id, ...d.data()})); // 這裡要確保有 id
+                    const found = admins.find(a => a.username === userIn && a.password === passIn);
+                    
+                    if (found) {
+                        state.isAdmin = true;
+                        state.role = found.role;
+                        state.adminId = found.id; // ★ 記錄 ID，以便修改自己的密碼
+                        state.activeTab = 'admin';
+                        state.data.admins = admins;
+                        render();
+                    } else {
+                        alert('帳號或密碼錯誤');
+                    }
+                });
+            };
+            loginProcess();
+        };
+        
+        //window.handleLogout = () => { state.isAdmin=false; state.activeTab='home'; render(); };
+
+        window.handleLogout = () => { 
+            state.isAdmin = false; 
+            state.role = 'guest'; 
+            state.adminId = null; // 清除 ID
+            state.activeTab = 'home'; 
+            render(); 
+        };
+
         window.setEditingId = (id) => { state.ui.editingId = id; render(); };
         window.deleteDoc = async (col, id) => { if(confirm('確定要刪除嗎？此動作無法復原。')) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', col, id)); };
         
@@ -1157,6 +1432,73 @@ function renderTeam(container) {
                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'team_contacts_v2'), data);
             }
             window.closeTeamModal();
+        };
+
+        // --- 留言板 Logic ---
+        window.toggleMsgModal = () => { 
+            state.ui.msgModal.open = !state.ui.msgModal.open; 
+            render(); 
+        };
+
+        window.submitMessage = async () => {
+            const name = document.getElementById('msg-name').value;
+            const contact = document.getElementById('msg-contact').value;
+            const content = document.getElementById('msg-content').value;
+
+            if(!name || !content) {
+                alert('請填寫姓名與內容！');
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'inquiries'), {
+                    name, contact, content, 
+                    timestamp: Date.now(),
+                    status: 'unread'
+                });
+                alert('留言已送出！');
+                state.ui.msgModal.open = false;
+                render();
+            } catch(e) {
+                alert('發送失敗: ' + e.message);
+            }
+        };
+        // --- Admin Account Logic ---
+        window.openAdminModal = (id = null) => { state.ui.adminModal = { open: true, id: id }; render(); };
+        window.closeAdminModal = () => { state.ui.adminModal = { open: false, id: null }; render(); };
+        
+        window.saveAdmin = async () => {
+            const id = state.ui.adminModal.id;
+            const name = document.getElementById('adm-name').value;
+            const username = document.getElementById('adm-user').value;
+            const password = document.getElementById('adm-pass').value;
+            const role = document.getElementById('adm-role').value;
+
+            if (!name || !username || !password) { alert('請填寫完整資料'); return; }
+
+            const data = { name, username, password, role, timestamp: Date.now() };
+
+            if (id) {
+                // 更新 (重設密碼)
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admins', id), {
+                    name, password, role // username 通常不給改
+                });
+            } else {
+                // 新增 (檢查帳號是否重複 - 簡易版直接新增，實務上應檢查)
+                const exists = state.data.admins.some(a => a.username === username);
+                if(exists) { alert('此帳號已存在！'); return; }
+                
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'admins'), data);
+            }
+            window.closeAdminModal();
+        };
+
+        // 修改 Logout，清除權限
+        window.handleLogout = () => { 
+            state.isAdmin = false; 
+            state.role = 'guest'; 
+            state.activeTab = 'home'; 
+            render(); 
         };
 
         init();
