@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>政大EMBA感謝函產生器 - A4完美版 (邊界加寬)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700&display=swap');
+
+        /* --- 應用程式介面樣式 (螢幕顯示用) --- */
+        body {
+            background-color: #e9ecef;
+            font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 左側控制面板 */
+        .control-panel {
+            width: 360px;
+            background-color: #fff;
+            padding: 25px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            z-index: 20;
+            border-right: 1px solid #ddd;
+        }
+
+        .control-panel h2 {
+            color: #1a365d;
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #1a365d;
+            padding-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus {
+            border-color: #1a365d;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 54, 93, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 140px;
+            line-height: 1.6;
+        }
+
+        /* 按鈕樣式 */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn-upload {
+            background-color: #f1f3f5;
+            color: #1a365d;
+            border: 1px dashed #1a365d;
+            margin-bottom: 5px;
+        }
+        .btn-upload:hover { background-color: #e9ecef; }
+
+        .btn-print {
+            background-color: #1a365d;
+            color: white;
+            margin-top: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        .btn-print:hover {
+            background-color: #122a4d;
+            transform: translateY(-1px);
+        }
+
+        /* 右側預覽區 */
+        .preview-area {
+            flex-grow: 1;
+            background-color: #525659;
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* --- A4 頁面與獎狀邊框樣式 (核心) --- */
+        .page {
+            width: 210mm;
+            height: 297mm; /* 嚴格 A4 高度 */
+            background-color: white;
+            box-shadow: 0 0 25px rgba(0,0,0,0.3);
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        /* 獎狀外框容器 */
+        .cert-container {
+            width: 100%;
+            height: 100%;
+            padding: 12mm; /* 保持邊框距離紙張邊緣的距離 */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 學院風雙層邊框 */
+        .cert-border-outer {
+            width: 100%;
+            height: 100%;
+            border: 6px solid #1a365d;
+            box-sizing: border-box;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .cert-border-inner {
+            width: 100%;
+            height: 100%;
+            border: 2px solid #c5a059;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: white;
+        }
+        
+        /* 四角裝飾 */
+        .corner-deco {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: #1a365d;
+            border-style: solid;
+            z-index: 5;
+        }
+        .corner-tl { top: 5px; left: 5px; border-width: 4px 0 0 4px; }
+        .corner-tr { top: 5px; right: 5px; border-width: 4px 4px 0 0; }
+        .corner-bl { bottom: 5px; left: 5px; border-width: 0 0 4px 4px; }
+        .corner-br { bottom: 5px; right: 5px; border-width: 0 4px 4px 0; }
+
+        /* 內容層 */
+        .content-layer {
+            flex-grow: 1;
+            /* 調整：增加上下 Padding 約 10-15mm (原為 15mm，現改為 25mm) */
+            padding: 25mm 22mm; 
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 浮水印 */
+        .watermark {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 55%;
+            max-width: 380px;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .watermark img {
+            width: 100%;
+            height: auto;
+            filter: grayscale(100%);
+        }
+
+        /* 頁眉 (Header) */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-bottom: 10px;
+            margin-bottom: 5px; /* 縮減間距 */
+            border-bottom: 1px solid transparent;
+        }
+
+        /* Logo */
+        .logo-box {
+            display: flex;
+            align-items: center;
+        }
+        .logo-img {
+            height: 70px; /* 稍微縮小 Logo 高度以騰出空間 */
+            width: auto;
+            display: block;
+        }
+
+        .header-text {
+            text-align: right;
+            color: #1a365d;
+        }
+        .header-en {
+            font-family: "Times New Roman", serif;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .header-zh {
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+            margin-top: 3px;
+        }
+
+        /* 標題 */
+        h1 {
+            font-size: 38px;
+            text-align: center;
+            letter-spacing: 15px;
+            margin: 0 0 20px 0; /* 縮減下方間距 (原30px) */
+            color: #222;
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+            align-self: center;
+            padding-bottom: 8px;
+        }
+        h1::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: #c5a059;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 稱謂 */
+        .recipient-display {
+            font-size: 19px;
+            margin-bottom: 20px; /* 縮減間距 (原25px) */
+            line-height: 1.5;
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* 內文 */
+        .content-display {
+            font-size: 17px;
+            line-height: 1.85; /* 微調行高以適應增加的邊界 (原2.1) */
+            text-align: justify;
+            color: #222;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        .paragraph {
+            text-indent: 2.2em;
+            margin-bottom: 12px; /* 縮減段落間距 */
+        }
+
+        /* 結語區 */
+        .blessing-block {
+            margin-top: 10px;
+            margin-left: 2.2em;
+            margin-bottom: 30px; /* 縮減間距 (原40px) */
+        }
+        .closing-word {
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+        .blessing-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+
+        /* 簽名區 */
+        .signature-section {
+            margin-top: auto;
+            text-align: right;
+            padding-right: 5px;
+            padding-bottom: 0px; /* 底部空間已由 content-layer padding 提供 */
+        }
+        .sign-org-display {
+            font-size: 17px;
+            color: #444;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .sign-name-display {
+            font-size: 26px;
+            font-weight: bold;
+            margin: 8px 0; /* 縮減間距 */
+            letter-spacing: 4px;
+            color: #000;
+        }
+        .date-display {
+            font-size: 17px;
+            color: #333;
+            margin-top: 5px;
+            font-family: "Times New Roman", "微軟正黑體", serif;
+        }
+
+        /* 頁尾 */
+        .footer {
+            margin-top: 15px; /* 縮減間距 */
+            text-align: center;
+            font-size: 10px;
+            color: #aaa;
+            letter-spacing: 1.5px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        /* --- 列印專用 CSS --- */
+        @media print {
+            .control-panel { display: none !important; }
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+            html, body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 0;
+                background-color: white;
+            }
+            .preview-area {
+                padding: 0;
+                margin: 0;
+                background: white;
+                height: 100%;
+                display: block;
+            }
+            .page {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                page-break-after: avoid;
+                overflow: hidden;
+                border: none;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 左側控制面板 -->
+    <div class="control-panel">
+        <h2>感謝函設定 (A4獎狀版)</h2>
+        
+        <div class="form-group">
+            <label>Logo 圖片</label>
+            <input type="file" id="logoInput" accept="image/*" style="display: none;">
+            <button class="btn btn-upload" onclick="document.getElementById('logoInput').click()">
+                📂 上傳 / 更換 Logo
+            </button>
+            <small style="color: #666; font-size: 12px;">同步更新上方 Logo 與背景浮水印</small>
+        </div>
+
+        <div class="form-group">
+            <label>收件人稱謂</label>
+            <input type="text" id="inputRecipient" class="form-control" value="敬愛的 政大 EMBA 班聯會會長 徐瑞英 學姐 鈞鑒：">
+        </div>
+
+        <div class="form-group">
+            <label>內文 (Enter 可換段落)</label>
+            <textarea id="inputContent" class="form-control">謹此致上政治大學 EMBA 班聯會樂智處最誠摯的感謝。
+
+「第二屆永豐盃全國 EMBA 個案競賽」於中華民國 115 年 4 月 26 日假國立中山大學舉行，此為全國 EMBA 學員重要之跨校交流與專業競技平台，亦是政大 EMBA 學弟妹展現實力、為校爭光的重要舞台。
+
+本屆賽事移師高雄舉辦，交通與住宿成本相對提高。承蒙學姐慷慨支持並率先響應，為競賽提供關鍵協助，展現對後進學弟妹的鼓勵，以及對政大 EMBA 精神與價值的傳承。
+
+謹代表政治大學 EMBA 班聯會樂智處與全體參賽學弟妹，致上由衷感謝與最高敬意，並期盼在學姐持續支持下，延續政大 EMBA 的榮耀與向心力。</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>結語祝詞</label>
+            <input type="text" id="inputBlessing" class="form-control" value="平安順心、事業昌隆">
+        </div>
+
+        <div class="form-group">
+            <label>署名單位</label>
+            <input type="text" id="inputSignOrg" class="form-control" value="政治大學 EMBA 班聯會 樂智處 敬上">
+        </div>
+
+        <div class="form-group">
+            <label>職稱 / 姓名</label>
+            <div style="display: flex; gap: 5px;">
+                <input type="text" id="inputSignTitle" class="form-control" value="樂智處處長" style="flex: 1;">
+                <input type="text" id="inputSignName" class="form-control" value="孔文秀" style="flex: 1;">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>日期</label>
+            <input type="text" id="inputDate" class="form-control" value="中華民國 115 年 5 月 10 日">
+        </div>
+
+        <button onclick="window.print()" class="btn btn-print">🖨️ 列印 / 另存 PDF</button>
+        <div style="text-align: center; margin-top: 10px; color: #666; font-size: 13px;">
+            <p><strong>列印提示：</strong></p>
+            <p style="margin: 2px 0;">紙張大小：<strong>A4</strong></p>
+            <p style="margin: 2px 0;">邊界：<strong>無 (None)</strong></p>
+            <p style="margin: 2px 0;">選項：勾選<strong>背景圖形</strong></p>
+        </div>
+    </div>
+
+    <!-- 右側預覽區 (列印範圍) -->
+    <div class="preview-area">
+        <div class="page">
+            <div class="cert-container">
+                <!-- 學院風雙層邊框 -->
+                <div class="cert-border-outer">
+                    <div class="cert-border-inner">
+                        <!-- 四角裝飾 -->
+                        <div class="corner-deco corner-tl"></div>
+                        <div class="corner-deco corner-tr"></div>
+                        <div class="corner-deco corner-bl"></div>
+                        <div class="corner-deco corner-br"></div>
+
+                        <!-- 浮水印 (位於內框背景) -->
+                        <div class="watermark">
+                             <img id="displayWatermark" src="NCCU_EMBA_LOGO.jpeg" alt="Watermark">
+                        </div>
+
+                        <!-- 內容層 -->
+                        <div class="content-layer">
+                            
+                            <!-- Header -->
+                            <div class="header-section">
+                                <div class="logo-box">
+                                    <img id="displayLogo" src="NCCU_EMBA_LOGO.jpeg" class="logo-img" alt="Logo" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
+                                    <div id="logo-fallback" style="display:none; font-family: 'Times New Roman'; font-size: 30px; font-weight: bold; color: #1a365d; border: 2px solid #1a365d; padding: 5px 15px;">
+                                        NCCU
+                                    </div>
+                                </div>
+                                <div class="header-text">
+                                    <div class="header-en">College of Commerce, NCCU</div>
+                                    <div class="header-zh">國立政治大學 EMBA 班聯會</div>
+                                </div>
+                            </div>
+                            
+                            <h1>感謝函</h1>
+
+                            <div id="displayRecipient" class="recipient-display"></div>
+                            <div id="displayContent" class="content-display"></div>
+
+                            <div class="blessing-block">
+                                <div class="closing-word">順頌</div>
+                                <div id="displayBlessing" class="blessing-text"></div>
+                            </div>
+
+                            <div class="signature-section">
+                                <div id="displaySignOrg" class="sign-org-display"></div>
+                                <div class="sign-name-display">
+                                    <span id="displaySignTitle" style="font-size: 0.8em; font-weight: normal; margin-right: 8px;"></span>
+                                    <span id="displaySignName"></span>
+                                </div>
+                                <div id="displayDate" class="date-display"></div>
+                            </div>
+
+                            <div class="footer">
+                                NATIONAL CHENGCHI UNIVERSITY EMBA STUDENT ASSOCIATION
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fields = ['Recipient', 'Content', 'Blessing', 'SignOrg', 'SignTitle', 'SignName', 'Date'];
+        
+        function updatePreview() {
+            fields.forEach(field => {
+                const input = document.getElementById('input' + field);
+                const display = document.getElementById('display' + field);
+                
+                if (field === 'Content') {
+                    const paragraphs = input.value.split('\n').filter(line => line.trim() !== '');
+                    display.innerHTML = paragraphs.map(p => `<p class="paragraph">${p}</p>`).join('');
+                } else {
+                    display.innerText = input.value;
+                }
+            });
+        }
+
+        fields.forEach(field => {
+            document.getElementById('input' + field).addEventListener('input', updatePreview);
+        });
+
+        // 圖片上傳處理
+        document.getElementById('logoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const src = e.target.result;
+                    const img = document.getElementById('displayLogo');
+                    img.src = src;
+                    img.style.display = 'block';
+                    document.getElementById('logo-fallback').style.display = 'none';
+                    const watermark = document.getElementById('displayWatermark');
+                    watermark.src = src;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        updatePreview();
+    </script>
+
+</body>
+</html>
