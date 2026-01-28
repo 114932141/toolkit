@@ -729,7 +729,7 @@ function renderAcademic() {
             </div>`;
         }
 
-function renderItinerary(container) {
+        function renderItinerary(container) {
             let html = `
             <div class="max-w-4xl mx-auto px-4 py-12 fade-in">
                 <div class="flex items-center justify-between mb-10">
@@ -788,16 +788,11 @@ function renderItinerary(container) {
                                 
                                 ${day.events.map((ev, evIdx) => {
                                     if(isEditing) {
-                                        // ★ 編輯模式：加入排序按鈕
                                         return `
                                         <div class="flex gap-2 items-start event-row bg-slate-50 p-3 rounded-lg border border-slate-200 group">
                                             <div class="flex flex-col gap-1 pt-1 mr-1">
-                                                <button onclick="window.moveEvent(this, 'up')" class="text-slate-300 hover:text-teal-600 hover:bg-white rounded p-0.5 transition" title="上移">
-                                                    <i data-lucide="arrow-up" class="w-3 h-3"></i>
-                                                </button>
-                                                <button onclick="window.moveEvent(this, 'down')" class="text-slate-300 hover:text-teal-600 hover:bg-white rounded p-0.5 transition" title="下移">
-                                                    <i data-lucide="arrow-down" class="w-3 h-3"></i>
-                                                </button>
+                                                <button onclick="window.moveEvent(this, 'up')" class="text-slate-300 hover:text-teal-600 hover:bg-white rounded p-0.5 transition" title="上移"><i data-lucide="arrow-up" class="w-3 h-3"></i></button>
+                                                <button onclick="window.moveEvent(this, 'down')" class="text-slate-300 hover:text-teal-600 hover:bg-white rounded p-0.5 transition" title="下移"><i data-lucide="arrow-down" class="w-3 h-3"></i></button>
                                             </div>
 
                                             <select class="event-type border border-slate-300 rounded p-2 text-sm bg-white shrink-0 cursor-pointer">
@@ -806,17 +801,19 @@ function renderItinerary(container) {
                                                 <option value="meal" ${ev.type=='meal'?'selected':''}>餐食</option>
                                                 <option value="transport" ${ev.type=='transport'?'selected':''}>交通</option>
                                             </select>
+                                            
                                             <div class="flex-1 space-y-2">
-                                                <input class="event-content w-full border border-slate-300 rounded p-2 text-sm" value="${ev.content}" placeholder="行程內容">
+                                                <input class="event-content w-full border border-slate-300 rounded p-2 text-sm font-bold text-slate-700" value="${ev.content}" placeholder="行程標題 (如: 東京鐵塔)">
+                                                <textarea class="event-desc w-full border border-slate-300 rounded p-2 text-xs text-slate-600 h-16 resize-none focus:ring-1 focus:ring-teal-200 outline-none" placeholder="景點描述與說明 (選填)">${ev.desc || ''}</textarea>
                                                 <div class="flex items-center gap-2">
                                                     <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                                                     <input class="event-map w-full border border-slate-300 rounded p-1 text-xs text-slate-500" value="${ev.mapUrl||''}" placeholder="Google Map 網址 (選填)">
                                                 </div>
                                             </div>
+                                            
                                             <button onclick="this.closest('.event-row').remove()" class="text-red-300 hover:text-red-500 p-2 hover:bg-red-50 rounded transition ml-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                                         </div>`;
                                     } else {
-                                        // 瀏覽模式 (保持不變)
                                         let typeConfig = {
                                             'visit': { color: 'blue', icon: 'briefcase', label: '參訪' },
                                             'attraction': { color: 'orange', icon: 'camera', label: '景點' },
@@ -835,10 +832,11 @@ function renderItinerary(container) {
                                                         ${typeConfig.label}
                                                     </span>
                                                 </div>
-                                                <p class="text-slate-700 text-base leading-relaxed ${ev.type === 'visit' ? 'font-bold' : ''}">
+                                                <div class="text-slate-700 text-base leading-relaxed ${ev.type === 'visit' ? 'font-bold' : ''}">
                                                     ${ev.content}
                                                     ${ev.mapUrl ? `<a href="${ev.mapUrl}" target="_blank" class="inline-flex items-center text-orange-500 hover:text-orange-600 ml-2" title="開啟地圖"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i></a>` : ''}
-                                                </p>
+                                                </div>
+                                                ${ev.desc ? `<p class="text-sm text-slate-500 mt-1.5 leading-relaxed bg-slate-50 p-2 rounded-lg border border-slate-50">${ev.desc}</p>` : ''}
                                             </div>
                                         </div>`;
                                     }
@@ -1429,11 +1427,14 @@ function renderTeam(container) {
             const date = document.getElementById(`edit-date-${id}`).value;
             const hotel = document.getElementById(`edit-hotel-${id}`).value;
             const eventRows = document.querySelectorAll(`#events-container-${id} .event-row`);
+            
             const events = Array.from(eventRows).map(row => ({
                 type: row.querySelector('.event-type').value,
                 content: row.querySelector('.event-content').value,
+                desc: row.querySelector('.event-desc').value, // ★ 新增：抓取描述欄位
                 mapUrl: row.querySelector('.event-map').value
             }));
+            
             await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'itinerary_v2', id), { title, date, hotel, events });
             state.ui.editingId = null; 
             render(); 
@@ -1445,12 +1446,8 @@ function renderTeam(container) {
             div.className = 'flex gap-2 items-start event-row bg-slate-50 p-3 rounded-lg border border-slate-200 group';
             div.innerHTML = `
                 <div class="flex flex-col gap-1 pt-1 mr-1">
-                    <button onclick="window.moveEvent(this, 'up')" class="text-slate-300 hover:text-teal-600 hover:bg-white rounded p-0.5 transition" title="上移">
-                        <i data-lucide="arrow-up" class="w-3 h-3"></i>
-                    </button>
-                    <button onclick="window.moveEvent(this, 'down')" class="text-slate-300 hover:text-teal-600 hover:bg-white rounded p-0.5 transition" title="下移">
-                        <i data-lucide="arrow-down" class="w-3 h-3"></i>
-                    </button>
+                    <button onclick="window.moveEvent(this, 'up')" class="text-slate-300 hover:text-teal-600 hover:bg-white rounded p-0.5 transition" title="上移"><i data-lucide="arrow-up" class="w-3 h-3"></i></button>
+                    <button onclick="window.moveEvent(this, 'down')" class="text-slate-300 hover:text-teal-600 hover:bg-white rounded p-0.5 transition" title="下移"><i data-lucide="arrow-down" class="w-3 h-3"></i></button>
                 </div>
 
                 <select class="event-type border border-slate-300 rounded p-2 text-sm bg-white shrink-0">
@@ -1459,18 +1456,23 @@ function renderTeam(container) {
                     <option value="meal">餐食</option>
                     <option value="transport">交通</option>
                 </select>
+                
                 <div class="flex-1 space-y-2">
-                    <input class="event-content w-full border border-slate-300 rounded p-2 text-sm" placeholder="行程內容">
+                    <input class="event-content w-full border border-slate-300 rounded p-2 text-sm font-bold text-slate-700" placeholder="行程標題">
+                    <textarea class="event-desc w-full border border-slate-300 rounded p-2 text-xs text-slate-600 h-16 resize-none focus:ring-1 focus:ring-teal-200 outline-none" placeholder="景點描述與說明 (選填)"></textarea>
                     <div class="flex items-center gap-2">
                         <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                         <input class="event-map w-full border border-slate-300 rounded p-1 text-xs text-slate-500" placeholder="Google Map 網址 (選填)">
                     </div>
                 </div>
+                
                 <button onclick="this.closest('.event-row').remove()" class="text-red-300 hover:text-red-500 p-2 hover:bg-red-50 rounded transition ml-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
             `;
             container.appendChild(div);
             lucide.createIcons();
         };
+
+
         window.addItineraryDay = async () => {
             const lastOrder = state.data.itinerary.length > 0 ? Math.max(...state.data.itinerary.map(d => d.order)) : 0;
             await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'itinerary_v2'), {
