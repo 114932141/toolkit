@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>政大EMBA感謝函產生器</title>
+    <title>政大EMBA感謝函產生器 - 頁首優化版</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap');
 
         /* --- 應用程式介面樣式 (螢幕顯示用) --- */
         body {
             background-color: #e9ecef;
-            font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+            font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif; 
             margin: 0;
             padding: 0;
             display: flex;
@@ -127,13 +127,15 @@
             flex-direction: column;
             overflow: hidden;
             margin-bottom: 40px;
+            /* 核心字體設定：標楷體 -> 微軟正黑體 -> 其他襯線體 */
+            font-family: "DFKai-SB", "BiauKai", "標楷體", "Microsoft JhengHei", "微軟正黑體", "Noto Serif TC", serif;
         }
 
         /* 獎狀外框容器 */
         .cert-container {
             width: 100%;
             height: 100%;
-            padding: 12mm; /* 保持邊框距離紙張邊緣的距離 */
+            padding: 12mm;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -179,8 +181,8 @@
         /* 內容層 */
         .content-layer {
             flex-grow: 1;
-            /* 調整：增加上下 Padding 約 10-15mm (原為 15mm，現改為 25mm) */
-            padding: 25mm 22mm; 
+            /* 上下 Padding 調整：上邊界縮小至 5mm，下邊界 25mm */
+            padding: 5mm 22mm 25mm 22mm; 
             display: flex;
             flex-direction: column;
             position: relative;
@@ -208,57 +210,62 @@
             filter: grayscale(100%);
         }
 
-        /* 頁眉 (Header) */
+        /* 頁眉 (Header) - 修正排版與鎖定高度 */
         .header-section {
+            /* 鎖定高度，加大空間以容納大Logo */
+            height: 140px; 
             display: flex;
+            /* 左右分散對齊：Logo在左，文字在右 */
             justify-content: space-between;
-            align-items: flex-end;
-            padding-bottom: 10px;
-            margin-bottom: 5px; /* 縮減間距 */
+            align-items: center; 
+            gap: 20px; 
+            padding-bottom: 0;
+            margin-bottom: 10px; 
             border-bottom: 1px solid transparent;
+            overflow: hidden; 
         }
 
         /* Logo */
         .logo-box {
             display: flex;
             align-items: center;
+            flex-shrink: 0; 
         }
         .logo-img {
-            height: 70px; /* 稍微縮小 Logo 高度以騰出空間 */
+            /* Logo 加大至 130px */
+            height: 130px; 
             width: auto;
             display: block;
         }
 
         .header-text {
-            text-align: right;
+            text-align: right; /* 文字靠右 */
             color: #1a365d;
-        }
-        .header-en {
-            font-family: "Times New Roman", serif;
-            font-size: 13px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .header-zh {
-            font-size: 15px;
+            font-size: 16px; /* 縮小字體 */
             font-weight: bold;
-            letter-spacing: 1.2px;
-            margin-top: 3px;
+            letter-spacing: 2px;
+            font-family: "DFKai-SB", "BiauKai", "標楷體", serif;
+            line-height: 1.2;
         }
 
         /* 標題 */
         h1 {
-            font-size: 38px;
+            font-size: 40px;
             text-align: center;
             letter-spacing: 15px;
-            margin: 0 0 20px 0; /* 縮減下方間距 (原30px) */
+            margin: 0 0 25px 0;
             color: #222;
             font-weight: bold;
             position: relative;
             display: inline-block;
             align-self: center;
             padding-bottom: 8px;
+            flex-shrink: 0;
         }
         h1::after {
             content: '';
@@ -274,35 +281,37 @@
 
         /* 稱謂 */
         .recipient-display {
-            font-size: 19px;
-            margin-bottom: 20px; /* 縮減間距 (原25px) */
+            font-size: 20px;
+            margin-bottom: 20px;
             line-height: 1.5;
             font-weight: bold;
             color: #000;
+            flex-shrink: 0;
         }
 
         /* 內文 */
         .content-display {
-            font-size: 17px;
-            line-height: 1.85; /* 微調行高以適應增加的邊界 (原2.1) */
+            font-size: 18px;
+            line-height: 2.0;
             text-align: justify;
             color: #222;
             margin-bottom: 20px;
-            flex-grow: 1;
+            flex-grow: 1; /* 佔滿剩餘空間 */
         }
         .paragraph {
             text-indent: 2.2em;
-            margin-bottom: 12px; /* 縮減段落間距 */
+            margin-bottom: 12px;
         }
 
         /* 結語區 */
         .blessing-block {
             margin-top: 10px;
             margin-left: 2.2em;
-            margin-bottom: 30px; /* 縮減間距 (原40px) */
+            margin-bottom: 30px;
+            flex-shrink: 0;
         }
         .closing-word {
-            font-size: 17px;
+            font-size: 18px;
             margin-bottom: 8px;
         }
         .blessing-text {
@@ -316,37 +325,41 @@
             margin-top: auto;
             text-align: right;
             padding-right: 5px;
-            padding-bottom: 0px; /* 底部空間已由 content-layer padding 提供 */
+            padding-bottom: 0px;
+            flex-shrink: 0;
         }
         .sign-org-display {
-            font-size: 17px;
+            font-size: 18px; /* 稍微縮小 */
             color: #444;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             letter-spacing: 1px;
         }
         .sign-name-display {
-            font-size: 26px;
+            font-size:  20px; /* 縮小簽名檔字體，確保一行呈現 */
             font-weight: bold;
-            margin: 8px 0; /* 縮減間距 */
-            letter-spacing: 4px;
+            margin: 5px 0;
+            letter-spacing: 2px;
             color: #000;
+            white-space: nowrap; /* 強制不換行 */
         }
         .date-display {
-            font-size: 17px;
+            font-size: 16px;
             color: #333;
             margin-top: 5px;
-            font-family: "Times New Roman", "微軟正黑體", serif;
+            font-family: "DFKai-SB", "BiauKai", "標楷體", "Times New Roman", serif;
         }
 
         /* 頁尾 */
         .footer {
-            margin-top: 15px; /* 縮減間距 */
+            margin-top: 10px;
             text-align: center;
             font-size: 10px;
             color: #aaa;
             letter-spacing: 1.5px;
             border-top: 1px solid #eee;
-            padding-top: 10px;
+            padding-top: 5px;
+            font-family: "Times New Roman", sans-serif;
+            flex-shrink: 0;
         }
 
         /* --- 列印專用 CSS --- */
@@ -391,7 +404,7 @@
 
     <!-- 左側控制面板 -->
     <div class="control-panel">
-        <h2>感謝函設定 (A4獎狀版)</h2>
+        <h2>感謝函設定 (頁首優化版)</h2>
         
         <div class="form-group">
             <label>Logo 圖片</label>
@@ -411,9 +424,7 @@
             <label>內文 (Enter 可換段落)</label>
             <textarea id="inputContent" class="form-control">謹此致上政治大學 EMBA 班聯會樂智處最誠摯的感謝。
 
-「第二屆永豐盃全國 EMBA 個案競賽」於中華民國 115 年 4 月 26 日假國立中山大學舉行，此為全國 EMBA 學員重要之跨校交流與專業競技平台，亦是政大 EMBA 學弟妹展現實力、為校爭光的重要舞台。
-
-本屆賽事移師高雄舉辦，交通與住宿成本相對提高。承蒙學姐慷慨支持並率先響應，為競賽提供關鍵協助，展現對後進學弟妹的鼓勵，以及對政大 EMBA 精神與價值的傳承。
+「第二屆永豐盃全國 EMBA 個案競賽」於中華民國 115 年 4 月 26 日假國立中山大學舉行，為全國 EMBA 學員重要之跨校交流與專業競技平台，亦是政大 EMBA 學弟妹展現實力、為校爭光的重要舞台。本屆賽事移師高雄舉辦，交通與住宿成本相對提高。承蒙學姐慷慨支持並率先響應，為競賽提供關鍵協助，展現對後進學弟妹的鼓勵，以及對政大 EMBA 精神與價值的傳承。
 
 謹代表政治大學 EMBA 班聯會樂智處與全體參賽學弟妹，致上由衷感謝與最高敬意，並期盼在學姐持續支持下，延續政大 EMBA 的榮耀與向心力。</textarea>
         </div>
@@ -431,7 +442,7 @@
         <div class="form-group">
             <label>職稱 / 姓名</label>
             <div style="display: flex; gap: 5px;">
-                <input type="text" id="inputSignTitle" class="form-control" value="樂智處處長" style="flex: 1;">
+                <input type="text" id="inputSignTitle" class="form-control" value="政大 EMBA 班聯會樂智處處長" style="flex: 1;">
                 <input type="text" id="inputSignName" class="form-control" value="孔文秀" style="flex: 1;">
             </div>
         </div>
@@ -471,7 +482,7 @@
                         <!-- 內容層 -->
                         <div class="content-layer">
                             
-                            <!-- Header -->
+                            <!-- Header (鎖定高度, 分散對齊) -->
                             <div class="header-section">
                                 <div class="logo-box">
                                     <img id="displayLogo" src="NCCU_EMBA_LOGO.jpeg" class="logo-img" alt="Logo" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
@@ -480,7 +491,6 @@
                                     </div>
                                 </div>
                                 <div class="header-text">
-                                    <div class="header-en">College of Commerce, NCCU</div>
                                     <div class="header-zh">國立政治大學 EMBA 班聯會</div>
                                 </div>
                             </div>
@@ -498,7 +508,7 @@
                             <div class="signature-section">
                                 <div id="displaySignOrg" class="sign-org-display"></div>
                                 <div class="sign-name-display">
-                                    <span id="displaySignTitle" style="font-size: 0.8em; font-weight: normal; margin-right: 8px;"></span>
+                                    <span id="displaySignTitle" style="font-weight: normal; margin-right: 8px;"></span>
                                     <span id="displaySignName"></span>
                                 </div>
                                 <div id="displayDate" class="date-display"></div>
