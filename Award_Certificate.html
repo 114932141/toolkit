@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>政大EMBA獎狀產生器</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+
+        /* --- 應用程式介面樣式 (螢幕顯示用) --- */
+        body {
+            background-color: #e9ecef;
+            font-family: "Noto Sans TC", "Microsoft JhengHei", "微軟正黑體", sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 左側控制面板 */
+        .control-panel {
+            width: 360px;
+            background-color: #fff;
+            padding: 25px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            z-index: 20;
+            border-right: 1px solid #ddd;
+        }
+
+        .control-panel h2 {
+            color: #8b0000;
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #8b0000;
+            padding-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #8b0000;
+            background: #fff5f5;
+            border-left: 3px solid #8b0000;
+            padding: 4px 8px;
+            margin: 14px 0 10px 0;
+            letter-spacing: 1px;
+        }
+
+        .form-group { margin-bottom: 14px; }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 9px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus {
+            border-color: #8b0000;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+            line-height: 1.6;
+        }
+
+        .inline-group {
+            display: flex;
+            gap: 8px;
+        }
+        .inline-group .form-control { flex: 1; }
+
+        /* 按鈕樣式 */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn-upload {
+            background-color: #f1f3f5;
+            color: #8b0000;
+            border: 1px dashed #8b0000;
+            margin-bottom: 5px;
+        }
+        .btn-upload:hover { background-color: #ffe5e5; }
+
+        .btn-print {
+            background-color: #8b0000;
+            color: white;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        .btn-print:hover {
+            background-color: #6b0000;
+            transform: translateY(-1px);
+        }
+
+        /* 右側預覽區 */
+        .preview-area {
+            flex-grow: 1;
+            background-color: #525659;
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* --- A4 頁面與獎狀邊框樣式 --- */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background-color: #ffffff;
+            box-shadow: 0 0 25px rgba(0,0,0,0.4);
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin-bottom: 40px;
+            font-family: "Noto Sans TC", "Microsoft JhengHei", "微軟正黑體", sans-serif;
+        }
+
+        /* 獎狀外框容器 */
+        .cert-container {
+            width: 100%;
+            height: 100%;
+            padding: 12mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 學院風雙層邊框 */
+        .cert-border-outer {
+            width: 100%;
+            height: 100%;
+            border: 7px solid #8b0000;
+            box-sizing: border-box;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .cert-border-inner {
+            width: 100%;
+            height: 100%;
+            border: 2px solid #c5a059;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: #ffffff;
+        }
+
+        /* 四角裝飾 */
+        .corner-deco {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-color: #8b0000;
+            border-style: solid;
+            z-index: 5;
+        }
+        .corner-tl { top: 5px; left: 5px; border-width: 4px 0 0 4px; }
+        .corner-tr { top: 5px; right: 5px; border-width: 4px 4px 0 0; }
+        .corner-bl { bottom: 5px; left: 5px; border-width: 0 0 4px 4px; }
+        .corner-br { bottom: 5px; right: 5px; border-width: 0 4px 4px 0; }
+
+        /* 中央菱形裝飾點 */
+        .diamond-deco {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #c5a059;
+            transform: rotate(45deg);
+            z-index: 5;
+        }
+        .diamond-top    { top: -5px;    left: 50%; margin-left: -4px; }
+        .diamond-bottom { bottom: -5px; left: 50%; margin-left: -4px; }
+        .diamond-left   { left: -5px;   top: 50%;  margin-top: -4px; }
+        .diamond-right  { right: -5px;  top: 50%;  margin-top: -4px; }
+
+        /* 內容層 */
+        .content-layer {
+            flex-grow: 1;
+            padding: 6mm 22mm 20mm 22mm;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 浮水印 */
+        .watermark {
+            position: absolute;
+            top: 53%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 55%;
+            max-width: 380px;
+            opacity: 0.07;
+            pointer-events: none;
+            z-index: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .watermark img {
+            width: 100%;
+            height: auto;
+            filter: grayscale(100%);
+        }
+
+        /* 頁眉 */
+        .header-section {
+            height: 130px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .logo-img {
+            height: 120px;
+            width: auto;
+            display: block;
+        }
+
+        .header-text {
+            text-align: right;
+            color: #8b0000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .header-org {
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+            line-height: 1.4;
+        }
+        .header-sub {
+            font-size: 13px;
+            color: #a0522d;
+            letter-spacing: 1px;
+            margin-top: 3px;
+        }
+
+        /* 金色分隔線 */
+        .gold-divider {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #c5a059, #8b6914, #c5a059, transparent);
+            margin: 4px 0 12px 0;
+            flex-shrink: 0;
+        }
+
+        /* 獎狀標題 */
+        .cert-title {
+            font-size: 52px;
+            text-align: center;
+            letter-spacing: 20px;
+            margin: 0 0 6px 0;
+            color: #8b0000;
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+            align-self: center;
+            padding-bottom: 6px;
+            flex-shrink: 0;
+            text-shadow: 1px 1px 2px rgba(139,0,0,0.2);
+        }
+        .cert-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: #c5a059;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 獎狀副標題（獎項類別） */
+        .cert-subtitle {
+            font-size: 18px;
+            text-align: center;
+            color: #8b6914;
+            letter-spacing: 4px;
+            margin: 8px 0 16px 0;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* 受獎人姓名大字 */
+        .recipient-name-block {
+            text-align: center;
+            margin: 10px 0 8px 0;
+            flex-shrink: 0;
+        }
+        .recipient-label {
+            font-size: 18px;
+            color: #555;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+        .recipient-name {
+            font-size: 38px;
+            font-weight: bold;
+            color: #1a1a1a;
+            letter-spacing: 8px;
+            line-height: 1.2;
+            border-bottom: 2px solid #c5a059;
+            display: inline-block;
+            padding: 2px 20px 6px 20px;
+        }
+        .recipient-title {
+            font-size: 17px;
+            color: #555;
+            margin-top: 6px;
+            letter-spacing: 2px;
+        }
+
+        /* 獎項說明 */
+        .award-block {
+            text-align: center;
+            margin: 12px 0 8px 0;
+            flex-shrink: 0;
+        }
+        .award-name {
+            font-size: 26px;
+            font-weight: bold;
+            color: #8b0000;
+            letter-spacing: 4px;
+            border: 2px solid #8b0000;
+            display: inline-block;
+            padding: 6px 24px;
+            margin-bottom: 4px;
+            background: rgba(139,0,0,0.04);
+        }
+
+        /* 內文 */
+        .content-display {
+            font-size: 16px;
+            line-height: 2.0;
+            text-align: justify;
+            color: #222;
+            margin: 10px 0;
+            flex-grow: 1;
+        }
+        .paragraph {
+            text-indent: 2.2em;
+            margin-bottom: 8px;
+        }
+
+        /* 簽名區 */
+        .signature-section {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0 10px;
+            flex-shrink: 0;
+        }
+
+        .sign-left {
+            text-align: left;
+        }
+        .sign-right {
+            text-align: right;
+        }
+
+        .sign-org-display {
+            font-size: 16px;
+            color: #444;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .sign-name-display {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #000;
+            white-space: nowrap;
+        }
+
+        .date-display {
+            font-size: 15px;
+            color: #333;
+            margin-top: 6px;
+            font-family: "Noto Sans TC", "Microsoft JhengHei", "Times New Roman", sans-serif;
+        }
+
+        /* 流水號 */
+        .cert-number {
+            font-size: 11px;
+            color: #999;
+            letter-spacing: 1px;
+            font-family: "Times New Roman", monospace;
+        }
+
+        /* 頁尾 */
+        .footer {
+            margin-top: 8px;
+            text-align: center;
+            font-size: 10px;
+            color: #bbb;
+            letter-spacing: 1.5px;
+            border-top: 1px solid #eee;
+            padding-top: 5px;
+            font-family: "Times New Roman", sans-serif;
+            flex-shrink: 0;
+        }
+
+        /* --- 列印專用 CSS --- */
+        @media print {
+            .control-panel { display: none !important; }
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+            html, body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 0;
+                background-color: white;
+            }
+            .preview-area {
+                padding: 0;
+                margin: 0;
+                background: white;
+                height: 100%;
+                display: block;
+            }
+            .page {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                page-break-after: avoid;
+                overflow: hidden;
+                border: none;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 左側控制面板 -->
+    <div class="control-panel">
+        <h2>🏆 獎狀產生器</h2>
+
+        <div class="section-title">▌ 基本設定</div>
+
+        <div class="form-group">
+            <label>Logo 圖片</label>
+            <input type="file" id="logoInput" accept="image/*" style="display: none;">
+            <button class="btn btn-upload" onclick="document.getElementById('logoInput').click()">
+                📂 上傳 / 更換 Logo
+            </button>
+            <small style="color: #666; font-size: 12px;">同步更新 Logo 與背景浮水印</small>
+        </div>
+
+        <div class="form-group">
+            <label style="display:flex; justify-content:space-between; align-items:center;">
+                Logo 尺寸
+                <span id="logoSizeLabel" style="font-weight:normal; color:#8b0000; font-size:13px;">120px</span>
+            </label>
+            <input type="range" id="logoSizeSlider" min="40" max="200" value="120" step="5"
+                style="width:100%; accent-color:#8b0000; cursor:pointer;">
+            <div style="display:flex; justify-content:space-between; font-size:11px; color:#999; margin-top:2px;">
+                <span>小</span><span>大</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>頒獎機構名稱</label>
+            <input type="text" id="inputOrg" class="form-control" value="國立政治大學 EMBA 班聯會">
+        </div>
+        <div class="form-group">
+            <label>機構副標（英文或附屬說明）</label>
+            <input type="text" id="inputOrgSub" class="form-control" value="National Chengchi University EMBA Student Association">
+        </div>
+
+        <div class="section-title">▌ 獎項資訊</div>
+
+        <div class="form-group">
+            <label>獎狀大標題</label>
+            <input type="text" id="inputCertTitle" class="form-control" value="獎　狀">
+        </div>
+        <div class="form-group">
+            <label>獎項副標題（類別）</label>
+            <input type="text" id="inputCertSubtitle" class="form-control" value="個案競賽　優勝獎">
+        </div>
+        <div class="form-group">
+            <label>獎項名稱（框內大字）</label>
+            <input type="text" id="inputAwardName" class="form-control" value="第二屆永豐盃全國 EMBA 個案競賽　優勝獎">
+        </div>
+
+        <div class="section-title">▌ 受獎人資訊</div>
+
+        <div class="form-group">
+            <label>受獎人稱謂（姓名前說明）</label>
+            <input type="text" id="inputRecipientLabel" class="form-control" value="茲證明">
+        </div>
+        <div class="form-group">
+            <label>受獎人姓名</label>
+            <input type="text" id="inputRecipientName" class="form-control" value="王　小　明">
+        </div>
+        <div class="form-group">
+            <label>受獎人職稱 / 學校</label>
+            <input type="text" id="inputRecipientTitle" class="form-control" value="國立政治大學 EMBA 114 級">
+        </div>
+
+        <div class="section-title">▌ 獎狀內文</div>
+
+        <div class="form-group">
+            <label>內文說明（Enter 換段）</label>
+            <textarea id="inputContent" class="form-control">於「第二屆永豐盃全國 EMBA 個案競賽」中，展現卓越之分析能力與團隊協作精神，於來自全國各頂尖大學之競爭隊伍中脫穎而出，榮獲優勝獎。
+
+謹頒此狀，以資鼓勵，並期許持續精進，為政大 EMBA 爭光。</textarea>
+        </div>
+
+        <div class="section-title">▌ 簽署資訊</div>
+
+        <div class="form-group">
+            <label>流水號 / 字號</label>
+            <input type="text" id="inputCertNo" class="form-control" value="政大EMBA班聯字第1140426001號">
+        </div>
+        <div class="form-group">
+            <label>頒獎單位</label>
+            <input type="text" id="inputSignOrg" class="form-control" value="政治大學 EMBA 班聯會 樂智處">
+        </div>
+        <div class="form-group">
+            <label>職稱 / 姓名</label>
+            <div class="inline-group">
+                <input type="text" id="inputSignTitle" class="form-control" placeholder="職稱" value="樂智處處長">
+                <input type="text" id="inputSignName" class="form-control" placeholder="姓名" value="孔文秀">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>日期</label>
+            <input type="text" id="inputDate" class="form-control" value="中華民國 115 年 5 月 10 日">
+        </div>
+
+        <button onclick="window.print()" class="btn btn-print">🖨️ 列印 / 另存 PDF</button>
+        <div style="text-align: center; margin-top: 10px; color: #666; font-size: 12px;">
+            <p style="margin: 3px 0;">紙張：<strong>A4</strong>　邊界：<strong>無 (None)</strong></p>
+            <p style="margin: 3px 0;">勾選：<strong>背景圖形</strong></p>
+        </div>
+    </div>
+
+    <!-- 右側預覽區 (列印範圍) -->
+    <div class="preview-area">
+        <div class="page">
+            <div class="cert-container">
+                <div class="cert-border-outer">
+                    <div class="cert-border-inner">
+                        <!-- 四角裝飾 -->
+                        <div class="corner-deco corner-tl"></div>
+                        <div class="corner-deco corner-tr"></div>
+                        <div class="corner-deco corner-bl"></div>
+                        <div class="corner-deco corner-br"></div>
+                        <!-- 菱形中點 -->
+                        <div class="diamond-deco diamond-top"></div>
+                        <div class="diamond-deco diamond-bottom"></div>
+                        <div class="diamond-deco diamond-left"></div>
+                        <div class="diamond-deco diamond-right"></div>
+
+                        <!-- 浮水印 -->
+                        <div class="watermark">
+                            <img id="displayWatermark" src="NCCU_EMBA_LOGO.jpeg" alt="Watermark">
+                        </div>
+
+                        <!-- 內容層 -->
+                        <div class="content-layer">
+
+                            <!-- Header -->
+                            <div class="header-section">
+                                <div class="logo-box">
+                                    <img id="displayLogo" src="NCCU_EMBA_LOGO.jpeg" class="logo-img" alt="Logo"
+                                        onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
+                                    <div id="logo-fallback" style="display:none; font-family: 'Noto Sans TC', 'Times New Roman'; font-size: 28px; font-weight: bold; color: #8b0000; border: 2px solid #8b0000; padding: 5px 15px;">
+                                        NCCU
+                                    </div>
+                                </div>
+                                <div class="header-text">
+                                    <div id="displayOrg" class="header-org"></div>
+                                    <div id="displayOrgSub" class="header-sub"></div>
+                                </div>
+                            </div>
+
+                            <!-- 金色分隔線 -->
+                            <div class="gold-divider"></div>
+
+                            <!-- 獎狀標題 -->
+                            <div id="displayCertTitle" class="cert-title"></div>
+                            <div id="displayCertSubtitle" class="cert-subtitle"></div>
+
+                            <!-- 受獎人 -->
+                            <div class="recipient-name-block">
+                                <div id="displayRecipientLabel" class="recipient-label"></div>
+                                <div id="displayRecipientName" class="recipient-name"></div>
+                                <div id="displayRecipientTitle" class="recipient-title"></div>
+                            </div>
+
+                            <!-- 獎項名稱框 -->
+                            <div class="award-block">
+                                <div id="displayAwardName" class="award-name"></div>
+                            </div>
+
+                            <!-- 內文 -->
+                            <div id="displayContent" class="content-display"></div>
+
+                            <!-- 簽名區 -->
+                            <div class="signature-section">
+                                <div class="sign-left">
+                                    <div id="displayCertNo" class="cert-number"></div>
+                                </div>
+                                <div class="sign-right">
+                                    <div id="displaySignOrg" class="sign-org-display"></div>
+                                    <div class="sign-name-display">
+                                        <span id="displaySignTitle" style="font-weight: normal; margin-right: 8px;"></span>
+                                        <span id="displaySignName"></span>
+                                    </div>
+                                    <div id="displayDate" class="date-display"></div>
+                                </div>
+                            </div>
+
+                            <div class="footer">
+                                NATIONAL CHENGCHI UNIVERSITY EMBA STUDENT ASSOCIATION
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fieldMap = [
+            { input: 'inputOrg',             display: 'displayOrg',             type: 'text' },
+            { input: 'inputOrgSub',          display: 'displayOrgSub',          type: 'text' },
+            { input: 'inputCertTitle',       display: 'displayCertTitle',       type: 'text' },
+            { input: 'inputCertSubtitle',    display: 'displayCertSubtitle',    type: 'text' },
+            { input: 'inputAwardName',       display: 'displayAwardName',       type: 'text' },
+            { input: 'inputRecipientLabel',  display: 'displayRecipientLabel',  type: 'text' },
+            { input: 'inputRecipientName',   display: 'displayRecipientName',   type: 'text' },
+            { input: 'inputRecipientTitle',  display: 'displayRecipientTitle',  type: 'text' },
+            { input: 'inputContent',         display: 'displayContent',         type: 'paragraph' },
+            { input: 'inputCertNo',          display: 'displayCertNo',          type: 'text' },
+            { input: 'inputSignOrg',         display: 'displaySignOrg',         type: 'text' },
+            { input: 'inputSignTitle',       display: 'displaySignTitle',       type: 'text' },
+            { input: 'inputSignName',        display: 'displaySignName',        type: 'text' },
+            { input: 'inputDate',            display: 'displayDate',            type: 'text' },
+        ];
+
+        function updatePreview() {
+            fieldMap.forEach(({ input, display, type }) => {
+                const inputEl = document.getElementById(input);
+                const displayEl = document.getElementById(display);
+                if (!inputEl || !displayEl) return;
+
+                if (type === 'paragraph') {
+                    const paragraphs = inputEl.value.split('\n').filter(line => line.trim() !== '');
+                    displayEl.innerHTML = paragraphs.map(p => `<p class="paragraph">${p}</p>`).join('');
+                } else {
+                    displayEl.innerText = inputEl.value;
+                }
+            });
+        }
+
+        fieldMap.forEach(({ input }) => {
+            const el = document.getElementById(input);
+            if (el) el.addEventListener('input', updatePreview);
+        });
+
+        // 圖片上傳
+        document.getElementById('logoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const src = e.target.result;
+                    const img = document.getElementById('displayLogo');
+                    img.src = src;
+                    img.style.display = 'block';
+                    document.getElementById('logo-fallback').style.display = 'none';
+                    document.getElementById('displayWatermark').src = src;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Logo 尺寸滑桿
+        const logoSlider = document.getElementById('logoSizeSlider');
+        const logoSizeLabel = document.getElementById('logoSizeLabel');
+
+        function applyLogoSize(size) {
+            const logoImg = document.getElementById('displayLogo');
+            logoImg.style.height = size + 'px';
+            // 讓 header-section 自適應高度，最小 80px
+            const headerSection = document.querySelector('.header-section');
+            headerSection.style.height = Math.max(80, size + 10) + 'px';
+            logoSizeLabel.textContent = size + 'px';
+        }
+
+        logoSlider.addEventListener('input', function() {
+            applyLogoSize(parseInt(this.value));
+        });
+
+        applyLogoSize(120);
+        updatePreview();
+    </script>
+
+</body>
+</html>
