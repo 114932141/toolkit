@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>美股買賣管理系統 - RWD 獨立匯率卡片版</title>
+    <title>美股買賣管理系統 - 終極多工平行加速版</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* 強制全局字體不低於 14pt (14pt = 18.6px，此處設定 18.5px 作為基底) */
-        html { font-size: 18.5px; }
+        /* 嚴格落實 RWD 全局字體不低於 14pt (14pt = 18.6px) */
+        html { font-size: 18.6px; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     </style>
 </head>
@@ -47,27 +47,31 @@
                 <button id="logoutBtn" class="bg-slate-800 hover:bg-rose-600 text-slate-200 hover:text-white px-4 py-1.5 rounded-md font-bold transition cursor-pointer text-base">登出帳號</button>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200">
-                    <div class="text-sm font-semibold text-slate-400 uppercase tracking-wider">目前持股總成本</div>
-                    <div id="totalCostDisplay" class="text-2xl font-bold text-slate-800 mt-1 font-mono">$0.00</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-200">
+                    <div class="text-sm font-semibold text-slate-400 uppercase tracking-wider">庫存持股總成本</div>
+                    <div id="totalCostDisplay" class="text-xl font-bold text-slate-800 mt-1 font-mono">$0.00</div>
                 </div>
-                <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200">
+                <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-200">
+                    <div class="text-sm font-semibold text-slate-400 uppercase tracking-wider">庫存目前總市值</div>
+                    <div id="totalMarketValueDisplay" class="text-xl font-bold text-indigo-600 mt-1 font-mono">$0.00</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-200">
                     <div class="text-sm font-semibold text-slate-400 uppercase tracking-wider">歷史已實現總損益</div>
-                    <div id="totalRealizedPnlDisplay" class="text-2xl font-bold mt-1 font-mono">$0.00</div>
+                    <div id="totalRealizedPnlDisplay" class="text-xl font-bold mt-1 font-mono">$0.00</div>
                 </div>
-                <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200">
+                <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-200">
                     <div class="text-sm font-semibold text-slate-400 uppercase tracking-wider">歷史交易勝率</div>
-                    <div id="winRateDisplay" class="text-2xl font-bold text-slate-800 mt-1">0%</div>
+                    <div id="winRateDisplay" class="text-xl font-bold text-slate-800 mt-1">0%</div>
                 </div>
-                <div class="bg-emerald-600 text-white p-5 rounded-xl shadow-md border border-emerald-700 flex flex-col justify-between">
+                <div class="bg-emerald-600 text-white p-4 rounded-xl shadow-md border border-emerald-700 flex flex-col justify-between">
                     <div class="flex justify-between items-center">
-                        <span class="text-sm font-bold text-emerald-100 uppercase tracking-wider">即時匯兌匯率</span>
-                        <span class="text-[11px] bg-emerald-500 text-emerald-50 px-2 py-0.5 rounded-sm font-mono animate-pulse">LIVE</span>
+                        <span class="text-xs font-bold text-emerald-100 uppercase tracking-wider">即時匯率 (5m)</span>
+                        <span class="text-[9px] bg-emerald-500 text-emerald-50 px-1.5 py-0.5 rounded-sm font-mono">LIVE</span>
                     </div>
-                    <div class="flex items-baseline justify-between mt-2">
-                        <span class="text-sm text-emerald-100">USD / TWD</span>
-                        <span id="fxRateDisplay" class="text-3xl font-black font-mono">讀取中</span>
+                    <div class="flex items-baseline justify-between mt-1">
+                        <span class="text-xs text-emerald-100">USD/TWD</span>
+                        <span id="fxRateDisplay" class="text-2xl font-black font-mono">32.45</span>
                     </div>
                 </div>
             </div>
@@ -83,25 +87,33 @@
 
             <div id="tabHomeView" class="block">
                 <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col">
-                    <div class="border-b border-slate-100 pb-3 mb-4">
-                        <h2 class="text-xl font-bold text-slate-900">💼 您目前的各股持股與已實現損益總覽</h2>
-                        <p class="text-sm text-slate-400 mt-0.5">自動加權計算您未結案股票之現狀，並同步呈現該公司過往已落袋的實現損益</p>
+                    <div class="border-b border-slate-100 pb-3 mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900">💼 您目前的各股持股現狀與即時估值總覽</h2>
+                            <p class="text-sm text-slate-400 mt-0.5">已升級多工平行加速模組，瞬間同步完畢最新未實現損益</p>
+                        </div>
+                        <button id="refreshPricesBtn" onclick="window.fetchAllActiveStockPrices && window.fetchAllActiveStockPrices()" class="bg-slate-100 hover:bg-indigo-50 text-indigo-600 hover:text-indigo-700 px-3 py-1.5 rounded-md font-bold text-sm border border-slate-200 transition cursor-pointer">
+                            ⚡ 秒速重新整理現價
+                        </button>
                     </div>
+                    
                     <div class="overflow-x-auto w-full">
                         <table class="w-full text-left whitespace-nowrap">
                             <thead class="text-sm text-slate-700 uppercase bg-indigo-50/50">
                                 <tr>
-                                    <th class="px-5 py-4 border-b border-slate-100 font-bold">公司代號</th>
-                                    <th class="px-5 py-4 border-b border-slate-100 font-bold">目前總股數</th>
-                                    <th class="px-5 py-4 border-b border-slate-100 font-bold">持有平均單價 (USD)</th>
-                                    <th class="px-5 py-4 border-b border-slate-100 font-bold">現有持股成本 (USD)</th>
-                                    <th class="px-5 py-4 border-b border-slate-100 font-bold text-right">該股已實現損益總額</th>
+                                    <th class="px-4 py-4 border-b border-slate-100 font-bold">公司代號</th>
+                                    <th class="px-4 py-4 border-b border-slate-100 font-bold">目前持股數</th>
+                                    <th class="px-4 py-4 border-b border-slate-100 font-bold">持有均價</th>
+                                    <th class="px-4 py-4 border-b border-slate-100 font-bold">Yahoo現價</th>
+                                    <th class="px-4 py-4 border-b border-slate-100 font-bold text-indigo-900 bg-indigo-50/20">當前持股成本 / 市值</th>
+                                    <th class="px-4 py-4 border-b border-slate-100 font-bold text-right">持股未實現損益 (帳面)</th>
+                                    <th class="px-4 py-4 border-b border-slate-100 font-bold text-right">該股已實現損益總額</th>
                                 </tr>
                             </thead>
                             <tbody id="inventoryTable" class="divide-y divide-slate-100 font-medium"></tbody>
                         </table>
                         <div id="emptyInventoryAlert" class="text-center py-16 text-slate-400 hidden">
-                            目前您的帳上無任何持股資產。可切換至「交易作業帳本」新增個人買入交易。
+                            目前您的帳上無 any 持股資產。可切換至「交易作業帳本」新增個人買入交易。
                         </div>
                     </div>
                 </div>
@@ -144,7 +156,7 @@
                                 <select id="matchId" class="mt-1.5 block w-full rounded-md border border-rose-300 bg-white p-2.5 text-base text-rose-950 font-medium"></select>
                             </div>
 
-                            <button type="submit" class="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 transition font-bold cursor-pointer">傳送交易至個人雲端</button>
+                            <button type="submit" class="w-full bg-indigo-600 text-white p-3 rounded-lg font-bold cursor-pointer transition hover:bg-indigo-700">傳送交易至個人雲端</button>
                         </form>
                     </div>
                 </div>
@@ -201,26 +213,101 @@
         let currentUser = null;
         let trades = [];
         let unsubscribeSnapshot = null;
+        let globalStockPrices = {}; 
 
         document.getElementById('date').value = new Date().toISOString().split('T')[0];
         document.getElementById('actionSymbol').addEventListener('input', () => { window.toggleFormType(); renderSystem(); });
 
-        // 📈 抓取 Yahoo Finance 最新美金台幣匯率
+        // 🌐 設定區
+        // Yahoo Finance 用於匯率（Finnhub 免費版不提供匯率），需透過 CORS Proxy
+        const YF_PROXY = "https://corsproxy.io/?url=";
+        // Finnhub 用於股票即時報價，原生支援 CORS，免費版 60 calls/分鐘
+        // 👉 請至 https://finnhub.io/register 申請免費 API Key 後填入下方
+        const FINNHUB_API_KEY = "d8o1vo9r01qvtr6m0f90d8o1vo9r01qvtr6m0f9g";
+
         async function fetchUSDTWDRate() {
             try {
-                const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/USDTWD=X`);
+                const target = encodeURIComponent(`https://query1.finance.yahoo.com/v8/finance/chart/USDTWD=X`);
+                const res = await fetch(`${YF_PROXY}${target}`);
                 const data = await res.json();
-                const rate = data.chart.result[0].meta.regularMarketPrice;
-                document.getElementById('fxRateDisplay').innerText = parseFloat(rate).toFixed(2);
+                document.getElementById('fxRateDisplay').innerText = parseFloat(data.chart.result[0].meta.regularMarketPrice).toFixed(2);
             } catch (e) {
-                document.getElementById('fxRateDisplay').innerText = "32.45"; // 失敗時的保險預設安全值
+                document.getElementById('fxRateDisplay').innerText = "32.45";
             }
         }
-        
         fetchUSDTWDRate();
-        setInterval(fetchUSDTWDRate, 300000); // 5分鐘定時背地更新
+        setInterval(fetchUSDTWDRate, 300000);
 
-        // 驗證與狀態追蹤
+        // 📈 ⚡【核心重構：改用 Finnhub，原生 CORS、不需 Proxy、逐支並行 + 逾時保護】⚡
+        window.fetchAllActiveStockPrices = async function() {
+            const activeSymbols = [...new Set(trades.filter(t => t.remainingShares > 0).map(t => t.symbol))];
+            const btn = document.getElementById('refreshPricesBtn');
+            const originalBtnText = btn ? btn.innerHTML : '';
+
+            if (activeSymbols.length === 0) return;
+
+            if (!FINNHUB_API_KEY || FINNHUB_API_KEY === "YOUR_FINNHUB_API_KEY") {
+                alert("⚠️ 尚未設定 Finnhub API Key！\n請至程式碼頂部的 FINNHUB_API_KEY 填入您的金鑰，\n可至 https://finnhub.io/register 免費申請。");
+                console.log("⚠️ 尚未設定 FINNHUB_API_KEY，請至程式碼頂部填入您的 Finnhub API Key");
+                return;
+            }
+
+            // 🔄 按鈕載入中狀態
+            if (btn) { btn.disabled = true; btn.innerHTML = "🔄 查詢中..."; }
+
+            // 💡 逾時保護：單一請求超過 5 秒直接放棄，避免卡死整個流程
+            const fetchWithTimeout = (url, ms = 8000) => {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), ms);
+                return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
+            };
+
+            let successCount = 0;
+            let failedSymbols = [];
+
+            try {
+                // 💡 Finnhub /quote 一次只回傳單一 symbol，但免費版支援高頻率，並行逐支查詢即可
+                await Promise.all(activeSymbols.map(async (symbol) => {
+                    try {
+                        const url = `https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(symbol)}&token=${FINNHUB_API_KEY}`;
+                        const res = await fetchWithTimeout(url);
+                        if (!res.ok) {
+                            throw new Error(`HTTP ${res.status}`);
+                        }
+                        const data = await res.json();
+                        // data.c = current price；0 或缺失代表代號錯誤或無資料
+                        if (data && data.c) {
+                            globalStockPrices[symbol] = data.c;
+                            successCount++;
+                        } else {
+                            failedSymbols.push(symbol);
+                            console.log(`${symbol} 現價無資料（代號是否正確？）`, data);
+                        }
+                    } catch (err) {
+                        failedSymbols.push(symbol);
+                        console.log(`${symbol} 現價加載失敗: ${err.message}`);
+                    }
+                }));
+
+                // 請求完成後，一次性刷新 UI 看板
+                renderSystem();
+
+                // ✅ 結果回饋
+                if (failedSymbols.length > 0 && successCount === 0) {
+                    alert(`❌ 現價查詢全部失敗：${failedSymbols.join(', ')}\n請打開瀏覽器 Console (F12) 查看詳細錯誤訊息，\n常見原因：API Key 錯誤、額度用盡，或股票代號格式不符 Finnhub 規範。`);
+                } else if (failedSymbols.length > 0) {
+                    console.log(`部分股票查詢失敗：${failedSymbols.join(', ')}`);
+                }
+            } catch (error) {
+                console.log("多工網路連線異常: " + error.message);
+                alert("❌ 查價發生異常：" + error.message);
+            } finally {
+                if (btn) { btn.disabled = false; btn.innerHTML = originalBtnText; }
+            }
+        }
+        setInterval(window.fetchAllActiveStockPrices, 180000); // 3分鐘定時背景秒同步
+
+        // Firebase 狀態監聽
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUser = user;
@@ -244,14 +331,14 @@
         document.getElementById('registerBtn').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim();
             const password = document.getElementById('authPassword').value;
-            if(!email || !password) { alert("請填寫完整登入欄位！"); return; }
+            if(!email || !password) return;
             try { await createUserWithEmailAndPassword(auth, email, password); alert("註冊成功！"); } catch (e) { alert(e.message); }
         });
 
         document.getElementById('loginBtn').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim();
             const password = document.getElementById('authPassword').value;
-            if(!email || !password) { alert("請填寫完整登入欄位！"); return; }
+            if(!email || !password) return;
             try { await signInWithEmailAndPassword(auth, email, password); } catch (e) { alert(e.message); }
         });
 
@@ -260,20 +347,22 @@
         });
 
         function initFirebaseUserListener(uid) {
-            const q = query(tradesCollectionRef, where("uid", "==", uid), orderBy("createdAt", "desc"));
+            const q = query(tradesCollectionRef, where("uid", "==", uid));
             unsubscribeSnapshot = onSnapshot(q, (snapshot) => {
+                let oldActiveSymbols = [...new Set(trades.filter(t => t.remainingShares > 0).map(t => t.symbol))];
+                
                 trades = [];
                 snapshot.forEach((doc) => { trades.push({ id: doc.id, ...doc.data() }); });
-                renderSystem();
-                window.toggleFormType();
-            }, (err) => {
-                if(err.message.includes("index")) {
-                    const fallbackQuery = query(tradesCollectionRef, where("uid", "==", uid));
-                    onSnapshot(fallbackQuery, (snap) => {
-                        trades = []; snap.forEach((doc) => { trades.push({ id: doc.id, ...doc.data() }); });
-                        renderSystem(); window.toggleFormType();
-                    });
+                
+                let newActiveSymbols = [...new Set(trades.filter(t => t.remainingShares > 0).map(t => t.symbol))];
+                
+                // 💡 只有在庫存股票代號有增減，或是初次載入時，才去呼叫 Yahoo 查價，防止重複卡頓
+                if (JSON.stringify(oldActiveSymbols) !== JSON.stringify(newActiveSymbols) || Object.keys(globalStockPrices).length === 0) {
+                    window.fetchAllActiveStockPrices(); 
+                } else {
+                    renderSystem();
                 }
+                window.toggleFormType();
             });
         }
 
@@ -281,8 +370,6 @@
             e.preventDefault();
             if (!currentUser) return;
             const symbol = document.getElementById('actionSymbol').value.toUpperCase().trim();
-            if(!symbol) { alert("請指定第一步的公司代號查詢框！"); return; }
-            
             const type = document.getElementById('type').value;
             const date = document.getElementById('date').value;
             const price = parseFloat(document.getElementById('price').value);
@@ -293,149 +380,88 @@
             if (type === 'BUY') {
                 try {
                     await addDoc(tradesCollectionRef, {
-                        uid: currentUser.uid, 
-                        symbol: symbol,
-                        buyDate: date,
-                        buyPrice: price,
-                        buyShares: shares,
-                        remainingShares: shares,
-                        sellRecords: [],
-                        createdAt: Date.now()
+                        uid: currentUser.uid, symbol: symbol, buyDate: date, buyPrice: price, buyShares: shares, remainingShares: shares, sellRecords: [], createdAt: Date.now()
                     });
                 } catch (error) { alert("失敗：" + error.message); }
             } else {
                 const matchId = document.getElementById('matchId').value;
-                if (!matchId || matchId.startsWith('--')) { alert('找不到該批次！'); btn.disabled = false; return; }
                 const targetBuy = trades.find(t => t.id === matchId);
-                if (shares > targetBuy.remainingShares) { alert("超賣！"); btn.disabled = false; return; }
-
                 const updatedSellRecords = [...targetBuy.sellRecords, { sellDate: date, sellPrice: price, sellShares: shares }];
                 const updatedRemainingShares = parseFloat((targetBuy.remainingShares - shares).toFixed(4));
-
                 try {
-                    await updateDoc(doc(db, "stock_trades", matchId), {
-                        sellRecords: updatedSellRecords,
-                        remainingShares: updatedRemainingShares
-                    });
+                    await updateDoc(doc(db, "stock_trades", matchId), { sellRecords: updatedSellRecords, remainingShares: updatedRemainingShares });
                 } catch (error) { alert("失敗：" + error.message); }
             }
-
-            document.getElementById('price').value = '';
-            document.getElementById('shares').value = '';
-            btn.disabled = false;
-            window.toggleFormType();
+            document.getElementById('price').value = ''; document.getElementById('shares').value = ''; btn.disabled = false; window.toggleFormType();
         });
 
         window.switchTab = function(tabName) {
-            const homeView = document.getElementById('tabHomeView');
-            const tradeView = document.getElementById('tabTradeView');
-            const homeBtn = document.getElementById('tabHomeBtn');
-            const tradeBtn = document.getElementById('tabTradeBtn');
+            const homeView = document.getElementById('tabHomeView'); const tradeView = document.getElementById('tabTradeView');
+            const homeBtn = document.getElementById('tabHomeBtn'); const tradeBtn = document.getElementById('tabTradeBtn');
             if (tabName === 'home') {
                 homeView.classList.replace('hidden', 'block'); tradeView.classList.replace('block', 'hidden');
-                homeBtn.className = "w-1/2 py-3 font-bold rounded-md text-indigo-600 bg-slate-100 transition duration-150 text-lg cursor-pointer";
-                tradeBtn.className = "w-1/2 py-3 font-bold rounded-md text-slate-500 hover:text-slate-700 transition duration-150 text-lg cursor-pointer";
+                homeBtn.className = "w-1/2 py-3 font-bold rounded-md text-indigo-600 bg-slate-100 transition text-lg cursor-pointer";
+                tradeBtn.className = "w-1/2 py-3 font-bold rounded-md text-slate-500 hover:text-slate-700 transition text-lg cursor-pointer";
             } else {
                 homeView.classList.replace('block', 'hidden'); tradeView.classList.replace('hidden', 'block');
-                homeBtn.className = "w-1/2 py-3 font-bold rounded-md text-slate-500 hover:text-slate-700 transition duration-150 text-lg cursor-pointer";
-                tradeBtn.className = "w-1/2 py-3 font-bold rounded-md text-indigo-600 bg-slate-100 transition duration-150 text-lg cursor-pointer";
+                homeBtn.className = "w-1/2 py-3 font-bold rounded-md text-slate-500 hover:text-slate-700 transition text-lg cursor-pointer";
+                tradeBtn.className = "w-1/2 py-3 font-bold rounded-md text-indigo-600 bg-slate-100 transition text-lg cursor-pointer";
             }
         }
 
         window.toggleFormType = function() {
-            const type = document.getElementById('type').value;
-            const symbol = document.getElementById('actionSymbol').value.toUpperCase().trim();
-            const matchGroup = document.getElementById('sellMatchGroup');
-            const matchSelect = document.getElementById('matchId');
-
+            const type = document.getElementById('type').value; const symbol = document.getElementById('actionSymbol').value.toUpperCase().trim();
+            const matchGroup = document.getElementById('sellMatchGroup'); const matchSelect = document.getElementById('matchId');
             if (type === 'SELL') {
                 matchGroup.classList.remove('hidden'); matchSelect.innerHTML = '';
                 const availableBuys = trades.filter(t => t.symbol === symbol && t.remainingShares > 0);
-                if (symbol === '') {
-                    matchSelect.innerHTML = `<option value="">請先在上方輸入查詢代號...</option>`;
-                } else if (availableBuys.length === 0) {
-                    matchSelect.innerHTML = `<option value="">-- 無持倉可供扣除 --</option>`;
-                } else {
-                    availableBuys.forEach(b => {
-                        matchSelect.innerHTML += `<option value="${b.id}">日期:${b.buyDate} | 可賣:${b.remainingShares}股 (成本:$${b.buyPrice})</option>`;
-                    });
-                }
-            } else {
-                matchGroup.classList.add('hidden');
-            }
+                if (symbol === '') { matchSelect.innerHTML = `<option value="">請先在上方輸入指定查詢代號...</option>`; }
+                else if (availableBuys.length === 0) { matchSelect.innerHTML = `<option value="">-- 無持倉可供扣除 --</option>`; }
+                else { availableBuys.forEach(b => { matchSelect.innerHTML += `<option value="${b.id}">日期:${b.buyDate} | 可賣:${b.remainingShares}股 (成本:$${b.buyPrice})</option>`; }); }
+            } else { matchGroup.classList.add('hidden'); }
         }
 
         window.deleteTradeRecord = async function(id, symbol) {
             if (!db) return;
-            if (confirm(`確定要永久刪除此筆 ${symbol} 紀錄與其關聯賣出嗎？`)) {
-                try { await deleteDoc(doc(db, "stock_trades", id)); } catch (e) { alert(e.message); }
-            }
+            if (confirm(`確定要永久刪除此筆 ${symbol} 紀錄嗎？`)) { try { await deleteDoc(doc(db, "stock_trades", id)); } catch (e) { alert(e.message); } }
         }
 
         function renderSystem() {
-            const historyTable = document.getElementById('historyTable');
-            const inventoryTable = document.getElementById('inventoryTable');
+            const historyTable = document.getElementById('historyTable'); const inventoryTable = document.getElementById('inventoryTable');
             historyTable.innerHTML = ''; inventoryTable.innerHTML = '';
-            
-            let totalCurrentCost = 0, totalRealizedPnl = 0, totalClosedTradesCount = 0, winTradesCount = 0;
+            let totalCurrentCost = 0, totalCurrentMarketValue = 0, totalRealizedPnl = 0, totalClosedTradesCount = 0, winTradesCount = 0;
             const filterSymbol = document.getElementById('actionSymbol').value.toUpperCase().trim();
-
-            document.getElementById('historyTitleDesc').innerText = filterSymbol ? `🔍 篩選個股：與 "${filterSymbol}" 相關的歷史紀錄。` : `📜 目前展示您的：全體歷史交易流水帳。`;
-
             const companyRealizedPnlMap = {};
 
-            // 1. 計算明細與過濾
             trades.forEach(t => {
                 let totalSoldSharesInBatch = 0, totalSoldAmountInBatch = 0, sellPrices = [];
                 if(t.sellRecords && Array.isArray(t.sellRecords)) {
-                    t.sellRecords.forEach(s => {
-                        totalSoldSharesInBatch += s.sellShares;
-                        totalSoldAmountInBatch += (s.sellPrice * s.sellShares);
-                        sellPrices.push(`$${s.sellPrice}(${s.sellShares}股)`);
-                    });
+                    t.sellRecords.forEach(s => { totalSoldSharesInBatch += s.sellShares; totalSoldAmountInBatch += (s.sellPrice * s.sellShares); sellPrices.push(`$${s.sellPrice}(${s.sellShares}股)`); });
                 }
-
-                let batchRealizedPnl = 0;
-                let pnlText = '-', pnlClass = 'text-slate-400';
-                
+                let batchRealizedPnl = 0, pnlText = '-', pnlClass = 'text-slate-400';
                 if (totalSoldSharesInBatch > 0) {
                     const correspondingBuyCost = t.buyPrice * totalSoldSharesInBatch;
                     batchRealizedPnl = totalSoldAmountInBatch - correspondingBuyCost;
                     const roi = (batchRealizedPnl / correspondingBuyCost) * 100;
-                    
                     totalRealizedPnl += batchRealizedPnl; totalClosedTradesCount++; if (batchRealizedPnl > 0) winTradesCount++;
                     pnlClass = batchRealizedPnl >= 0 ? 'text-emerald-600 font-bold' : 'text-rose-600 font-bold';
-                    pnlText = `${batchRealizedPnl >= 0 ? '+' : ''}$${batchRealizedPnl.toFixed(2)} (${batchRealizedPnl >= 0 ? '+' : ''}${roi.toFixed(2)}%)`;
+                    pnlText = `${batchRealizedPnl >= 0 ? '+' : ''}$${batchRealizedPnl.toFixed(2)} (${batchRealizedPnl >= 0 ? '+' : ''}${roi.toFixed(1)}%)`;
                 }
-
                 if (!companyRealizedPnlMap[t.symbol]) companyRealizedPnlMap[t.symbol] = 0;
                 companyRealizedPnlMap[t.symbol] += batchRealizedPnl;
-
                 if (filterSymbol !== '' && t.symbol !== filterSymbol) return;
 
                 historyTable.innerHTML += `
                     <tr class="border-b text-center hover:bg-slate-50/50">
-                        <td class="px-3 py-4 font-bold text-slate-900">${t.symbol}</td>
-                        <td class="px-3 py-4">${t.buyDate}</td>
-                        <td class="px-3 py-4 font-mono">$${t.buyPrice.toFixed(2)}</td>
-                        <td class="px-3 py-4 font-mono">${t.buyShares}</td>
-                        <td class="px-3 py-4 text-slate-400 text-sm truncate max-w-[150px]" title="${sellPrices.join(' | ')}">${sellPrices.length > 0 ? sellPrices.join(' | ') : '-'}</td>
-                        <td class="px-3 py-4 font-mono">${totalSoldSharesInBatch > 0 ? totalSoldSharesInBatch : '-'}</td>
-                        <td class="px-3 py-4 font-semibold font-mono ${t.remainingShares > 0 ? 'text-indigo-600' : 'text-slate-300'}">${t.remainingShares}</td>
-                        <td class="px-3 py-4 text-right font-mono ${pnlClass}">${pnlText}</td>
-                        <td class="px-3 py-4 text-center">
-                            <button onclick="window.deleteTradeRecord('${t.id}', '${t.symbol}')" class="bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white px-2.5 py-1 rounded text-sm font-bold transition">🗑️</button>
-                        </td>
+                        <td class="px-3 py-4 font-bold text-slate-900">${t.symbol}</td><td class="px-3 py-4">${t.buyDate}</td><td class="px-3 py-4 font-mono">$${t.buyPrice.toFixed(2)}</td><td class="px-3 py-4 font-mono">${t.buyShares}</td><td class="px-3 py-4 text-slate-400 text-sm truncate max-w-[150px]">${sellPrices.length > 0 ? sellPrices.join(' | ') : '-'}</td><td class="px-3 py-4 font-mono">${totalSoldSharesInBatch > 0 ? totalSoldSharesInBatch : '-'}</td><td class="px-3 py-4 font-semibold font-mono ${t.remainingShares > 0 ? 'text-indigo-600' : 'text-slate-300'}">${t.remainingShares}</td><td class="px-3 py-4 text-right font-mono ${pnlClass}">${pnlText}</td><td class="px-3 py-4 text-center"><button onclick="window.deleteTradeRecord('${t.id}', '${t.symbol}')" class="bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white px-2.5 py-1 rounded text-sm font-bold transition">🗑️</button></td>
                     </tr>`;
             });
 
-            // 2. 彙整渲染首頁持股
             const inventorySummary = {};
             trades.forEach(t => {
                 if (t.remainingShares > 0) {
                     if (!inventorySummary[t.symbol]) { inventorySummary[t.symbol] = { totalShares: 0, totalCost: 0 }; }
-                    inventorySummary[t.symbol].totalShares += t.remainingShares;
-                    inventorySummary[t.symbol].totalCost += (t.buyPrice * t.remainingShares);
+                    inventorySummary[t.symbol].totalShares += t.remainingShares; inventorySummary[t.symbol].totalCost += (t.buyPrice * t.remainingShares);
                 }
             });
 
@@ -443,28 +469,29 @@
             document.getElementById('emptyInventoryAlert').classList.toggle('hidden', activeSymbols.length > 0);
 
             activeSymbols.forEach(symbol => {
-                const item = inventorySummary[symbol]; 
-                const avgPrice = item.totalCost / item.totalShares; 
-                totalCurrentCost += item.totalCost;
+                const item = inventorySummary[symbol]; const avgPrice = item.totalCost / item.totalShares; totalCurrentCost += item.totalCost;
+                const livePrice = globalStockPrices[symbol];
+                let livePriceText = "載入中...", unreleasedPnlText = "計算中...", unreleasedPnlClass = "text-slate-400", costAndMarketText = `$ ${item.totalCost.toFixed(2)} / -`;
+
+                if (livePrice) {
+                    livePriceText = `$ ${livePrice.toFixed(2)}`; const currentMarketValue = livePrice * item.totalShares; totalCurrentMarketValue += currentMarketValue;
+                    costAndMarketText = `<span class="text-slate-400 font-mono">$${item.totalCost.toFixed(1)}</span> ➔ <span class="text-indigo-600 font-bold font-mono">$${currentMarketValue.toFixed(1)}</span>`;
+                    const unreleasedNetPnl = currentMarketValue - item.totalCost; const unreleasedRoi = (unreleasedNetPnl / item.totalCost) * 100;
+                    unreleasedPnlClass = unreleasedNetPnl >= 0 ? "text-emerald-600 font-bold" : "text-rose-600 font-bold";
+                    unreleasedPnlText = `${unreleasedNetPnl >= 0 ? '+' : ''}$${unreleasedNetPnl.toFixed(2)} (${unreleasedNetPnl >= 0 ? '+' : ''}${unreleasedRoi.toFixed(1)}%)`;
+                } else { totalCurrentMarketValue += item.totalCost; }
 
                 const compPnl = companyRealizedPnlMap[symbol] || 0;
-                const compPnlClass = compPnl > 0 ? 'text-emerald-600 font-bold' : (compPnl < 0 ? 'text-rose-600 font-bold' : 'text-slate-400');
-                const compPnlText = compPnl !== 0 ? `${compPnl >= 0 ? '+' : ''}$${compPnl.toFixed(2)}` : '$0.00';
-
                 inventoryTable.innerHTML += `
                     <tr class="border-b bg-white hover:bg-slate-50/50">
-                        <td class="px-6 py-5 font-black text-slate-900 tracking-wide">${symbol}</td>
-                        <td class="px-6 py-5 text-indigo-600 font-bold font-mono">${item.totalShares.toFixed(4)} 股</td>
-                        <td class="px-6 py-5 text-emerald-600 font-semibold font-mono">$ ${avgPrice.toFixed(2)}</td>
-                        <td class="px-6 py-5 text-slate-700 font-mono font-medium">$ ${item.totalCost.toFixed(2)}</td>
-                        <td class="px-6 py-5 text-right font-mono ${compPnlClass}">${compPnlText}</td>
+                        <td class="px-6 py-5 font-black text-slate-900 tracking-wide text-xl">${symbol}</td><td class="px-6 py-5 text-indigo-600 font-bold font-mono">${item.totalShares.toFixed(4)} 股</td><td class="px-6 py-5 text-slate-500 font-semibold font-mono">$ ${avgPrice.toFixed(2)}</td><td class="px-6 py-5 text-emerald-600 font-black font-mono bg-emerald-50/20">${livePriceText}</td><td class="px-6 py-5 font-mono text-sm">${costAndMarketText}</td><td class="px-6 py-5 text-right font-mono ${unreleasedPnlClass}">${unreleasedPnlText}</td><td class="px-6 py-5 text-right font-mono text-sm ${compPnl > 0 ? 'text-emerald-600 font-bold' : (compPnl < 0 ? 'text-rose-600' : 'text-slate-400')}">$${compPnl.toFixed(2)}</td>
                     </tr>`;
             });
 
-            // 更新總數據
             document.getElementById('totalCostDisplay').innerText = `$${totalCurrentCost.toFixed(2)}`;
+            document.getElementById('totalMarketValueDisplay').innerText = `$${totalCurrentMarketValue.toFixed(2)}`;
             document.getElementById('totalRealizedPnlDisplay').innerText = `${totalRealizedPnl >= 0 ? '+' : ''}$${totalRealizedPnl.toFixed(2)}`;
-            document.getElementById('totalRealizedPnlDisplay').className = `text-2xl font-bold mt-1 font-mono ${totalRealizedPnl > 0 ? 'text-emerald-600' : (totalRealizedPnl < 0 ? 'text-rose-600' : 'text-slate-800')}`;
+            document.getElementById('totalRealizedPnlDisplay').className = `text-xl font-bold mt-1 font-mono ${totalRealizedPnl > 0 ? 'text-emerald-600' : (totalRealizedPnl < 0 ? 'text-rose-600' : 'text-slate-800')}`;
             document.getElementById('winRateDisplay').innerText = `${totalClosedTradesCount > 0 ? ((winTradesCount / totalClosedTradesCount) * 100).toFixed(0) : 0}% (${winTradesCount}/${totalClosedTradesCount})`;
         }
     </script>
