@@ -46,6 +46,9 @@
             .rwd-table td.rwd-cell-empty { display: none; }
             .rwd-table td .truncate { max-width: 60vw; }
         }
+
+        .sort-arrow { display: inline-block; width: 1em; margin-left: 2px; opacity: 0.4; }
+        .sort-arrow.active { opacity: 1; color: #4338ca; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 p-2 sm:p-4 md:p-6 text-base md:text-lg overflow-x-hidden">
@@ -103,8 +106,8 @@
                 </div>
                 <div class="col-span-2 lg:col-span-1 bg-emerald-600 text-white p-3 md:p-4 rounded-xl shadow-md border border-emerald-700 flex flex-col justify-between">
                     <div class="flex justify-between items-center">
-                        <span class="text-xs font-bold text-emerald-100 uppercase tracking-wider">即時匯率 (5m)</span>
-                        <span class="text-[9px] bg-emerald-500 text-emerald-50 px-1.5 py-0.5 rounded-sm font-mono">LIVE</span>
+                        <span class="text-xs font-bold text-emerald-100 uppercase tracking-wider">每日參考匯率</span>
+                        <span class="text-[9px] bg-emerald-500 text-emerald-50 px-1.5 py-0.5 rounded-sm font-mono">DAILY</span>
                     </div>
                     <div class="flex items-baseline justify-between mt-1">
                         <span class="text-xs text-emerald-100">USD/TWD</span>
@@ -142,7 +145,7 @@
                                     <th class="px-4 py-4 border-b border-slate-100 font-bold">目前持股數</th>
                                     <th class="px-4 py-4 border-b border-slate-100 font-bold">持有均價</th>
                                     <th class="px-4 py-4 border-b border-slate-100 font-bold">即時現價</th>
-                                    <th class="px-4 py-4 border-b border-slate-100 font-bold text-indigo-900 bg-indigo-50/20">當前持股成本 / 市值</th>
+                                    <th class="px-4 py-4 border-b border-slate-100 font-bold text-indigo-900 bg-indigo-50/20">當前持股成本(含手續費) / 市值</th>
                                     <th class="px-4 py-4 border-b border-slate-100 font-bold text-right">持股未實現損益 (帳面)</th>
                                     <th class="px-4 py-4 border-b border-slate-100 font-bold text-right">該股已實現損益總額</th>
                                 </tr>
@@ -183,9 +186,15 @@
                                     <input type="number" id="price" step="0.01" min="0.01" placeholder="0.00" class="mt-1 block w-full rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-base md:text-lg" required>
                                 </div>
                             </div>
-                            <div>
-                                <label class="block font-bold text-slate-600 text-sm md:text-base">交易股數</label>
-                                <input type="number" id="shares" step="0.0001" min="0.0001" placeholder="0.00" class="mt-1 block w-full rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-base md:text-lg" required>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block font-bold text-slate-600 text-sm md:text-base">交易股數</label>
+                                    <input type="number" id="shares" step="0.0001" min="0.0001" placeholder="0.00" class="mt-1 block w-full rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-base md:text-lg" required>
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-600 text-sm md:text-base">手續費 (USD)</label>
+                                    <input type="number" id="fee" step="0.01" min="0" value="39" class="mt-1 block w-full rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-base md:text-lg" required>
+                                </div>
                             </div>
 
                             <div id="sellMatchGroup" class="hidden bg-rose-50 p-3 rounded-lg border border-rose-200">
@@ -220,23 +229,38 @@
                             僅顯示有剩餘持股
                         </label>
                     </div>
+
+                    <div class="md:hidden flex gap-2 mb-3">
+                        <select id="mobileSortKey" class="flex-1 rounded-lg border border-slate-300 bg-slate-50 p-2 text-sm font-semibold">
+                            <option value="buyDate">排序：買入日</option>
+                            <option value="symbol">排序：公司代號</option>
+                            <option value="buyPrice">排序：買入價</option>
+                            <option value="buyShares">排序：買入股數</option>
+                            <option value="soldShares">排序：已賣股數</option>
+                            <option value="remainingShares">排序：剩餘持股</option>
+                            <option value="pnl">排序：單筆損益</option>
+                        </select>
+                        <button id="mobileSortDirBtn" type="button" class="px-3 py-2 rounded-lg border border-slate-300 bg-slate-50 font-bold text-sm">▼ 新→舊</button>
+                    </div>
                     <div class="w-full">
                         <table class="rwd-table w-full text-left whitespace-nowrap md:whitespace-normal">
                             <thead class="text-sm text-slate-700 uppercase bg-slate-50 font-bold">
                                 <tr class="border-b border-slate-200">
-                                    <th class="px-3 py-3">公司</th>
-                                    <th class="px-3 py-3 text-emerald-800 bg-emerald-50/50">買入日</th>
-                                    <th class="px-3 py-3 text-emerald-800 bg-emerald-50/50">買入價</th>
-                                    <th class="px-3 py-3 text-emerald-800 bg-emerald-50/50">買入股</th>
+                                    <th class="px-3 py-3 cursor-pointer hover:bg-slate-100 select-none" onclick="window.setHistorySortKey('symbol')">公司<span class="sort-arrow" data-sort-key="symbol"></span></th>
+                                    <th class="px-3 py-3 text-emerald-800 bg-emerald-50/50 cursor-pointer hover:bg-emerald-100 select-none" onclick="window.setHistorySortKey('buyDate')">買入日<span class="sort-arrow" data-sort-key="buyDate"></span></th>
+                                    <th class="px-3 py-3 text-emerald-800 bg-emerald-50/50 cursor-pointer hover:bg-emerald-100 select-none" onclick="window.setHistorySortKey('buyPrice')">買入價<span class="sort-arrow" data-sort-key="buyPrice"></span></th>
+                                    <th class="px-3 py-3 text-emerald-800 bg-emerald-50/50 cursor-pointer hover:bg-emerald-100 select-none" onclick="window.setHistorySortKey('buyShares')">買入股<span class="sort-arrow" data-sort-key="buyShares"></span></th>
                                     <th class="px-3 py-3 text-rose-800 bg-rose-50/50">分批賣出明細</th>
-                                    <th class="px-3 py-3 text-rose-800 bg-rose-50/50">已賣股</th>
-                                    <th class="px-3 py-3 font-semibold text-indigo-900 bg-indigo-50/30">剩餘持股</th>
-                                    <th class="px-3 py-3 font-bold text-right">單筆損益 (ROI)</th>
+                                    <th class="px-3 py-3 text-rose-800 bg-rose-50/50 cursor-pointer hover:bg-rose-100 select-none" onclick="window.setHistorySortKey('soldShares')">已賣股<span class="sort-arrow" data-sort-key="soldShares"></span></th>
+                                    <th class="px-3 py-3 font-semibold text-indigo-900 bg-indigo-50/30 cursor-pointer hover:bg-indigo-100 select-none" onclick="window.setHistorySortKey('remainingShares')">剩餘持股<span class="sort-arrow" data-sort-key="remainingShares"></span></th>
+                                    <th class="px-3 py-3 font-bold text-right cursor-pointer hover:bg-slate-100 select-none" onclick="window.setHistorySortKey('pnl')">單筆損益 (ROI)<span class="sort-arrow" data-sort-key="pnl"></span></th>
                                     <th class="px-3 py-3 text-center text-slate-400">操作</th>
                                 </tr>
                             </thead>
                             <tbody id="historyTable" class="text-slate-600 divide-y divide-slate-100 font-medium text-sm md:text-base"></tbody>
                         </table>
+                        <p class="text-xs text-slate-400 mt-2">💡 點擊欄位標題可切換排序（再次點擊切換新舊/大小排序方向），預設為買入日：新→舊</p>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -268,30 +292,54 @@
         let trades = [];
         let unsubscribeSnapshot = null;
         let globalStockPrices = {}; 
+        // 📑 歷史紀錄排序狀態：預設依買入日新→舊排序
+        let historySortKey = 'buyDate';
+        let historySortDir = 'desc'; // 'asc' or 'desc'
 
         document.getElementById('date').value = new Date().toISOString().split('T')[0];
         document.getElementById('actionSymbol').addEventListener('input', () => { window.toggleFormType(); renderSystem(); });
         document.getElementById('onlyRemainingFilter').addEventListener('change', () => { renderSystem(); });
 
         // 🌐 設定區
-        // Yahoo Finance 用於匯率（Finnhub 免費版不提供匯率），需透過 CORS Proxy
-        const YF_PROXY = "https://corsproxy.io/?url=";
-        // Finnhub 用於股票即時報價，原生支援 CORS，免費版 60 calls/分鐘
+        // Finnhub 用於股票報價與匯率，原生支援 CORS，免費版 60 calls/分鐘，不需透過 CORS Proxy
         // 👉 請至 https://finnhub.io/register 申請免費 API Key 後填入下方
         const FINNHUB_API_KEY = "d8o1vo9r01qvtr6m0f90d8o1vo9r01qvtr6m0f9g";
 
+        // 💱 USD/TWD 每日均價：只需每日參考價，不需秒級更新，故每日僅查詢一次並快取於 localStorage
         async function fetchUSDTWDRate() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const cacheKey = 'usdtwd_daily_rate';
             try {
-                const target = encodeURIComponent(`https://query1.finance.yahoo.com/v8/finance/chart/USDTWD=X`);
-                const res = await fetch(`${YF_PROXY}${target}`);
+                const cachedRaw = localStorage.getItem(cacheKey);
+                if (cachedRaw) {
+                    const cached = JSON.parse(cachedRaw);
+                    if (cached.date === todayStr && cached.rate) {
+                        document.getElementById('fxRateDisplay').innerText = parseFloat(cached.rate).toFixed(2);
+                        return;
+                    }
+                }
+            } catch (e) { /* 快取讀取失敗時忽略，直接重新查詢 */ }
+
+            try {
+                // 💡 Finnhub /forex/rates 免費版可用，回傳以 USD 為基準的各幣別匯率快照，當作當日參考匯率
+                const res = await fetch(`https://finnhub.io/api/v1/forex/rates?base=USD&token=${FINNHUB_API_KEY}`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
-                document.getElementById('fxRateDisplay').innerText = parseFloat(data.chart.result[0].meta.regularMarketPrice).toFixed(2);
+                const rate = data?.quote?.TWD;
+                if (rate) {
+                    document.getElementById('fxRateDisplay').innerText = parseFloat(rate).toFixed(2);
+                    localStorage.setItem(cacheKey, JSON.stringify({ date: todayStr, rate: rate }));
+                } else {
+                    throw new Error("回應中無 TWD 匯率資料");
+                }
             } catch (e) {
+                console.log("匯率查詢失敗，沿用預設值: " + e.message);
                 document.getElementById('fxRateDisplay').innerText = "32.45";
             }
         }
         fetchUSDTWDRate();
-        setInterval(fetchUSDTWDRate, 300000);
+        // 💡 每日均價無需頻繁更新，改為每小時檢查一次（若快取仍為當天日期則不會真正觸發 API 請求）
+        setInterval(fetchUSDTWDRate, 3600000);
 
         // 📈 ⚡【核心重構：改用 Finnhub，原生 CORS、不需 Proxy、逐支並行 + 逾時保護】⚡
         window.fetchAllActiveStockPrices = async function() {
@@ -429,25 +477,26 @@
             const date = document.getElementById('date').value;
             const price = parseFloat(document.getElementById('price').value);
             const shares = parseFloat(document.getElementById('shares').value);
+            const fee = parseFloat(document.getElementById('fee').value) || 0;
             const btn = e.target.querySelector('button[type="submit"]');
             btn.disabled = true;
 
             if (type === 'BUY') {
                 try {
                     await addDoc(tradesCollectionRef, {
-                        uid: currentUser.uid, symbol: symbol, buyDate: date, buyPrice: price, buyShares: shares, remainingShares: shares, sellRecords: [], createdAt: Date.now()
+                        uid: currentUser.uid, symbol: symbol, buyDate: date, buyPrice: price, buyShares: shares, buyFee: fee, remainingShares: shares, sellRecords: [], createdAt: Date.now()
                     });
                 } catch (error) { alert("失敗：" + error.message); }
             } else {
                 const matchId = document.getElementById('matchId').value;
                 const targetBuy = trades.find(t => t.id === matchId);
-                const updatedSellRecords = [...targetBuy.sellRecords, { sellDate: date, sellPrice: price, sellShares: shares }];
+                const updatedSellRecords = [...targetBuy.sellRecords, { sellDate: date, sellPrice: price, sellShares: shares, sellFee: fee }];
                 const updatedRemainingShares = parseFloat((targetBuy.remainingShares - shares).toFixed(4));
                 try {
                     await updateDoc(doc(db, "stock_trades", matchId), { sellRecords: updatedSellRecords, remainingShares: updatedRemainingShares });
                 } catch (error) { alert("失敗：" + error.message); }
             }
-            document.getElementById('price').value = ''; document.getElementById('shares').value = ''; btn.disabled = false; window.toggleFormType();
+            document.getElementById('price').value = ''; document.getElementById('shares').value = ''; document.getElementById('fee').value = '39'; btn.disabled = false; window.toggleFormType();
         });
 
         window.switchTab = function(tabName) {
@@ -464,6 +513,46 @@
             }
         }
 
+        // 📑 點擊歷史紀錄表頭切換排序欄位／方向
+        window.setHistorySortKey = function(key) {
+            if (historySortKey === key) {
+                historySortDir = historySortDir === 'asc' ? 'desc' : 'asc';
+            } else {
+                historySortKey = key;
+                // 日期、損益、股數類預設先看「新→大」比較直覺；公司代號預設 A→Z
+                historySortDir = (key === 'symbol') ? 'asc' : 'desc';
+            }
+            renderSystem();
+        }
+
+        function updateSortArrowIcons() {
+            document.querySelectorAll('.sort-arrow').forEach(el => {
+                const key = el.getAttribute('data-sort-key');
+                if (key === historySortKey) {
+                    el.textContent = historySortDir === 'asc' ? '▲' : '▼';
+                    el.classList.add('active');
+                } else {
+                    el.textContent = '◇';
+                    el.classList.remove('active');
+                }
+            });
+            // 同步手機版排序下拉選單與方向按鈕
+            const mobileSelect = document.getElementById('mobileSortKey');
+            const mobileDirBtn = document.getElementById('mobileSortDirBtn');
+            if (mobileSelect) mobileSelect.value = historySortKey;
+            if (mobileDirBtn) mobileDirBtn.innerText = historySortDir === 'asc' ? '▲ 舊→新/小→大' : '▼ 新→舊/大→小';
+        }
+
+        document.getElementById('mobileSortKey').addEventListener('change', (e) => {
+            historySortKey = e.target.value;
+            historySortDir = (historySortKey === 'symbol') ? 'asc' : 'desc';
+            renderSystem();
+        });
+        document.getElementById('mobileSortDirBtn').addEventListener('click', () => {
+            historySortDir = historySortDir === 'asc' ? 'desc' : 'asc';
+            renderSystem();
+        });
+
         window.toggleFormType = function() {
             const type = document.getElementById('type').value; const symbol = document.getElementById('actionSymbol').value.toUpperCase().trim();
             const matchGroup = document.getElementById('sellMatchGroup'); const matchSelect = document.getElementById('matchId');
@@ -477,7 +566,7 @@
             window.updateSellSimulation();
         }
 
-        // 💰 賣出損益模擬：依目前選擇的買入批次 + 輸入的賣出價/股數，即時試算預估損益
+        // 💰 賣出損益模擬：依目前選擇的買入批次 + 輸入的賣出價/股數/手續費，即時試算預估損益
         window.updateSellSimulation = function() {
             const type = document.getElementById('type').value;
             const simBox = document.getElementById('sellSimulationBox');
@@ -487,6 +576,7 @@
             const targetBuy = trades.find(t => t.id === matchId);
             const sellPrice = parseFloat(document.getElementById('price').value);
             const sellShares = parseFloat(document.getElementById('shares').value);
+            const sellFee = parseFloat(document.getElementById('fee').value) || 0;
 
             if (!targetBuy || isNaN(sellPrice) || isNaN(sellShares) || sellShares <= 0) {
                 simBox.classList.add('hidden');
@@ -495,14 +585,16 @@
 
             simBox.classList.remove('hidden');
             const cappedShares = Math.min(sellShares, targetBuy.remainingShares);
-            const cost = targetBuy.buyPrice * cappedShares;
+            // 💰 買入手續費按本次賣出股數佔該買入批次總股數的比例分攤
+            const buyFeeShare = (targetBuy.buyFee || 0) * (cappedShares / targetBuy.buyShares);
+            const cost = (targetBuy.buyPrice * cappedShares) + buyFeeShare;
             const proceeds = sellPrice * cappedShares;
-            const pnl = proceeds - cost;
+            const pnl = proceeds - sellFee - cost;
             const roi = cost > 0 ? (pnl / cost) * 100 : 0;
             const remainingAfter = parseFloat((targetBuy.remainingShares - sellShares).toFixed(4));
 
-            document.getElementById('simCost').innerText = `$${cost.toFixed(2)}`;
-            document.getElementById('simProceeds').innerText = `$${proceeds.toFixed(2)}`;
+            document.getElementById('simCost').innerText = `$${cost.toFixed(2)} (含買入手續費分攤$${buyFeeShare.toFixed(2)})`;
+            document.getElementById('simProceeds').innerText = `$${proceeds.toFixed(2)} (扣賣出手續費$${sellFee.toFixed(2)})`;
             const pnlEl = document.getElementById('simPnl');
             pnlEl.innerText = `${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)}`;
             pnlEl.className = `text-right font-mono font-bold ${pnl >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
@@ -523,6 +615,7 @@
         document.getElementById('matchId').addEventListener('change', () => window.updateSellSimulation());
         document.getElementById('price').addEventListener('input', () => window.updateSellSimulation());
         document.getElementById('shares').addEventListener('input', () => window.updateSellSimulation());
+        document.getElementById('fee').addEventListener('input', () => window.updateSellSimulation());
 
         window.deleteTradeRecord = async function(id, symbol) {
             if (!db) return;
@@ -537,15 +630,20 @@
             const onlyRemaining = document.getElementById('onlyRemainingFilter') && document.getElementById('onlyRemainingFilter').checked;
             const companyRealizedPnlMap = {};
 
+            const historyRows = [];
+
             trades.forEach(t => {
-                let totalSoldSharesInBatch = 0, totalSoldAmountInBatch = 0, sellPrices = [];
+                let totalSoldSharesInBatch = 0, totalSoldAmountInBatch = 0, totalSellFeesInBatch = 0, sellPrices = [];
                 if(t.sellRecords && Array.isArray(t.sellRecords)) {
-                    t.sellRecords.forEach(s => { totalSoldSharesInBatch += s.sellShares; totalSoldAmountInBatch += (s.sellPrice * s.sellShares); sellPrices.push(`$${s.sellPrice}(${s.sellShares}股)`); });
+                    t.sellRecords.forEach(s => { totalSoldSharesInBatch += s.sellShares; totalSoldAmountInBatch += (s.sellPrice * s.sellShares); totalSellFeesInBatch += (s.sellFee || 0); sellPrices.push(`$${s.sellPrice}(${s.sellShares}股)`); });
                 }
                 let batchRealizedPnl = 0, pnlText = '-', pnlClass = 'text-slate-400';
                 if (totalSoldSharesInBatch > 0) {
                     const correspondingBuyCost = t.buyPrice * totalSoldSharesInBatch;
-                    batchRealizedPnl = totalSoldAmountInBatch - correspondingBuyCost;
+                    // 💰 買入手續費按賣出比例分攤計入成本（例如batch買100股付一次手續費，僅賣出40股時只分攤40%手續費）
+                    const buyFeeShare = (t.buyFee || 0) * (totalSoldSharesInBatch / t.buyShares);
+                    const totalFees = buyFeeShare + totalSellFeesInBatch;
+                    batchRealizedPnl = totalSoldAmountInBatch - correspondingBuyCost - totalFees;
                     const roi = (batchRealizedPnl / correspondingBuyCost) * 100;
                     totalRealizedPnl += batchRealizedPnl; totalClosedTradesCount++; if (batchRealizedPnl > 0) winTradesCount++;
                     pnlClass = batchRealizedPnl >= 0 ? 'text-emerald-600 font-bold' : 'text-rose-600 font-bold';
@@ -556,17 +654,48 @@
                 if (filterSymbol !== '' && t.symbol !== filterSymbol) return;
                 if (onlyRemaining && !(t.remainingShares > 0)) return;
 
-                historyTable.innerHTML += `
+                const html = `
                     <tr class="border-b text-center hover:bg-slate-50/50">
-                        <td data-label="公司" class="px-3 py-4 font-bold text-slate-900">${t.symbol}</td><td data-label="買入日" class="px-3 py-4">${t.buyDate}</td><td data-label="買入價" class="px-3 py-4 font-mono">$${t.buyPrice.toFixed(2)}</td><td data-label="買入股" class="px-3 py-4 font-mono">${t.buyShares}</td><td data-label="分批賣出明細" class="px-3 py-4 text-slate-400 text-sm truncate max-w-[150px]">${sellPrices.length > 0 ? sellPrices.join(' | ') : '-'}</td><td data-label="已賣股" class="px-3 py-4 font-mono">${totalSoldSharesInBatch > 0 ? totalSoldSharesInBatch : '-'}</td><td data-label="剩餘持股" class="px-3 py-4 font-semibold font-mono ${t.remainingShares > 0 ? 'text-indigo-600' : 'text-slate-300'}">${t.remainingShares}</td><td data-label="單筆損益(ROI)" class="px-3 py-4 text-right font-mono ${pnlClass}">${pnlText}</td><td data-label="操作" class="px-3 py-4 text-center"><button onclick="window.deleteTradeRecord('${t.id}', '${t.symbol}')" class="bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white px-2.5 py-1 rounded text-sm font-bold transition">🗑️</button></td>
+                        <td data-label="公司" class="px-3 py-4 font-bold text-slate-900">${t.symbol}</td><td data-label="買入日" class="px-3 py-4">${t.buyDate}</td><td data-label="買入價" class="px-3 py-4 font-mono">$${t.buyPrice.toFixed(2)}<span class="text-slate-300 text-xs"> (手續費$${(t.buyFee || 0).toFixed(0)})</span></td><td data-label="買入股" class="px-3 py-4 font-mono">${t.buyShares}</td><td data-label="分批賣出明細" class="px-3 py-4 text-slate-400 text-sm truncate max-w-[150px]">${sellPrices.length > 0 ? sellPrices.join(' | ') : '-'}</td><td data-label="已賣股" class="px-3 py-4 font-mono">${totalSoldSharesInBatch > 0 ? totalSoldSharesInBatch : '-'}</td><td data-label="剩餘持股" class="px-3 py-4 font-semibold font-mono ${t.remainingShares > 0 ? 'text-indigo-600' : 'text-slate-300'}">${t.remainingShares}</td><td data-label="單筆損益(ROI)" class="px-3 py-4 text-right font-mono ${pnlClass}">${pnlText}</td><td data-label="操作" class="px-3 py-4 text-center"><button onclick="window.deleteTradeRecord('${t.id}', '${t.symbol}')" class="bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white px-2.5 py-1 rounded text-sm font-bold transition">🗑️</button></td>
                     </tr>`;
+
+                historyRows.push({
+                    html: html,
+                    symbol: t.symbol,
+                    buyDate: t.buyDate,
+                    buyPrice: t.buyPrice,
+                    buyShares: t.buyShares,
+                    soldShares: totalSoldSharesInBatch,
+                    remainingShares: t.remainingShares,
+                    pnl: batchRealizedPnl,
+                    createdAt: t.createdAt || 0
+                });
             });
+
+            // 📑 依目前選定的排序欄位/方向排序歷史紀錄
+            historyRows.sort((a, b) => {
+                let valA = a[historySortKey], valB = b[historySortKey];
+                let cmp;
+                if (historySortKey === 'symbol' || historySortKey === 'buyDate') {
+                    cmp = String(valA).localeCompare(String(valB));
+                    // 買入日相同時，用建立時間排序當次序穩定的依據
+                    if (cmp === 0) cmp = a.createdAt - b.createdAt;
+                } else {
+                    cmp = valA - valB;
+                }
+                return historySortDir === 'asc' ? cmp : -cmp;
+            });
+
+            historyTable.innerHTML = historyRows.map(r => r.html).join('');
+            updateSortArrowIcons();
 
             const inventorySummary = {};
             trades.forEach(t => {
                 if (t.remainingShares > 0) {
                     if (!inventorySummary[t.symbol]) { inventorySummary[t.symbol] = { totalShares: 0, totalCost: 0 }; }
-                    inventorySummary[t.symbol].totalShares += t.remainingShares; inventorySummary[t.symbol].totalCost += (t.buyPrice * t.remainingShares);
+                    // 💰 未賣出部分的成本，計入按比例分攤的買入手續費
+                    const buyFeeShareForRemaining = (t.buyFee || 0) * (t.remainingShares / t.buyShares);
+                    inventorySummary[t.symbol].totalShares += t.remainingShares; inventorySummary[t.symbol].totalCost += (t.buyPrice * t.remainingShares) + buyFeeShareForRemaining;
                 }
             });
 
