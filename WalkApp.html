@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>遇見 65 歲的自己｜樂活芽芽散步</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap">
+<style>
+:root{
+  --ink:#14232E; --cream:#F6F1E8; --sand:#ECE4D4; --card:#FFFCF6; --line:#E2D8C5;
+  --amber:#E89B3C; --amberDk:#8A4A05; --teal:#1F6E64; --green:#3E9E6A; --body:#4A5560;
+  --mist:#C9D3D6; --pink:#E57FA0;
+}
+*{box-sizing:border-box}
+html{font-size:18px}
+html.xl{font-size:21px}
+body{margin:0;background:#E9E2D3;color:var(--ink);font-family:'Noto Sans TC',system-ui,-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;-webkit-tap-highlight-color:transparent}
+button{font-family:inherit;cursor:pointer;border:none}
+.app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--cream);position:relative;padding-bottom:96px;box-shadow:0 0 40px rgba(20,35,46,.12)}
+/* header */
+.top{position:sticky;top:0;z-index:20;background:rgba(246,241,232,.96);backdrop-filter:blur(8px);padding:14px 16px 10px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.top .who{flex:1;min-width:0}
+.top .who b{display:block;font-size:1.05rem;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .who span{font-size:.78rem;color:var(--body)}
+.chip{display:flex;align-items:center;gap:4px;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:6px 12px;font-weight:900;font-size:.95rem}
+.chip.coin{border-color:#F2C14E;background:#FFF6DD}
+.iconbtn{width:44px;height:44px;border-radius:14px;background:var(--card);border:2px solid var(--line);font-size:1.2rem}
+/* screens */
+.screen{display:none;padding:16px;animation:fadeIn .35s ease}
+.screen.on{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h2.sec{font-size:1.25rem;font-weight:900;margin:22px 0 10px;display:flex;align-items:center;gap:8px}
+h2.sec small{font-size:.75rem;font-weight:700;color:var(--body);margin-left:auto}
+.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:16px}
+.muted{color:var(--body);font-size:.85rem;line-height:1.6}
+/* map */
+.mapwrap{position:relative;border-radius:26px;overflow:hidden;border:3px solid #CFE3C8;background:linear-gradient(#D9F0D3,#BFE3B4)}
+#map{display:block;width:100%;height:auto;touch-action:manipulation}
+.seed{cursor:pointer}
+.bob{animation:bob 1.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.pulse{animation:pulse 1.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.bloom{animation:bloom .6s cubic-bezier(.3,1.6,.5,1) both;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes bloom{from{transform:scale(0)}to{transform:scale(1)}}
+.maptag{position:absolute;left:12px;top:12px;background:rgba(20,35,46,.78);color:#fff;border-radius:999px;padding:6px 12px;font-size:.78rem;font-weight:700}
+.stepbar{display:flex;align-items:center;gap:14px;margin-top:14px}
+.ring{width:96px;height:96px;flex:none;position:relative}
+.ring svg{width:96px;height:96px;transform:rotate(-90deg)}
+.ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;font-size:1.15rem;line-height:1.1}
+.ring .num small{font-size:.65rem;color:var(--body);font-weight:700}
+.walkbtns{flex:1;display:flex;flex-direction:column;gap:10px}
+.big{border-radius:18px;padding:14px 16px;font-weight:900;font-size:1.05rem;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s}
+.big:active{transform:scale(.97)}
+.b-green{background:var(--green);color:#fff;box-shadow:0 6px 0 #2B7A50}
+.b-amber{background:var(--amber);color:var(--ink);box-shadow:0 6px 0 #B9741F}
+.b-ink{background:var(--ink);color:#fff;box-shadow:0 6px 0 #000}
+.b-soft{background:var(--sand);color:var(--ink)}
+.b-green.on{background:#2B7A50}
+/* tasks */
+.task{display:flex;align-items:center;gap:12px;padding:12px;border-radius:20px;background:var(--card);border:2px solid var(--line);margin-bottom:10px}
+.task .bud{width:54px;height:60px;flex:none}
+.task .tx{flex:1;min-width:0}
+.task .tx b{display:block;font-size:1rem}
+.task .tx span{font-size:.8rem;color:var(--body)}
+.task .go{border-radius:14px;padding:10px 12px;font-weight:900;background:var(--amber);color:var(--ink);font-size:.9rem;white-space:nowrap}
+.task.done{background:#EAF5EC;border-color:#BFDFC6}
+.task.done .go{background:#BFDFC6;color:#1F5B3A}
+/* family */
+.fam{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.fam:last-child{border-bottom:none}
+.fam .em{font-size:1.9rem}
+.fam .tx{flex:1}
+.fam .tx b{display:block}
+.fam .tx span{font-size:.8rem;color:var(--green);font-weight:700}
+.heart{background:#FDE7EE;color:#B4325E;border-radius:12px;padding:8px 12px;font-weight:900}
+.bar{height:14px;border-radius:999px;background:var(--sand);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--green),#8BCB6A);transition:width .6s}
+.bar.gold i{background:linear-gradient(90deg,var(--amber),#F6CF6B)}
+/* buddies grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bcard{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:10px 6px;text-align:center;cursor:pointer;transition:transform .15s}
+.bcard:active{transform:scale(.96)}
+.bcard svg{width:72px;height:80px}
+.bcard b{display:block;font-size:.9rem}
+.bcard span{font-size:.72rem;color:var(--body)}
+.bcard.lock svg{filter:grayscale(1) brightness(.2);opacity:.35}
+.party{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;min-height:70px;align-items:flex-end}
+.party svg{width:50px;height:58px}
+/* badges */
+.badge{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:12px 6px;text-align:center;cursor:pointer}
+.medal{width:70px;height:70px;margin:0 auto 6px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;background:radial-gradient(circle at 35% 30%,#FFF3C4,#F2C14E 60%,#C98F1A);box-shadow:inset 0 -4px 0 rgba(0,0,0,.15),0 4px 0 #B07A12}
+.badge.lock .medal{background:radial-gradient(circle at 35% 30%,#F0EBE1,#D6CDBD);box-shadow:inset 0 -4px 0 rgba(0,0,0,.08);filter:grayscale(1);opacity:.6}
+.badge b{display:block;font-size:.85rem}
+.badge span{font-size:.7rem;color:var(--body)}
+/* future */
+.stations{display:flex;justify-content:space-between;position:relative;margin:6px 4px 14px}
+.stations:before{content:"";position:absolute;left:20px;right:20px;top:24px;height:6px;background:var(--sand);border-radius:6px}
+.st{position:relative;z-index:1;text-align:center;cursor:pointer;background:none}
+.st .dot{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.05rem;background:#fff;border:3px solid var(--line);color:var(--body)}
+.st.open .dot{background:var(--amber);border-color:#B9741F;color:var(--ink)}
+.st.sel .dot{outline:4px solid rgba(232,155,60,.35)}
+.st small{display:block;font-size:.7rem;margin-top:4px;color:var(--body);font-weight:700}
+.scene{border-radius:24px;overflow:hidden;border:3px solid var(--line);position:relative}
+.scene svg{display:block;width:100%;height:auto}
+.speech{background:var(--ink);color:#fff;border-radius:20px;padding:16px;margin-top:12px;line-height:1.7;font-size:1rem;position:relative}
+.speech:before{content:"";position:absolute;top:-10px;left:40px;border:10px solid transparent;border-top:none;border-bottom-color:var(--ink)}
+.meters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.meter{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:12px}
+.meter b{font-size:.9rem}
+.meter .lv{float:right;font-weight:900;color:var(--amberDk)}
+.qbtn{display:block;width:100%;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 14px;font-weight:700;font-size:.95rem;margin-bottom:8px}
+.chat{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.msg{max-width:88%;padding:10px 14px;border-radius:16px;line-height:1.6;font-size:.95rem}
+.msg.me{align-self:flex-end;background:var(--green);color:#fff;border-bottom-right-radius:4px}
+.msg.ai{align-self:flex-start;background:#fff;border:2px solid var(--line);border-bottom-left-radius:4px}
+.selfie{display:flex;align-items:center;gap:12px}
+.selfie .ph{width:72px;height:72px;border-radius:50%;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:1.8rem;overflow:hidden;flex:none;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.selfie .ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(.45) sepia(.3) contrast(1.05)}
+/* shop */
+.item{display:flex;gap:12px;align-items:center;padding:14px;margin-bottom:10px}
+.item .ic{width:58px;height:58px;border-radius:18px;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:1.9rem;flex:none}
+.item .tx{flex:1;min-width:0}
+.item .tx b{display:block}
+.item .tx span{font-size:.75rem;color:var(--body)}
+.item .price{font-weight:900;color:var(--amberDk);font-size:.95rem}
+.item button{border-radius:14px;padding:10px 12px;font-weight:900;background:var(--green);color:#fff;white-space:nowrap}
+.item button.no{background:var(--sand);color:var(--body)}
+.ticket{border:2px dashed var(--amber);background:#FFF8EA;border-radius:18px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.ticket b{display:block}
+.ticket code{font-size:.85rem;font-weight:700;letter-spacing:1px}
+/* nav */
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;border-top:2px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 6px calc(8px + env(safe-area-inset-bottom));z-index:30}
+.nav button{background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.72rem;font-weight:700;color:var(--body);padding:6px 0;border-radius:14px;position:relative}
+.nav button .e{font-size:1.5rem;line-height:1}
+.nav button.on{background:#FFF1DC;color:var(--ink)}
+.nav .dotn{position:absolute;top:2px;right:18%;width:12px;height:12px;border-radius:50%;background:#E5484D;border:2px solid #fff;display:none}
+.nav .dotn.show{display:block}
+/* overlays */
+.ov{position:fixed;inset:0;background:rgba(20,35,46,.6);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.ov.on{display:flex}
+.sheet{background:var(--cream);width:100%;max-width:480px;border-radius:28px 28px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom));max-height:88vh;overflow:auto;animation:up .3s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.sheet h3{margin:0 0 6px;font-size:1.3rem;font-weight:900}
+.center{text-align:center}
+.hatch{width:150px;height:170px;margin:6px auto}
+.egg{animation:shake .5s ease-in-out 3;transform-origin:50% 90%;transform-box:fill-box}
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+.jump{animation:jump .6s ease}
+@keyframes jump{0%,100%{transform:translateY(0)}40%{transform:translateY(-22px)}}
+.toast{position:fixed;left:50%;top:84px;transform:translate(-50%,-20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:16px;font-weight:700;z-index:60;opacity:0;transition:all .3s;pointer-events:none;width:max-content;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.pop{position:fixed;z-index:70;font-weight:900;color:var(--amberDk);font-size:1.2rem;pointer-events:none;animation:popup 1s ease-out forwards;text-shadow:0 2px 0 #fff}
+@keyframes popup{from{opacity:1;transform:translate(-50%,0)}to{opacity:0;transform:translate(-50%,-60px)}}
+.conf{position:fixed;top:-12px;width:10px;height:14px;z-index:80;pointer-events:none;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+input[type=text]{width:100%;font-size:1.1rem;padding:14px;border-radius:16px;border:2px solid var(--line);background:#fff;font-family:inherit}
+.looks{display:flex;gap:10px;justify-content:center;margin:12px 0}
+.look{width:64px;height:64px;border-radius:50%;border:4px solid transparent;cursor:pointer}
+.look.sel{border-color:var(--ink)}
+.row{display:flex;gap:10px}
+.row>*{flex:1}
+.note{font-size:.72rem;color:var(--body);text-align:center;margin-top:12px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <div class="who"><b id="hdrName">我的樂活花園</b><span id="hdrSub">今天走多少都算 🌱</span></div>
+    <div class="chip coin" title="樂活幣">🪙 <span id="coins">0</span></div>
+    <div class="chip" title="累積活躍天數">🔥 <span id="days">0</span></div>
+    <button class="iconbtn" onclick="openSettings()" aria-label="設定">⚙️</button>
+  </header>
+
+  <!-- 散步 -->
+  <section class="screen on" id="s-walk">
+    <div class="mapwrap">
+      <svg id="map" viewBox="0 0 360 300" aria-label="今日散步地圖"></svg>
+      <div class="maptag" id="mapTag">今日散步路線｜第 1 圈</div>
+    </div>
+    <div class="stepbar">
+      <div class="ring">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="#ECE4D4" stroke-width="12"/><circle id="ringArc" cx="50" cy="50" r="42" fill="none" stroke="#3E9E6A" stroke-width="12" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264" style="transition:stroke-dashoffset .5s"/></svg>
+        <div class="num"><span id="steps">0</span><small>/ 3,000 步</small></div>
+      </div>
+      <div class="walkbtns">
+        <button class="big b-green" onclick="walk(300,event)">👟 走一走 +300 步</button>
+        <button class="big b-soft" id="autoBtn" onclick="toggleAuto()">▶️ 自動散步</button>
+      </div>
+    </div>
+    <p class="muted" style="margin:10px 2px 0">每走 500 步種下一朵花；路上冒出的 <b>🌰 種子</b> 點一下就能孵出芽芽夥伴！</p>
+
+    <h2 class="sec">⏱️ 今天的 3 分鐘小任務 <small>做一件就很棒</small></h2>
+    <div id="tasks"></div>
+
+    <h2 class="sec">👨‍👩‍👧 三代家族圈</h2>
+    <div class="card">
+      <div id="family"></div>
+      <div style="margin-top:12px">
+        <div style="display:flex;justify-content:space-between;font-weight:700;font-size:.85rem;margin-bottom:6px"><span>全家今日一起走 20,000 步</span><span id="famNum">0</span></div>
+        <div class="bar"><i id="famBar" style="width:0%"></i></div>
+        <button class="big b-amber" id="famClaim" style="width:100%;margin-top:12px;display:none" onclick="claimFamily(event)">🎉 全家達標！領取 50 樂活幣</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 夥伴 -->
+  <section class="screen" id="s-buddy">
+    <div class="card center" style="background:linear-gradient(#E3F3DD,#FFFCF6)">
+      <b style="font-size:1.1rem">正在跟著你散步的芽芽</b>
+      <div class="party" id="party"></div>
+      <div class="muted" id="partyTxt"></div>
+    </div>
+    <h2 class="sec">📖 芽芽圖鑑 <small id="dexCount"></small></h2>
+    <div class="grid" id="dex"></div>
+    <p class="note">每種芽芽代表一種好習慣：走路、存錢、睡眠、家人、保障、健檢。點一下可以摸摸頭！</p>
+  </section>
+
+  <!-- 徽章 -->
+  <section class="screen" id="s-badge">
+    <div class="card" style="display:flex;align-items:center;gap:14px">
+      <div class="medal" style="margin:0;flex:none">🏅</div>
+      <div><b style="font-size:1.1rem">徽章收藏冊</b><div class="muted" id="badgeSum"></div></div>
+    </div>
+    <h2 class="sec">✨ 所有徽章 <small>沒有失敗，只有還沒解鎖</small></h2>
+    <div class="grid" id="badges"></div>
+  </section>
+
+  <!-- 未來 -->
+  <section class="screen" id="s-future">
+    <h2 class="sec" style="margin-top:4px">🗺️ 長壽人生地圖 <small>點每一站聽他說話</small></h2>
+    <div class="stations" id="stations"></div>
+    <div class="scene" id="scene"></div>
+    <div class="speech" id="speech"></div>
+    <div class="row" style="margin-top:10px">
+      <button class="big b-amber" onclick="speak()">🔊 聽他說</button>
+      <button class="big b-soft" onclick="pickSelfie()">📸 放上我的照片</button>
+    </div>
+    <input type="file" id="selfieIn" accept="image/*" style="display:none" onchange="loadSelfie(event)">
+    <div class="meters">
+      <div class="meter"><b>💪 健康活力</b><span class="lv" id="hLv">Lv1</span><div class="bar" style="margin-top:8px"><i id="hBar"></i></div></div>
+      <div class="meter"><b>🪙 生活安心</b><span class="lv" id="wLv">Lv1</span><div class="bar gold" style="margin-top:8px"><i id="wBar"></i></div></div>
+    </div>
+    <div class="card" style="margin-top:12px" id="hint"></div>
+    <div class="selfie card" style="margin-top:12px" id="selfieBox" hidden>
+      <div class="ph" id="selfiePh">🙂</div>
+      <div class="muted">這是「示意」老化濾鏡。正式版會由 AI 依你的雙帳戶，生成 65、75、85 歲的你。</div>
+    </div>
+    <h2 class="sec">💬 跟未來的自己聊聊</h2>
+    <div class="chat" id="chat"></div>
+    <button class="qbtn" onclick="ask(0)">🌱 我今天只做一件事，該做什麼？</button>
+    <button class="qbtn" onclick="ask(1)">😟 我是不是準備得不夠？</button>
+    <button class="qbtn" onclick="ask(2)">👵 爸媽也能一起玩嗎？</button>
+    <button class="qbtn" onclick="ask(3)">🛡️ 長照保障，我需要現在決定嗎？</button>
+  </section>
+
+  <!-- 兌換 -->
+  <section class="screen" id="s-shop">
+    <div class="card" style="display:flex;align-items:center;gap:14px;background:#FFF6DD;border-color:#F2C14E">
+      <div style="font-size:2.4rem">🪙</div>
+      <div style="flex:1"><b style="font-size:1.1rem">我的樂活幣：<span id="coins2">0</span></b><div class="muted">走路、完成小任務、拿徽章都能賺樂活幣</div></div>
+    </div>
+    <h2 class="sec">🎁 好康兌換</h2>
+    <div id="shop"></div>
+    <h2 class="sec">🎟️ 我的票券 <small id="tixCount"></small></h2>
+    <div id="tickets"></div>
+    <p class="note">原型示意：合作商家、折扣內容與兌換條件以實際活動辦法為準。</p>
+  </section>
+
+  <nav class="nav">
+    <button class="on" data-s="walk" onclick="go('walk')"><span class="e">🌿</span>散步</button>
+    <button data-s="buddy" onclick="go('buddy')"><span class="e">🌱</span>夥伴<i class="dotn" id="dot-buddy"></i></button>
+    <button data-s="badge" onclick="go('badge')"><span class="e">🏅</span>徽章<i class="dotn" id="dot-badge"></i></button>
+    <button data-s="future" onclick="go('future')"><span class="e">🧓</span>未來的我</button>
+    <button data-s="shop" onclick="go('shop')"><span class="e">🎁</span>兌換</button>
+  </nav>
+</div>
+
+<div class="ov" id="ov" onclick="if(event.target===this)closeSheet()"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- 資料 ---------- */
+const SPECIES = {
+  walk:  {name:'走走芽', color:'#7BC67E', dark:'#3E8E52', habit:'走路', line:'一起去公園吧！今天的風好舒服～', desc:'每走 500 步、完成散步任務就會出現。最喜歡陪你飯後散步。'},
+  coin:  {name:'存存芽', color:'#F2C14E', dark:'#B8860B', habit:'存錢', line:'叮！少一杯手搖，多一趟旅行！', desc:'少喝一杯手搖、自動存一點錢時出現。頭上的金幣會越長越亮。'},
+  moon:  {name:'眠眠芽', color:'#8E9BE8', dark:'#5562B8', habit:'睡眠', line:'呼～早點睡，明天氣色更好喔。', desc:'11:30 前放下手機就會出現。睡飽的人，未來看起來年輕五歲。'},
+  heart: {name:'暖暖芽', color:'#F29CB6', dark:'#C25A7C', habit:'家人', line:'打通電話給爸媽，他們會很開心！', desc:'陪爸媽散步、跟家人互相打氣時出現。三代一起，照顧不再一個人扛。'},
+  shield:{name:'護護芽', color:'#6CCFC2', dark:'#1F8A7E', habit:'保障', line:'我會守護你，慢慢來，不急。', desc:'花 1 分鐘看看保障清單時出現。只陪你了解，不催你做決定。'},
+  star:  {name:'檢檢芽', color:'#F7A35C', dark:'#C76A1E', habit:'健檢', line:'今年的健檢預約了嗎？我陪你去！', desc:'預約健檢時出現。早點知道，就能早點安心。'},
+  legend:{name:'長壽芽', color:'#C9A2F0', dark:'#7E52B8', habit:'傳說', line:'我是傳說中的長壽芽，活得久也活得好！', desc:'稀有夥伴！孵化種子時有機會遇見，或在兌換區取得。', rare:true}
+};
+const BASIC = ['walk','coin','moon','heart','shield','star'];
+
+const TASKS = [
+  {id:'t_walk',  sp:'walk',  t:'飯後散步 20 分鐘', s:'順便陪爸媽走一圈也算', coin:20, h:20, w:0, f:0, steps:1500},
+  {id:'t_save',  sp:'coin',  t:'少喝一杯手搖，存 $100', s:'自動轉入退休小金庫', coin:20, h:0, w:25, f:0},
+  {id:'t_sleep', sp:'moon',  t:'11:30 前放下手機', s:'睡飽是最便宜的保養品', coin:15, h:15, w:0, f:0},
+  {id:'t_family',sp:'heart', t:'打通電話給爸媽或孩子', s:'聊 3 分鐘就好', coin:25, h:5, w:0, f:25},
+  {id:'t_protect',sp:'shield',t:'花 1 分鐘看看保障清單', s:'只看看，不用現在決定', coin:20, h:0, w:15, f:0, sheet:true},
+  {id:'t_check', sp:'star',  t:'預約今年的健康檢查', s:'選一個方便的日子就好', coin:30, h:20, w:0, f:0}
+];
+
+const BADGES = [
+  {id:'hello',   e:'👋', n:'初次相遇',     d:'開始你的樂活花園', p:s=>[s.started?1:0,1]},
+  {id:'first',   e:'👣', n:'第一步',       d:'今天踏出任何一步', p:s=>[Math.min(s.totalSteps,1),1]},
+  {id:'goal',    e:'🎯', n:'今日小目標',   d:'一天走到 3,000 步', p:s=>[Math.min(s.bestDay,3000),3000]},
+  {id:'tenk',    e:'⛰️', n:'萬步達人',     d:'一天走到 10,000 步', p:s=>[Math.min(s.bestDay,10000),10000]},
+  {id:'d3',      e:'🔥', n:'累積 3 天',    d:'有活動的日子累積 3 天（休息日不扣分）', p:s=>[Math.min(s.activeDays,3),3]},
+  {id:'d7',      e:'🌈', n:'一週好習慣',   d:'有活動的日子累積 7 天', p:s=>[Math.min(s.activeDays,7),7]},
+  {id:'saver',   e:'🐷', n:'存錢小豬',     d:'完成 3 次存錢任務', p:s=>[Math.min(s.cnt.t_save||0,3),3]},
+  {id:'owl',     e:'🦉', n:'早睡貓頭鷹',   d:'完成 3 次早睡任務', p:s=>[Math.min(s.cnt.t_sleep||0,3),3]},
+  {id:'filial',  e:'💞', n:'孝親好幫手',   d:'完成 3 次家人任務', p:s=>[Math.min(s.cnt.t_family||0,3),3]},
+  {id:'hearts',  e:'👨‍👩‍👧', n:'三代同心',  d:'送出 3 次愛心給家人', p:s=>[Math.min(s.hearts,3),3]},
+  {id:'checkup', e:'🩺', n:'健檢勇者',     d:'預約一次健康檢查', p:s=>[Math.min(s.cnt.t_check||0,1),1]},
+  {id:'guard',   e:'🛡️', n:'安心守護者',   d:'看過一次保障清單', p:s=>[Math.min(s.cnt.t_protect||0,1),1]},
+  {id:'collect', e:'📖', n:'芽芽收藏家',   d:'集滿 6 種基本芽芽', p:s=>[BASIC.filter(k=>s.buddies[k]>0).length,6]},
+  {id:'legend',  e:'🦄', n:'長壽芽現身',   d:'遇見稀有的長壽芽', p:s=>[Math.min(s.buddies.legend||0,1),1]},
+  {id:'st65',    e:'🌅', n:'解鎖 65 歲',   d:'人生地圖抵達 65 歲站', p:s=>[Math.min(level(s),1),1]},
+  {id:'shop',    e:'🛍️', n:'第一次兌換',   d:'用樂活幣兌換一次好康', p:s=>[Math.min(s.tickets.length,1),1]}
+];
+
+const SHOP = [
+  {id:'coffee', e:'☕', n:'超商美式咖啡 1 杯', p:'合作夥伴：便利商店', c:150},
+  {id:'veg',    e:'🥬', n:'有機超市 100 元折價券', p:'合作夥伴：有機超市', c:400},
+  {id:'shoe',   e:'👟', n:'健走鞋 9 折優惠券', p:'合作夥伴：運動用品店', c:600},
+  {id:'legend', e:'🦄', n:'稀有夥伴「長壽芽」', p:'限定夥伴，會跟著你散步', c:800},
+  {id:'check',  e:'🩺', n:'精緻健檢 85 折', p:'合作夥伴：健檢中心', c:1000},
+  {id:'prem',   e:'🛡️', n:'醫療／長照險保費折抵 $500', p:'外溢保單回饋', c:1500},
+  {id:'trip',   e:'🏨', n:'家庭旅遊住宿 9 折', p:'合作夥伴：旅宿業者', c:1800}
+];
+
+const STATIONS = [
+  {age:45, need:0, label:'今天'},
+  {age:65, need:1, label:'第二人生'},
+  {age:75, need:3, label:'自在旅行'},
+  {age:85, need:5, label:'安心被照顧'},
+  {age:95, need:7, label:'好好說再見'}
+];
+const LINES = {
+  45:'嗨，{n}！我是 45 歲的你。上有爸媽、下有孩子，辛苦了。從今天起，每天只要 3 分鐘，我們一起慢慢走。',
+  65:'嗨，{n}！我 65 歲了，剛報名社區大學的攝影課。謝謝你 45 歲那年開始每天散步，現在膝蓋很好用！',
+  75:'75 歲的我，上個月和老朋友環島一圈。你每個月自動存下的那一點點，變成了一趟一趟的旅行。',
+  85:'85 歲需要人幫忙的時候，我早就安排好照顧方式了。孩子不用辭職，週末來陪我喝茶就好。',
+  95:'95 歲，想說的話都跟家人說了。這一生很值得，謝謝你一路上每一個小小的決定。'
+};
+
+const FAMILY = [
+  {id:'mom', e:'👵', n:'媽媽（76 歲）', acts:['公園健走 4,200 步','跳了 20 分鐘土風舞','和鄰居散步 3,500 步']},
+  {id:'dad', e:'👴', n:'爸爸（79 歲）', acts:['早上打太極 2,800 步','陪孫子去市場 3,100 步','今天在家休息也很好']},
+  {id:'kid', e:'🧑‍🎓', n:'兒子（23 歲）', acts:['通勤走路 6,800 步','剛設定每月存 $3,000','下班去健身房 7,500 步']}
+];
+const FAM_STEPS = {mom:[4200,3000,3500], dad:[2800,3100,1200], kid:[6800,5200,7500]};
+
+/* ---------- 狀態 ---------- */
+const KEY='futureMeGarden.v1';
+function fresh(){return {started:false,name:'',look:0,coins:0,steps:0,totalSteps:0,bestDay:0,health:0,wealth:0,family:0,
+  activeDays:0,activeToday:false,day:1,done:{},cnt:{},buddies:{walk:0,coin:0,moon:0,heart:0,shield:0,star:0,legend:0},
+  party:[],flowers:[],totalFlowers:0,seeds:[],badges:{},hearts:0,heartTo:{},famClaimed:false,famIdx:0,tickets:[],
+  selStation:45,selfie:null,newBuddy:false,newBadge:false,chat:[]};}
+let S=fresh();
+try{const raw=localStorage.getItem(KEY); if(raw){S=Object.assign(fresh(),JSON.parse(raw));}}catch(e){}
+function save(){try{const c=Object.assign({},S,{selfie:null});localStorage.setItem(KEY,JSON.stringify(c));}catch(e){}}
+
+const LOOKS=['#E89B3C','#3E9E6A','#6C7BD9','#E57FA0'];
+function level(s){return Math.floor((s.health+s.wealth+s.family)/100);}
+function tier(x){return x>=200?2:x>=80?1:0;}
+function lv(x){return 1+Math.floor(x/40);}
+
+/* ---------- 芽芽 SVG ---------- */
+function ornament(k,c){
+  switch(k){
+    case 'walk': return `<path d="M0 -44 C-12 -52,-16 -40,-4 -40Z" fill="${c.dark}"/><path d="M0 -44 C12 -54,18 -42,4 -40Z" fill="${c.color}" stroke="${c.dark}" stroke-width="1.5"/>`;
+    case 'coin': return `<circle cx="0" cy="-48" r="9" fill="#FFD866" stroke="#B8860B" stroke-width="2"/><path d="M0 -54 V-42 M3 -51 Q-4 -53 -3 -49 Q3 -47 3 -45 Q2 -42 -3 -44" stroke="#8A5A00" stroke-width="1.8" fill="none" stroke-linecap="round"/>`;
+    case 'moon': return `<path d="M4 -57 A10 10 0 1 0 4 -39 A8 8 0 1 1 4 -57Z" fill="#FFE08A" stroke="#C9A43A" stroke-width="1.2"/>`;
+    case 'heart': return `<path d="M0 -40 C-12 -48,-8 -58,0 -52 C8 -58,12 -48,0 -40Z" fill="#FF6F91" stroke="#C2405F" stroke-width="1.2"/>`;
+    case 'shield': return `<path d="M0 -58 L9 -55 L8 -46 Q5 -40 0 -38 Q-5 -40 -8 -46 L-9 -55Z" fill="#BFF1EA" stroke="#1F6E64" stroke-width="2"/><path d="M-3 -48 L-1 -45 L4 -51" stroke="#1F6E64" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+    case 'star': return `<polygon points="0,-59 3,-51 11,-51 5,-46 7,-38 0,-43 -7,-38 -5,-46 -11,-51 -3,-51" fill="#FFD25E" stroke="#C78A1E" stroke-width="1.2"/>`;
+    case 'legend': return `<polygon points="-11,-42 -11,-54 -5,-48 0,-57 5,-48 11,-54 11,-42" fill="#FFD25E" stroke="#B8860B" stroke-width="1.5"/><circle cx="0" cy="-50" r="2" fill="#E5484D"/>`;
+  }
+}
+function buddyG(k){
+  const c=SPECIES[k];
+  const body = k==='legend' ? 'url(#rainbow)' : c.color;
+  return `<g>
+    <path d="M0 -24 Q-1 -32 0 -40" stroke="${c.dark}" stroke-width="3" fill="none" stroke-linecap="round"/>
+    ${ornament(k,c)}
+    <ellipse cx="-8" cy="24" rx="7" ry="3.5" fill="${c.dark}"/><ellipse cx="8" cy="24" rx="7" ry="3.5" fill="${c.dark}"/>
+    <ellipse cx="0" cy="2" rx="20" ry="23" fill="${body}" stroke="${c.dark}" stroke-width="2"/>
+    <ellipse cx="-7" cy="-8" rx="5" ry="7" fill="#fff" opacity=".3"/>
+    <circle cx="-7" cy="-1" r="3.4" fill="#14232E"/><circle cx="7" cy="-1" r="3.4" fill="#14232E"/>
+    <circle cx="-6" cy="-2.3" r="1.1" fill="#fff"/><circle cx="8" cy="-2.3" r="1.1" fill="#fff"/>
+    <ellipse cx="-13" cy="6" rx="3.5" ry="2" fill="#FF8FA3" opacity=".7"/><ellipse cx="13" cy="6" rx="3.5" ry="2" fill="#FF8FA3" opacity=".7"/>
+    <path d="M-4 7 Q0 11 4 7" stroke="#14232E" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>`;
+}
+const DEFS=`<defs><linearGradient id="rainbow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB3C7"/><stop offset=".5" stop-color="#C9A2F0"/><stop offset="1" stop-color="#9FD8F5"/></linearGradient></defs>`;
+function buddySVG(k,cls=''){return `<svg viewBox="-26 -62 52 92" class="${cls}" aria-label="${SPECIES[k].name}">${DEFS}${buddyG(k)}</svg>`;}
+function eggSVG(){return `<svg viewBox="-40 -50 80 100" class="hatch"><g class="egg"><ellipse cx="0" cy="8" rx="30" ry="38" fill="#FFF3D6" stroke="#C9A43A" stroke-width="3"/><circle cx="-10" cy="-6" r="5" fill="#F2C14E"/><circle cx="12" cy="10" r="6" fill="#7BC67E"/><circle cx="-4" cy="26" r="4" fill="#F29CB6"/></g></svg>`;}
+
+/* ---------- 地圖 ---------- */
+const PATH='M30 272 C110 268 60 200 150 190 S310 170 270 110 S110 70 190 32';
+const GOAL=3000;
+let pathEl=null, pathLen=0, PTS=[];
+function pt(f){f=Math.max(0,Math.min(1,f));return PTS[Math.round(f*300)]||{x:30,y:272};}
+function flowerSVG(x,y,col,anim){return `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})"><g class="${anim?'bloom':''}"><path d="M0 0 V-8" stroke="#3E8E52" stroke-width="2"/><circle cx="-4" cy="-11" r="3.6" fill="${col}"/><circle cx="4" cy="-11" r="3.6" fill="${col}"/><circle cx="0" cy="-15" r="3.6" fill="${col}"/><circle cx="0" cy="-7.5" r="3.6" fill="${col}"/><circle cx="0" cy="-11" r="2.6" fill="#FFE08A"/></g></g>`;}
+function drawMap(newFlower){
+  const svg=document.getElementById('map');
+  if(!pathEl){
+    svg.innerHTML=DEFS+`
+      <rect width="360" height="300" fill="#CDEBC4"/>
+      <ellipse cx="300" cy="260" rx="90" ry="40" fill="#BDE3B2"/><ellipse cx="60" cy="60" rx="80" ry="40" fill="#BDE3B2"/>
+      <path d="M0 140 Q80 120 120 150 T240 140" stroke="#A9D9F2" stroke-width="14" fill="none" opacity=".7" stroke-linecap="round"/>
+      <g font-size="22"><text x="20" y="120">🌳</text><text x="310" y="200">🌳</text><text x="70" y="240">🌲</text><text x="290" y="60">🌲</text><text x="210" y="260">🌷</text></g>
+      <path id="walkPath" d="${PATH}" stroke="#F6E6C4" stroke-width="16" fill="none" stroke-linecap="round"/>
+      <path d="${PATH}" stroke="#E2C994" stroke-width="2" stroke-dasharray="4 8" fill="none"/>
+      <g id="stationsG"></g><g id="flowersG"></g><g id="seedsG"></g><g id="partyG"></g><g id="meG"></g>`;
+    pathEl=document.getElementById('walkPath');
+    try{pathLen=pathEl.getTotalLength();for(let i=0;i<=300;i++){const p=pathEl.getPointAtLength(i/300*pathLen);PTS.push({x:p.x,y:p.y});}}
+    catch(e){for(let i=0;i<=300;i++){const t=i/300;PTS.push({x:30+t*160+Math.sin(t*9)*80,y:272-t*240});}}
+    const st=[[.33,'🌳','公園'],[.66,'🛒','市場'],[1,'🏠','爸媽家']];
+    document.getElementById('stationsG').innerHTML=st.map(([f,e,l])=>{const p=pt(f);return `<g transform="translate(${p.x},${p.y})"><circle r="15" fill="#fff" stroke="#E89B3C" stroke-width="3"/><text y="6" text-anchor="middle" font-size="16">${e}</text><text y="30" text-anchor="middle" font-size="11" font-weight="700" fill="#14232E">${l}</text></g>`;}).join('');
+  }
+  const lap=Math.floor(S.steps/GOAL), f=S.steps===0?0:((S.steps%GOAL)||GOAL)/GOAL;
+  document.getElementById('mapTag').textContent=`今日散步路線｜第 ${Math.min(lap+1,99)} 圈`;
+  document.getElementById('flowersG').innerHTML=S.flowers.map((fl,i)=>{const p=pt(fl.f);return flowerSVG(p.x+fl.dx,p.y+fl.dy,fl.c,newFlower&&i===S.flowers.length-1);}).join('');
+  document.getElementById('seedsG').innerHTML=S.seeds.map((sd,i)=>`<g transform="translate(${sd.x},${sd.y})" class="seed" onclick="collectSeed(${i},event)" role="button" aria-label="種子"><g class="pulse"><circle r="16" fill="#fff" opacity=".85"/><text y="7" text-anchor="middle" font-size="20">🌰</text></g></g>`).join('');
+  const me=pt(f);
+  const party=S.party.slice(-5).reverse();
+  document.getElementById('partyG').innerHTML=party.map((k,i)=>{const p=pt(f-0.035*(i+1));return `<g transform="translate(${p.x.toFixed(1)},${(p.y-4).toFixed(1)}) scale(.42)"><g class="bob" style="animation-delay:${i*.15}s">${buddyG(k)}</g></g>`;}).join('');
+  const col=LOOKS[S.look]||LOOKS[0];
+  document.getElementById('meG').innerHTML=`<g transform="translate(${me.x.toFixed(1)},${(me.y-6).toFixed(1)})"><g class="bob"><ellipse cx="0" cy="12" rx="10" ry="3" fill="#000" opacity=".15"/><rect x="-8" y="-6" width="16" height="18" rx="7" fill="${col}"/><circle cx="0" cy="-13" r="9" fill="#FAD7B5"/><path d="M-9 -15 Q0 -26 9 -15" fill="#4B3B33"/><circle cx="-3" cy="-13" r="1.4" fill="#14232E"/><circle cx="3" cy="-13" r="1.4" fill="#14232E"/><path d="M-3 -9 Q0 -7 3 -9" stroke="#C2405F" stroke-width="1.4" fill="none"/></g></g>`;
+}
+
+/* ---------- 走路 ---------- */
+let autoTimer=null, seedTick=0;
+function markActive(){if(!S.activeToday){S.activeToday=true;S.activeDays++;}}
+function walk(n,ev){
+  const before=S.steps;
+  S.steps+=n; S.totalSteps+=n; S.bestDay=Math.max(S.bestDay,S.steps); markActive();
+  S.health+=Math.round(n/100);
+  let planted=false;
+  const b500=Math.floor(before/500), a500=Math.floor(S.steps/500);
+  for(let i=b500;i<a500;i++){
+    const fpos=(((i+1)*500)%GOAL||GOAL)/GOAL;
+    S.flowers.push({f:fpos,dx:(Math.random()*24-12),dy:(Math.random()*14+6)*(Math.random()<.5?-1:1),c:['#FF8FA3','#FFD25E','#B9A6F5','#FF9F68','#8FD3FF'][i%5]});
+    if(S.flowers.length>40)S.flowers.shift();
+    S.totalFlowers++; addCoins(5); planted=true;
+  }
+  seedTick+=n;
+  if(seedTick>=600 && S.seeds.length<3){seedTick=0;spawnSeed();}
+  if(before<GOAL && S.steps>=GOAL){addCoins(30);toast('🎯 今日小目標達成！+30 樂活幣');gainBuddy('walk',true);}
+  else if(planted && !autoTimer){toast('🌸 種下一朵花！+5 樂活幣');}
+  if(ev)popAt(ev,`+${n} 步`);
+  render(planted); checkBadges();
+}
+function spawnSeed(){
+  const f=Math.random(), p=pt(f);
+  S.seeds.push({x:Math.round(Math.max(24,Math.min(336,p.x+(Math.random()*70-35)))),y:Math.round(Math.max(24,Math.min(276,p.y+(Math.random()*50-25))))});
+}
+function toggleAuto(){
+  const b=document.getElementById('autoBtn');
+  if(autoTimer){clearInterval(autoTimer);autoTimer=null;b.textContent='▶️ 自動散步';b.classList.remove('b-green','on');b.classList.add('b-soft');save();}
+  else{autoTimer=setInterval(()=>walk(60),500);b.textContent='⏸️ 散步中…點我暫停';b.classList.remove('b-soft');b.classList.add('b-green','on');}
+}
+function collectSeed(i,ev){
+  ev.stopPropagation();
+  S.seeds.splice(i,1);
+  const k = Math.random()<0.07 ? 'legend' : BASIC[Math.floor(Math.random()*BASIC.length)];
+  addCoins(10); popAt(ev,'+10 🪙');
+  hatch(k);
+  drawMap();
+}
+
+/* ---------- 夥伴 ---------- */
+function gainBuddy(k,quiet){
+  S.buddies[k]=(S.buddies[k]||0)+1; S.party.push(k); if(S.party.length>12)S.party.shift();
+  S.newBuddy=true; markActive();
+  if(!quiet)hatch(k,true);
+  render(); checkBadges();
+}
+function hatch(k,already){
+  if(!already){S.buddies[k]=(S.buddies[k]||0)+1;S.party.push(k);if(S.party.length>12)S.party.shift();S.newBuddy=true;}
+  const c=SPECIES[k];
+  openSheet(`<div class="center"><h3>種子孵化中…</h3><div id="hatchBox">${eggSVG()}</div><p class="muted" id="hatchTxt">搖一搖、搖一搖…</p></div>`);
+  setTimeout(()=>{
+    const box=document.getElementById('hatchBox'); if(!box)return;
+    box.innerHTML=`<div class="jump" style="width:150px;height:170px;margin:6px auto">${buddySVG(k)}</div>`;
+    document.getElementById('hatchTxt').innerHTML=`<b style="font-size:1.2rem;color:var(--ink)">${c.rare?'🌟 稀有！':''}${c.name} 加入了！</b><br>「${c.line}」<br><span style="font-size:.8rem">代表習慣：${c.habit}｜目前擁有 ${S.buddies[k]} 隻</span><br><button class="big b-green" style="width:100%;margin-top:14px" onclick="closeSheet()">太可愛了！</button>`;
+    if(c.rare)confetti();
+    render(); checkBadges();
+  },1500);
+}
+function petBuddy(k){
+  const c=SPECIES[k], n=S.buddies[k]||0;
+  if(!n){openSheet(`<div class="center"><div style="width:120px;height:140px;margin:0 auto;filter:grayscale(1) brightness(.2);opacity:.35">${buddySVG(k)}</div><h3>？？？</h3><p class="muted">還沒遇見牠。提示：${c.desc}</p><button class="big b-soft" style="width:100%;margin-top:10px" onclick="closeSheet()">好，我去找找</button></div>`);return;}
+  openSheet(`<div class="center"><div id="petBox" style="width:140px;height:160px;margin:0 auto">${buddySVG(k)}</div><h3>${c.name}　Lv${1+Math.floor(n/3)}</h3><p class="muted">${c.desc}</p><div class="card" style="margin:10px 0" id="petLine">「${c.line}」</div><button class="big b-amber" style="width:100%" onclick="pet('${k}',event)">🤚 摸摸頭</button></div>`);
+}
+const PET=['嘿嘿，好癢！','再摸一下嘛～','今天也要慢慢來喔！','你是我最喜歡的人類！','一起去散步嗎？'];
+let petCount=0;
+function pet(k,ev){
+  const b=document.getElementById('petBox'); b.classList.remove('jump'); void b.offsetWidth; b.classList.add('jump');
+  document.getElementById('petLine').textContent=`「${PET[petCount++%PET.length]}」`;
+  if(petCount%5===0){addCoins(1);popAt(ev,'+1 🪙');}
+}
+
+/* ---------- 任務 ---------- */
+function doTask(id,ev){
+  const t=TASKS.find(x=>x.id===id); if(S.done[id])return;
+  if(t.sheet && !ev.fromSheet){protectSheet();return;}
+  S.done[id]=true; S.cnt[id]=(S.cnt[id]||0)+1;
+  S.health+=t.h; S.wealth+=t.w; S.family+=t.f; addCoins(t.coin); markActive();
+  popAt(ev,`+${t.coin} 🪙`);
+  if(t.steps){walk(t.steps);}
+  gainBuddy(t.sp,true);
+  toast(`✨ ${SPECIES[t.sp].name} 加入散步隊伍！`);
+  render(); checkBadges();
+}
+function protectSheet(){
+  openSheet(`<h3>🛡️ 1 分鐘保障清單</h3><p class="muted">只是看看，不打分數、不推銷。想深入了解時，再按「想了解」就好。</p>
+  <div class="card" style="margin:12px 0;line-height:2">
+   ✅ 全民健保<br>✅ 住院醫療（請確認保單是否還在）<br>🌱 失能／長照保障：<b>可以之後再了解</b><br>🌱 退休帳戶自動提撥：<b>每月多 1% 就很好</b>
+  </div>
+  <div class="row"><button class="big b-green" onclick="closeSheet();doTask('t_protect',{fromSheet:true,clientX:innerWidth/2,clientY:innerHeight/2})">我看完了 👍</button>
+  <button class="big b-soft" onclick="toast('📩 已記下，等你方便時，顧問才會聯絡你');">想了解</button></div>`);
+}
+
+/* ---------- 家族 ---------- */
+function famSteps(){return FAMILY.reduce((a,m)=>a+FAM_STEPS[m.id][S.famIdx%3],0)+S.steps;}
+function cheer(id,ev){
+  if(S.heartTo[id]){toast('今天已經送過囉，明天再來 ❤️');return;}
+  S.heartTo[id]=true; S.hearts++; S.family+=10; addCoins(3); markActive();
+  popAt(ev,'❤️ +3');
+  toast(`已送出愛心給${FAMILY.find(m=>m.id===id).n.split('（')[0]}！`);
+  render(); checkBadges();
+}
+function claimFamily(ev){S.famClaimed=true;addCoins(50);popAt(ev,'+50 🪙');confetti();toast('🎉 全家一起達標！');render();}
+
+/* ---------- 徽章 ---------- */
+let badgeQueue=[];
+function checkBadges(){
+  BADGES.forEach(b=>{if(!S.badges[b.id]){const [v,m]=b.p(S);if(v>=m){S.badges[b.id]=true;S.newBadge=true;addCoins(20);badgeQueue.push(b);}}});
+  if(badgeQueue.length && !document.getElementById('ov').classList.contains('on'))showBadge();
+  save();
+}
+function showBadge(){
+  const b=badgeQueue.shift(); if(!b)return;
+  confetti();
+  openSheet(`<div class="center"><div class="medal jump" style="width:110px;height:110px;font-size:3.2rem">${b.e}</div><h3>獲得徽章：${b.n}</h3><p class="muted">${b.d}</p><p style="font-weight:900;color:var(--amberDk)">+20 樂活幣</p><button class="big b-green" style="width:100%" onclick="closeSheet()">收下 🏅</button></div>`);
+  renderHeader();
+}
+function badgeInfo(id){
+  const b=BADGES.find(x=>x.id===id), [v,m]=b.p(S), got=S.badges[id];
+  openSheet(`<div class="center"><div class="medal" style="width:100px;height:100px;font-size:3rem;${got?'':'filter:grayscale(1);opacity:.5'}">${b.e}</div><h3>${b.n}</h3><p class="muted">${b.d}</p>${got?'<p style="font-weight:900;color:var(--green)">✅ 已解鎖</p>':`<div class="bar" style="margin:10px 0"><i style="width:${Math.round(v/m*100)}%"></i></div><p class="muted">${v.toLocaleString()} / ${m.toLocaleString()}　慢慢來，不急 🌱</p>`}<button class="big b-soft" style="width:100%;margin-top:8px" onclick="closeSheet()">好</button></div>`);
+}
+
+/* ---------- 兌換 ---------- */
+function redeem(id,ev){
+  const it=SHOP.find(x=>x.id===id); if(S.coins<it.c)return;
+  openSheet(`<div class="center"><div style="font-size:3rem">${it.e}</div><h3>兌換「${it.n}」？</h3><p class="muted">將使用 ${it.c} 樂活幣，剩下 ${S.coins-it.c} 幣</p><div class="row" style="margin-top:12px"><button class="big b-soft" onclick="closeSheet()">再想想</button><button class="big b-green" onclick="confirmRedeem('${id}')">確定兌換</button></div></div>`);
+}
+function confirmRedeem(id){
+  const it=SHOP.find(x=>x.id===id);
+  S.coins-=it.c;
+  const code='FM-'+Math.random().toString(36).slice(2,6).toUpperCase()+'-'+(1000+Math.floor(Math.random()*9000));
+  S.tickets.unshift({n:it.n,e:it.e,code,d:`第 ${S.day} 天`});
+  if(id==='legend'){S.buddies.legend++;S.party.push('legend');}
+  confetti();
+  const bars=Array.from({length:34},(_,i)=>`<rect x="${i*6}" y="0" width="${[2,3,1,4][(i*7+code.charCodeAt(i%code.length))%4]}" height="44" fill="#14232E"/>`).join('');
+  openSheet(`<div class="center"><h3>🎉 兌換成功！</h3><div class="ticket" style="flex-direction:column;margin-top:10px"><div style="font-size:2.4rem">${it.e}</div><b>${it.n}</b><svg viewBox="0 0 204 44" style="width:80%;height:44px;margin:8px 0">${bars}</svg><code>${code}</code></div><div class="row"><button class="big b-soft" onclick="copyCode('${code}')">📋 複製代碼</button><button class="big b-green" onclick="closeSheet()">好的</button></div></div>`);
+  render(); checkBadges();
+}
+function copyCode(c){try{navigator.clipboard.writeText(c).then(()=>toast('已複製：'+c),()=>toast('代碼：'+c));}catch(e){toast('代碼：'+c);}}
+
+/* ---------- 未來的我 ---------- */
+function futureSVG(age){
+  const ht=tier(S.health), wt=tier(S.wealth), col=LOOKS[S.look]||LOOKS[0];
+  const young = age===45;
+  const scenes=[
+    `<rect width="360" height="220" fill="#CFEAF7"/><circle cx="300" cy="50" r="26" fill="#FFD866"/><ellipse cx="90" cy="230" rx="160" ry="70" fill="#9ED39B"/><ellipse cx="300" cy="235" rx="150" ry="60" fill="#B6E0A8"/><text x="30" y="170" font-size="34">🌳</text><text x="290" y="180" font-size="30">🌷</text><rect x="210" y="160" width="70" height="8" rx="3" fill="#A0703F"/><text x="20" y="30" font-size="13" font-weight="700" fill="#14232E">📍 社區公園的午後</text>`,
+    `<rect width="360" height="220" fill="#BFE6F5"/><circle cx="290" cy="46" r="24" fill="#FFD866"/><rect y="130" width="360" height="40" fill="#5DB7E0"/><path d="M0 150 Q30 142 60 150 T120 150 T180 150 T240 150 T300 150 T360 150" stroke="#fff" stroke-width="3" fill="none" opacity=".7"/><rect y="168" width="360" height="52" fill="#F3DFB3"/><text x="290" y="125" font-size="26">⛵</text><text x="20" y="30" font-size="13" font-weight="700" fill="#14232E">📍 環島小旅行・東海岸</text>`,
+    `<rect width="360" height="220" fill="#C9E4FF"/><path d="M0 170 L80 70 L140 150 L210 50 L300 160 L360 110 L360 220 L0 220Z" fill="#8FB3D9"/><path d="M80 70 L95 90 L65 90Z M210 50 L228 75 L193 75Z" fill="#fff"/><rect y="170" width="360" height="50" fill="#8CCB82"/><text x="250" y="45" font-size="24">✈️</text><text x="20" y="30" font-size="13" font-weight="700" fill="#14232E">📍 和老伴的國外健行</text>`
+  ];
+  const props=[
+    `<rect x="190" y="118" width="14" height="12" rx="3" fill="#fff" stroke="#A0703F" stroke-width="2"/><path d="M204 121 q6 3 0 7" stroke="#A0703F" stroke-width="2" fill="none"/>`,
+    `<rect x="148" y="104" width="22" height="34" rx="8" fill="#3E9E6A"/>`,
+    `<path d="M200 98 L214 196" stroke="#5B4636" stroke-width="4" stroke-linecap="round"/><path d="M150 74 Q180 58 210 74 Z" fill="#E89B3C"/>`
+  ];
+  const hair = young ? '#4B3B33' : (age>=85?'#F1F1F1':'#D9D9D9');
+  const cheek = ['#F7B4A7','#FF9C8C','#FF8476'][ht];
+  const smile = ['M172 96 Q180 101 188 96','M171 95 Q180 104 189 95','M170 94 Q180 107 190 94'][ht];
+  const sparkle = ht===2?`<text x="222" y="80" font-size="18">✨</text><text x="128" y="96" font-size="14">✨</text>`:'';
+  const wrinkles = young?'':`<path d="M166 84 q4 -2 8 0 M186 84 q4 -2 8 0" stroke="#C99A86" stroke-width="1.2" fill="none"/>`;
+  return `<svg viewBox="0 0 360 220" aria-label="${age} 歲的你">${scenes[young?0:wt]}
+   <ellipse cx="180" cy="200" rx="40" ry="7" fill="#000" opacity=".12"/>
+   ${young?'':props[ht]}
+   <rect x="164" y="160" width="10" height="38" rx="5" fill="#3A4A5A"/><rect x="186" y="160" width="10" height="38" rx="5" fill="#3A4A5A"/>
+   <rect x="154" y="104" width="52" height="64" rx="22" fill="${col}"/>
+   <path d="M156 116 L136 ${ht===2?96:136}" stroke="#FAD7B5" stroke-width="9" stroke-linecap="round"/><path d="M204 116 L222 ${ht>=1?92:136}" stroke="#FAD7B5" stroke-width="9" stroke-linecap="round"/>
+   <circle cx="180" cy="84" r="24" fill="#FAD7B5"/>
+   <path d="M156 82 Q160 54 180 56 Q202 54 204 82 Q198 66 180 66 Q164 66 156 82Z" fill="${hair}"/>
+   ${age>=75?'<rect x="166" y="80" width="12" height="8" rx="3" fill="none" stroke="#5B4636" stroke-width="1.6"/><rect x="183" y="80" width="12" height="8" rx="3" fill="none" stroke="#5B4636" stroke-width="1.6"/><path d="M178 84 h5" stroke="#5B4636" stroke-width="1.6"/>':''}
+   <circle cx="172" cy="84" r="2.4" fill="#14232E"/><circle cx="188" cy="84" r="2.4" fill="#14232E"/>
+   ${wrinkles}
+   <ellipse cx="166" cy="93" rx="4" ry="2.4" fill="${cheek}" opacity=".7"/><ellipse cx="194" cy="93" rx="4" ry="2.4" fill="${cheek}" opacity=".7"/>
+   <path d="${smile}" stroke="#B4325E" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+   ${sparkle}
+   <g transform="translate(250,188) scale(.5)">${S.party.length?buddyG(S.party[S.party.length-1]):''}</g>
+   <rect x="268" y="196" width="84" height="20" rx="10" fill="#14232E" opacity=".75"/><text x="310" y="210" font-size="11" fill="#fff" text-anchor="middle" font-weight="700">${young?'今天的你':age+' 歲的你'}</text>
+  </svg>`;
+}
+function selStation(age){
+  const st=STATIONS.find(s=>s.age===age);
+  if(level(S)<st.need){const need=st.need*100-(S.health+S.wealth+S.family);toast(`🌱 再累積約 ${need} 點活力，就能解鎖 ${age} 歲站`);return;}
+  S.selStation=age; renderFuture(); save();
+}
+function speak(){
+  const t=document.getElementById('speech').textContent;
+  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='zh-TW';u.rate=.9;speechSynthesis.speak(u);toast('🔊 播放中…');}catch(e){toast('這個瀏覽器不支援朗讀，請直接閱讀文字 🙂');}
+}
+function pickSelfie(){document.getElementById('selfieIn').click();}
+function loadSelfie(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=x=>{S.selfie=x.target.result;renderFuture();toast('📸 已放上照片（只存在你的裝置）');};r.readAsDataURL(f);}
+const ANSWERS=[
+  ()=>{const t=TASKS.find(x=>!S.done[x.id]);return t?`今天只要做一件就好：「${t.t}」。做不到也沒關係，明天再來，我一直都在。`:'今天的小任務都完成了！現在最重要的事，是好好休息 😊';},
+  ()=>'不用跟別人比，也不用一次到位。你每多走一點、多存一點，我這邊就多一份從容。這裡沒有分數，只有下一章。',
+  ()=>'當然可以！到「三代家族圈」送愛心給爸媽和孩子，全家一起走到 20,000 步還有獎勵。照顧不用一個人扛。',
+  ()=>'不用現在決定。先花 1 分鐘看看保障清單就好，等你準備好，再按「想了解」，顧問才會聯絡你。'
+];
+const QS=['我今天只做一件事，該做什麼？','我是不是準備得不夠？','爸媽也能一起玩嗎？','長照保障，我需要現在決定嗎？'];
+function ask(i){
+  const box=document.getElementById('chat');
+  box.insertAdjacentHTML('beforeend',`<div class="msg me">${QS[i]}</div>`);
+  setTimeout(()=>{box.insertAdjacentHTML('beforeend',`<div class="msg ai">🧓 ${ANSWERS[i]()}</div>`);box.lastElementChild.scrollIntoView({behavior:'smooth',block:'center'});},450);
+}
+
+/* ---------- 共用 ---------- */
+function addCoins(n){S.coins+=n;}
+function popAt(ev,txt){
+  const x=ev&&ev.clientX!==undefined?ev.clientX:innerWidth/2, y=ev&&ev.clientY!==undefined?ev.clientY:innerHeight/2;
+  const d=document.createElement('div');d.className='pop';d.textContent=txt;d.style.left=x+'px';d.style.top=(y-20)+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),1000);
+}
+let toastT;
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2400);}
+function confetti(){
+  const cols=['#E89B3C','#3E9E6A','#F29CB6','#8E9BE8','#FFD25E','#6CCFC2'];
+  for(let i=0;i<42;i++){const c=document.createElement('div');c.className='conf';c.style.left=Math.random()*100+'vw';c.style.background=cols[i%cols.length];c.style.animationDuration=(1.2+Math.random()*1.2)+'s';c.style.animationDelay=(Math.random()*.3)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),2800);}
+}
+function openSheet(html){document.getElementById('sheet').innerHTML=html;document.getElementById('ov').classList.add('on');}
+function closeSheet(){document.getElementById('ov').classList.remove('on');setTimeout(()=>{if(badgeQueue.length)showBadge();},250);}
+function go(s){
+  document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('on',x.id==='s-'+s));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
+  if(s==='buddy')S.newBuddy=false; if(s==='badge')S.newBadge=false;
+  render(); scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- 設定 / 示範 ---------- */
+function openSettings(){
+  openSheet(`<h3>⚙️ 設定與簡報示範</h3><p class="muted">現場展示時，可以用下面的按鈕快速體驗不同天的狀態。</p>
+  <button class="qbtn" onclick="document.documentElement.classList.toggle('xl');toast('已切換字體大小')">🔍 切換特大字</button>
+  <button class="qbtn" onclick="nextDay()">⏩ 快轉到明天（任務重置，活躍天數累積）</button>
+  <button class="qbtn" onclick="addCoins(500);render();closeSheet();toast('🪙 已加入 500 示範幣')">🪙 加 500 示範幣（展示兌換用）</button>
+  <button class="qbtn" onclick="for(let i=0;i<3;i++)spawnSeed();drawMap();closeSheet();toast('🌰 地圖上冒出了種子！')">🌰 在地圖上撒 3 顆種子</button>
+  <button class="qbtn" onclick="resetAll()">🔄 重新開始（清除所有進度）</button>
+  <p class="note">進度只存在這台裝置的瀏覽器中，不會上傳。</p>`);
+}
+function nextDay(){
+  S.day++; S.steps=0; S.done={}; S.flowers=[]; S.seeds=[]; S.activeToday=false; S.heartTo={}; S.famClaimed=false; S.famIdx++;
+  closeSheet(); render(); toast(`☀️ 第 ${S.day} 天早安！今天也慢慢來`);
+}
+function resetAll(){S=fresh();try{localStorage.removeItem(KEY);}catch(e){}closeSheet();if(autoTimer)toggleAuto();onboard();render();}
+
+/* ---------- 開場 ---------- */
+let pickLook=0;
+function onboard(){
+  openSheet(`<div class="center"><div style="display:flex;justify-content:center;gap:4px;height:90px">${['walk','coin','heart'].map(k=>`<div style="width:64px" class="bob">${buddySVG(k)}</div>`).join('')}</div>
+  <h3>遇見 65 歲的自己</h3><p class="muted">給 45+ 的你：沒有分數、沒有考試。<br>每天 3 分鐘，走路、存錢、陪家人，<br>就能孵出芽芽夥伴、收集徽章、換好康。</p>
+  <div style="text-align:left;margin-top:14px"><b>怎麼稱呼你？</b><input type="text" id="nm" placeholder="例如：淑芬" maxlength="8" style="margin-top:6px"></div>
+  <div style="text-align:left;margin-top:12px"><b>選一個你喜歡的顏色</b></div>
+  <div class="looks">${LOOKS.map((c,i)=>`<div class="look ${i===0?'sel':''}" style="background:${c}" onclick="pickLook=${i};document.querySelectorAll('.look').forEach((x,j)=>x.classList.toggle('sel',j===${i}))"></div>`).join('')}</div>
+  <button class="big b-green" style="width:100%" onclick="start()">🌱 開始散步</button></div>`);
+}
+function start(){
+  const v=(document.getElementById('nm').value||'').trim();
+  S.name=v||'你'; S.look=pickLook; S.started=true; S.coins+=50;
+  closeSheet(); render();
+  setTimeout(()=>{hatch('walk');setTimeout(()=>{toast('🎁 見面禮：50 樂活幣');},300);checkBadgesLater();},300);
+}
+function checkBadgesLater(){setTimeout(()=>{checkBadges();},2200);}
+
+/* ---------- 畫面 ---------- */
+function renderHeader(){
+  document.getElementById('hdrName').textContent=S.name?`${S.name}的樂活花園`:'我的樂活花園';
+  document.getElementById('hdrSub').textContent=`第 ${S.day} 天・走多少都算 🌱`;
+  document.getElementById('coins').textContent=S.coins.toLocaleString();
+  document.getElementById('coins2').textContent=S.coins.toLocaleString();
+  document.getElementById('days').textContent=S.activeDays;
+  document.getElementById('dot-buddy').classList.toggle('show',S.newBuddy);
+  document.getElementById('dot-badge').classList.toggle('show',S.newBadge);
+}
+function renderWalk(newFlower){
+  drawMap(newFlower);
+  const f=Math.min(S.steps/GOAL,1);
+  document.getElementById('ringArc').setAttribute('stroke-dashoffset',(264*(1-f)).toFixed(1));
+  document.getElementById('steps').textContent=S.steps.toLocaleString();
+  document.getElementById('tasks').innerHTML=TASKS.map(t=>`<div class="task ${S.done[t.id]?'done':''}"><div class="bud">${buddySVG(t.sp)}</div><div class="tx"><b>${t.t}</b><span>${t.s}</span></div><button class="go" onclick="doTask('${t.id}',event)">${S.done[t.id]?'完成 ✓':'+'+t.coin+' 🪙'}</button></div>`).join('');
+  document.getElementById('family').innerHTML=FAMILY.map(m=>`<div class="fam"><div class="em">${m.e}</div><div class="tx"><b>${m.n}</b><span>✅ ${m.acts[S.famIdx%3]}</span></div><button class="heart" onclick="cheer('${m.id}',event)">${S.heartTo[m.id]?'❤️ 已送':'🤍 送愛心'}</button></div>`).join('');
+  const fs=famSteps();
+  document.getElementById('famNum').textContent=`${fs.toLocaleString()} 步`;
+  document.getElementById('famBar').style.width=Math.min(100,fs/200)+'%';
+  document.getElementById('famClaim').style.display=(fs>=20000&&!S.famClaimed)?'flex':'none';
+}
+function renderBuddy(){
+  const party=S.party.slice(-6);
+  document.getElementById('party').innerHTML=party.length?party.map((k,i)=>`<div class="bob" style="animation-delay:${i*.12}s" onclick="petBuddy('${k}')">${buddySVG(k)}</div>`).join(''):'<span class="muted">還沒有夥伴，去散步撿種子吧！</span>';
+  const total=Object.values(S.buddies).reduce((a,b)=>a+b,0);
+  document.getElementById('partyTxt').textContent=`共 ${total} 隻芽芽｜已種下 ${S.totalFlowers} 朵花`;
+  const keys=[...BASIC,'legend'];
+  document.getElementById('dexCount').textContent=`${keys.filter(k=>S.buddies[k]>0).length} / ${keys.length} 種`;
+  document.getElementById('dex').innerHTML=keys.map(k=>{const n=S.buddies[k]||0;return `<div class="bcard ${n?'':'lock'}" onclick="petBuddy('${k}')">${buddySVG(k)}<b>${n?SPECIES[k].name:'？？？'}</b><span>${n?`×${n}｜${SPECIES[k].habit}`:SPECIES[k].habit+'芽'}</span></div>`;}).join('');
+}
+function renderBadges(){
+  const got=BADGES.filter(b=>S.badges[b.id]).length;
+  document.getElementById('badgeSum').textContent=`已收集 ${got} / ${BADGES.length} 枚・每枚 +20 樂活幣`;
+  document.getElementById('badges').innerHTML=BADGES.map(b=>{const [v,m]=b.p(S);const ok=S.badges[b.id];return `<div class="badge ${ok?'':'lock'}" onclick="badgeInfo('${b.id}')"><div class="medal">${b.e}</div><b>${b.n}</b><span>${ok?'已解鎖':`${Math.round(v/m*100)}%`}</span></div>`;}).join('');
+}
+function renderFuture(){
+  const L=level(S);
+  if(STATIONS.find(s=>s.age===S.selStation).need>L)S.selStation=45;
+  document.getElementById('stations').innerHTML=STATIONS.map(s=>`<button class="st ${L>=s.need?'open':''} ${S.selStation===s.age?'sel':''}" onclick="selStation(${s.age})"><div class="dot">${L>=s.need?s.age:'🔒'}</div><small>${s.label}</small></button>`).join('');
+  document.getElementById('scene').innerHTML=futureSVG(S.selStation);
+  document.getElementById('speech').textContent=LINES[S.selStation].replace('{n}',S.name||'你');
+  document.getElementById('hLv').textContent='Lv'+lv(S.health);
+  document.getElementById('wLv').textContent='Lv'+lv(S.wealth+S.family);
+  document.getElementById('hBar').style.width=((S.health%40)/40*100)+'%';
+  document.getElementById('wBar').style.width=(((S.wealth+S.family)%40)/40*100)+'%';
+  const next=STATIONS.find(s=>s.need>L);
+  const tot=S.health+S.wealth+S.family;
+  document.getElementById('hint').innerHTML=next?`<b>🌱 下一章：${next.age} 歲・${next.label}</b><div class="bar gold" style="margin:8px 0"><i style="width:${Math.round(tot/(next.need*100)*100)}%"></i></div><div class="muted">再累積 ${next.need*100-tot} 點活力就能聽 ${next.age} 歲的你說話。散步、存錢、陪家人都算。</div>`:'<b>🌈 人生地圖全部點亮了！</b><div class="muted">95 歲的你想對你說聲謝謝。</div>';
+  const box=document.getElementById('selfieBox');
+  if(S.selfie){box.hidden=false;document.getElementById('selfiePh').innerHTML=`<img src="${S.selfie}" alt="你的照片（示意老化濾鏡）">`;}
+}
+function renderShop(){
+  document.getElementById('shop').innerHTML=SHOP.map(it=>{const ok=S.coins>=it.c;return `<div class="card item"><div class="ic">${it.e}</div><div class="tx"><b>${it.n}</b><span>${it.p}</span><div class="price">🪙 ${it.c.toLocaleString()}</div></div><button class="${ok?'':'no'}" onclick="${ok?`redeem('${it.id}',event)`:''}">${ok?'兌換':'還差 '+(it.c-S.coins)}</button></div>`;}).join('');
+  document.getElementById('tixCount').textContent=S.tickets.length?`${S.tickets.length} 張`:'';
+  document.getElementById('tickets').innerHTML=S.tickets.length?S.tickets.map(t=>`<div class="ticket"><div style="font-size:1.8rem">${t.e}</div><div style="flex:1"><b>${t.n}</b><code>${t.code}</code></div><span class="muted">${t.d}</span></div>`).join(''):'<p class="muted">還沒有票券，存一點樂活幣就能換好康！</p>';
+}
+function render(newFlower){renderHeader();renderWalk(newFlower);renderBuddy();renderBadges();renderFuture();renderShop();save();}
+
+render();
+if(!S.started)onboard();
+</script>
+</body>
+</html>
