@@ -126,6 +126,12 @@ h2.sec small{font-size:.75rem;font-weight:700;color:var(--body);margin-left:auto
 .item .price{font-weight:900;color:var(--amberDk);font-size:.95rem}
 .item button{border-radius:14px;padding:10px 12px;font-weight:900;background:var(--green);color:#fff;white-space:nowrap}
 .item button.no{background:var(--sand);color:var(--body)}
+.item button.eq{background:var(--ink);color:#fff}
+.item button.own{background:#BFDFC6;color:#1F5B3A}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--sand);padding:6px;border-radius:18px;margin-top:16px}
+.tabs button{padding:12px 6px;border-radius:14px;font-weight:900;background:none;font-size:.95rem;color:var(--body)}
+.tabs button.on{background:#fff;color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.scene.gold{border:6px solid #E8B23C;box-shadow:0 0 0 4px #FFF1C4}
 .ticket{border:2px dashed var(--amber);background:#FFF8EA;border-radius:18px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
 .ticket b{display:block}
 .ticket code{font-size:.85rem;font-weight:700;letter-spacing:1px}
@@ -146,6 +152,7 @@ h2.sec small{font-size:.75rem;font-weight:700;color:var(--body);margin-left:auto
 .hatch{width:150px;height:170px;margin:6px auto}
 .egg{animation:shake .5s ease-in-out 3;transform-origin:50% 90%;transform-box:fill-box}
 @keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+#hatchBox svg,#petBox svg,.sheet .bob svg{width:100%;height:100%;display:block}
 .jump{animation:jump .6s ease}
 @keyframes jump{0%,100%{transform:translateY(0)}40%{transform:translateY(-22px)}}
 .toast{position:fixed;left:50%;top:84px;transform:translate(-50%,-20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:16px;font-weight:700;z-index:60;opacity:0;transition:all .3s;pointer-events:none;width:max-content;max-width:90vw;text-align:center}
@@ -200,7 +207,7 @@ input[type=text]{width:100%;font-size:1.1rem;padding:14px;border-radius:16px;bor
       <div style="margin-top:12px">
         <div style="display:flex;justify-content:space-between;font-weight:700;font-size:.85rem;margin-bottom:6px"><span>全家今日一起走 20,000 步</span><span id="famNum">0</span></div>
         <div class="bar"><i id="famBar" style="width:0%"></i></div>
-        <button class="big b-amber" id="famClaim" style="width:100%;margin-top:12px;display:none" onclick="claimFamily(event)">🎉 全家達標！領取 50 樂活幣</button>
+        <button class="big b-amber" id="famClaim" style="width:100%;margin-top:12px;display:none" onclick="claimFamily(event)">🎉 全家達標！領取 5 樂活幣</button>
       </div>
     </div>
   </section>
@@ -259,11 +266,12 @@ input[type=text]{width:100%;font-size:1.1rem;padding:14px;border-radius:16px;bor
   <section class="screen" id="s-shop">
     <div class="card" style="display:flex;align-items:center;gap:14px;background:#FFF6DD;border-color:#F2C14E">
       <div style="font-size:2.4rem">🪙</div>
-      <div style="flex:1"><b style="font-size:1.1rem">我的樂活幣：<span id="coins2">0</span></b><div class="muted">走路、完成小任務、拿徽章都能賺樂活幣</div></div>
+      <div style="flex:1"><b style="font-size:1.1rem">我的樂活幣：<span id="coins2">0</span></b><div class="muted">每 1,000 步 +1・小任務 +1～3・徽章 +2・全家達標 +5</div></div>
     </div>
-    <h2 class="sec">🎁 好康兌換</h2>
+    <div class="tabs"><button data-t="deco" class="on" onclick="setShopTab('deco')">🎨 虛擬裝飾</button><button data-t="fin" onclick="setShopTab('fin')">🏥 金融・醫療優惠</button></div>
+    <p class="muted" id="shopIntro" style="margin:8px 4px 12px"></p>
     <div id="shop"></div>
-    <h2 class="sec">🎟️ 我的票券 <small id="tixCount"></small></h2>
+    <h2 class="sec">🎟️ 我的優惠券 <small id="tixCount"></small></h2>
     <div id="tickets"></div>
     <p class="note">原型示意：合作商家、折扣內容與兌換條件以實際活動辦法為準。</p>
   </section>
@@ -294,12 +302,12 @@ const SPECIES = {
 const BASIC = ['walk','coin','moon','heart','shield','star'];
 
 const TASKS = [
-  {id:'t_walk',  sp:'walk',  t:'飯後散步 20 分鐘', s:'順便陪爸媽走一圈也算', coin:20, h:20, w:0, f:0, steps:1500},
-  {id:'t_save',  sp:'coin',  t:'少喝一杯手搖，存 $100', s:'自動轉入退休小金庫', coin:20, h:0, w:25, f:0},
-  {id:'t_sleep', sp:'moon',  t:'11:30 前放下手機', s:'睡飽是最便宜的保養品', coin:15, h:15, w:0, f:0},
-  {id:'t_family',sp:'heart', t:'打通電話給爸媽或孩子', s:'聊 3 分鐘就好', coin:25, h:5, w:0, f:25},
-  {id:'t_protect',sp:'shield',t:'花 1 分鐘看看保障清單', s:'只看看，不用現在決定', coin:20, h:0, w:15, f:0, sheet:true},
-  {id:'t_check', sp:'star',  t:'預約今年的健康檢查', s:'選一個方便的日子就好', coin:30, h:20, w:0, f:0}
+  {id:'t_walk',  sp:'walk',  t:'飯後散步 20 分鐘', s:'順便陪爸媽走一圈也算', coin:2, h:20, w:0, f:0, steps:1500},
+  {id:'t_save',  sp:'coin',  t:'少喝一杯手搖，存 $100', s:'自動轉入退休小金庫', coin:2, h:0, w:25, f:0},
+  {id:'t_sleep', sp:'moon',  t:'11:30 前放下手機', s:'睡飽是最便宜的保養品', coin:1, h:15, w:0, f:0},
+  {id:'t_family',sp:'heart', t:'打通電話給爸媽或孩子', s:'聊 3 分鐘就好', coin:3, h:5, w:0, f:25},
+  {id:'t_protect',sp:'shield',t:'花 1 分鐘看看保障清單', s:'只看看，不用現在決定', coin:2, h:0, w:15, f:0, sheet:true},
+  {id:'t_check', sp:'star',  t:'預約今年的健康檢查', s:'選一個方便的日子就好', coin:3, h:20, w:0, f:0}
 ];
 
 const BADGES = [
@@ -318,18 +326,24 @@ const BADGES = [
   {id:'collect', e:'📖', n:'芽芽收藏家',   d:'集滿 6 種基本芽芽', p:s=>[BASIC.filter(k=>s.buddies[k]>0).length,6]},
   {id:'legend',  e:'🦄', n:'長壽芽現身',   d:'遇見稀有的長壽芽', p:s=>[Math.min(s.buddies.legend||0,1),1]},
   {id:'st65',    e:'🌅', n:'解鎖 65 歲',   d:'人生地圖抵達 65 歲站', p:s=>[Math.min(level(s),1),1]},
-  {id:'shop',    e:'🛍️', n:'第一次兌換',   d:'用樂活幣兌換一次好康', p:s=>[Math.min(s.tickets.length,1),1]}
+  {id:'shop',    e:'🛍️', n:'第一次兌換',   d:'用樂活幣兌換一次好康', p:s=>[Math.min(s.redeemCount||0,1),1]}
 ];
 
 const SHOP = [
-  {id:'coffee', e:'☕', n:'超商美式咖啡 1 杯', p:'合作夥伴：便利商店', c:150},
-  {id:'veg',    e:'🥬', n:'有機超市 100 元折價券', p:'合作夥伴：有機超市', c:400},
-  {id:'shoe',   e:'👟', n:'健走鞋 9 折優惠券', p:'合作夥伴：運動用品店', c:600},
-  {id:'legend', e:'🦄', n:'稀有夥伴「長壽芽」', p:'限定夥伴，會跟著你散步', c:800},
-  {id:'check',  e:'🩺', n:'精緻健檢 85 折', p:'合作夥伴：健檢中心', c:1000},
-  {id:'prem',   e:'🛡️', n:'醫療／長照險保費折抵 $500', p:'外溢保單回饋', c:1500},
-  {id:'trip',   e:'🏨', n:'家庭旅遊住宿 9 折', p:'合作夥伴：旅宿業者', c:1800}
+  {id:'hat',      cat:'deco', e:'👒', n:'芽芽小草帽', p:'所有芽芽都戴上草帽，散步更有型', c:30, slot:'hat', go:'buddy'},
+  {id:'sunflower',cat:'deco', e:'🌻', n:'向日葵花園', p:'散步路上開出的花變成向日葵', c:40, slot:'flower', go:'walk'},
+  {id:'scarf',    cat:'deco', e:'🧣', n:'暖暖紅圍巾', p:'你的角色和未來的你都圍上圍巾', c:50, slot:'scarf', go:'future'},
+  {id:'frame',    cat:'deco', e:'🖼️', n:'金色回憶相框', p:'「未來的我」畫面加上金框與星星', c:60, slot:'frame', go:'future'},
+  {id:'seaside',  cat:'deco', e:'🏖️', n:'海邊步道地圖', p:'散步地圖換成海邊風景', c:80, slot:'map', go:'walk'},
+  {id:'legend',   cat:'deco', e:'🦄', n:'稀有夥伴「長壽芽」', p:'限定夥伴，會跟著你散步', c:150, once:true, go:'buddy'},
+  {id:'pharm',    cat:'fin',  e:'💊', n:'合作藥局 保健品 9 折', p:'醫療生態圈・合作藥局（示意）', c:120},
+  {id:'dental',   cat:'fin',  e:'🦷', n:'牙科洗牙 折抵 $200', p:'醫療生態圈・合作牙醫診所（示意）', c:200},
+  {id:'fund',     cat:'fin',  e:'📈', n:'定期定額基金 手續費 5 折', p:'金融生態圈・合作投信（示意）', c:250},
+  {id:'check',    cat:'fin',  e:'🩺', n:'精緻健檢 85 折', p:'醫療生態圈・合作健檢中心（示意）', c:300},
+  {id:'rate',     cat:'fin',  e:'🏦', n:'退休帳戶利率加碼 +0.2%', p:'金融生態圈・合作銀行，為期 3 個月（示意）', c:400},
+  {id:'prem',     cat:'fin',  e:'🛡️', n:'醫療／長照險 保費折抵 $500', p:'金融生態圈・外溢保單回饋（示意）', c:600}
 ];
+let shopTab='deco';
 
 const STATIONS = [
   {age:45, need:0, label:'今天'},
@@ -358,7 +372,7 @@ const KEY='futureMeGarden.v1';
 function fresh(){return {started:false,name:'',look:0,coins:0,steps:0,totalSteps:0,bestDay:0,health:0,wealth:0,family:0,
   activeDays:0,activeToday:false,day:1,done:{},cnt:{},buddies:{walk:0,coin:0,moon:0,heart:0,shield:0,star:0,legend:0},
   party:[],flowers:[],totalFlowers:0,seeds:[],badges:{},hearts:0,heartTo:{},famClaimed:false,famIdx:0,tickets:[],
-  selStation:45,selfie:null,newBuddy:false,newBadge:false,chat:[]};}
+  selStation:45,selfie:null,newBuddy:false,newBadge:false,chat:[],owned:{},equip:{},redeemCount:0};}
 let S=fresh();
 try{const raw=localStorage.getItem(KEY); if(raw){S=Object.assign(fresh(),JSON.parse(raw));}}catch(e){}
 function save(){try{const c=Object.assign({},S,{selfie:null});localStorage.setItem(KEY,JSON.stringify(c));}catch(e){}}
@@ -393,6 +407,7 @@ function buddyG(k){
     <circle cx="-6" cy="-2.3" r="1.1" fill="#fff"/><circle cx="8" cy="-2.3" r="1.1" fill="#fff"/>
     <ellipse cx="-13" cy="6" rx="3.5" ry="2" fill="#FF8FA3" opacity=".7"/><ellipse cx="13" cy="6" rx="3.5" ry="2" fill="#FF8FA3" opacity=".7"/>
     <path d="M-4 7 Q0 11 4 7" stroke="#14232E" stroke-width="2" fill="none" stroke-linecap="round"/>
+    ${S.equip&&S.equip.hat?'<path d="M-13 -17 Q-12 -32 0 -32 Q12 -32 13 -17Z" fill="#F2D58A" stroke="#A9812F" stroke-width="1.5"/><ellipse cx="0" cy="-17" rx="24" ry="5" fill="#F6DE9C" stroke="#A9812F" stroke-width="1.5"/><path d="M-12.5 -21 Q0 -24 12.5 -21" stroke="#E5484D" stroke-width="3" fill="none"/>':''}
   </g>`;
 }
 const DEFS=`<defs><linearGradient id="rainbow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB3C7"/><stop offset=".5" stop-color="#C9A2F0"/><stop offset="1" stop-color="#9FD8F5"/></linearGradient></defs>`;
@@ -404,15 +419,19 @@ const PATH='M30 272 C110 268 60 200 150 190 S310 170 270 110 S110 70 190 32';
 const GOAL=3000;
 let pathEl=null, pathLen=0, PTS=[];
 function pt(f){f=Math.max(0,Math.min(1,f));return PTS[Math.round(f*300)]||{x:30,y:272};}
-function flowerSVG(x,y,col,anim){return `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})"><g class="${anim?'bloom':''}"><path d="M0 0 V-8" stroke="#3E8E52" stroke-width="2"/><circle cx="-4" cy="-11" r="3.6" fill="${col}"/><circle cx="4" cy="-11" r="3.6" fill="${col}"/><circle cx="0" cy="-15" r="3.6" fill="${col}"/><circle cx="0" cy="-7.5" r="3.6" fill="${col}"/><circle cx="0" cy="-11" r="2.6" fill="#FFE08A"/></g></g>`;}
+function flowerSVG(x,y,col,anim){
+  if(S.equip&&S.equip.flower){return `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})"><g class="${anim?'bloom':''}"><path d="M0 0 V-9" stroke="#3E8E52" stroke-width="2.2"/><path d="M0 -4 q5 -4 7 0" fill="#5BAE62"/>${[0,45,90,135,180,225,270,315].map(a=>`<ellipse cx="0" cy="-19" rx="2.6" ry="5" fill="#FFC92E" transform="rotate(${a} 0 -13)"/>`).join('')}<circle cx="0" cy="-13" r="4.2" fill="#7A4A1E"/></g></g>`;}
+  return `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})"><g class="${anim?'bloom':''}"><path d="M0 0 V-8" stroke="#3E8E52" stroke-width="2"/><circle cx="-4" cy="-11" r="3.6" fill="${col}"/><circle cx="4" cy="-11" r="3.6" fill="${col}"/><circle cx="0" cy="-15" r="3.6" fill="${col}"/><circle cx="0" cy="-7.5" r="3.6" fill="${col}"/><circle cx="0" cy="-11" r="2.6" fill="#FFE08A"/></g></g>`;}
 function drawMap(newFlower){
   const svg=document.getElementById('map');
   if(!pathEl){
     svg.innerHTML=DEFS+`
-      <rect width="360" height="300" fill="#CDEBC4"/>
+      ${S.equip.map?`<rect width="360" height="300" fill="#F7E6BE"/><path d="M0 0 H360 V70 Q300 95 240 72 T120 80 T0 70Z" fill="#7CCBEA"/><path d="M0 62 Q60 80 120 70 T240 66 T360 62" stroke="#fff" stroke-width="3" fill="none" opacity=".7"/><ellipse cx="300" cy="260" rx="90" ry="40" fill="#F1D9A2"/>
+      <g font-size="22"><text x="20" y="130">🌴</text><text x="312" y="205">🌴</text><text x="60" y="250">⛱️</text><text x="250" y="40">⛵</text><text x="205" y="270">🐚</text><text x="320" y="270">🦀</text></g>`
+      :`<rect width="360" height="300" fill="#CDEBC4"/>
       <ellipse cx="300" cy="260" rx="90" ry="40" fill="#BDE3B2"/><ellipse cx="60" cy="60" rx="80" ry="40" fill="#BDE3B2"/>
       <path d="M0 140 Q80 120 120 150 T240 140" stroke="#A9D9F2" stroke-width="14" fill="none" opacity=".7" stroke-linecap="round"/>
-      <g font-size="22"><text x="20" y="120">🌳</text><text x="310" y="200">🌳</text><text x="70" y="240">🌲</text><text x="290" y="60">🌲</text><text x="210" y="260">🌷</text></g>
+      <g font-size="22"><text x="20" y="120">🌳</text><text x="310" y="200">🌳</text><text x="70" y="240">🌲</text><text x="290" y="60">🌲</text><text x="210" y="260">🌷</text></g>`}
       <path id="walkPath" d="${PATH}" stroke="#F6E6C4" stroke-width="16" fill="none" stroke-linecap="round"/>
       <path d="${PATH}" stroke="#E2C994" stroke-width="2" stroke-dasharray="4 8" fill="none"/>
       <g id="stationsG"></g><g id="flowersG"></g><g id="seedsG"></g><g id="partyG"></g><g id="meG"></g>`;
@@ -430,7 +449,7 @@ function drawMap(newFlower){
   const party=S.party.slice(-5).reverse();
   document.getElementById('partyG').innerHTML=party.map((k,i)=>{const p=pt(f-0.035*(i+1));return `<g transform="translate(${p.x.toFixed(1)},${(p.y-4).toFixed(1)}) scale(.42)"><g class="bob" style="animation-delay:${i*.15}s">${buddyG(k)}</g></g>`;}).join('');
   const col=LOOKS[S.look]||LOOKS[0];
-  document.getElementById('meG').innerHTML=`<g transform="translate(${me.x.toFixed(1)},${(me.y-6).toFixed(1)})"><g class="bob"><ellipse cx="0" cy="12" rx="10" ry="3" fill="#000" opacity=".15"/><rect x="-8" y="-6" width="16" height="18" rx="7" fill="${col}"/><circle cx="0" cy="-13" r="9" fill="#FAD7B5"/><path d="M-9 -15 Q0 -26 9 -15" fill="#4B3B33"/><circle cx="-3" cy="-13" r="1.4" fill="#14232E"/><circle cx="3" cy="-13" r="1.4" fill="#14232E"/><path d="M-3 -9 Q0 -7 3 -9" stroke="#C2405F" stroke-width="1.4" fill="none"/></g></g>`;
+  document.getElementById('meG').innerHTML=`<g transform="translate(${me.x.toFixed(1)},${(me.y-6).toFixed(1)})"><g class="bob"><ellipse cx="0" cy="12" rx="10" ry="3" fill="#000" opacity=".15"/><rect x="-8" y="-6" width="16" height="18" rx="7" fill="${col}"/><circle cx="0" cy="-13" r="9" fill="#FAD7B5"/><path d="M-9 -15 Q0 -26 9 -15" fill="#4B3B33"/>${S.equip.scarf?'<path d="M-8 -5 Q0 -1 8 -5 L8 -1 Q0 3 -8 -1Z" fill="#E5484D"/><rect x="3" y="-2" width="4" height="9" rx="2" fill="#C93A3E"/>':''}<circle cx="-3" cy="-13" r="1.4" fill="#14232E"/><circle cx="3" cy="-13" r="1.4" fill="#14232E"/><path d="M-3 -9 Q0 -7 3 -9" stroke="#C2405F" stroke-width="1.4" fill="none"/></g></g>`;
 }
 
 /* ---------- 走路 ---------- */
@@ -440,18 +459,19 @@ function walk(n,ev){
   const before=S.steps;
   S.steps+=n; S.totalSteps+=n; S.bestDay=Math.max(S.bestDay,S.steps); markActive();
   S.health+=Math.round(n/100);
-  let planted=false;
+  let planted=false, coinTick=false;
   const b500=Math.floor(before/500), a500=Math.floor(S.steps/500);
   for(let i=b500;i<a500;i++){
     const fpos=(((i+1)*500)%GOAL||GOAL)/GOAL;
     S.flowers.push({f:fpos,dx:(Math.random()*24-12),dy:(Math.random()*14+6)*(Math.random()<.5?-1:1),c:['#FF8FA3','#FFD25E','#B9A6F5','#FF9F68','#8FD3FF'][i%5]});
     if(S.flowers.length>40)S.flowers.shift();
-    S.totalFlowers++; addCoins(5); planted=true;
+    S.totalFlowers++; planted=true;
+    if((i+1)%2===0){addCoins(1);coinTick=true;}
   }
   seedTick+=n;
   if(seedTick>=600 && S.seeds.length<3){seedTick=0;spawnSeed();}
-  if(before<GOAL && S.steps>=GOAL){addCoins(30);toast('🎯 今日小目標達成！+30 樂活幣');gainBuddy('walk',true);}
-  else if(planted && !autoTimer){toast('🌸 種下一朵花！+5 樂活幣');}
+  if(before<GOAL && S.steps>=GOAL){addCoins(3);toast('🎯 今日小目標達成！+3 樂活幣');gainBuddy('walk',true);}
+  else if(planted && !autoTimer){toast(coinTick?'🌸 又開一朵花！每 1,000 步 +1 樂活幣':'🌸 種下一朵花！');}
   if(ev)popAt(ev,`+${n} 步`);
   render(planted); checkBadges();
 }
@@ -468,7 +488,7 @@ function collectSeed(i,ev){
   ev.stopPropagation();
   S.seeds.splice(i,1);
   const k = Math.random()<0.07 ? 'legend' : BASIC[Math.floor(Math.random()*BASIC.length)];
-  addCoins(10); popAt(ev,'+10 🪙');
+  addCoins(1); popAt(ev,'+1 🪙');
   hatch(k);
   drawMap();
 }
@@ -502,7 +522,6 @@ let petCount=0;
 function pet(k,ev){
   const b=document.getElementById('petBox'); b.classList.remove('jump'); void b.offsetWidth; b.classList.add('jump');
   document.getElementById('petLine').textContent=`「${PET[petCount++%PET.length]}」`;
-  if(petCount%5===0){addCoins(1);popAt(ev,'+1 🪙');}
 }
 
 /* ---------- 任務 ---------- */
@@ -530,24 +549,24 @@ function protectSheet(){
 function famSteps(){return FAMILY.reduce((a,m)=>a+FAM_STEPS[m.id][S.famIdx%3],0)+S.steps;}
 function cheer(id,ev){
   if(S.heartTo[id]){toast('今天已經送過囉，明天再來 ❤️');return;}
-  S.heartTo[id]=true; S.hearts++; S.family+=10; addCoins(3); markActive();
-  popAt(ev,'❤️ +3');
+  S.heartTo[id]=true; S.hearts++; S.family+=10; markActive();
+  popAt(ev,'❤️');
   toast(`已送出愛心給${FAMILY.find(m=>m.id===id).n.split('（')[0]}！`);
   render(); checkBadges();
 }
-function claimFamily(ev){S.famClaimed=true;addCoins(50);popAt(ev,'+50 🪙');confetti();toast('🎉 全家一起達標！');render();}
+function claimFamily(ev){S.famClaimed=true;addCoins(5);popAt(ev,'+5 🪙');confetti();toast('🎉 全家一起達標！');render();}
 
 /* ---------- 徽章 ---------- */
 let badgeQueue=[];
 function checkBadges(){
-  BADGES.forEach(b=>{if(!S.badges[b.id]){const [v,m]=b.p(S);if(v>=m){S.badges[b.id]=true;S.newBadge=true;addCoins(20);badgeQueue.push(b);}}});
+  BADGES.forEach(b=>{if(!S.badges[b.id]){const [v,m]=b.p(S);if(v>=m){S.badges[b.id]=true;S.newBadge=true;addCoins(2);badgeQueue.push(b);}}});
   if(badgeQueue.length && !document.getElementById('ov').classList.contains('on'))showBadge();
   save();
 }
 function showBadge(){
   const b=badgeQueue.shift(); if(!b)return;
   confetti();
-  openSheet(`<div class="center"><div class="medal jump" style="width:110px;height:110px;font-size:3.2rem">${b.e}</div><h3>獲得徽章：${b.n}</h3><p class="muted">${b.d}</p><p style="font-weight:900;color:var(--amberDk)">+20 樂活幣</p><button class="big b-green" style="width:100%" onclick="closeSheet()">收下 🏅</button></div>`);
+  openSheet(`<div class="center"><div class="medal jump" style="width:110px;height:110px;font-size:3.2rem">${b.e}</div><h3>獲得徽章：${b.n}</h3><p class="muted">${b.d}</p><p style="font-weight:900;color:var(--amberDk)">+2 樂活幣</p><button class="big b-green" style="width:100%" onclick="closeSheet()">收下 🏅</button></div>`);
   renderHeader();
 }
 function badgeInfo(id){
@@ -557,18 +576,35 @@ function badgeInfo(id){
 
 /* ---------- 兌換 ---------- */
 function redeem(id,ev){
-  const it=SHOP.find(x=>x.id===id); if(S.coins<it.c)return;
-  openSheet(`<div class="center"><div style="font-size:3rem">${it.e}</div><h3>兌換「${it.n}」？</h3><p class="muted">將使用 ${it.c} 樂活幣，剩下 ${S.coins-it.c} 幣</p><div class="row" style="margin-top:12px"><button class="big b-soft" onclick="closeSheet()">再想想</button><button class="big b-green" onclick="confirmRedeem('${id}')">確定兌換</button></div></div>`);
+  const it=SHOP.find(x=>x.id===id);
+  if(it.cat==='deco' && S.owned[id]){ if(!it.once)toggleEquip(id); return; }
+  if(S.coins<it.c)return;
+  openSheet(`<div class="center"><div style="font-size:3rem">${it.e}</div><h3>兌換「${it.n}」？</h3><p class="muted">${it.p}<br>將使用 ${it.c} 樂活幣，剩下 ${S.coins-it.c} 幣</p><div class="row" style="margin-top:12px"><button class="big b-soft" onclick="closeSheet()">再想想</button><button class="big b-green" onclick="confirmRedeem('${id}')">確定兌換</button></div></div>`);
+}
+function rebuildMap(){pathEl=null;PTS=[];}
+function toggleEquip(id){
+  const it=SHOP.find(x=>x.id===id);
+  S.equip[it.slot]=!S.equip[it.slot];
+  if(it.slot==='map')rebuildMap();
+  toast(S.equip[it.slot]?`✨ 已裝備「${it.n}」`:`已卸下「${it.n}」`);
+  render();
 }
 function confirmRedeem(id){
   const it=SHOP.find(x=>x.id===id);
-  S.coins-=it.c;
-  const code='FM-'+Math.random().toString(36).slice(2,6).toUpperCase()+'-'+(1000+Math.floor(Math.random()*9000));
-  S.tickets.unshift({n:it.n,e:it.e,code,d:`第 ${S.day} 天`});
-  if(id==='legend'){S.buddies.legend++;S.party.push('legend');}
+  if(S.coins<it.c || (it.cat==='deco'&&S.owned[id])){closeSheet();return;}
+  S.coins-=it.c; S.redeemCount=(S.redeemCount||0)+1;
   confetti();
-  const bars=Array.from({length:34},(_,i)=>`<rect x="${i*6}" y="0" width="${[2,3,1,4][(i*7+code.charCodeAt(i%code.length))%4]}" height="44" fill="#14232E"/>`).join('');
-  openSheet(`<div class="center"><h3>🎉 兌換成功！</h3><div class="ticket" style="flex-direction:column;margin-top:10px"><div style="font-size:2.4rem">${it.e}</div><b>${it.n}</b><svg viewBox="0 0 204 44" style="width:80%;height:44px;margin:8px 0">${bars}</svg><code>${code}</code></div><div class="row"><button class="big b-soft" onclick="copyCode('${code}')">📋 複製代碼</button><button class="big b-green" onclick="closeSheet()">好的</button></div></div>`);
+  if(it.cat==='deco'){
+    S.owned[id]=true;
+    if(it.once){S.buddies.legend++;S.party.push('legend');}
+    else{S.equip[it.slot]=true; if(it.slot==='map')rebuildMap();}
+    openSheet(`<div class="center"><div class="jump" style="font-size:4rem">${it.e}</div><h3>🎉 取得「${it.n}」！</h3><p class="muted">${it.once?'長壽芽已經加入你的散步隊伍。':'已經自動裝備，隨時可以在兌換區卸下或重新裝備。'}</p><div class="row" style="margin-top:12px"><button class="big b-soft" onclick="closeSheet()">好的</button><button class="big b-green" onclick="closeSheet();go('${it.go}')">去看看 👀</button></div></div>`);
+  }else{
+    const code='FM-'+Math.random().toString(36).slice(2,6).toUpperCase()+'-'+(1000+Math.floor(Math.random()*9000));
+    S.tickets.unshift({n:it.n,e:it.e,code,d:`第 ${S.day} 天`});
+    const bars=Array.from({length:34},(_,i)=>`<rect x="${i*6}" y="0" width="${[2,3,1,4][(i*7+code.charCodeAt(i%code.length))%4]}" height="44" fill="#14232E"/>`).join('');
+    openSheet(`<div class="center"><h3>🎉 兌換成功！</h3><div class="ticket" style="flex-direction:column;margin-top:10px"><div style="font-size:2.4rem">${it.e}</div><b>${it.n}</b><span class="muted">${it.p}</span><svg viewBox="0 0 204 44" style="width:80%;height:44px;margin:8px 0">${bars}</svg><code>${code}</code></div><div class="row"><button class="big b-soft" onclick="copyCode('${code}')">📋 複製代碼</button><button class="big b-green" onclick="closeSheet()">好的</button></div></div>`);
+  }
   render(); checkBadges();
 }
 function copyCode(c){try{navigator.clipboard.writeText(c).then(()=>toast('已複製：'+c),()=>toast('代碼：'+c));}catch(e){toast('代碼：'+c);}}
@@ -599,6 +635,7 @@ function futureSVG(age){
    <rect x="154" y="104" width="52" height="64" rx="22" fill="${col}"/>
    <path d="M156 116 L136 ${ht===2?96:136}" stroke="#FAD7B5" stroke-width="9" stroke-linecap="round"/><path d="M204 116 L222 ${ht>=1?92:136}" stroke="#FAD7B5" stroke-width="9" stroke-linecap="round"/>
    <circle cx="180" cy="84" r="24" fill="#FAD7B5"/>
+   ${S.equip.scarf?'<path d="M160 104 Q180 116 200 104 L200 113 Q180 125 160 113Z" fill="#E5484D"/><rect x="186" y="112" width="10" height="26" rx="4" fill="#C93A3E"/>':''}
    <path d="M156 82 Q160 54 180 56 Q202 54 204 82 Q198 66 180 66 Q164 66 156 82Z" fill="${hair}"/>
    ${age>=75?'<rect x="166" y="80" width="12" height="8" rx="3" fill="none" stroke="#5B4636" stroke-width="1.6"/><rect x="183" y="80" width="12" height="8" rx="3" fill="none" stroke="#5B4636" stroke-width="1.6"/><path d="M178 84 h5" stroke="#5B4636" stroke-width="1.6"/>':''}
    <circle cx="172" cy="84" r="2.4" fill="#14232E"/><circle cx="188" cy="84" r="2.4" fill="#14232E"/>
@@ -606,6 +643,7 @@ function futureSVG(age){
    <ellipse cx="166" cy="93" rx="4" ry="2.4" fill="${cheek}" opacity=".7"/><ellipse cx="194" cy="93" rx="4" ry="2.4" fill="${cheek}" opacity=".7"/>
    <path d="${smile}" stroke="#B4325E" stroke-width="2.4" fill="none" stroke-linecap="round"/>
    ${sparkle}
+   ${S.equip.frame?'<g font-size="16"><text x="14" y="200">⭐</text><text x="330" y="80">⭐</text><text x="120" y="40">✨</text></g>':''}
    <g transform="translate(250,188) scale(.5)">${S.party.length?buddyG(S.party[S.party.length-1]):''}</g>
    <rect x="268" y="196" width="84" height="20" rx="10" fill="#14232E" opacity=".75"/><text x="310" y="210" font-size="11" fill="#fff" text-anchor="middle" font-weight="700">${young?'今天的你':age+' 歲的你'}</text>
   </svg>`;
@@ -660,7 +698,7 @@ function openSettings(){
   openSheet(`<h3>⚙️ 設定與簡報示範</h3><p class="muted">現場展示時，可以用下面的按鈕快速體驗不同天的狀態。</p>
   <button class="qbtn" onclick="document.documentElement.classList.toggle('xl');toast('已切換字體大小')">🔍 切換特大字</button>
   <button class="qbtn" onclick="nextDay()">⏩ 快轉到明天（任務重置，活躍天數累積）</button>
-  <button class="qbtn" onclick="addCoins(500);render();closeSheet();toast('🪙 已加入 500 示範幣')">🪙 加 500 示範幣（展示兌換用）</button>
+  <button class="qbtn" onclick="addCoins(300);render();closeSheet();toast('🪙 已加入 300 示範幣')">🪙 加 300 示範幣（展示兌換用）</button>
   <button class="qbtn" onclick="for(let i=0;i<3;i++)spawnSeed();drawMap();closeSheet();toast('🌰 地圖上冒出了種子！')">🌰 在地圖上撒 3 顆種子</button>
   <button class="qbtn" onclick="resetAll()">🔄 重新開始（清除所有進度）</button>
   <p class="note">進度只存在這台裝置的瀏覽器中，不會上傳。</p>`);
@@ -683,9 +721,9 @@ function onboard(){
 }
 function start(){
   const v=(document.getElementById('nm').value||'').trim();
-  S.name=v||'你'; S.look=pickLook; S.started=true; S.coins+=50;
+  S.name=v||'你'; S.look=pickLook; S.started=true; S.coins+=5;
   closeSheet(); render();
-  setTimeout(()=>{hatch('walk');setTimeout(()=>{toast('🎁 見面禮：50 樂活幣');},300);checkBadgesLater();},300);
+  setTimeout(()=>{hatch('walk');setTimeout(()=>{toast('🎁 見面禮：5 樂活幣');},300);checkBadgesLater();},300);
 }
 function checkBadgesLater(){setTimeout(()=>{checkBadges();},2200);}
 
@@ -722,7 +760,7 @@ function renderBuddy(){
 }
 function renderBadges(){
   const got=BADGES.filter(b=>S.badges[b.id]).length;
-  document.getElementById('badgeSum').textContent=`已收集 ${got} / ${BADGES.length} 枚・每枚 +20 樂活幣`;
+  document.getElementById('badgeSum').textContent=`已收集 ${got} / ${BADGES.length} 枚・每枚 +2 樂活幣`;
   document.getElementById('badges').innerHTML=BADGES.map(b=>{const [v,m]=b.p(S);const ok=S.badges[b.id];return `<div class="badge ${ok?'':'lock'}" onclick="badgeInfo('${b.id}')"><div class="medal">${b.e}</div><b>${b.n}</b><span>${ok?'已解鎖':`${Math.round(v/m*100)}%`}</span></div>`;}).join('');
 }
 function renderFuture(){
@@ -730,6 +768,7 @@ function renderFuture(){
   if(STATIONS.find(s=>s.age===S.selStation).need>L)S.selStation=45;
   document.getElementById('stations').innerHTML=STATIONS.map(s=>`<button class="st ${L>=s.need?'open':''} ${S.selStation===s.age?'sel':''}" onclick="selStation(${s.age})"><div class="dot">${L>=s.need?s.age:'🔒'}</div><small>${s.label}</small></button>`).join('');
   document.getElementById('scene').innerHTML=futureSVG(S.selStation);
+  document.getElementById('scene').classList.toggle('gold',!!S.equip.frame);
   document.getElementById('speech').textContent=LINES[S.selStation].replace('{n}',S.name||'你');
   document.getElementById('hLv').textContent='Lv'+lv(S.health);
   document.getElementById('wLv').textContent='Lv'+lv(S.wealth+S.family);
@@ -741,10 +780,21 @@ function renderFuture(){
   const box=document.getElementById('selfieBox');
   if(S.selfie){box.hidden=false;document.getElementById('selfiePh').innerHTML=`<img src="${S.selfie}" alt="你的照片（示意老化濾鏡）">`;}
 }
+function setShopTab(t){shopTab=t;renderShop();}
 function renderShop(){
-  document.getElementById('shop').innerHTML=SHOP.map(it=>{const ok=S.coins>=it.c;return `<div class="card item"><div class="ic">${it.e}</div><div class="tx"><b>${it.n}</b><span>${it.p}</span><div class="price">🪙 ${it.c.toLocaleString()}</div></div><button class="${ok?'':'no'}" onclick="${ok?`redeem('${it.id}',event)`:''}">${ok?'兌換':'還差 '+(it.c-S.coins)}</button></div>`;}).join('');
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===shopTab));
+  document.getElementById('shopIntro').textContent = shopTab==='deco'
+    ? '換來的裝飾會直接出現在 App 裡：芽芽、花園、地圖和未來的你。'
+    : '金融與醫療生態圈的折扣券，兌換後會出現在下方「我的優惠券」。';
+  document.getElementById('shop').innerHTML=SHOP.filter(it=>it.cat===shopTab).map(it=>{
+    const ok=S.coins>=it.c, own=it.cat==='deco'&&S.owned[it.id], on=own&&!it.once&&S.equip[it.slot];
+    let cls, label;
+    if(own){ if(it.once){cls='own';label='已擁有';} else if(on){cls='eq';label='使用中 ✓';} else {cls='own';label='裝備';} }
+    else { cls=ok?'':'no'; label=ok?'兌換':'還差 '+(it.c-S.coins); }
+    return `<div class="card item"><div class="ic">${it.e}</div><div class="tx"><b>${it.n}</b><span>${it.p}</span><div class="price">${own?'✅ 已兌換':'🪙 '+it.c.toLocaleString()}</div></div><button class="${cls}" onclick="redeem('${it.id}',event)">${label}</button></div>`;
+  }).join('');
   document.getElementById('tixCount').textContent=S.tickets.length?`${S.tickets.length} 張`:'';
-  document.getElementById('tickets').innerHTML=S.tickets.length?S.tickets.map(t=>`<div class="ticket"><div style="font-size:1.8rem">${t.e}</div><div style="flex:1"><b>${t.n}</b><code>${t.code}</code></div><span class="muted">${t.d}</span></div>`).join(''):'<p class="muted">還沒有票券，存一點樂活幣就能換好康！</p>';
+  document.getElementById('tickets').innerHTML=S.tickets.length?S.tickets.map(t=>`<div class="ticket"><div style="font-size:1.8rem">${t.e}</div><div style="flex:1"><b>${t.n}</b><code>${t.code}</code></div><span class="muted">${t.d}</span></div>`).join(''):'<p class="muted">還沒有優惠券。慢慢累積就好，不急 🌱</p>';
 }
 function render(newFlower){renderHeader();renderWalk(newFlower);renderBuddy();renderBadges();renderFuture();renderShop();save();}
 
