@@ -3,38 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>遇見 65 歲的自己｜樂活芽芽散步</title>
+<title>遇見 65 歲的自己 2.0｜Meet Your Future Self</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap">
 <style>
-:root{
-  --ink:#14232E; --cream:#F6F1E8; --sand:#ECE4D4; --card:#FFFCF6; --line:#E2D8C5;
-  --amber:#E89B3C; --amberDk:#8A4A05; --teal:#1F6E64; --green:#3E9E6A; --body:#4A5560;
-  --mist:#C9D3D6; --pink:#E57FA0;
-}
+:root{--ink:#1F2544;--cream:#FFF8EE;--sand:#EFE6D6;--card:#FFFDF8;--line:#E6DCCB;--amber:#F2A33A;--amberDk:#8A4A05;--green:#2E9E68;--teal:#1F7A70;--body:#505672;--grape:#6E5AE6;--coral:#E8604F;--sky:#3D9FE0}
 *{box-sizing:border-box}
 html{font-size:18px}
 html.xl{font-size:21px}
-body{margin:0;background:#E9E2D3;color:var(--ink);font-family:'Noto Sans TC',system-ui,-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;-webkit-tap-highlight-color:transparent}
-button{font-family:inherit;cursor:pointer;border:none}
-.app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--cream);position:relative;padding-bottom:96px;box-shadow:0 0 40px rgba(20,35,46,.12)}
-/* header */
-.top{position:sticky;top:0;z-index:20;background:rgba(246,241,232,.96);backdrop-filter:blur(8px);padding:14px 16px 10px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+body{margin:0;background:#E7E0D2;color:var(--ink);font-family:'Noto Sans TC',system-ui,-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;-webkit-tap-highlight-color:transparent}
+button{font-family:inherit;cursor:pointer;border:none;color:inherit}
+.app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--cream);position:relative;padding-bottom:100px;box-shadow:0 0 40px rgba(31,37,68,.12)}
+.top{position:sticky;top:0;z-index:20;background:rgba(255,248,238,.96);backdrop-filter:blur(8px);padding:12px 16px 10px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
 .top .who{flex:1;min-width:0}
-.top .who b{display:block;font-size:1.05rem;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.top .who span{font-size:.78rem;color:var(--body)}
-.chip{display:flex;align-items:center;gap:4px;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:6px 12px;font-weight:900;font-size:.95rem}
-.chip.coin{border-color:#F2C14E;background:#FFF6DD}
-.iconbtn{width:44px;height:44px;border-radius:14px;background:var(--card);border:2px solid var(--line);font-size:1.2rem}
-/* screens */
-.screen{display:none;padding:16px;animation:fadeIn .35s ease}
+.top .who b{display:block;font-size:1rem;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .who span{font-size:.75rem;color:var(--body)}
+.chip{display:flex;align-items:center;gap:4px;background:#FFF6DD;border:2px solid #F2C14E;border-radius:999px;padding:6px 12px;font-weight:900;font-size:.9rem}
+.iconbtn{width:42px;height:42px;border-radius:14px;background:var(--card);border:2px solid var(--line);font-size:1.15rem}
+.screen{display:none;padding:16px;animation:fadeIn .3s ease}
 .screen.on{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-h2.sec{font-size:1.25rem;font-weight:900;margin:22px 0 10px;display:flex;align-items:center;gap:8px}
-h2.sec small{font-size:.75rem;font-weight:700;color:var(--body);margin-left:auto}
+h1.pg{font-size:1.45rem;font-weight:900;margin:4px 0 4px}
+.sub{color:var(--body);font-size:.88rem;line-height:1.6;margin:0 0 12px}
+h2.sec{font-size:1.15rem;font-weight:900;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+h2.sec small{font-size:.72rem;font-weight:700;color:var(--body);margin-left:auto}
 .card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:16px}
-.muted{color:var(--body);font-size:.85rem;line-height:1.6}
+.muted{color:var(--body);font-size:.84rem;line-height:1.6}
+.big{border-radius:18px;padding:14px 16px;font-weight:900;font-size:1rem;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s;width:100%}
+.big:active{transform:scale(.97)}
+.b-green{background:var(--green);color:#fff;box-shadow:0 5px 0 #1F7A4E}
+.b-amber{background:var(--amber);color:var(--ink);box-shadow:0 5px 0 #C27B1E}
+.b-ink{background:var(--ink);color:#fff;box-shadow:0 5px 0 #000}
+.b-soft{background:var(--sand);color:var(--ink)}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.pill{display:inline-block;font-size:.72rem;font-weight:900;padding:3px 10px;border-radius:999px;background:var(--sand)}
+.p-g{background:#D8F1E3;color:#1F6E48}.p-a{background:#FFE9C7;color:#8A4A05}.p-v{background:#E5E0FF;color:#4B3BB8}.p-s{background:#DCEFFC;color:#1C5E8E}
+/* hero */
+.hero{border-radius:26px;overflow:hidden;background:linear-gradient(160deg,#2B3366,#1F2544);color:#fff;position:relative}
+.hero .art{display:block;width:100%}
+.hero .art svg{display:block;width:100%;height:auto}
+.hero .tx{padding:14px 18px 18px}
+.hero h2{margin:0 0 6px;font-size:1.25rem;font-weight:900;line-height:1.4}
+.hero p{margin:0 0 14px;color:#D7DBF0;font-size:.86rem;line-height:1.6}
+/* rings */
+.rings{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.rg{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:10px 6px;text-align:center}
+.rg svg{width:82px;height:82px}
+.rg b{display:block;font-size:.92rem}
+.rg span{font-size:.72rem;color:var(--body)}
+/* journey */
+.jn{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.js{display:flex;align-items:center;gap:10px;font-size:.88rem}
+.js i{width:26px;height:26px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:900;font-size:.8rem;background:var(--sand);color:var(--body)}
+.js.ok i{background:var(--green);color:#fff}
+.js.now{font-weight:900}.js.now i{background:var(--amber);color:var(--ink)}
+.bar{height:12px;border-radius:999px;background:var(--sand);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--green),#8BCB6A);transition:width .5s}
+.bar.gold i{background:linear-gradient(90deg,var(--amber),#F6CF6B)}
 /* map */
-.mapwrap{position:relative;border-radius:26px;overflow:hidden;border:3px solid #CFE3C8;background:linear-gradient(#D9F0D3,#BFE3B4)}
+.mapwrap{position:relative;border-radius:24px;overflow:hidden;border:3px solid #CFE3C8}
 #map{display:block;width:100%;height:auto;touch-action:manipulation}
 .seed{cursor:pointer}
 .bob{animation:bob 1.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
@@ -43,763 +69,920 @@ h2.sec small{font-size:.75rem;font-weight:700;color:var(--body);margin-left:auto
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
 .bloom{animation:bloom .6s cubic-bezier(.3,1.6,.5,1) both;transform-box:fill-box;transform-origin:50% 100%}
 @keyframes bloom{from{transform:scale(0)}to{transform:scale(1)}}
-.maptag{position:absolute;left:12px;top:12px;background:rgba(20,35,46,.78);color:#fff;border-radius:999px;padding:6px 12px;font-size:.78rem;font-weight:700}
-.stepbar{display:flex;align-items:center;gap:14px;margin-top:14px}
-.ring{width:96px;height:96px;flex:none;position:relative}
-.ring svg{width:96px;height:96px;transform:rotate(-90deg)}
-.ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;font-size:1.15rem;line-height:1.1}
-.ring .num small{font-size:.65rem;color:var(--body);font-weight:700}
+.maptag{position:absolute;left:12px;top:12px;background:rgba(31,37,68,.8);color:#fff;border-radius:999px;padding:5px 12px;font-size:.75rem;font-weight:700}
+.stepbar{display:flex;align-items:center;gap:14px;margin-top:12px}
+.ring{width:92px;height:92px;flex:none;position:relative}
+.ring svg{width:92px;height:92px;transform:rotate(-90deg)}
+.ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;font-size:1.1rem;line-height:1.1}
+.ring .num small{font-size:.62rem;color:var(--body);font-weight:700}
 .walkbtns{flex:1;display:flex;flex-direction:column;gap:10px}
-.big{border-radius:18px;padding:14px 16px;font-weight:900;font-size:1.05rem;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s}
-.big:active{transform:scale(.97)}
-.b-green{background:var(--green);color:#fff;box-shadow:0 6px 0 #2B7A50}
-.b-amber{background:var(--amber);color:var(--ink);box-shadow:0 6px 0 #B9741F}
-.b-ink{background:var(--ink);color:#fff;box-shadow:0 6px 0 #000}
-.b-soft{background:var(--sand);color:var(--ink)}
-.b-green.on{background:#2B7A50}
 /* tasks */
-.task{display:flex;align-items:center;gap:12px;padding:12px;border-radius:20px;background:var(--card);border:2px solid var(--line);margin-bottom:10px}
-.task .bud{width:54px;height:60px;flex:none}
+.task{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:20px;background:var(--card);border:2px solid var(--line);margin-bottom:10px}
+.task .bud{width:50px;height:56px;flex:none}
+.task .bud svg{width:100%;height:100%}
 .task .tx{flex:1;min-width:0}
-.task .tx b{display:block;font-size:1rem}
-.task .tx span{font-size:.8rem;color:var(--body)}
-.task .go{border-radius:14px;padding:10px 12px;font-weight:900;background:var(--amber);color:var(--ink);font-size:.9rem;white-space:nowrap}
+.task .tx b{display:block;font-size:.98rem}
+.task .tx span{font-size:.78rem;color:var(--body)}
+.task .go{border-radius:14px;padding:10px 12px;font-weight:900;background:var(--amber);color:var(--ink);font-size:.85rem;white-space:nowrap}
 .task.done{background:#EAF5EC;border-color:#BFDFC6}
 .task.done .go{background:#BFDFC6;color:#1F5B3A}
+em.rec{font-style:normal;background:#FFF1DC;color:var(--amberDk);font-weight:700;border-radius:8px;padding:1px 6px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.stats div{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:10px 4px}
+.stats b{display:block;font-size:1.15rem}
+.stats span{font-size:.68rem;color:var(--body)}
 /* family */
-.fam{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.fam{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
 .fam:last-child{border-bottom:none}
-.fam .em{font-size:1.9rem}
-.fam .tx{flex:1}
-.fam .tx b{display:block}
-.fam .tx span{font-size:.8rem;color:var(--green);font-weight:700}
-.heart{background:#FDE7EE;color:#B4325E;border-radius:12px;padding:8px 12px;font-weight:900}
-.bar{height:14px;border-radius:999px;background:var(--sand);overflow:hidden}
-.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--green),#8BCB6A);transition:width .6s}
-.bar.gold i{background:linear-gradient(90deg,var(--amber),#F6CF6B)}
-/* buddies grid */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.bcard{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:10px 6px;text-align:center;cursor:pointer;transition:transform .15s}
-.bcard:active{transform:scale(.96)}
-.bcard svg{width:72px;height:80px}
-.bcard b{display:block;font-size:.9rem}
-.bcard span{font-size:.72rem;color:var(--body)}
-.bcard.lock svg{filter:grayscale(1) brightness(.2);opacity:.35}
-.party{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;min-height:70px;align-items:flex-end}
-.party svg{width:50px;height:58px}
-/* badges */
-.badge{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:12px 6px;text-align:center;cursor:pointer}
-.medal{width:70px;height:70px;margin:0 auto 6px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;background:radial-gradient(circle at 35% 30%,#FFF3C4,#F2C14E 60%,#C98F1A);box-shadow:inset 0 -4px 0 rgba(0,0,0,.15),0 4px 0 #B07A12}
-.badge.lock .medal{background:radial-gradient(circle at 35% 30%,#F0EBE1,#D6CDBD);box-shadow:inset 0 -4px 0 rgba(0,0,0,.08);filter:grayscale(1);opacity:.6}
-.badge b{display:block;font-size:.85rem}
-.badge span{font-size:.7rem;color:var(--body)}
+.fam .em{font-size:1.8rem}
+.fam .tx{flex:1}.fam .tx b{display:block}
+.fam .tx span{font-size:.78rem;color:var(--green);font-weight:700}
+.heart{background:#FDE7EE;color:#B4325E;border-radius:12px;padding:8px 12px;font-weight:900;font-size:.85rem}
+.famrow{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.famrow span{background:var(--sand);border-radius:999px;padding:4px 10px;font-size:.82rem;font-weight:700}
+.fact{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.92rem}
+.fact:last-child{border-bottom:none}
+.fact .ck{width:30px;height:30px;border-radius:10px;border:2px solid var(--line);background:#fff;flex:none;font-weight:900}
+.fact.ok .ck{background:var(--green);border-color:var(--green);color:#fff}
+.fact.ok span{color:var(--body);text-decoration:line-through}
+/* scenarios */
+.scn{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sc{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px;text-align:left;display:flex;flex-direction:column;gap:6px;position:relative}
+.sc .e{font-size:1.8rem}
+.sc b{font-size:.95rem;line-height:1.35}
+.sc span{font-size:.75rem;color:var(--body)}
+.sc.ok{border-color:#9FD3B4;background:#F1FAF4}
+.sc .tick{position:absolute;right:10px;top:10px;font-size:.72rem;font-weight:900;color:#1F6E48}
+.sl{margin:12px 0}
+.sl .lb{display:flex;justify-content:space-between;font-size:.88rem;font-weight:700;margin-bottom:4px}
+.sl .lb b{color:var(--amberDk);font-size:1rem}
+input[type=range]{width:100%;accent-color:var(--green);height:28px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chipb{padding:9px 12px;border-radius:14px;border:2px solid var(--line);background:#fff;font-weight:700;font-size:.88rem}
+.chipb.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.cmp{display:flex;flex-direction:column;gap:10px;margin:10px 0}
+.cmp .r{display:grid;grid-template-columns:64px 1fr 92px;gap:8px;align-items:center;font-size:.85rem;font-weight:700}
+.cmp .t{height:22px;border-radius:999px;background:var(--sand);overflow:hidden}
+.cmp .t i{display:block;height:100%;border-radius:999px}
+.cmp .v{text-align:right}
+.headline{font-size:1.05rem;font-weight:900;line-height:1.6;margin:6px 0}
+.chk{margin:0;padding-left:20px;line-height:1.8;font-size:.9rem}
+.note{font-size:.72rem;color:var(--body);text-align:center;margin-top:12px;line-height:1.6}
+/* retire */
+.bignum{font-size:2rem;font-weight:900;line-height:1.1}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:12px}
+.kpi span{font-size:.75rem;color:var(--body);display:block}
+.kpi b{font-size:1.3rem}
+#retChart svg{width:100%;height:auto;display:block}
 /* future */
-.stations{display:flex;justify-content:space-between;position:relative;margin:6px 4px 14px}
-.stations:before{content:"";position:absolute;left:20px;right:20px;top:24px;height:6px;background:var(--sand);border-radius:6px}
-.st{position:relative;z-index:1;text-align:center;cursor:pointer;background:none}
-.st .dot{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.05rem;background:#fff;border:3px solid var(--line);color:var(--body)}
-.st.open .dot{background:var(--amber);border-color:#B9741F;color:var(--ink)}
-.st.sel .dot{outline:4px solid rgba(232,155,60,.35)}
-.st small{display:block;font-size:.7rem;margin-top:4px;color:var(--body);font-weight:700}
+.ages{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.ag{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:10px 4px;text-align:center}
+.ag b{display:block;font-size:1.3rem}
+.ag span{font-size:.7rem;color:var(--body)}
+.ag.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ag.on span{color:#D7DBF0}
 .scene{border-radius:24px;overflow:hidden;border:3px solid var(--line);position:relative}
 .scene svg{display:block;width:100%;height:auto}
-.speech{background:var(--ink);color:#fff;border-radius:20px;padding:16px;margin-top:12px;line-height:1.7;font-size:1rem;position:relative}
+.scene.gold{border:6px solid #E8B23C;box-shadow:0 0 0 4px #FFF1C4}
+.topic{font-weight:900;font-size:1.05rem;margin:14px 0 4px}
+.speech{background:var(--ink);color:#fff;border-radius:20px;padding:16px;margin-top:10px;line-height:1.75;font-size:.98rem;position:relative}
 .speech:before{content:"";position:absolute;top:-10px;left:40px;border:10px solid transparent;border-top:none;border-bottom-color:var(--ink)}
-.meters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.meter{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:12px}
-.meter b{font-size:.9rem}
-.meter .lv{float:right;font-weight:900;color:var(--amberDk)}
-.qbtn{display:block;width:100%;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 14px;font-weight:700;font-size:.95rem;margin-bottom:8px}
+.qbtn{display:block;width:100%;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:11px 14px;font-weight:700;font-size:.92rem;margin-bottom:8px}
 .chat{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
-.msg{max-width:88%;padding:10px 14px;border-radius:16px;line-height:1.6;font-size:.95rem}
+.msg{max-width:88%;padding:10px 14px;border-radius:16px;line-height:1.6;font-size:.93rem}
 .msg.me{align-self:flex-end;background:var(--green);color:#fff;border-bottom-right-radius:4px}
 .msg.ai{align-self:flex-start;background:#fff;border:2px solid var(--line);border-bottom-left-radius:4px}
+.ask{display:flex;gap:8px}
+.ask input{flex:1}
 .selfie{display:flex;align-items:center;gap:12px}
-.selfie .ph{width:72px;height:72px;border-radius:50%;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:1.8rem;overflow:hidden;flex:none;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.selfie .ph{width:68px;height:68px;border-radius:50%;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:1.6rem;overflow:hidden;flex:none;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .selfie .ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(.45) sepia(.3) contrast(1.05)}
-/* shop */
-.item{display:flex;gap:12px;align-items:center;padding:14px;margin-bottom:10px}
-.item .ic{width:58px;height:58px;border-radius:18px;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:1.9rem;flex:none}
-.item .tx{flex:1;min-width:0}
-.item .tx b{display:block}
-.item .tx span{font-size:.75rem;color:var(--body)}
-.item .price{font-weight:900;color:var(--amberDk);font-size:.95rem}
+/* report */
+.rep{border-left:6px solid var(--green);margin-bottom:10px}
+.rep h3{margin:0 0 4px;font-size:1.05rem;display:flex;align-items:center;gap:8px}
+.rep.m{border-left-color:var(--sky)}.rep.r{border-left-color:var(--amber)}
+.cta{display:flex;flex-direction:column;gap:10px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;color:var(--body);line-height:1.6;margin-top:10px}
+.consent input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--green)}
+/* growth */
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--sand);padding:6px;border-radius:18px;margin:4px 0 12px}
+.tabs.two{grid-template-columns:1fr 1fr}
+.tabs button{padding:11px 6px;border-radius:14px;font-weight:900;background:none;font-size:.9rem;color:var(--body)}
+.tabs button.on{background:#fff;color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bcard{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:10px 6px;text-align:center;cursor:pointer}
+.bcard svg{width:68px;height:76px}
+.bcard b{display:block;font-size:.88rem}
+.bcard span{font-size:.7rem;color:var(--body)}
+.bcard.lock svg{filter:grayscale(1) brightness(.2);opacity:.35}
+.party{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;min-height:66px;align-items:flex-end}
+.party svg{width:48px;height:56px}
+.badge{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:12px 6px;text-align:center;cursor:pointer}
+.medal{width:64px;height:64px;margin:0 auto 6px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;background:radial-gradient(circle at 35% 30%,#FFF3C4,#F2C14E 60%,#C98F1A);box-shadow:inset 0 -4px 0 rgba(0,0,0,.15),0 4px 0 #B07A12}
+.badge.lock .medal{background:radial-gradient(circle at 35% 30%,#F0EBE1,#D6CDBD);box-shadow:inset 0 -4px 0 rgba(0,0,0,.08);filter:grayscale(1);opacity:.6}
+.badge b{display:block;font-size:.82rem}
+.badge span{font-size:.68rem;color:var(--body)}
+.item{display:flex;gap:12px;align-items:center;padding:12px;margin-bottom:10px}
+.item .ic{width:54px;height:54px;border-radius:16px;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex:none}
+.item .tx{flex:1;min-width:0}.item .tx b{display:block;font-size:.95rem}
+.item .tx span{font-size:.73rem;color:var(--body)}
+.item .price{font-weight:900;color:var(--amberDk);font-size:.9rem}
 .item button{border-radius:14px;padding:10px 12px;font-weight:900;background:var(--green);color:#fff;white-space:nowrap}
 .item button.no{background:var(--sand);color:var(--body)}
 .item button.eq{background:var(--ink);color:#fff}
 .item button.own{background:#BFDFC6;color:#1F5B3A}
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--sand);padding:6px;border-radius:18px;margin-top:16px}
-.tabs button{padding:12px 6px;border-radius:14px;font-weight:900;background:none;font-size:.95rem;color:var(--body)}
-.tabs button.on{background:#fff;color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.08)}
-.scene.gold{border:6px solid #E8B23C;box-shadow:0 0 0 4px #FFF1C4}
 .ticket{border:2px dashed var(--amber);background:#FFF8EA;border-radius:18px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
-.ticket b{display:block}
-.ticket code{font-size:.85rem;font-weight:700;letter-spacing:1px}
+.ticket b{display:block}.ticket code{font-size:.82rem;font-weight:700;letter-spacing:1px}
+/* mood */
+.moods{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
+.mb{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.72rem;font-weight:700;color:var(--body)}
+.mb .e{font-size:1.6rem;line-height:1.2}
+.mb.on{border-color:var(--ink);background:#FFF1DC;color:var(--ink)}
+.week{display:flex;gap:6px;margin-top:10px;align-items:center;font-size:.72rem;color:var(--body);flex-wrap:wrap}
+.week .d{width:28px;height:28px;border-radius:50%;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:.95rem}
 /* nav */
 .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;border-top:2px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 6px calc(8px + env(safe-area-inset-bottom));z-index:30}
-.nav button{background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.72rem;font-weight:700;color:var(--body);padding:6px 0;border-radius:14px;position:relative}
-.nav button .e{font-size:1.5rem;line-height:1}
+.nav button{background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.7rem;font-weight:700;color:var(--body);padding:6px 0;border-radius:14px}
+.nav button .e{font-size:1.45rem;line-height:1}
 .nav button.on{background:#FFF1DC;color:var(--ink)}
-.nav .dotn{position:absolute;top:2px;right:18%;width:12px;height:12px;border-radius:50%;background:#E5484D;border:2px solid #fff;display:none}
-.nav .dotn.show{display:block}
 /* overlays */
-.ov{position:fixed;inset:0;background:rgba(20,35,46,.6);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.ov{position:fixed;inset:0;background:rgba(31,37,68,.6);z-index:50;display:none;align-items:flex-end;justify-content:center}
 .ov.on{display:flex}
-.sheet{background:var(--cream);width:100%;max-width:480px;border-radius:28px 28px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom));max-height:88vh;overflow:auto;animation:up .3s ease}
+.sheet{background:var(--cream);width:100%;max-width:480px;border-radius:28px 28px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom));max-height:90vh;overflow:auto;animation:up .3s ease}
 @keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
-.sheet h3{margin:0 0 6px;font-size:1.3rem;font-weight:900}
+.sheet h3{margin:0 0 6px;font-size:1.25rem;font-weight:900}
 .center{text-align:center}
 .hatch{width:150px;height:170px;margin:6px auto}
+#hatchBox svg,#petBox svg,.sheet .bob svg{width:100%;height:100%;display:block}
 .egg{animation:shake .5s ease-in-out 3;transform-origin:50% 90%;transform-box:fill-box}
 @keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
-#hatchBox svg,#petBox svg,.sheet .bob svg{width:100%;height:100%;display:block}
 .jump{animation:jump .6s ease}
 @keyframes jump{0%,100%{transform:translateY(0)}40%{transform:translateY(-22px)}}
-.toast{position:fixed;left:50%;top:84px;transform:translate(-50%,-20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:16px;font-weight:700;z-index:60;opacity:0;transition:all .3s;pointer-events:none;width:max-content;max-width:90vw;text-align:center}
+.gen{width:100%;height:14px;border-radius:999px;background:var(--sand);overflow:hidden;margin:16px 0}
+.gen i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--grape),var(--sky));animation:gen 2.4s ease forwards}
+@keyframes gen{to{width:100%}}
+.toast{position:fixed;left:50%;top:80px;transform:translate(-50%,-20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:16px;font-weight:700;z-index:60;opacity:0;transition:all .3s;pointer-events:none;width:max-content;max-width:90vw;text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
-.pop{position:fixed;z-index:70;font-weight:900;color:var(--amberDk);font-size:1.2rem;pointer-events:none;animation:popup 1s ease-out forwards;text-shadow:0 2px 0 #fff}
+.pop{position:fixed;z-index:70;font-weight:900;color:var(--amberDk);font-size:1.15rem;pointer-events:none;animation:popup 1s ease-out forwards;text-shadow:0 2px 0 #fff}
 @keyframes popup{from{opacity:1;transform:translate(-50%,0)}to{opacity:0;transform:translate(-50%,-60px)}}
 .conf{position:fixed;top:-12px;width:10px;height:14px;z-index:80;pointer-events:none;border-radius:2px;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
-input[type=text]{width:100%;font-size:1.1rem;padding:14px;border-radius:16px;border:2px solid var(--line);background:#fff;font-family:inherit}
-.looks{display:flex;gap:10px;justify-content:center;margin:12px 0}
-.look{width:64px;height:64px;border-radius:50%;border:4px solid transparent;cursor:pointer}
+input[type=text]{width:100%;font-size:1.05rem;padding:13px;border-radius:16px;border:2px solid var(--line);background:#fff;font-family:inherit}
+.field{text-align:left;margin-top:16px}
+.field>b{display:block;margin-bottom:8px}
+.stepper{display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:4px}
+.stepper button{width:40px;height:40px;border-radius:12px;background:var(--sand);font-size:1.1rem;font-weight:900}
+.stepper span{min-width:72px;text-align:center;font-weight:900;font-size:1.05rem}
+.prow2{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.dots{text-align:center;color:var(--body);margin:16px 0 10px;letter-spacing:6px}
+.looks{display:flex;gap:10px;margin:6px 0}
+.look{width:52px;height:52px;border-radius:50%;border:4px solid transparent;cursor:pointer}
 .look.sel{border-color:var(--ink)}
-.row{display:flex;gap:10px}
-.row>*{flex:1}
-.note{font-size:.72rem;color:var(--body);text-align:center;margin-top:12px}
+.wish{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.wish button{background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 8px;font-weight:700;font-size:.9rem;display:flex;flex-direction:column;align-items:center;gap:4px}
+.wish button .e{font-size:1.7rem}
+.wish button.on{border-color:var(--ink);background:#FFF1DC}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div class="app" id="app">
+<div class="app">
   <header class="top">
-    <div class="who"><b id="hdrName">我的樂活花園</b><span id="hdrSub">今天走多少都算 🌱</span></div>
-    <div class="chip coin" title="樂活幣">🪙 <span id="coins">0</span></div>
-    <div class="chip" title="累積活躍天數">🔥 <span id="days">0</span></div>
+    <div class="who"><b id="hdrName">遇見 65 歲的自己</b><span id="hdrSub">Meet Your Future Self</span></div>
+    <button class="chip" onclick="go('growth');setGrowthTab('shop')" aria-label="樂活幣">🪙 <span id="coins">0</span></button>
     <button class="iconbtn" onclick="openSettings()" aria-label="設定">⚙️</button>
   </header>
 
-  <!-- 散步 -->
-  <section class="screen on" id="s-walk">
-    <div class="mapwrap">
-      <svg id="map" viewBox="0 0 360 300" aria-label="今日散步地圖"></svg>
-      <div class="maptag" id="mapTag">今日散步路線｜第 1 圈</div>
-    </div>
-    <div class="stepbar">
-      <div class="ring">
-        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="#ECE4D4" stroke-width="12"/><circle id="ringArc" cx="50" cy="50" r="42" fill="none" stroke="#3E9E6A" stroke-width="12" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264" style="transition:stroke-dashoffset .5s"/></svg>
-        <div class="num"><span id="steps">0</span><small>/ 3,000 步</small></div>
+  <!-- 首頁 -->
+  <section class="screen on" id="s-home">
+    <h1 class="pg" id="hello">你好，今天想為未來做什麼？</h1>
+    <p class="sub" id="helloSub"></p>
+    <div class="card" id="journeyCard" style="margin-bottom:14px"></div>
+    <div class="hero">
+      <div class="art" id="heroArt"></div>
+      <div class="tx">
+        <h2>今天的你，正在為 65 歲的自己做準備嗎？</h2>
+        <p>健康、保障與退休生活，從現在開始，一步一步累積。</p>
+        <button class="big b-amber" onclick="go('future')">✨ 看看 65 歲的我</button>
       </div>
+    </div>
+    <h2 class="sec">📊 我的人生準備度 <small>點一下看細節</small></h2>
+    <div class="rings" id="rings"></div>
+    <button class="big b-soft" style="margin-top:10px" onclick="openReport()">📄 查看我的人生報告</button>
+    <h2 class="sec">⏱️ 今日行動 <small>一件就好</small></h2>
+    <div id="todayAct"></div>
+    <div class="card" id="moodCard" style="margin-top:10px"></div>
+    <h2 class="sec">👨‍👩‍👧 和家人一起準備</h2>
+    <div class="card" id="homeFamily"></div>
+    <h2 class="sec">🌱 我的成長紀錄</h2>
+    <div class="card" style="display:flex;align-items:center;gap:12px;cursor:pointer" onclick="go('growth')">
+      <div style="width:56px;height:62px;flex:none" id="growthBud"></div>
+      <div style="flex:1"><b id="growthTxt"></b><div class="muted">芽芽夥伴、徽章與樂活幣兌換</div></div>
+      <span style="font-size:1.4rem">›</span>
+    </div>
+  </section>
+
+  <!-- 健康生活 -->
+  <section class="screen" id="s-health">
+    <h1 class="pg">💪 健康生活</h1>
+    <p class="sub">讓健康變成每天的小行動。散步、睡眠、飲食與健檢，都會累積進你的健康存摺。</p>
+    <h2 class="sec" style="margin-top:6px">🚶 今日活動</h2>
+    <div class="mapwrap"><svg id="map" viewBox="0 0 360 300" aria-label="今日散步地圖"></svg><div class="maptag" id="mapTag">今日散步路線</div></div>
+    <div class="stepbar">
+      <div class="ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="#EFE6D6" stroke-width="12"/><circle id="ringArc" cx="50" cy="50" r="42" fill="none" stroke="#2E9E68" stroke-width="12" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264" style="transition:stroke-dashoffset .5s"/></svg><div class="num"><span id="steps">0</span><small>/ 3,000 步</small></div></div>
       <div class="walkbtns">
         <button class="big b-green" onclick="walk(300,event)">👟 走一走 +300 步</button>
         <button class="big b-soft" id="autoBtn" onclick="toggleAuto()">▶️ 自動散步</button>
       </div>
     </div>
-    <p class="muted" style="margin:10px 2px 0">每走 500 步種下一朵花；路上冒出的 <b>🌰 種子</b> 點一下就能孵出芽芽夥伴！</p>
-
-    <h2 class="sec">⏱️ 今天的 3 分鐘小任務 <small>做一件就很棒</small></h2>
-    <div id="tasks"></div>
-
-    <h2 class="sec">👨‍👩‍👧 三代家族圈</h2>
+    <p class="muted" style="margin:8px 2px 0">每走 500 步開一朵花；路上的 🌰 種子點一下就能孵出芽芽夥伴。</p>
+    <h2 class="sec">✅ 今天的健康任務 <small>做一件就很棒</small></h2>
+    <div id="hTasks"></div>
+    <h2 class="sec">🩺 健康快評</h2>
+    <div class="card" id="hqCard"></div>
+    <h2 class="sec">📘 我的健康存摺</h2>
+    <div class="stats" id="hBook"></div>
+    <h2 class="sec" id="famTitle">👨‍👩‍👧 家庭健康</h2>
     <div class="card">
       <div id="family"></div>
-      <div style="margin-top:12px">
-        <div style="display:flex;justify-content:space-between;font-weight:700;font-size:.85rem;margin-bottom:6px"><span>全家今日一起走 20,000 步</span><span id="famNum">0</span></div>
-        <div class="bar"><i id="famBar" style="width:0%"></i></div>
-        <button class="big b-amber" id="famClaim" style="width:100%;margin-top:12px;display:none" onclick="claimFamily(event)">🎉 全家達標！領取 5 樂活幣</button>
-      </div>
+      <div style="margin-top:12px"><div style="display:flex;justify-content:space-between;font-weight:700;font-size:.82rem;margin-bottom:6px"><span id="famGoalTxt"></span><span id="famNum">0</span></div><div class="bar"><i id="famBar" style="width:0%"></i></div>
+      <button class="big b-amber" id="famClaim" style="margin-top:12px;display:none" onclick="claimFamily(event)">🎉 大家一起達標！領取 5 樂活幣</button></div>
     </div>
   </section>
 
-  <!-- 夥伴 -->
-  <section class="screen" id="s-buddy">
-    <div class="card center" style="background:linear-gradient(#E3F3DD,#FFFCF6)">
-      <b style="font-size:1.1rem">正在跟著你散步的芽芽</b>
-      <div class="party" id="party"></div>
-      <div class="muted" id="partyTxt"></div>
-    </div>
-    <h2 class="sec">📖 芽芽圖鑑 <small id="dexCount"></small></h2>
-    <div class="grid" id="dex"></div>
-    <p class="note">每種芽芽代表一種好習慣：走路、存錢、睡眠、家人、保障、健檢。點一下可以摸摸頭！</p>
+  <!-- 醫療保障 -->
+  <section class="screen" id="s-protect">
+    <h1 class="pg">🛡️ 醫療保障</h1>
+    <p class="sub">人生風險模擬器：先想像情境，再看看準備。不用填保單，也不會推銷。</p>
+    <div class="card" style="background:#EEF6FD;border-color:#C9E2F5"><b style="font-size:1.1rem">如果明天發生這件事，你準備好了嗎？</b><div class="muted">選一個你最關心的情境開始。</div></div>
+    <div class="scn" style="margin-top:10px" id="scnList"></div>
+    <h2 class="sec">📋 我目前的保障與預備金</h2>
+    <div class="card" id="coverCard"></div>
+    <h2 class="sec">💡 我的保障建議</h2>
+    <div class="card" id="protectAdvice"></div>
   </section>
 
-  <!-- 徽章 -->
-  <section class="screen" id="s-badge">
-    <div class="card" style="display:flex;align-items:center;gap:14px">
-      <div class="medal" style="margin:0;flex:none">🏅</div>
-      <div><b style="font-size:1.1rem">徽章收藏冊</b><div class="muted" id="badgeSum"></div></div>
-    </div>
-    <h2 class="sec">✨ 所有徽章 <small>沒有失敗，只有還沒解鎖</small></h2>
-    <div class="grid" id="badges"></div>
+  <!-- 情境模擬（子頁） -->
+  <section class="screen" id="s-risk">
+    <button class="qbtn" style="width:auto;display:inline-block" onclick="go('protect')">‹ 回到情境列表</button>
+    <div id="riskBody"></div>
   </section>
 
-  <!-- 未來 -->
+  <!-- 退休規劃 -->
+  <section class="screen" id="s-retire">
+    <h1 class="pg">🏖️ 我的退休生活試算</h1>
+    <p class="sub">調整數字，看看現在的準備如何影響未來。</p>
+    <div class="card" id="retOut"></div>
+    <div class="card" style="margin-top:10px" id="retChart"></div>
+    <div class="card" style="margin-top:10px" id="retInputs"></div>
+    <h2 class="sec">✅ 今天的存錢小行動</h2>
+    <div id="rTasks"></div>
+    <p class="note">示意工具：簡化試算，假設每月月底投入、報酬率固定且按月複利；不包含稅負、費用與通膨，不構成投資建議。</p>
+  </section>
+
+  <!-- 未來的我 -->
   <section class="screen" id="s-future">
-    <h2 class="sec" style="margin-top:4px">🗺️ 長壽人生地圖 <small>點每一站聽他說話</small></h2>
-    <div class="stations" id="stations"></div>
+    <h1 class="pg">🔮 未來的我</h1>
+    <p class="sub" id="futureSub">AI 人生體驗：看見 65、75、85 歲的自己，和他聊聊。</p>
+    <div class="ages" id="ages"></div>
     <div class="scene" id="scene"></div>
+    <div class="topic" id="topic"></div>
     <div class="speech" id="speech"></div>
     <div class="row" style="margin-top:10px">
       <button class="big b-amber" onclick="speak()">🔊 聽他說</button>
-      <button class="big b-soft" onclick="pickSelfie()">📸 放上我的照片</button>
+      <button class="big b-soft" onclick="document.getElementById('selfieIn').click()">📸 放上我的照片</button>
     </div>
     <input type="file" id="selfieIn" accept="image/*" style="display:none" onchange="loadSelfie(event)">
-    <div class="meters">
-      <div class="meter"><b>💪 健康活力</b><span class="lv" id="hLv">Lv1</span><div class="bar" style="margin-top:8px"><i id="hBar"></i></div></div>
-      <div class="meter"><b>🪙 生活安心</b><span class="lv" id="wLv">Lv1</span><div class="bar gold" style="margin-top:8px"><i id="wBar"></i></div></div>
-    </div>
-    <div class="card" style="margin-top:12px" id="hint"></div>
-    <div class="selfie card" style="margin-top:12px" id="selfieBox" hidden>
-      <div class="ph" id="selfiePh">🙂</div>
-      <div class="muted">這是「示意」老化濾鏡。正式版會由 AI 依你的雙帳戶，生成 65、75、85 歲的你。</div>
-    </div>
-    <h2 class="sec">💬 跟未來的自己聊聊</h2>
+    <div class="selfie card" style="margin-top:10px" id="selfieBox" hidden><div class="ph" id="selfiePh">🙂</div><div class="muted">這是示意的老化濾鏡；正式版由 AI 依你的狀態生成 65、75、85 歲的你。照片只存在這台裝置。</div></div>
+    <h2 class="sec">💬 和未來的自己聊聊</h2>
     <div class="chat" id="chat"></div>
-    <button class="qbtn" onclick="ask(0)">🌱 我今天只做一件事，該做什麼？</button>
-    <button class="qbtn" onclick="ask(1)">😟 我是不是準備得不夠？</button>
-    <button class="qbtn" onclick="ask(2)">👵 爸媽也能一起玩嗎？</button>
-    <button class="qbtn" onclick="ask(3)">🛡️ 長照保障，我需要現在決定嗎？</button>
+    <div id="qList"></div>
+    <div class="ask"><input type="text" id="askIn" placeholder="想問他什麼？" maxlength="40" onkeydown="if(event.key==='Enter')askFree()"><button class="big b-green" style="width:auto;padding:12px 16px" onclick="askFree()">送出</button></div>
+    <p class="note">原型示意：回覆依你的設定與準備度產生；正式版串接 AI 對話。</p>
   </section>
 
-  <!-- 兌換 -->
-  <section class="screen" id="s-shop">
-    <div class="card" style="display:flex;align-items:center;gap:14px;background:#FFF6DD;border-color:#F2C14E">
-      <div style="font-size:2.4rem">🪙</div>
-      <div style="flex:1"><b style="font-size:1.1rem">我的樂活幣：<span id="coins2">0</span></b><div class="muted">每 1,000 步 +1・小任務 +1～3・徽章 +2・全家達標 +5</div></div>
+  <!-- 人生報告（子頁） -->
+  <section class="screen" id="s-report"><div id="reportBody"></div></section>
+
+  <!-- 成長紀錄（子頁） -->
+  <section class="screen" id="s-growth">
+    <h1 class="pg">🌱 我的成長紀錄</h1>
+    <div class="tabs" id="gTabs"><button data-t="bud" class="on" onclick="setGrowthTab('bud')">芽芽夥伴</button><button data-t="badge" onclick="setGrowthTab('badge')">徽章</button><button data-t="shop" onclick="setGrowthTab('shop')">樂活幣兌換</button></div>
+    <div id="g-bud">
+      <div class="card center" style="background:linear-gradient(#E3F3DD,#FFFDF8)"><b>正在陪你散步的芽芽</b><div class="party" id="party"></div><div class="muted" id="partyTxt"></div></div>
+      <h2 class="sec">📖 芽芽圖鑑 <small id="dexCount"></small></h2>
+      <div class="grid" id="dex"></div>
     </div>
-    <div class="tabs"><button data-t="deco" class="on" onclick="setShopTab('deco')">🎨 虛擬裝飾</button><button data-t="fin" onclick="setShopTab('fin')">🏥 金融・醫療優惠</button></div>
-    <p class="muted" id="shopIntro" style="margin:8px 4px 12px"></p>
-    <div id="shop"></div>
-    <h2 class="sec">🎟️ 我的優惠券 <small id="tixCount"></small></h2>
-    <div id="tickets"></div>
-    <p class="note">原型示意：合作商家、折扣內容與兌換條件以實際活動辦法為準。</p>
+    <div id="g-badge" hidden>
+      <div class="muted" id="badgeSum" style="margin-bottom:10px"></div>
+      <div class="grid" id="badges"></div>
+    </div>
+    <div id="g-shop" hidden>
+      <div class="card" style="display:flex;align-items:center;gap:12px;background:#FFF6DD;border-color:#F2C14E"><div style="font-size:2.2rem">🪙</div><div><b>我的樂活幣：<span id="coins2">0</span></b><div class="muted">每 1,000 步 +1・小任務 +1～3・完成評估 +2</div></div></div>
+      <div class="tabs two" id="sTabs" style="margin-top:12px"><button data-t="deco" class="on" onclick="setShopTab('deco')">🎨 虛擬裝飾</button><button data-t="fin" onclick="setShopTab('fin')">🏥 金融・醫療優惠</button></div>
+      <p class="muted" id="shopIntro"></p>
+      <div id="shop"></div>
+      <h2 class="sec">🎟️ 我的優惠券 <small id="tixCount"></small></h2>
+      <div id="tickets"></div>
+      <p class="note">原型示意：合作夥伴與折扣內容以實際活動辦法為準。</p>
+    </div>
   </section>
 
   <nav class="nav">
-    <button class="on" data-s="walk" onclick="go('walk')"><span class="e">🌿</span>散步</button>
-    <button data-s="buddy" onclick="go('buddy')"><span class="e">🌱</span>夥伴<i class="dotn" id="dot-buddy"></i></button>
-    <button data-s="badge" onclick="go('badge')"><span class="e">🏅</span>徽章<i class="dotn" id="dot-badge"></i></button>
-    <button data-s="future" onclick="go('future')"><span class="e">🧓</span>未來的我</button>
-    <button data-s="shop" onclick="go('shop')"><span class="e">🎁</span>兌換</button>
+    <button class="on" data-s="home" onclick="go('home')"><span class="e">🏠</span>首頁</button>
+    <button data-s="health" onclick="go('health')"><span class="e">💪</span>健康生活</button>
+    <button data-s="protect" onclick="go('protect')"><span class="e">🛡️</span>醫療保障</button>
+    <button data-s="retire" onclick="go('retire')"><span class="e">🏖️</span>退休規劃</button>
+    <button data-s="future" onclick="go('future')"><span class="e">🔮</span>未來的我</button>
   </nav>
 </div>
-
 <div class="ov" id="ov" onclick="if(event.target===this)closeSheet()"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
-/* ---------- 資料 ---------- */
-const SPECIES = {
-  walk:  {name:'走走芽', color:'#7BC67E', dark:'#3E8E52', habit:'走路', line:'一起去公園吧！今天的風好舒服～', desc:'每走 500 步、完成散步任務就會出現。最喜歡陪你飯後散步。'},
-  coin:  {name:'存存芽', color:'#F2C14E', dark:'#B8860B', habit:'存錢', line:'叮！少一杯手搖，多一趟旅行！', desc:'少喝一杯手搖、自動存一點錢時出現。頭上的金幣會越長越亮。'},
-  moon:  {name:'眠眠芽', color:'#8E9BE8', dark:'#5562B8', habit:'睡眠', line:'呼～早點睡，明天氣色更好喔。', desc:'11:30 前放下手機就會出現。睡飽的人，未來看起來年輕五歲。'},
-  heart: {name:'暖暖芽', color:'#F29CB6', dark:'#C25A7C', habit:'家人', line:'打通電話給爸媽，他們會很開心！', desc:'陪爸媽散步、跟家人互相打氣時出現。三代一起，照顧不再一個人扛。'},
-  shield:{name:'護護芽', color:'#6CCFC2', dark:'#1F8A7E', habit:'保障', line:'我會守護你，慢慢來，不急。', desc:'花 1 分鐘看看保障清單時出現。只陪你了解，不催你做決定。'},
-  star:  {name:'檢檢芽', color:'#F7A35C', dark:'#C76A1E', habit:'健檢', line:'今年的健檢預約了嗎？我陪你去！', desc:'預約健檢時出現。早點知道，就能早點安心。'},
-  legend:{name:'長壽芽', color:'#C9A2F0', dark:'#7E52B8', habit:'傳說', line:'我是傳說中的長壽芽，活得久也活得好！', desc:'稀有夥伴！孵化種子時有機會遇見，或在兌換區取得。', rare:true}
+/* ================= 資料 ================= */
+const SPECIES={
+  walk:{name:'走走芽',color:'#7BC67E',dark:'#3E8E52',habit:'走路',line:'一起去公園吧！今天的風好舒服～',desc:'散步、運動時出現，最喜歡陪你飯後走一圈。'},
+  coin:{name:'存存芽',color:'#F2C14E',dark:'#B8860B',habit:'存錢',line:'叮！少一杯手搖，多一趟旅行！',desc:'存下一點錢、完成退休試算時出現。'},
+  moon:{name:'眠眠芽',color:'#8E9BE8',dark:'#5562B8',habit:'睡眠',line:'呼～早點睡，明天氣色更好喔。',desc:'早點放下手機就會出現。'},
+  heart:{name:'暖暖芽',color:'#F29CB6',dark:'#C25A7C',habit:'家人',line:'打通電話給家人，他們會很開心！',desc:'和家人一起完成準備時出現。'},
+  shield:{name:'護護芽',color:'#6CCFC2',dark:'#1F8A7E',habit:'保障',line:'我會守護你，慢慢來，不急。',desc:'完成人生風險情境時出現，只陪你了解，不催你決定。'},
+  star:{name:'檢檢芽',color:'#F7A35C',dark:'#C76A1E',habit:'健檢',line:'今年的健檢預約了嗎？我陪你去！',desc:'預約健檢、完成健康快評時出現。'},
+  legend:{name:'長壽芽',color:'#C9A2F0',dark:'#7E52B8',habit:'傳說',line:'我是傳說中的長壽芽，活得久也活得好！',desc:'稀有夥伴！孵化種子時有機會遇見。',rare:true}
 };
-const BASIC = ['walk','coin','moon','heart','shield','star'];
-
-const TASKS = [
-  {id:'t_walk',  sp:'walk',  t:'飯後散步 20 分鐘', s:'順便陪爸媽走一圈也算', coin:2, h:20, w:0, f:0, steps:1500},
-  {id:'t_save',  sp:'coin',  t:'少喝一杯手搖，存 $100', s:'自動轉入退休小金庫', coin:2, h:0, w:25, f:0},
-  {id:'t_sleep', sp:'moon',  t:'11:30 前放下手機', s:'睡飽是最便宜的保養品', coin:1, h:15, w:0, f:0},
-  {id:'t_family',sp:'heart', t:'打通電話給爸媽或孩子', s:'聊 3 分鐘就好', coin:3, h:5, w:0, f:25},
-  {id:'t_protect',sp:'shield',t:'花 1 分鐘看看保障清單', s:'只看看，不用現在決定', coin:2, h:0, w:15, f:0, sheet:true},
-  {id:'t_check', sp:'star',  t:'預約今年的健康檢查', s:'選一個方便的日子就好', coin:3, h:20, w:0, f:0}
+const BASIC=['walk','coin','moon','heart','shield','star'];
+const H_TASKS=[
+  {id:'t_walk',sp:'walk',t:'為未來的自己，多走 15 分鐘',s:'約 1,500 步',coin:2,steps:1500},
+  {id:'t_sleep',sp:'moon',t:'11:30 前放下手機',s:'睡飽是最便宜的保養品',coin:1},
+  {id:'t_diet',sp:'walk',t:'今天多吃一份蔬菜',s:'午餐或晚餐都可以',coin:1},
+  {id:'t_check',sp:'star',t:'預約今年的健康檢查',s:'選一個方便的日子就好',coin:3},
+  {id:'t_family',sp:'heart',t:'打通電話給家人',s:'聊 3 分鐘就好',coin:3}
 ];
-
-const BADGES = [
-  {id:'hello',   e:'👋', n:'初次相遇',     d:'開始你的樂活花園', p:s=>[s.started?1:0,1]},
-  {id:'first',   e:'👣', n:'第一步',       d:'今天踏出任何一步', p:s=>[Math.min(s.totalSteps,1),1]},
-  {id:'goal',    e:'🎯', n:'今日小目標',   d:'一天走到 3,000 步', p:s=>[Math.min(s.bestDay,3000),3000]},
-  {id:'tenk',    e:'⛰️', n:'萬步達人',     d:'一天走到 10,000 步', p:s=>[Math.min(s.bestDay,10000),10000]},
-  {id:'d3',      e:'🔥', n:'累積 3 天',    d:'有活動的日子累積 3 天（休息日不扣分）', p:s=>[Math.min(s.activeDays,3),3]},
-  {id:'d7',      e:'🌈', n:'一週好習慣',   d:'有活動的日子累積 7 天', p:s=>[Math.min(s.activeDays,7),7]},
-  {id:'saver',   e:'🐷', n:'存錢小豬',     d:'完成 3 次存錢任務', p:s=>[Math.min(s.cnt.t_save||0,3),3]},
-  {id:'owl',     e:'🦉', n:'早睡貓頭鷹',   d:'完成 3 次早睡任務', p:s=>[Math.min(s.cnt.t_sleep||0,3),3]},
-  {id:'filial',  e:'💞', n:'孝親好幫手',   d:'完成 3 次家人任務', p:s=>[Math.min(s.cnt.t_family||0,3),3]},
-  {id:'hearts',  e:'👨‍👩‍👧', n:'三代同心',  d:'送出 3 次愛心給家人', p:s=>[Math.min(s.hearts,3),3]},
-  {id:'checkup', e:'🩺', n:'健檢勇者',     d:'預約一次健康檢查', p:s=>[Math.min(s.cnt.t_check||0,1),1]},
-  {id:'guard',   e:'🛡️', n:'安心守護者',   d:'看過一次保障清單', p:s=>[Math.min(s.cnt.t_protect||0,1),1]},
-  {id:'collect', e:'📖', n:'芽芽收藏家',   d:'集滿 6 種基本芽芽', p:s=>[BASIC.filter(k=>s.buddies[k]>0).length,6]},
-  {id:'legend',  e:'🦄', n:'長壽芽現身',   d:'遇見稀有的長壽芽', p:s=>[Math.min(s.buddies.legend||0,1),1]},
-  {id:'st65',    e:'🌅', n:'解鎖 65 歲',   d:'人生地圖抵達 65 歲站', p:s=>[Math.min(level(s),1),1]},
-  {id:'shop',    e:'🛍️', n:'第一次兌換',   d:'用樂活幣兌換一次好康', p:s=>[Math.min(s.redeemCount||0,1),1]}
+const R_TASKS=[
+  {id:'t_save',sp:'coin',t:'少喝一杯手搖，存下 $100',s:'轉入退休小金庫',coin:2},
+  {id:'t_auto',sp:'coin',t:'把每月自動提撥調高 1%',s:'設定一次，之後自動完成',coin:3}
 ];
-
-const SHOP = [
-  {id:'hat',      cat:'deco', e:'👒', n:'芽芽小草帽', p:'所有芽芽都戴上草帽，散步更有型', c:30, slot:'hat', go:'buddy'},
-  {id:'sunflower',cat:'deco', e:'🌻', n:'向日葵花園', p:'散步路上開出的花變成向日葵', c:40, slot:'flower', go:'walk'},
-  {id:'scarf',    cat:'deco', e:'🧣', n:'暖暖紅圍巾', p:'你的角色和未來的你都圍上圍巾', c:50, slot:'scarf', go:'future'},
-  {id:'frame',    cat:'deco', e:'🖼️', n:'金色回憶相框', p:'「未來的我」畫面加上金框與星星', c:60, slot:'frame', go:'future'},
-  {id:'seaside',  cat:'deco', e:'🏖️', n:'海邊步道地圖', p:'散步地圖換成海邊風景', c:80, slot:'map', go:'walk'},
-  {id:'legend',   cat:'deco', e:'🦄', n:'稀有夥伴「長壽芽」', p:'限定夥伴，會跟著你散步', c:150, once:true, go:'buddy'},
-  {id:'pharm',    cat:'fin',  e:'💊', n:'合作藥局 保健品 9 折', p:'醫療生態圈・合作藥局（示意）', c:120},
-  {id:'dental',   cat:'fin',  e:'🦷', n:'牙科洗牙 折抵 $200', p:'醫療生態圈・合作牙醫診所（示意）', c:200},
-  {id:'fund',     cat:'fin',  e:'📈', n:'定期定額基金 手續費 5 折', p:'金融生態圈・合作投信（示意）', c:250},
-  {id:'check',    cat:'fin',  e:'🩺', n:'精緻健檢 85 折', p:'醫療生態圈・合作健檢中心（示意）', c:300},
-  {id:'rate',     cat:'fin',  e:'🏦', n:'退休帳戶利率加碼 +0.2%', p:'金融生態圈・合作銀行，為期 3 個月（示意）', c:400},
-  {id:'prem',     cat:'fin',  e:'🛡️', n:'醫療／長照險 保費折抵 $500', p:'金融生態圈・外溢保單回饋（示意）', c:600}
+const ALL_TASKS=[...H_TASKS,...R_TASKS];
+const BADGES=[
+  {id:'hello',e:'👋',n:'初次相遇',d:'完成個人設定',p:s=>[s.started?1:0,1]},
+  {id:'meet',e:'🔮',n:'遇見未來的我',d:'生成 65、75、85 歲的自己',p:s=>[s.futureGen?1:0,1]},
+  {id:'risk1',e:'🧭',n:'情境挑戰者',d:'完成一個人生風險情境',p:s=>[Math.min(Object.keys(s.riskDone).length,1),1]},
+  {id:'risk4',e:'🛡️',n:'全方位思考',d:'四個情境都體驗過',p:s=>[Object.keys(s.riskDone).length,4]},
+  {id:'hq',e:'🩺',n:'健康快評',d:'完成健康快評',p:s=>[s.healthQ?1:0,1]},
+  {id:'ret',e:'🏖️',n:'退休試算',d:'完成一次退休試算',p:s=>[s.retireDone?1:0,1]},
+  {id:'report',e:'📄',n:'人生報告',d:'取得專屬人生報告',p:s=>[s.reportSeen?1:0,1]},
+  {id:'action',e:'🚀',n:'啟動第一步',d:'從報告啟動第一個行動',p:s=>[s.firstAction?1:0,1]},
+  {id:'goal',e:'🎯',n:'今日小目標',d:'一天走到 3,000 步',p:s=>[Math.min(s.bestDay,3000),3000]},
+  {id:'d3',e:'🔥',n:'累積 3 天',d:'有活動的日子累積 3 天（休息日不扣分）',p:s=>[Math.min(s.activeDays,3),3]},
+  {id:'saver',e:'🐷',n:'存錢小豬',d:'完成 3 次存錢行動',p:s=>[Math.min((s.cnt.t_save||0)+(s.cnt.t_auto||0),3),3]},
+  {id:'checkup',e:'🏥',n:'健檢勇者',d:'預約一次健康檢查',p:s=>[Math.min(s.cnt.t_check||0,1),1]},
+  {id:'family',e:'👨‍👩‍👧',n:'三代同心',d:'完成 3 項家庭準備',p:s=>[Math.min(Object.keys(s.famDone).length+s.hearts,3),3]},
+  {id:'mood3',e:'📔',n:'心情日記',d:'記錄 3 晚的心情',p:s=>[Math.min(Object.keys(s.moods).length,3),3]},
+  {id:'collect',e:'📖',n:'芽芽收藏家',d:'集滿 6 種基本芽芽',p:s=>[BASIC.filter(k=>s.buddies[k]>0).length,6]},
+  {id:'shop',e:'🛍️',n:'第一次兌換',d:'用樂活幣兌換一次',p:s=>[Math.min(s.redeemCount,1),1]}
 ];
-let shopTab='deco';
-
-const STATIONS = [
-  {age:45, need:0, label:'今天'},
-  {age:65, need:1, label:'第二人生'},
-  {age:75, need:3, label:'自在旅行'},
-  {age:85, need:5, label:'安心被照顧'},
-  {age:95, need:7, label:'好好說再見'}
+const SHOP=[
+  {id:'hat',cat:'deco',e:'👒',n:'芽芽小草帽',p:'所有芽芽都戴上草帽',c:30,slot:'hat',go:'growth'},
+  {id:'sunflower',cat:'deco',e:'🌻',n:'向日葵花園',p:'散步路上開出向日葵',c:40,slot:'flower',go:'health'},
+  {id:'scarf',cat:'deco',e:'🧣',n:'暖暖紅圍巾',p:'你和未來的你都圍上圍巾',c:50,slot:'scarf',go:'future'},
+  {id:'frame',cat:'deco',e:'🖼️',n:'金色回憶相框',p:'「未來的我」加上金框',c:60,slot:'frame',go:'future'},
+  {id:'seaside',cat:'deco',e:'🏖️',n:'海邊步道地圖',p:'散步地圖換成海邊風景',c:80,slot:'map',go:'health'},
+  {id:'legend',cat:'deco',e:'🦄',n:'稀有夥伴「長壽芽」',p:'限定夥伴，會跟著你散步',c:150,once:true,go:'growth'},
+  {id:'pharm',cat:'fin',e:'💊',n:'合作藥局 保健品 9 折',p:'醫療生態圈（示意）',c:120},
+  {id:'dental',cat:'fin',e:'🦷',n:'牙科洗牙 折抵 $200',p:'醫療生態圈（示意）',c:200},
+  {id:'fund',cat:'fin',e:'📈',n:'定期定額 手續費 5 折',p:'金融生態圈（示意）',c:250},
+  {id:'check',cat:'fin',e:'🩺',n:'精緻健檢 85 折',p:'醫療生態圈（示意）',c:300},
+  {id:'rate',cat:'fin',e:'🏦',n:'退休帳戶利率加碼 +0.2%',p:'金融生態圈，3 個月（示意）',c:400},
+  {id:'prem',cat:'fin',e:'🛡️',n:'醫療／長照險 保費折抵 $500',p:'外溢保單回饋（示意）',c:600}
 ];
-const LINES = {
-  45:'嗨，{n}！我是 45 歲的你。上有爸媽、下有孩子，辛苦了。從今天起，每天只要 3 分鐘，我們一起慢慢走。',
-  65:'嗨，{n}！我 65 歲了，剛報名社區大學的攝影課。謝謝你 45 歲那年開始每天散步，現在膝蓋很好用！',
-  75:'75 歲的我，上個月和老朋友環島一圈。你每個月自動存下的那一點點，變成了一趟一趟的旅行。',
-  85:'85 歲需要人幫忙的時候，我早就安排好照顧方式了。孩子不用辭職，週末來陪我喝茶就好。',
-  95:'95 歲，想說的話都跟家人說了。這一生很值得，謝謝你一路上每一個小小的決定。'
-};
-
-const FAMILY = [
-  {id:'mom', e:'👵', n:'媽媽（76 歲）', acts:['公園健走 4,200 步','跳了 20 分鐘土風舞','和鄰居散步 3,500 步']},
-  {id:'dad', e:'👴', n:'爸爸（79 歲）', acts:['早上打太極 2,800 步','陪孫子去市場 3,100 步','今天在家休息也很好']},
-  {id:'kid', e:'🧑‍🎓', n:'兒子（23 歲）', acts:['通勤走路 6,800 步','剛設定每月存 $3,000','下班去健身房 7,500 步']}
+const MOODS=[
+  {id:'great',e:'😄',n:'開心',reply:'今天過得不錯！把這份好心情帶進夢裡，明天也慢慢來。'},
+  {id:'calm',e:'🙂',n:'平靜',reply:'平平穩穩的一天也很好。早點休息，明天見。'},
+  {id:'tired',e:'😮‍💨',n:'有點累',reply:'今天辛苦了。早點放下手機休息，明天我只推薦你最輕鬆的小事。'},
+  {id:'worried',e:'😟',n:'有點煩',reply:'煩心的事先放在這裡就好。明天出去走 10 分鐘，或找信任的人聊聊，會好一點。'},
+  {id:'down',e:'😢',n:'低落',reply:'謝謝你願意說出來。今晚好好休息，明天不用勉強完成任何任務。如果這種感覺持續很久，找家人、朋友或專業的人聊聊會有幫助。'}
 ];
-const FAM_STEPS = {mom:[4200,3000,3500], dad:[2800,3100,1200], kid:[6800,5200,7500]};
-
-/* ---------- 狀態 ---------- */
-const KEY='futureMeGarden.v1';
-function fresh(){return {started:false,name:'',look:0,coins:0,steps:0,totalSteps:0,bestDay:0,health:0,wealth:0,family:0,
-  activeDays:0,activeToday:false,day:1,done:{},cnt:{},buddies:{walk:0,coin:0,moon:0,heart:0,shield:0,star:0,legend:0},
-  party:[],flowers:[],totalFlowers:0,seeds:[],badges:{},hearts:0,heartTo:{},famClaimed:false,famIdx:0,tickets:[],
-  selStation:45,selfie:null,newBuddy:false,newBadge:false,chat:[],owned:{},equip:{},redeemCount:0};}
-let S=fresh();
-try{const raw=localStorage.getItem(KEY); if(raw){S=Object.assign(fresh(),JSON.parse(raw));}}catch(e){}
-function save(){try{const c=Object.assign({},S,{selfie:null});localStorage.setItem(KEY,JSON.stringify(c));}catch(e){}}
-
+const MOOD_REC={great:'t_family',calm:'t_walk',tired:'t_sleep',worried:'t_walk',down:'t_sleep'};
+const WISHES={travel:{e:'🧳',n:'到處旅行'},family:{e:'👨‍👩‍👧',n:'陪伴家人'},learn:{e:'🎨',n:'學新東西'},work:{e:'🛠️',n:'做喜歡的工作'},volunteer:{e:'🤝',n:'當志工回饋'}};
+const LIFES=['全職工作','兼職工作','自己做生意','家庭照顧者','已退休'];
 const LOOKS=['#E89B3C','#3E9E6A','#6C7BD9','#E57FA0'];
-function level(s){return Math.floor((s.health+s.wealth+s.family)/100);}
-function tier(x){return x>=200?2:x>=80?1:0;}
-function lv(x){return 1+Math.floor(x/40);}
 
-/* ---------- 芽芽 SVG ---------- */
-function ornament(k,c){
-  switch(k){
-    case 'walk': return `<path d="M0 -44 C-12 -52,-16 -40,-4 -40Z" fill="${c.dark}"/><path d="M0 -44 C12 -54,18 -42,4 -40Z" fill="${c.color}" stroke="${c.dark}" stroke-width="1.5"/>`;
-    case 'coin': return `<circle cx="0" cy="-48" r="9" fill="#FFD866" stroke="#B8860B" stroke-width="2"/><path d="M0 -54 V-42 M3 -51 Q-4 -53 -3 -49 Q3 -47 3 -45 Q2 -42 -3 -44" stroke="#8A5A00" stroke-width="1.8" fill="none" stroke-linecap="round"/>`;
-    case 'moon': return `<path d="M4 -57 A10 10 0 1 0 4 -39 A8 8 0 1 1 4 -57Z" fill="#FFE08A" stroke="#C9A43A" stroke-width="1.2"/>`;
-    case 'heart': return `<path d="M0 -40 C-12 -48,-8 -58,0 -52 C8 -58,12 -48,0 -40Z" fill="#FF6F91" stroke="#C2405F" stroke-width="1.2"/>`;
-    case 'shield': return `<path d="M0 -58 L9 -55 L8 -46 Q5 -40 0 -38 Q-5 -40 -8 -46 L-9 -55Z" fill="#BFF1EA" stroke="#1F6E64" stroke-width="2"/><path d="M-3 -48 L-1 -45 L4 -51" stroke="#1F6E64" stroke-width="2" fill="none" stroke-linecap="round"/>`;
-    case 'star': return `<polygon points="0,-59 3,-51 11,-51 5,-46 7,-38 0,-43 -7,-38 -5,-46 -11,-51 -3,-51" fill="#FFD25E" stroke="#C78A1E" stroke-width="1.2"/>`;
-    case 'legend': return `<polygon points="-11,-42 -11,-54 -5,-48 0,-57 5,-48 11,-54 11,-42" fill="#FFD25E" stroke="#B8860B" stroke-width="1.5"/><circle cx="0" cy="-50" r="2" fill="#E5484D"/>`;
-  }
-}
-function buddyG(k){
-  const c=SPECIES[k];
-  const body = k==='legend' ? 'url(#rainbow)' : c.color;
-  return `<g>
-    <path d="M0 -24 Q-1 -32 0 -40" stroke="${c.dark}" stroke-width="3" fill="none" stroke-linecap="round"/>
-    ${ornament(k,c)}
-    <ellipse cx="-8" cy="24" rx="7" ry="3.5" fill="${c.dark}"/><ellipse cx="8" cy="24" rx="7" ry="3.5" fill="${c.dark}"/>
-    <ellipse cx="0" cy="2" rx="20" ry="23" fill="${body}" stroke="${c.dark}" stroke-width="2"/>
-    <ellipse cx="-7" cy="-8" rx="5" ry="7" fill="#fff" opacity=".3"/>
-    <circle cx="-7" cy="-1" r="3.4" fill="#14232E"/><circle cx="7" cy="-1" r="3.4" fill="#14232E"/>
-    <circle cx="-6" cy="-2.3" r="1.1" fill="#fff"/><circle cx="8" cy="-2.3" r="1.1" fill="#fff"/>
-    <ellipse cx="-13" cy="6" rx="3.5" ry="2" fill="#FF8FA3" opacity=".7"/><ellipse cx="13" cy="6" rx="3.5" ry="2" fill="#FF8FA3" opacity=".7"/>
-    <path d="M-4 7 Q0 11 4 7" stroke="#14232E" stroke-width="2" fill="none" stroke-linecap="round"/>
-    ${S.equip&&S.equip.hat?'<path d="M-13 -17 Q-12 -32 0 -32 Q12 -32 13 -17Z" fill="#F2D58A" stroke="#A9812F" stroke-width="1.5"/><ellipse cx="0" cy="-17" rx="24" ry="5" fill="#F6DE9C" stroke="#A9812F" stroke-width="1.5"/><path d="M-12.5 -21 Q0 -24 12.5 -21" stroke="#E5484D" stroke-width="3" fill="none"/>':''}
-  </g>`;
-}
+/* ================= 狀態 ================= */
+const KEY='futureMe2.v1';
+function fresh(){return {started:false,name:'',look:0,
+  p:{age:48,gender:'f',spouse:true,mom:{on:true,age:76},dad:{on:true,age:79},kids:1,kidAge:20,life:'全職工作',wish:'travel'},
+  fin:{income:6,expense:5,emergency:30,mortgage:2},cover:{med:true,ci:false,dis:false,ltc:false,life:true},coverDone:false,
+  ret:{retAge:65,assets:300,monthly:15000,need:60000,other:20000,rate:3,plan:90},retireDone:false,
+  healthQ:null,riskDone:{},riskIn:{},futureGen:false,reportSeen:false,firstAction:false,famDone:{},
+  coins:0,steps:0,totalSteps:0,bestDay:0,activeDays:0,activeToday:false,day:1,done:{},cnt:{},
+  buddies:{walk:0,coin:0,moon:0,heart:0,shield:0,star:0,legend:0},party:[],flowers:[],totalFlowers:0,seeds:[],badges:{},
+  hearts:0,heartTo:{},famClaimed:false,famIdx:0,tickets:[],owned:{},equip:{},redeemCount:0,moods:{},moodAsked:{},demoEvening:false,
+  selAge:65,selfie:null};}
+let S=fresh();
+try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);S=Object.assign(fresh(),o);S.p=Object.assign(fresh().p,o.p||{});}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(Object.assign({},S,{selfie:null})));}catch(e){}}
+const fmt=n=>Math.round(n).toLocaleString();
+const wan=n=>`${fmt(n)} 萬`;
+
+/* ================= 芽芽 SVG ================= */
+function ornament(k,c){switch(k){
+  case 'walk':return `<path d="M0 -44 C-12 -52,-16 -40,-4 -40Z" fill="${c.dark}"/><path d="M0 -44 C12 -54,18 -42,4 -40Z" fill="${c.color}" stroke="${c.dark}" stroke-width="1.5"/>`;
+  case 'coin':return `<circle cx="0" cy="-48" r="9" fill="#FFD866" stroke="#B8860B" stroke-width="2"/><path d="M0 -54 V-42 M3 -51 Q-4 -53 -3 -49 Q3 -47 3 -45 Q2 -42 -3 -44" stroke="#8A5A00" stroke-width="1.8" fill="none" stroke-linecap="round"/>`;
+  case 'moon':return `<path d="M4 -57 A10 10 0 1 0 4 -39 A8 8 0 1 1 4 -57Z" fill="#FFE08A" stroke="#C9A43A" stroke-width="1.2"/>`;
+  case 'heart':return `<path d="M0 -40 C-12 -48,-8 -58,0 -52 C8 -58,12 -48,0 -40Z" fill="#FF6F91" stroke="#C2405F" stroke-width="1.2"/>`;
+  case 'shield':return `<path d="M0 -58 L9 -55 L8 -46 Q5 -40 0 -38 Q-5 -40 -8 -46 L-9 -55Z" fill="#BFF1EA" stroke="#1F6E64" stroke-width="2"/><path d="M-3 -48 L-1 -45 L4 -51" stroke="#1F6E64" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+  case 'star':return `<polygon points="0,-59 3,-51 11,-51 5,-46 7,-38 0,-43 -7,-38 -5,-46 -11,-51 -3,-51" fill="#FFD25E" stroke="#C78A1E" stroke-width="1.2"/>`;
+  case 'legend':return `<polygon points="-11,-42 -11,-54 -5,-48 0,-57 5,-48 11,-54 11,-42" fill="#FFD25E" stroke="#B8860B" stroke-width="1.5"/><circle cx="0" cy="-50" r="2" fill="#E5484D"/>`;}}
+function buddyG(k){const c=SPECIES[k],body=k==='legend'?'url(#rainbow)':c.color;
+  return `<g><path d="M0 -24 Q-1 -32 0 -40" stroke="${c.dark}" stroke-width="3" fill="none" stroke-linecap="round"/>${ornament(k,c)}
+  <ellipse cx="-8" cy="24" rx="7" ry="3.5" fill="${c.dark}"/><ellipse cx="8" cy="24" rx="7" ry="3.5" fill="${c.dark}"/>
+  <ellipse cx="0" cy="2" rx="20" ry="23" fill="${body}" stroke="${c.dark}" stroke-width="2"/><ellipse cx="-7" cy="-8" rx="5" ry="7" fill="#fff" opacity=".3"/>
+  <circle cx="-7" cy="-1" r="3.4" fill="#14232E"/><circle cx="7" cy="-1" r="3.4" fill="#14232E"/><circle cx="-6" cy="-2.3" r="1.1" fill="#fff"/><circle cx="8" cy="-2.3" r="1.1" fill="#fff"/>
+  <ellipse cx="-13" cy="6" rx="3.5" ry="2" fill="#FF8FA3" opacity=".7"/><ellipse cx="13" cy="6" rx="3.5" ry="2" fill="#FF8FA3" opacity=".7"/>
+  <path d="M-4 7 Q0 11 4 7" stroke="#14232E" stroke-width="2" fill="none" stroke-linecap="round"/>
+  ${S.equip.hat?'<path d="M-13 -17 Q-12 -32 0 -32 Q12 -32 13 -17Z" fill="#F2D58A" stroke="#A9812F" stroke-width="1.5"/><ellipse cx="0" cy="-17" rx="24" ry="5" fill="#F6DE9C" stroke="#A9812F" stroke-width="1.5"/><path d="M-12.5 -21 Q0 -24 12.5 -21" stroke="#E5484D" stroke-width="3" fill="none"/>':''}</g>`;}
 const DEFS=`<defs><linearGradient id="rainbow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB3C7"/><stop offset=".5" stop-color="#C9A2F0"/><stop offset="1" stop-color="#9FD8F5"/></linearGradient></defs>`;
-function buddySVG(k,cls=''){return `<svg viewBox="-26 -62 52 92" class="${cls}" aria-label="${SPECIES[k].name}">${DEFS}${buddyG(k)}</svg>`;}
+function buddySVG(k){return `<svg viewBox="-26 -62 52 92" aria-label="${SPECIES[k].name}">${DEFS}${buddyG(k)}</svg>`;}
 function eggSVG(){return `<svg viewBox="-40 -50 80 100" class="hatch"><g class="egg"><ellipse cx="0" cy="8" rx="30" ry="38" fill="#FFF3D6" stroke="#C9A43A" stroke-width="3"/><circle cx="-10" cy="-6" r="5" fill="#F2C14E"/><circle cx="12" cy="10" r="6" fill="#7BC67E"/><circle cx="-4" cy="26" r="4" fill="#F29CB6"/></g></svg>`;}
 
-/* ---------- 地圖 ---------- */
+/* ================= 散步地圖 ================= */
 const PATH='M30 272 C110 268 60 200 150 190 S310 170 270 110 S110 70 190 32';
-const GOAL=3000;
-let pathEl=null, pathLen=0, PTS=[];
-function pt(f){f=Math.max(0,Math.min(1,f));return PTS[Math.round(f*300)]||{x:30,y:272};}
+const GOAL=3000; let PTS=[], mapBuilt=false;
+(function(){try{const ns='http://www.w3.org/2000/svg',sv=document.createElementNS(ns,'svg');sv.setAttribute('style','position:absolute;width:0;height:0;visibility:hidden');const pth=document.createElementNS(ns,'path');pth.setAttribute('d',PATH);sv.appendChild(pth);document.body.appendChild(sv);const L=pth.getTotalLength();for(let i=0;i<=300;i++){const q=pth.getPointAtLength(i/300*L);PTS.push({x:q.x,y:q.y});}sv.remove();}catch(e){for(let i=0;i<=300;i++){const t=i/300;PTS.push({x:30+t*160+Math.sin(t*9)*80,y:272-t*240});}}})();
+function pt(f){f=Math.max(0,Math.min(1,f));return PTS[Math.round(f*300)];}
 function flowerSVG(x,y,col,anim){
-  if(S.equip&&S.equip.flower){return `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})"><g class="${anim?'bloom':''}"><path d="M0 0 V-9" stroke="#3E8E52" stroke-width="2.2"/><path d="M0 -4 q5 -4 7 0" fill="#5BAE62"/>${[0,45,90,135,180,225,270,315].map(a=>`<ellipse cx="0" cy="-19" rx="2.6" ry="5" fill="#FFC92E" transform="rotate(${a} 0 -13)"/>`).join('')}<circle cx="0" cy="-13" r="4.2" fill="#7A4A1E"/></g></g>`;}
+  if(S.equip.flower)return `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})"><g class="${anim?'bloom':''}"><path d="M0 0 V-9" stroke="#3E8E52" stroke-width="2.2"/>${[0,45,90,135,180,225,270,315].map(a=>`<ellipse cx="0" cy="-19" rx="2.6" ry="5" fill="#FFC92E" transform="rotate(${a} 0 -13)"/>`).join('')}<circle cx="0" cy="-13" r="4.2" fill="#7A4A1E"/></g></g>`;
   return `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})"><g class="${anim?'bloom':''}"><path d="M0 0 V-8" stroke="#3E8E52" stroke-width="2"/><circle cx="-4" cy="-11" r="3.6" fill="${col}"/><circle cx="4" cy="-11" r="3.6" fill="${col}"/><circle cx="0" cy="-15" r="3.6" fill="${col}"/><circle cx="0" cy="-7.5" r="3.6" fill="${col}"/><circle cx="0" cy="-11" r="2.6" fill="#FFE08A"/></g></g>`;}
 function drawMap(newFlower){
   const svg=document.getElementById('map');
-  if(!pathEl){
-    svg.innerHTML=DEFS+`
-      ${S.equip.map?`<rect width="360" height="300" fill="#F7E6BE"/><path d="M0 0 H360 V70 Q300 95 240 72 T120 80 T0 70Z" fill="#7CCBEA"/><path d="M0 62 Q60 80 120 70 T240 66 T360 62" stroke="#fff" stroke-width="3" fill="none" opacity=".7"/><ellipse cx="300" cy="260" rx="90" ry="40" fill="#F1D9A2"/>
-      <g font-size="22"><text x="20" y="130">🌴</text><text x="312" y="205">🌴</text><text x="60" y="250">⛱️</text><text x="250" y="40">⛵</text><text x="205" y="270">🐚</text><text x="320" y="270">🦀</text></g>`
-      :`<rect width="360" height="300" fill="#CDEBC4"/>
-      <ellipse cx="300" cy="260" rx="90" ry="40" fill="#BDE3B2"/><ellipse cx="60" cy="60" rx="80" ry="40" fill="#BDE3B2"/>
-      <path d="M0 140 Q80 120 120 150 T240 140" stroke="#A9D9F2" stroke-width="14" fill="none" opacity=".7" stroke-linecap="round"/>
-      <g font-size="22"><text x="20" y="120">🌳</text><text x="310" y="200">🌳</text><text x="70" y="240">🌲</text><text x="290" y="60">🌲</text><text x="210" y="260">🌷</text></g>`}
-      <path id="walkPath" d="${PATH}" stroke="#F6E6C4" stroke-width="16" fill="none" stroke-linecap="round"/>
-      <path d="${PATH}" stroke="#E2C994" stroke-width="2" stroke-dasharray="4 8" fill="none"/>
-      <g id="stationsG"></g><g id="flowersG"></g><g id="seedsG"></g><g id="partyG"></g><g id="meG"></g>`;
-    pathEl=document.getElementById('walkPath');
-    try{pathLen=pathEl.getTotalLength();for(let i=0;i<=300;i++){const p=pathEl.getPointAtLength(i/300*pathLen);PTS.push({x:p.x,y:p.y});}}
-    catch(e){for(let i=0;i<=300;i++){const t=i/300;PTS.push({x:30+t*160+Math.sin(t*9)*80,y:272-t*240});}}
-    const st=[[.33,'🌳','公園'],[.66,'🛒','市場'],[1,'🏠','爸媽家']];
-    document.getElementById('stationsG').innerHTML=st.map(([f,e,l])=>{const p=pt(f);return `<g transform="translate(${p.x},${p.y})"><circle r="15" fill="#fff" stroke="#E89B3C" stroke-width="3"/><text y="6" text-anchor="middle" font-size="16">${e}</text><text y="30" text-anchor="middle" font-size="11" font-weight="700" fill="#14232E">${l}</text></g>`;}).join('');
+  if(!mapBuilt){
+    svg.innerHTML=DEFS+(S.equip.map?`<rect width="360" height="300" fill="#F7E6BE"/><path d="M0 0 H360 V70 Q300 95 240 72 T120 80 T0 70Z" fill="#7CCBEA"/><g font-size="22"><text x="20" y="130">🌴</text><text x="312" y="205">🌴</text><text x="60" y="250">⛱️</text><text x="250" y="40">⛵</text><text x="205" y="270">🐚</text></g>`
+      :`<rect width="360" height="300" fill="#CDEBC4"/><ellipse cx="300" cy="260" rx="90" ry="40" fill="#BDE3B2"/><ellipse cx="60" cy="60" rx="80" ry="40" fill="#BDE3B2"/><path d="M0 140 Q80 120 120 150 T240 140" stroke="#A9D9F2" stroke-width="14" fill="none" opacity=".7" stroke-linecap="round"/><g font-size="22"><text x="20" y="120">🌳</text><text x="310" y="200">🌳</text><text x="70" y="240">🌲</text><text x="290" y="60">🌲</text><text x="210" y="260">🌷</text></g>`)
+      +`<path d="${PATH}" stroke="#F6E6C4" stroke-width="16" fill="none" stroke-linecap="round"/><path d="${PATH}" stroke="#E2C994" stroke-width="2" stroke-dasharray="4 8" fill="none"/><g id="stationsG"></g><g id="flowersG"></g><g id="seedsG"></g><g id="partyG"></g><g id="meG"></g>`;
+    const hasP=S.p.mom.on||S.p.dad.on;
+    const st=[[.33,'🌳','公園'],[.66,'🛒','市場'],[1,'🏠',hasP?'爸媽家':'回家']];
+    document.getElementById('stationsG').innerHTML=st.map(([f,e,l])=>{const q=pt(f);return `<g transform="translate(${q.x},${q.y})"><circle r="15" fill="#fff" stroke="#E89B3C" stroke-width="3"/><text y="6" text-anchor="middle" font-size="16">${e}</text><text y="30" text-anchor="middle" font-size="11" font-weight="700" fill="#14232E">${l}</text></g>`;}).join('');
+    mapBuilt=true;
   }
   const lap=Math.floor(S.steps/GOAL), f=S.steps===0?0:((S.steps%GOAL)||GOAL)/GOAL;
   document.getElementById('mapTag').textContent=`今日散步路線｜第 ${Math.min(lap+1,99)} 圈`;
-  document.getElementById('flowersG').innerHTML=S.flowers.map((fl,i)=>{const p=pt(fl.f);return flowerSVG(p.x+fl.dx,p.y+fl.dy,fl.c,newFlower&&i===S.flowers.length-1);}).join('');
+  document.getElementById('flowersG').innerHTML=S.flowers.map((fl,i)=>{const q=pt(fl.f);return flowerSVG(q.x+fl.dx,q.y+fl.dy,fl.c,newFlower&&i===S.flowers.length-1);}).join('');
   document.getElementById('seedsG').innerHTML=S.seeds.map((sd,i)=>`<g transform="translate(${sd.x},${sd.y})" class="seed" onclick="collectSeed(${i},event)" role="button" aria-label="種子"><g class="pulse"><circle r="16" fill="#fff" opacity=".85"/><text y="7" text-anchor="middle" font-size="20">🌰</text></g></g>`).join('');
   const me=pt(f);
-  const party=S.party.slice(-5).reverse();
-  document.getElementById('partyG').innerHTML=party.map((k,i)=>{const p=pt(f-0.035*(i+1));return `<g transform="translate(${p.x.toFixed(1)},${(p.y-4).toFixed(1)}) scale(.42)"><g class="bob" style="animation-delay:${i*.15}s">${buddyG(k)}</g></g>`;}).join('');
+  document.getElementById('partyG').innerHTML=S.party.slice(-5).reverse().map((k,i)=>{const q=pt(f-0.035*(i+1));return `<g transform="translate(${q.x.toFixed(1)},${(q.y-4).toFixed(1)}) scale(.42)"><g class="bob" style="animation-delay:${i*.15}s">${buddyG(k)}</g></g>`;}).join('');
   const col=LOOKS[S.look]||LOOKS[0];
-  document.getElementById('meG').innerHTML=`<g transform="translate(${me.x.toFixed(1)},${(me.y-6).toFixed(1)})"><g class="bob"><ellipse cx="0" cy="12" rx="10" ry="3" fill="#000" opacity=".15"/><rect x="-8" y="-6" width="16" height="18" rx="7" fill="${col}"/><circle cx="0" cy="-13" r="9" fill="#FAD7B5"/><path d="M-9 -15 Q0 -26 9 -15" fill="#4B3B33"/>${S.equip.scarf?'<path d="M-8 -5 Q0 -1 8 -5 L8 -1 Q0 3 -8 -1Z" fill="#E5484D"/><rect x="3" y="-2" width="4" height="9" rx="2" fill="#C93A3E"/>':''}<circle cx="-3" cy="-13" r="1.4" fill="#14232E"/><circle cx="3" cy="-13" r="1.4" fill="#14232E"/><path d="M-3 -9 Q0 -7 3 -9" stroke="#C2405F" stroke-width="1.4" fill="none"/></g></g>`;
+  document.getElementById('meG').innerHTML=`<g transform="translate(${me.x.toFixed(1)},${(me.y-6).toFixed(1)})"><g class="bob"><ellipse cx="0" cy="12" rx="10" ry="3" fill="#000" opacity=".15"/><rect x="-8" y="-6" width="16" height="18" rx="7" fill="${col}"/><circle cx="0" cy="-13" r="9" fill="#FAD7B5"/><path d="M-9 -15 Q0 -26 9 -15" fill="#4B3B33"/>${S.equip.scarf?'<path d="M-8 -5 Q0 -1 8 -5 L8 -1 Q0 3 -8 -1Z" fill="#E5484D"/>':''}<circle cx="-3" cy="-13" r="1.4" fill="#14232E"/><circle cx="3" cy="-13" r="1.4" fill="#14232E"/><path d="M-3 -9 Q0 -7 3 -9" stroke="#C2405F" stroke-width="1.4" fill="none"/></g></g>`;
 }
-
-/* ---------- 走路 ---------- */
-let autoTimer=null, seedTick=0;
+let autoTimer=null,seedTick=0;
 function markActive(){if(!S.activeToday){S.activeToday=true;S.activeDays++;}}
 function walk(n,ev){
-  const before=S.steps;
-  S.steps+=n; S.totalSteps+=n; S.bestDay=Math.max(S.bestDay,S.steps); markActive();
-  S.health+=Math.round(n/100);
-  let planted=false, coinTick=false;
-  const b500=Math.floor(before/500), a500=Math.floor(S.steps/500);
-  for(let i=b500;i<a500;i++){
-    const fpos=(((i+1)*500)%GOAL||GOAL)/GOAL;
-    S.flowers.push({f:fpos,dx:(Math.random()*24-12),dy:(Math.random()*14+6)*(Math.random()<.5?-1:1),c:['#FF8FA3','#FFD25E','#B9A6F5','#FF9F68','#8FD3FF'][i%5]});
-    if(S.flowers.length>40)S.flowers.shift();
-    S.totalFlowers++; planted=true;
+  const before=S.steps; S.steps+=n; S.totalSteps+=n; S.bestDay=Math.max(S.bestDay,S.steps); markActive();
+  let planted=false,coinTick=false;
+  for(let i=Math.floor(before/500);i<Math.floor(S.steps/500);i++){
+    S.flowers.push({f:(((i+1)*500)%GOAL||GOAL)/GOAL,dx:Math.random()*24-12,dy:(Math.random()*14+6)*(Math.random()<.5?-1:1),c:['#FF8FA3','#FFD25E','#B9A6F5','#FF9F68','#8FD3FF'][i%5]});
+    if(S.flowers.length>40)S.flowers.shift(); S.totalFlowers++; planted=true;
     if((i+1)%2===0){addCoins(1);coinTick=true;}
   }
-  seedTick+=n;
-  if(seedTick>=600 && S.seeds.length<3){seedTick=0;spawnSeed();}
-  if(before<GOAL && S.steps>=GOAL){addCoins(3);toast('🎯 今日小目標達成！+3 樂活幣');gainBuddy('walk',true);}
-  else if(planted && !autoTimer){toast(coinTick?'🌸 又開一朵花！每 1,000 步 +1 樂活幣':'🌸 種下一朵花！');}
+  seedTick+=n; if(seedTick>=600&&S.seeds.length<3){seedTick=0;spawnSeed();}
+  if(before<GOAL&&S.steps>=GOAL){addCoins(3);toast('🎯 今日小目標達成！+3 樂活幣');gainBuddy('walk');}
+  else if(planted&&!autoTimer)toast(coinTick?'🌸 又開一朵花！每 1,000 步 +1 樂活幣':'🌸 種下一朵花！');
   if(ev)popAt(ev,`+${n} 步`);
   render(planted); checkBadges();
 }
-function spawnSeed(){
-  const f=Math.random(), p=pt(f);
-  S.seeds.push({x:Math.round(Math.max(24,Math.min(336,p.x+(Math.random()*70-35)))),y:Math.round(Math.max(24,Math.min(276,p.y+(Math.random()*50-25))))});
-}
-function toggleAuto(){
-  const b=document.getElementById('autoBtn');
-  if(autoTimer){clearInterval(autoTimer);autoTimer=null;b.textContent='▶️ 自動散步';b.classList.remove('b-green','on');b.classList.add('b-soft');save();}
-  else{autoTimer=setInterval(()=>walk(60),500);b.textContent='⏸️ 散步中…點我暫停';b.classList.remove('b-soft');b.classList.add('b-green','on');}
-}
-function collectSeed(i,ev){
-  ev.stopPropagation();
-  S.seeds.splice(i,1);
-  const k = Math.random()<0.07 ? 'legend' : BASIC[Math.floor(Math.random()*BASIC.length)];
-  addCoins(1); popAt(ev,'+1 🪙');
-  hatch(k);
-  drawMap();
-}
+function spawnSeed(){const q=pt(Math.random());S.seeds.push({x:Math.round(Math.max(24,Math.min(336,q.x+(Math.random()*70-35)))),y:Math.round(Math.max(24,Math.min(276,q.y+(Math.random()*50-25))))});}
+function toggleAuto(){const b=document.getElementById('autoBtn');
+  if(autoTimer){clearInterval(autoTimer);autoTimer=null;b.textContent='▶️ 自動散步';b.className='big b-soft';save();}
+  else{autoTimer=setInterval(()=>walk(60),500);b.textContent='⏸️ 散步中…點我暫停';b.className='big b-green';}}
+function collectSeed(i,ev){ev.stopPropagation();S.seeds.splice(i,1);const k=Math.random()<0.07?'legend':BASIC[Math.floor(Math.random()*BASIC.length)];addCoins(1);popAt(ev,'+1 🪙');hatch(k);drawMap();}
 
-/* ---------- 夥伴 ---------- */
-function gainBuddy(k,quiet){
-  S.buddies[k]=(S.buddies[k]||0)+1; S.party.push(k); if(S.party.length>12)S.party.shift();
-  S.newBuddy=true; markActive();
-  if(!quiet)hatch(k,true);
-  render(); checkBadges();
-}
-function hatch(k,already){
-  if(!already){S.buddies[k]=(S.buddies[k]||0)+1;S.party.push(k);if(S.party.length>12)S.party.shift();S.newBuddy=true;}
-  const c=SPECIES[k];
+/* ================= 夥伴 / 孵化 ================= */
+function gainBuddy(k){S.buddies[k]=(S.buddies[k]||0)+1;S.party.push(k);if(S.party.length>12)S.party.shift();markActive();}
+function hatch(k){gainBuddy(k);const c=SPECIES[k];
   openSheet(`<div class="center"><h3>種子孵化中…</h3><div id="hatchBox">${eggSVG()}</div><p class="muted" id="hatchTxt">搖一搖、搖一搖…</p></div>`);
-  setTimeout(()=>{
-    const box=document.getElementById('hatchBox'); if(!box)return;
+  setTimeout(()=>{const box=document.getElementById('hatchBox');if(!box)return;
     box.innerHTML=`<div class="jump" style="width:150px;height:170px;margin:6px auto">${buddySVG(k)}</div>`;
-    document.getElementById('hatchTxt').innerHTML=`<b style="font-size:1.2rem;color:var(--ink)">${c.rare?'🌟 稀有！':''}${c.name} 加入了！</b><br>「${c.line}」<br><span style="font-size:.8rem">代表習慣：${c.habit}｜目前擁有 ${S.buddies[k]} 隻</span><br><button class="big b-green" style="width:100%;margin-top:14px" onclick="closeSheet()">太可愛了！</button>`;
-    if(c.rare)confetti();
-    render(); checkBadges();
-  },1500);
-}
-function petBuddy(k){
-  const c=SPECIES[k], n=S.buddies[k]||0;
-  if(!n){openSheet(`<div class="center"><div style="width:120px;height:140px;margin:0 auto;filter:grayscale(1) brightness(.2);opacity:.35">${buddySVG(k)}</div><h3>？？？</h3><p class="muted">還沒遇見牠。提示：${c.desc}</p><button class="big b-soft" style="width:100%;margin-top:10px" onclick="closeSheet()">好，我去找找</button></div>`);return;}
-  openSheet(`<div class="center"><div id="petBox" style="width:140px;height:160px;margin:0 auto">${buddySVG(k)}</div><h3>${c.name}　Lv${1+Math.floor(n/3)}</h3><p class="muted">${c.desc}</p><div class="card" style="margin:10px 0" id="petLine">「${c.line}」</div><button class="big b-amber" style="width:100%" onclick="pet('${k}',event)">🤚 摸摸頭</button></div>`);
-}
-const PET=['嘿嘿，好癢！','再摸一下嘛～','今天也要慢慢來喔！','你是我最喜歡的人類！','一起去散步嗎？'];
-let petCount=0;
-function pet(k,ev){
-  const b=document.getElementById('petBox'); b.classList.remove('jump'); void b.offsetWidth; b.classList.add('jump');
-  document.getElementById('petLine').textContent=`「${PET[petCount++%PET.length]}」`;
-}
+    document.getElementById('hatchTxt').innerHTML=`<b style="font-size:1.15rem;color:var(--ink)">${c.rare?'🌟 稀有！':''}${c.name} 加入了！</b><br>「${c.line}」<br><span style="font-size:.8rem">代表習慣：${c.habit}｜目前 ${S.buddies[k]} 隻</span><br><button class="big b-green" style="margin-top:14px" onclick="closeSheet()">太可愛了！</button>`;
+    if(c.rare)confetti(); render(); checkBadges();},1400);}
+function petBuddy(k){const c=SPECIES[k],n=S.buddies[k]||0;
+  if(!n){openSheet(`<div class="center"><div style="width:110px;height:130px;margin:0 auto;filter:grayscale(1) brightness(.2);opacity:.35">${buddySVG(k)}</div><h3>？？？</h3><p class="muted">還沒遇見牠。提示：${c.desc}</p><button class="big b-soft" onclick="closeSheet()">好，我去找找</button></div>`);return;}
+  openSheet(`<div class="center"><div id="petBox" style="width:130px;height:150px;margin:0 auto">${buddySVG(k)}</div><h3>${c.name}　Lv${1+Math.floor(n/3)}</h3><p class="muted">${c.desc}</p><div class="card" style="margin:10px 0">「${c.line}」</div><button class="big b-amber" onclick="const b=document.getElementById('petBox');b.classList.remove('jump');void b.offsetWidth;b.classList.add('jump')">🤚 摸摸頭</button></div>`);}
 
-/* ---------- 任務 ---------- */
-function doTask(id,ev){
-  const t=TASKS.find(x=>x.id===id); if(S.done[id])return;
-  if(t.sheet && !ev.fromSheet){protectSheet();return;}
-  S.done[id]=true; S.cnt[id]=(S.cnt[id]||0)+1;
-  S.health+=t.h; S.wealth+=t.w; S.family+=t.f; addCoins(t.coin); markActive();
-  popAt(ev,`+${t.coin} 🪙`);
-  if(t.steps){walk(t.steps);}
-  gainBuddy(t.sp,true);
-  toast(`✨ ${SPECIES[t.sp].name} 加入散步隊伍！`);
-  render(); checkBadges();
-}
-function protectSheet(){
-  openSheet(`<h3>🛡️ 1 分鐘保障清單</h3><p class="muted">只是看看，不打分數、不推銷。想深入了解時，再按「想了解」就好。</p>
-  <div class="card" style="margin:12px 0;line-height:2">
-   ✅ 全民健保<br>✅ 住院醫療（請確認保單是否還在）<br>🌱 失能／長照保障：<b>可以之後再了解</b><br>🌱 退休帳戶自動提撥：<b>每月多 1% 就很好</b>
-  </div>
-  <div class="row"><button class="big b-green" onclick="closeSheet();doTask('t_protect',{fromSheet:true,clientX:innerWidth/2,clientY:innerHeight/2})">我看完了 👍</button>
-  <button class="big b-soft" onclick="toast('📩 已記下，等你方便時，顧問才會聯絡你');">想了解</button></div>`);
-}
+/* ================= 任務 ================= */
+function famWord(){const p=S.p;return p.mom.on&&p.dad.on?'爸媽':p.mom.on?'媽媽':p.dad.on?'爸爸':'';}
+function tt(t){const p=S.p,par=famWord();
+  if(t.id==='t_family'){if(par)return {t:`打通電話給${par}`,s:'聊 3 分鐘就好'};if(p.kids>0)return {t:'和孩子聊聊今天',s:'3 分鐘就好'};if(p.spouse)return {t:'和另一半散步聊聊天',s:'飯後走一圈'};return {t:'傳訊息問候一位老朋友',s:'一句「最近好嗎」就很好'};}
+  if(t.id==='t_walk'){const who=par?`陪${par}`:p.spouse?'和另一半':p.kids>0?'和孩子':'和朋友';return {t:t.t,s:`約 1,500 步，${who}一起走也算`};}
+  return {t:t.t,s:t.s};}
+function taskHTML(t,rec){const x=tt(t),d=S.done[t.id];return `<div class="task ${d?'done':''}"><div class="bud">${buddySVG(t.sp)}</div><div class="tx"><b>${x.t}</b><span>${rec&&!d?'<em class="rec">🌙 依昨晚心情推薦</em> ':''}${x.s}</span></div><button class="go" onclick="doTask('${t.id}',event)">${d?'完成 ✓':'+'+t.coin+' 🪙'}</button></div>`;}
+function doTask(id,ev){const t=ALL_TASKS.find(x=>x.id===id);if(S.done[id])return;
+  S.done[id]=true;S.cnt[id]=(S.cnt[id]||0)+1;addCoins(t.coin);markActive();popAt(ev,`+${t.coin} 🪙`);
+  if(t.steps)walk(t.steps);
+  gainBuddy(t.sp);toast(`✨ ${SPECIES[t.sp].name} 加入散步隊伍！`);
+  if(S.reportSeen)S.firstAction=true;
+  render();checkBadges();}
 
-/* ---------- 家族 ---------- */
-function famSteps(){return FAMILY.reduce((a,m)=>a+FAM_STEPS[m.id][S.famIdx%3],0)+S.steps;}
-function cheer(id,ev){
-  if(S.heartTo[id]){toast('今天已經送過囉，明天再來 ❤️');return;}
-  S.heartTo[id]=true; S.hearts++; S.family+=10; markActive();
-  popAt(ev,'❤️');
-  toast(`已送出愛心給${FAMILY.find(m=>m.id===id).n.split('（')[0]}！`);
-  render(); checkBadges();
-}
-function claimFamily(ev){S.famClaimed=true;addCoins(5);popAt(ev,'+5 🪙');confetti();toast('🎉 全家一起達標！');render();}
+/* ================= 家庭 ================= */
+function famMembers(){const p=S.p,m=[];
+  if(p.mom.on)m.push({id:'mom',e:'👵',n:`媽媽（${p.mom.age} 歲）`,short:'媽媽',acts:['公園健走 4,200 步','跳了 20 分鐘土風舞','和鄰居散步 3,500 步'],steps:[4200,3000,3500]});
+  if(p.dad.on)m.push({id:'dad',e:'👴',n:`爸爸（${p.dad.age} 歲）`,short:'爸爸',acts:['早上打太極 2,800 步','去市場買菜 3,100 步','今天在家休息也很好'],steps:[2800,3100,1200]});
+  if(p.spouse)m.push({id:'sp',e:'💑',n:'另一半',short:'另一半',acts:['午休散步 5,200 步','一起存了旅遊基金','晚餐後陪你走一圈'],steps:[5200,4100,4600]});
+  if(p.kids>0){const y=p.kidAge<15;m.push({id:'kid',e:y?'🧒':'🧑‍🎓',n:p.kids>1?`孩子們（老大 ${p.kidAge} 歲）`:`孩子（${p.kidAge} 歲）`,short:p.kids>1?'孩子們':'孩子',acts:y?['和同學打球 9,000 步','今天乖乖寫完功課','陪你去公園跑跑']:['通勤走路 6,800 步','剛設定每月存 $3,000','下班去健身房 7,500 步'],steps:y?[9000,4000,6500]:[6800,5200,7500]});}
+  if(!m.length)m.push({id:'fr',e:'🧑‍🤝‍🧑',n:'好朋友（邀請加入）',short:'好朋友',acts:['報名了健走團','約好週末去爬山','傳了一張夕陽照片給你'],steps:[3600,4800,2900]});
+  return m;}
+function famGoal(){return Math.min(20000,5000*(famMembers().length+1));}
+function famSteps(){return famMembers().reduce((a,m)=>a+m.steps[S.famIdx%3],0)+S.steps;}
+function famActs(){const p=S.p,par=famWord(),a=[];
+  if(p.spouse)a.push({id:'f_ret',t:'邀請另一半一起做退休試算',go:'retire'});
+  if(par)a.push({id:'f_par',t:`陪${par}完成一次健康任務`,go:'health'});
+  a.push({id:'f_care',t:'和家人聊聊未來的照護安排',go:'protect'});
+  a.push({id:'f_fund',t:'建立家庭緊急預備金目標',go:'protect'});
+  if(p.kids>0)a.push({id:'f_kid',t:'和孩子分享你的退休計畫',go:'retire'});
+  return a;}
+function doFam(id,ev){if(S.famDone[id])return;S.famDone[id]=true;addCoins(2);popAt(ev,'+2 🪙');gainBuddy('heart');markActive();if(S.reportSeen)S.firstAction=true;toast('💞 家庭準備 +1，暖暖芽加入了！');render();checkBadges();}
+function cheer(id,ev){if(S.heartTo[id]){toast('今天已經送過囉，明天再來 ❤️');return;}S.heartTo[id]=true;S.hearts++;markActive();popAt(ev,'❤️');toast(`已送出愛心給${famMembers().find(m=>m.id===id).short}！`);render();checkBadges();}
+function claimFamily(ev){S.famClaimed=true;addCoins(5);popAt(ev,'+5 🪙');confetti();render();}
 
-/* ---------- 徽章 ---------- */
-let badgeQueue=[];
-function checkBadges(){
-  BADGES.forEach(b=>{if(!S.badges[b.id]){const [v,m]=b.p(S);if(v>=m){S.badges[b.id]=true;S.newBadge=true;addCoins(2);badgeQueue.push(b);}}});
-  if(badgeQueue.length && !document.getElementById('ov').classList.contains('on'))showBadge();
-  save();
-}
-function showBadge(){
-  const b=badgeQueue.shift(); if(!b)return;
-  confetti();
-  openSheet(`<div class="center"><div class="medal jump" style="width:110px;height:110px;font-size:3.2rem">${b.e}</div><h3>獲得徽章：${b.n}</h3><p class="muted">${b.d}</p><p style="font-weight:900;color:var(--amberDk)">+2 樂活幣</p><button class="big b-green" style="width:100%" onclick="closeSheet()">收下 🏅</button></div>`);
-  renderHeader();
-}
-function badgeInfo(id){
-  const b=BADGES.find(x=>x.id===id), [v,m]=b.p(S), got=S.badges[id];
-  openSheet(`<div class="center"><div class="medal" style="width:100px;height:100px;font-size:3rem;${got?'':'filter:grayscale(1);opacity:.5'}">${b.e}</div><h3>${b.n}</h3><p class="muted">${b.d}</p>${got?'<p style="font-weight:900;color:var(--green)">✅ 已解鎖</p>':`<div class="bar" style="margin:10px 0"><i style="width:${Math.round(v/m*100)}%"></i></div><p class="muted">${v.toLocaleString()} / ${m.toLocaleString()}　慢慢來，不急 🌱</p>`}<button class="big b-soft" style="width:100%;margin-top:8px" onclick="closeSheet()">好</button></div>`);
-}
+/* ================= 準備度 ================= */
+function retCalc(){const r=S.ret,age=S.p.age,mr=r.rate/100/12,n=Math.max(0,(r.retAge-age)*12),g=Math.pow(1+mr,n);
+  const fv=r.assets*10000*g+(mr>0?r.monthly*(g-1)/mr:r.monthly*n);
+  const net=Math.max(0,r.need-r.other),m=Math.max(0,(r.plan-r.retAge)*12);
+  const req=mr>0?net*(1-Math.pow(1+mr,-m))/mr:net*m;
+  const gap=req-fv, extra=gap>0&&n>0?gap/(mr>0?(g-1)/mr:n):0;
+  const path=[];let bal=r.assets*10000;
+  for(let a=age;a<=r.plan;a++){path.push({a,v:Math.max(0,bal)});for(let k=0;k<12;k++){bal=bal*(1+mr)+(a<r.retAge?r.monthly:-net);}}
+  let runOut=null;for(const q of path){if(q.a>=r.retAge&&q.v<=0){runOut=q.a;break;}}
+  return {fv,req,gap,extra,ratio:req>0?fv/req:1,path,runOut,years:r.retAge-age};}
+function readiness(){
+  let h=null;if(S.healthQ){h=Object.values(S.healthQ).reduce((a,b)=>a+b,0)/8*60+Math.min(25,S.activeDays*3)+((S.cnt.t_check||0)?10:0)+(Object.keys(S.moods).length?5:0);h=Math.min(100,Math.round(h));}
+  let m=null;if(S.coverDone){const c=S.cover;m=(c.med?20:0)+(c.ci?15:0)+(c.dis?15:0)+(c.ltc?20:0)+(c.life?10:0)+Math.min(S.fin.emergency/Math.max(1,S.fin.expense),6)/6*20;m=Math.round(m);}
+  let r=null;if(S.retireDone)r=Math.min(100,Math.round(retCalc().ratio*100));
+  return {h,m,r};}
+function lvl(v){return v==null?{t:'尚未評估',c:'#B9B2A3'}:v>=70?{t:'🌳 準備充足',c:'#2E9E68'}:v>=40?{t:'🌿 穩穩前進',c:'#F2A33A'}:{t:'🌱 起步中',c:'#6E5AE6'};}
+function ringSVG(v,c){const off=v==null?264:264*(1-v/100);return `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="#EFE6D6" stroke-width="11" ${v==null?'stroke-dasharray="6 6"':''}/><circle cx="50" cy="50" r="42" fill="none" stroke="${c}" stroke-width="11" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="${off}" transform="rotate(-90 50 50)"/><text x="50" y="${v==null?57:58}" text-anchor="middle" font-size="${v==null?16:24}" font-weight="900" fill="#1F2544">${v==null?'？':v}</text></svg>`;}
 
-/* ---------- 兌換 ---------- */
-function redeem(id,ev){
-  const it=SHOP.find(x=>x.id===id);
-  if(it.cat==='deco' && S.owned[id]){ if(!it.once)toggleEquip(id); return; }
-  if(S.coins<it.c)return;
-  openSheet(`<div class="center"><div style="font-size:3rem">${it.e}</div><h3>兌換「${it.n}」？</h3><p class="muted">${it.p}<br>將使用 ${it.c} 樂活幣，剩下 ${S.coins-it.c} 幣</p><div class="row" style="margin-top:12px"><button class="big b-soft" onclick="closeSheet()">再想想</button><button class="big b-green" onclick="confirmRedeem('${id}')">確定兌換</button></div></div>`);
-}
-function rebuildMap(){pathEl=null;PTS=[];}
-function toggleEquip(id){
-  const it=SHOP.find(x=>x.id===id);
-  S.equip[it.slot]=!S.equip[it.slot];
-  if(it.slot==='map')rebuildMap();
-  toast(S.equip[it.slot]?`✨ 已裝備「${it.n}」`:`已卸下「${it.n}」`);
-  render();
-}
-function confirmRedeem(id){
-  const it=SHOP.find(x=>x.id===id);
-  if(S.coins<it.c || (it.cat==='deco'&&S.owned[id])){closeSheet();return;}
-  S.coins-=it.c; S.redeemCount=(S.redeemCount||0)+1;
-  confetti();
-  if(it.cat==='deco'){
-    S.owned[id]=true;
-    if(it.once){S.buddies.legend++;S.party.push('legend');}
-    else{S.equip[it.slot]=true; if(it.slot==='map')rebuildMap();}
-    openSheet(`<div class="center"><div class="jump" style="font-size:4rem">${it.e}</div><h3>🎉 取得「${it.n}」！</h3><p class="muted">${it.once?'長壽芽已經加入你的散步隊伍。':'已經自動裝備，隨時可以在兌換區卸下或重新裝備。'}</p><div class="row" style="margin-top:12px"><button class="big b-soft" onclick="closeSheet()">好的</button><button class="big b-green" onclick="closeSheet();go('${it.go}')">去看看 👀</button></div></div>`);
-  }else{
-    const code='FM-'+Math.random().toString(36).slice(2,6).toUpperCase()+'-'+(1000+Math.floor(Math.random()*9000));
-    S.tickets.unshift({n:it.n,e:it.e,code,d:`第 ${S.day} 天`});
-    const bars=Array.from({length:34},(_,i)=>`<rect x="${i*6}" y="0" width="${[2,3,1,4][(i*7+code.charCodeAt(i%code.length))%4]}" height="44" fill="#14232E"/>`).join('');
-    openSheet(`<div class="center"><h3>🎉 兌換成功！</h3><div class="ticket" style="flex-direction:column;margin-top:10px"><div style="font-size:2.4rem">${it.e}</div><b>${it.n}</b><span class="muted">${it.p}</span><svg viewBox="0 0 204 44" style="width:80%;height:44px;margin:8px 0">${bars}</svg><code>${code}</code></div><div class="row"><button class="big b-soft" onclick="copyCode('${code}')">📋 複製代碼</button><button class="big b-green" onclick="closeSheet()">好的</button></div></div>`);
-  }
-  render(); checkBadges();
-}
-function copyCode(c){try{navigator.clipboard.writeText(c).then(()=>toast('已複製：'+c),()=>toast('代碼：'+c));}catch(e){toast('代碼：'+c);}}
-
-/* ---------- 未來的我 ---------- */
-function futureSVG(age){
-  const ht=tier(S.health), wt=tier(S.wealth), col=LOOKS[S.look]||LOOKS[0];
-  const young = age===45;
-  const scenes=[
-    `<rect width="360" height="220" fill="#CFEAF7"/><circle cx="300" cy="50" r="26" fill="#FFD866"/><ellipse cx="90" cy="230" rx="160" ry="70" fill="#9ED39B"/><ellipse cx="300" cy="235" rx="150" ry="60" fill="#B6E0A8"/><text x="30" y="170" font-size="34">🌳</text><text x="290" y="180" font-size="30">🌷</text><rect x="210" y="160" width="70" height="8" rx="3" fill="#A0703F"/><text x="20" y="30" font-size="13" font-weight="700" fill="#14232E">📍 社區公園的午後</text>`,
-    `<rect width="360" height="220" fill="#BFE6F5"/><circle cx="290" cy="46" r="24" fill="#FFD866"/><rect y="130" width="360" height="40" fill="#5DB7E0"/><path d="M0 150 Q30 142 60 150 T120 150 T180 150 T240 150 T300 150 T360 150" stroke="#fff" stroke-width="3" fill="none" opacity=".7"/><rect y="168" width="360" height="52" fill="#F3DFB3"/><text x="290" y="125" font-size="26">⛵</text><text x="20" y="30" font-size="13" font-weight="700" fill="#14232E">📍 環島小旅行・東海岸</text>`,
-    `<rect width="360" height="220" fill="#C9E4FF"/><path d="M0 170 L80 70 L140 150 L210 50 L300 160 L360 110 L360 220 L0 220Z" fill="#8FB3D9"/><path d="M80 70 L95 90 L65 90Z M210 50 L228 75 L193 75Z" fill="#fff"/><rect y="170" width="360" height="50" fill="#8CCB82"/><text x="250" y="45" font-size="24">✈️</text><text x="20" y="30" font-size="13" font-weight="700" fill="#14232E">📍 和老伴的國外健行</text>`
-  ];
-  const props=[
-    `<rect x="190" y="118" width="14" height="12" rx="3" fill="#fff" stroke="#A0703F" stroke-width="2"/><path d="M204 121 q6 3 0 7" stroke="#A0703F" stroke-width="2" fill="none"/>`,
-    `<rect x="148" y="104" width="22" height="34" rx="8" fill="#3E9E6A"/>`,
-    `<path d="M200 98 L214 196" stroke="#5B4636" stroke-width="4" stroke-linecap="round"/><path d="M150 74 Q180 58 210 74 Z" fill="#E89B3C"/>`
-  ];
-  const hair = young ? '#4B3B33' : (age>=85?'#F1F1F1':'#D9D9D9');
-  const cheek = ['#F7B4A7','#FF9C8C','#FF8476'][ht];
-  const smile = ['M172 96 Q180 101 188 96','M171 95 Q180 104 189 95','M170 94 Q180 107 190 94'][ht];
-  const sparkle = ht===2?`<text x="222" y="80" font-size="18">✨</text><text x="128" y="96" font-size="14">✨</text>`:'';
-  const wrinkles = young?'':`<path d="M166 84 q4 -2 8 0 M186 84 q4 -2 8 0" stroke="#C99A86" stroke-width="1.2" fill="none"/>`;
-  return `<svg viewBox="0 0 360 220" aria-label="${age} 歲的你">${scenes[young?0:wt]}
-   <ellipse cx="180" cy="200" rx="40" ry="7" fill="#000" opacity=".12"/>
-   ${young?'':props[ht]}
+/* ================= 未來的我 ================= */
+function sceneBG(){const w=S.p.wish||'travel',sp=S.p.spouse;
+  const S1={travel:`<rect width="360" height="220" fill="#BFE6F5"/><circle cx="290" cy="46" r="24" fill="#FFD866"/><rect y="128" width="360" height="42" fill="#5DB7E0"/><rect y="168" width="360" height="52" fill="#F3DFB3"/><text x="290" y="122" font-size="26">⛵</text><text x="30" y="160" font-size="26">🌴</text><text x="20" y="28" font-size="13" font-weight="700" fill="#14232E">📍 ${sp?'和老伴的':''}東海岸小旅行</text>`,
+    family:`<rect width="360" height="220" fill="#FCE9D2"/><rect y="150" width="360" height="70" fill="#E8C9A0"/><rect x="230" y="40" width="90" height="70" rx="6" fill="#fff" stroke="#C9A26E" stroke-width="3"/><text x="252" y="88" font-size="30">🌄</text><rect x="20" y="140" width="110" height="14" rx="5" fill="#A0703F"/><text x="40" y="136" font-size="22">🍲</text><text x="20" y="28" font-size="13" font-weight="700" fill="#14232E">📍 週末全家回來吃飯</text>`,
+    learn:`<rect width="360" height="220" fill="#E6E2FF"/><rect y="160" width="360" height="60" fill="#CFC6F2"/><rect x="250" y="50" width="70" height="90" fill="#fff" stroke="#8C7BD9" stroke-width="3"/><text x="262" y="105" font-size="30">🖼️</text><path d="M285 140 L270 175 M285 140 L300 175" stroke="#8C7BD9" stroke-width="4"/><text x="30" y="80" font-size="24">📷</text><text x="20" y="28" font-size="13" font-weight="700" fill="#14232E">📍 社區大學的攝影課</text>`,
+    work:`<rect width="360" height="220" fill="#FFF1D6"/><rect y="160" width="360" height="60" fill="#E9D3A6"/><rect x="230" y="60" width="100" height="80" fill="#fff" stroke="#C9A26E" stroke-width="3"/><text x="248" y="112" font-size="28">☕</text><text x="286" y="112" font-size="28">🪴</text><text x="30" y="90" font-size="24">🛠️</text><text x="20" y="28" font-size="13" font-weight="700" fill="#14232E">📍 我的小小工作室</text>`,
+    volunteer:`<rect width="360" height="220" fill="#DFF3E4"/><rect y="160" width="360" height="60" fill="#B6DFA8"/><text x="250" y="150" font-size="30">🌻</text><text x="295" y="150" font-size="30">🌱</text><text x="30" y="150" font-size="28">🧺</text><text x="20" y="28" font-size="13" font-weight="700" fill="#14232E">📍 社區菜園當志工</text>`};
+  return S1[w];}
+function futureSVG(age,small){
+  const R=readiness(),ht=R.h==null?1:(R.h>=70?2:R.h>=40?1:0),col=LOOKS[S.look]||LOOKS[0],now=age===S.p.age,g=S.p.gender;
+  const hair=now?'#4B3B33':(age>=85?'#F1F1F1':age>=75?'#DADADA':'#BDBDBD');
+  const cheek=['#F7B4A7','#FF9C8C','#FF8476'][ht],smile=['M172 96 Q180 101 188 96','M171 95 Q180 104 189 95','M170 94 Q180 107 190 94'][ht];
+  const props=[`<rect x="190" y="118" width="14" height="12" rx="3" fill="#fff" stroke="#A0703F" stroke-width="2"/>`,`<rect x="148" y="104" width="22" height="34" rx="8" fill="#3E9E6A"/>`,`<path d="M200 98 L214 196" stroke="#5B4636" stroke-width="4" stroke-linecap="round"/><path d="M150 74 Q180 58 210 74 Z" fill="#E89B3C"/>`];
+  const longHair=g==='f'?`<path d="M156 80 Q150 108 160 118 L165 88Z M204 80 Q210 108 200 118 L195 88Z" fill="${hair}"/>`:'';
+  const partner=(S.p.spouse&&!now)?`<g transform="translate(-62,8)"><rect x="166" y="156" width="9" height="34" rx="4" fill="#3A4A5A"/><rect x="183" y="156" width="9" height="34" rx="4" fill="#3A4A5A"/><rect x="156" y="106" width="46" height="58" rx="20" fill="#6C9BD2"/><circle cx="179" cy="88" r="21" fill="#F6CBA8"/>${g==='m'?`<path d="M158 84 Q152 108 161 116 L165 88Z M200 84 Q206 108 197 116 L193 88Z" fill="${hair}"/>`:''}<path d="M158 86 Q160 62 179 63 Q199 62 200 86 Q194 72 179 72 Q164 72 158 86Z" fill="${hair}"/><circle cx="172" cy="88" r="2.1" fill="#14232E"/><circle cx="186" cy="88" r="2.1" fill="#14232E"/><path d="M172 97 Q179 102 186 97" stroke="#B4325E" stroke-width="2" fill="none" stroke-linecap="round"/></g>`:'';
+  return `<svg viewBox="0 0 360 220" aria-label="${age} 歲的你">${sceneBG()}
+   <ellipse cx="180" cy="200" rx="40" ry="7" fill="#000" opacity=".12"/>${partner}${now?'':props[ht]}
    <rect x="164" y="160" width="10" height="38" rx="5" fill="#3A4A5A"/><rect x="186" y="160" width="10" height="38" rx="5" fill="#3A4A5A"/>
    <rect x="154" y="104" width="52" height="64" rx="22" fill="${col}"/>
    <path d="M156 116 L136 ${ht===2?96:136}" stroke="#FAD7B5" stroke-width="9" stroke-linecap="round"/><path d="M204 116 L222 ${ht>=1?92:136}" stroke="#FAD7B5" stroke-width="9" stroke-linecap="round"/>
-   <circle cx="180" cy="84" r="24" fill="#FAD7B5"/>
+   ${longHair}<circle cx="180" cy="84" r="24" fill="#FAD7B5"/>
    ${S.equip.scarf?'<path d="M160 104 Q180 116 200 104 L200 113 Q180 125 160 113Z" fill="#E5484D"/><rect x="186" y="112" width="10" height="26" rx="4" fill="#C93A3E"/>':''}
    <path d="M156 82 Q160 54 180 56 Q202 54 204 82 Q198 66 180 66 Q164 66 156 82Z" fill="${hair}"/>
    ${age>=75?'<rect x="166" y="80" width="12" height="8" rx="3" fill="none" stroke="#5B4636" stroke-width="1.6"/><rect x="183" y="80" width="12" height="8" rx="3" fill="none" stroke="#5B4636" stroke-width="1.6"/><path d="M178 84 h5" stroke="#5B4636" stroke-width="1.6"/>':''}
    <circle cx="172" cy="84" r="2.4" fill="#14232E"/><circle cx="188" cy="84" r="2.4" fill="#14232E"/>
-   ${wrinkles}
+   ${now?'':'<path d="M166 76 q4 -2 8 0 M186 76 q4 -2 8 0" stroke="#C99A86" stroke-width="1.2" fill="none"/>'}
    <ellipse cx="166" cy="93" rx="4" ry="2.4" fill="${cheek}" opacity=".7"/><ellipse cx="194" cy="93" rx="4" ry="2.4" fill="${cheek}" opacity=".7"/>
    <path d="${smile}" stroke="#B4325E" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-   ${sparkle}
-   ${S.equip.frame?'<g font-size="16"><text x="14" y="200">⭐</text><text x="330" y="80">⭐</text><text x="120" y="40">✨</text></g>':''}
+   ${ht===2?'<text x="224" y="80" font-size="18">✨</text>':''}${S.equip.frame?'<g font-size="16"><text x="14" y="200">⭐</text><text x="330" y="80">⭐</text></g>':''}
    <g transform="translate(250,188) scale(.5)">${S.party.length?buddyG(S.party[S.party.length-1]):''}</g>
-   <rect x="268" y="196" width="84" height="20" rx="10" fill="#14232E" opacity=".75"/><text x="310" y="210" font-size="11" fill="#fff" text-anchor="middle" font-weight="700">${young?'今天的你':age+' 歲的你'}</text>
-  </svg>`;
-}
-function selStation(age){
-  const st=STATIONS.find(s=>s.age===age);
-  if(level(S)<st.need){const need=st.need*100-(S.health+S.wealth+S.family);toast(`🌱 再累積約 ${need} 點活力，就能解鎖 ${age} 歲站`);return;}
-  S.selStation=age; renderFuture(); save();
-}
-function speak(){
-  const t=document.getElementById('speech').textContent;
-  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='zh-TW';u.rate=.9;speechSynthesis.speak(u);toast('🔊 播放中…');}catch(e){toast('這個瀏覽器不支援朗讀，請直接閱讀文字 🙂');}
-}
-function pickSelfie(){document.getElementById('selfieIn').click();}
-function loadSelfie(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=x=>{S.selfie=x.target.result;renderFuture();toast('📸 已放上照片（只存在你的裝置）');};r.readAsDataURL(f);}
-const ANSWERS=[
-  ()=>{const t=TASKS.find(x=>!S.done[x.id]);return t?`今天只要做一件就好：「${t.t}」。做不到也沒關係，明天再來，我一直都在。`:'今天的小任務都完成了！現在最重要的事，是好好休息 😊';},
-  ()=>'不用跟別人比，也不用一次到位。你每多走一點、多存一點，我這邊就多一份從容。這裡沒有分數，只有下一章。',
-  ()=>'當然可以！到「三代家族圈」送愛心給爸媽和孩子，全家一起走到 20,000 步還有獎勵。照顧不用一個人扛。',
-  ()=>'不用現在決定。先花 1 分鐘看看保障清單就好，等你準備好，再按「想了解」，顧問才會聯絡你。'
-];
-const QS=['我今天只做一件事，該做什麼？','我是不是準備得不夠？','爸媽也能一起玩嗎？','長照保障，我需要現在決定嗎？'];
-function ask(i){
-  const box=document.getElementById('chat');
-  box.insertAdjacentHTML('beforeend',`<div class="msg me">${QS[i]}</div>`);
-  setTimeout(()=>{box.insertAdjacentHTML('beforeend',`<div class="msg ai">🧓 ${ANSWERS[i]()}</div>`);box.lastElementChild.scrollIntoView({behavior:'smooth',block:'center'});},450);
-}
+   ${small?'':`<rect x="268" y="196" width="84" height="20" rx="10" fill="#14232E" opacity=".75"/><text x="310" y="210" font-size="11" fill="#fff" text-anchor="middle" font-weight="700">${age} 歲的你</text>`}
+  </svg>`;}
+const TOPIC={65:'65 歲・退休生活開始｜你想怎麼過退休生活？',75:'75 歲・健康與家庭關係｜你還能自在地做喜歡的事嗎？',85:'85 歲・自主生活與照護｜你希望如何安排自己的晚年？'};
+function futureLine(age){
+  const p=S.p,n=S.name||'你',R=readiness(),yrs=age-p.age,kidW=p.kids>1?'孩子們':'孩子',par=famWord();
+  const wishTxt={travel:'剛從東海岸旅行回來',family:'週末全家都回來吃飯，好熱鬧',learn:'正在社區大學學攝影',work:'開了一間小工作室，做自己喜歡的事',volunteer:'在社區菜園當志工，認識好多朋友'}[p.wish||'travel'];
+  const hLine=R.h==null?`我們還沒好好看過自己的身體，找一天做個健康快評吧。`:R.h<40?`如果可以重新選擇，我希望 ${p.age} 歲的你，不要總是把自己的健康放在最後。`:R.h<70?'你最近開始動起來了，我的膝蓋很感謝你。':'謝謝你一直照顧身體，我到現在還能自在地走路。';
+  const rLine=R.r==null?'我們還沒算過退休金夠不夠，找一天一起算算看好嗎？':R.r<70?'退休金還差一點，所以我還在兼差；不過現在調整還來得及。':'退休金準備得剛好，我可以安心做喜歡的事。';
+  const mLine=R.m==null?'關於生病或照護，我們還沒好好想過，找時間看看保障好嗎？':R.m<70?'照護費用讓我有點擔心，早點準備會更安心。':`需要照護的時候，費用早就安排好了${p.kids>0?`，${kidW}不用辭職`:''}。`;
+  if(age===65){const fam=[];if(p.spouse)fam.push('另一半常陪我散步');if(p.kids>0)fam.push(`${p.kids>1?'老大':'孩子'}也 ${p.kidAge+yrs} 歲了`);if(p.mom.on&&p.mom.age+yrs<=95)fam.push(`媽媽 ${p.mom.age+yrs} 歲，還能一起曬太陽`);
+    return `嗨，${n}！${yrs} 年後的我 65 歲，${wishTxt}。${fam.length?fam.join('，')+'。':''}${rLine}${hLine}`;}
+  if(age===75)return `75 歲的我，${p.spouse?'和另一半':'和老朋友'}還是常常出門。${hLine}${p.kids>0?`${kidW}偶爾帶我們去走走。`:''}${par?`${par}教我的事，我一直都記得。`:''}`;
+  return `85 歲了，我想自己決定住在哪裡、由誰照顧。${mLine}${p.spouse?'我和另一半互相照應著。':''}謝謝你在 ${p.age} 歲那年，願意開始為我準備。`;}
+const QA={
+  65:[['退休後，你每天都在做什麼？',()=>`我${{travel:'規劃下一趟旅行',family:'陪家人、幫忙帶孫子',learn:'上課、拍照、寫字',work:'在工作室做喜歡的東西',volunteer:'在社區當志工'}[S.p.wish||'travel']}，每天早上一定先散步 30 分鐘。`],
+      ['我現在最該先做哪一件事？',()=>nextStepText()],
+      ['我的退休金夠用嗎？',()=>{if(!S.retireDone)return '我們還沒算過！到「退休規劃」調整幾個數字，3 分鐘就知道。';const c=retCalc();return c.gap>0?`照目前的準備，退休時大約有 ${wan(c.fv/1e4)}，離需要的 ${wan(c.req/1e4)} 還差一些。每月多投入約 $${fmt(c.extra)} 就能補上。`:`照目前的準備，退休時大約有 ${wan(c.fv/1e4)}，足夠支應到 ${S.ret.plan} 歲。`;}]],
+  75:[['你身體還好嗎？',()=>{const R=readiness();return R.h==null?'先幫我做個健康快評吧，我才知道怎麼回答你。':R.h>=70?'很好！每天還能走 8,000 步。':'還可以，只是膝蓋偶爾會痠。你現在多走一點，我就輕鬆一點。';}],
+      ['家人們都好嗎？',()=>S.p.kids>0?`${S.p.kids>1?'孩子們':'孩子'}都有自己的生活，常常打電話回來。${S.p.spouse?'另一半還是很愛碎念我，哈。':''}`:S.p.spouse?'我和另一半互相照顧，日子很踏實。':'老朋友們都在，我們每週一起爬山。'],
+      ['你有什麼後悔的事嗎？',()=>`後悔太晚開始照顧自己。${S.p.age} 歲的你，現在開始剛剛好。`]],
+  85:[['你需要人照顧嗎？',()=>'需要一點幫忙，但我早就想好要怎麼安排，也跟家人說好了。'],
+      ['照護的錢夠嗎？',()=>{const R=readiness();return R.m==null?'先到「醫療保障」看看「父母需要長期照護」這個情境，也想想自己的。':R.m>=70?'夠的，你很早就開始準備了。':'有點緊。現在先建立緊急預備金、了解長照保障，就會好很多。';}],
+      ['你想對我說什麼？',()=>`謝謝你。不用一次做到完美，每天一點點，就是送給我最好的禮物。`]]};
+function nextStepText(){const R=readiness();
+  if(!S.riskDone||!Object.keys(S.riskDone).length)return '先挑一個你最擔心的人生情境，看看自己準備好了沒。';
+  if(R.h==null)return '先做 1 分鐘的健康快評吧。';
+  if(R.r==null)return '花 3 分鐘做一次退休試算。';
+  const low=[['h','健康',R.h],['m','保障',R.m],['r','退休',R.r]].sort((a,b)=>a[2]-b[2])[0];
+  return {h:'每天為我多走 15 分鐘，就是最好的開始。',m:'把緊急預備金慢慢存到 6 個月的家庭支出。',r:'把每月的自動提撥調高一點點就好。'}[low[0]];}
 
-/* ---------- 共用 ---------- */
-function addCoins(n){S.coins+=n;}
-function popAt(ev,txt){
-  const x=ev&&ev.clientX!==undefined?ev.clientX:innerWidth/2, y=ev&&ev.clientY!==undefined?ev.clientY:innerHeight/2;
-  const d=document.createElement('div');d.className='pop';d.textContent=txt;d.style.left=x+'px';d.style.top=(y-20)+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),1000);
-}
-let toastT;
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2400);}
-function confetti(){
-  const cols=['#E89B3C','#3E9E6A','#F29CB6','#8E9BE8','#FFD25E','#6CCFC2'];
-  for(let i=0;i<42;i++){const c=document.createElement('div');c.className='conf';c.style.left=Math.random()*100+'vw';c.style.background=cols[i%cols.length];c.style.animationDuration=(1.2+Math.random()*1.2)+'s';c.style.animationDelay=(Math.random()*.3)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),2800);}
-}
-function openSheet(html){document.getElementById('sheet').innerHTML=html;document.getElementById('ov').classList.add('on');}
-function closeSheet(){document.getElementById('ov').classList.remove('on');setTimeout(()=>{if(badgeQueue.length)showBadge();},250);}
-function go(s){
-  document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('on',x.id==='s-'+s));
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
-  if(s==='buddy')S.newBuddy=false; if(s==='badge')S.newBadge=false;
-  render(); scrollTo({top:0,behavior:'smooth'});
-}
+/* ================= 情境模擬 ================= */
+const SCN={
+  sick:{e:'🤒',t:'我突然生病，需要休養半年',s:'醫療支出及收入中斷'},
+  parent:{e:'👵',t:'父母需要長期照護',s:'家庭照護及長照費用'},
+  income:{e:'💼',t:'家庭主要收入突然中斷',s:'房貸、教育及家庭生活支出'},
+  disable:{e:'🦽',t:'我失去工作能力',s:'長期收入及家庭經濟保障'}};
+const RDEF={sick:{months:6,medSelf:20,ciPay:50},parent:{careMonthly:3,careYears:8,share:1,parentPrep:50},income:{months:12,lifePay:300},disable:{disMonthly:3,other:2}};
+let curRisk=null;
+function getRI(id){S.riskIn[id]=Object.assign({},RDEF[id],S.riskIn[id]||{});return S.riskIn[id];}
+function setPath(path,v){const ks=path.split('.');let o=S;for(let i=0;i<ks.length-1;i++)o=o[ks[i]];o[ks[ks.length-1]]=v;}
+function getPath(path){return path.split('.').reduce((o,k)=>o[k],S);}
+function sl(path,label,min,max,step,unit,after){const v=getPath(path);return `<div class="sl"><div class="lb"><span>${label}</span><b id="v_${path.replace(/\./g,'_')}">${Number(v).toLocaleString()}${unit}</b></div><input type="range" min="${min}" max="${max}" step="${step}" value="${v}" oninput="setPath('${path}',+this.value);document.getElementById('v_${path.replace(/\./g,'_')}').textContent=Number(this.value).toLocaleString()+'${unit}';${after||''}"></div>`;}
+function coverChips(after){const C=[['med','實支實付醫療險'],['ci','重大疾病／癌症險'],['dis','失能險'],['ltc','長照險'],['life','壽險']];
+  return `<div class="chips">${C.map(([k,n])=>`<button class="chipb ${S.cover[k]?'on':''}" onclick="S.cover['${k}']=!S.cover['${k}'];this.classList.toggle('on');${after||''}">${n}</button>`).join('')}</div>`;}
+function riskCompute(id){const f=S.fin,c=S.cover,x=getRI(id);let o={};
+  if(id==='sick'){const med=c.med?x.medSelf*0.2:x.medSelf,need=med+x.months*f.expense,have=f.emergency+(c.ci?x.ciPay:0),hold=Math.max(0,(have-med)/f.expense);
+    o={need,have,unit:'萬',labels:['需要','已準備'],head:hold>=x.months?`✅ 緊急預備金和保險，大約可以支撐 ${hold.toFixed(1)} 個月，足以度過 ${x.months} 個月的休養期。`:`⚠️ 大約可以支撐 ${hold.toFixed(1)} 個月；休養 ${x.months} 個月，還差約 ${wan(need-have)}。`,
+      checks:[c.med?'實支實付醫療險：確認保單仍有效、額度是否足夠':'了解實支實付醫療險，降低自付醫療費用',c.ci?'重大疾病／癌症險：確認一次給付的金額':'了解重大疾病／癌症的一次給付保障',f.emergency<6*f.expense?`緊急預備金目標：約 6 個月家庭支出（${wan(6*f.expense)}）`:'緊急預備金充足，記得每年檢視一次'],
+      ins:sl('riskIn.sick.months','休養月數',1,12,1,' 個月','riskResult()')+sl('riskIn.sick.medSelf','自付醫療費用（未投保時，示意）',0,100,5,' 萬','riskResult()')+(c.ci?sl('riskIn.sick.ciPay','重大疾病一次給付（依你的保單）',0,300,10,' 萬','riskResult()'):'')};}
+  if(id==='parent'){const total=x.careMonthly*x.careYears*12,mine=Math.max(0,total-x.parentPrep)*x.share,monthly=mine/(x.careYears*12),surplus=Math.max(0,f.income-f.expense);
+    o={need:monthly,have:surplus,unit:'萬/月',labels:['每月負擔','每月餘裕'],head:`照護 ${x.careYears} 年總花費約 ${wan(total)}；你分擔的部分每月約 ${monthly.toFixed(1)} 萬，${monthly<=surplus?'目前的月餘裕還撐得住。':'超過目前每月的餘裕，需要提早規劃。'}`,
+      checks:['和兄弟姊妹先聊聊照顧分工與費用','了解政府長照 2.0 可申請的服務',`確認${famWord()||'爸媽'}自己的存款與保單狀況`,c.ltc?'你已有長照險：也確認給付條件與金額':'也想想自己的長照準備，避免下一代重演'],
+      ins:sl('riskIn.parent.careMonthly','每月照護費用',1,8,0.5,' 萬','riskResult()')+sl('riskIn.parent.careYears','照護年數',1,15,1,' 年','riskResult()')+sl('riskIn.parent.parentPrep','長輩自己的準備',0,500,10,' 萬','riskResult()')+`<div class="sl"><div class="lb"><span>你負擔的比例</span></div><div class="chips">${[[1,'全部由我'],[0.5,'兩人分擔'],[0.34,'三人分擔']].map(([v,n])=>`<button class="chipb ${x.share===v?'on':''}" onclick="getRI('parent').share=${v};renderRisk()">${n}</button>`).join('')}</div></div>`,
+      src:'每月約 3 萬、平均 8 年的預設值，取自新光人壽以不健康餘命估算的照護成本（今周刊，2026/3）'};}
+  if(id==='income'){const need=x.months*f.expense,have=f.emergency+(c.life?x.lifePay:0),hold=have/f.expense;
+    o={need,have,unit:'萬',labels:['需要','已準備'],head:hold>=x.months?`✅ 預備金${c.life?'加上壽險':''}約可支撐 ${hold.toFixed(1)} 個月的家庭開銷。`:`⚠️ 約可支撐 ${hold.toFixed(1)} 個月；${x.months} 個月內還差約 ${wan(need-have)}。`,
+      checks:[f.mortgage>0?`房貸每月 ${f.mortgage} 萬：確認是否有房貸壽險或可申請寬限`:'目前沒有房貸，壓力相對小',S.p.kids>0&&S.p.kidAge<22?'孩子的教育費用是否已有準備':'檢視家中其他固定支出',c.life?'壽險：確認保額是否跟得上家庭支出':'家庭主要收入者的壽險保額，可和顧問確認是否足夠'],
+      ins:sl('riskIn.income.months','收入中斷月數',3,36,1,' 個月','riskResult()')+(c.life?sl('riskIn.income.lifePay','壽險給付（若因身故中斷，依保單）',0,1000,50,' 萬','riskResult()'):'')};}
+  if(id==='disable'){const sup=(c.dis?x.disMonthly:0)+x.other,gap=Math.max(0,f.expense-sup),hold=gap>0?f.emergency/gap:Infinity,yrs=Math.max(0,S.ret.retAge-S.p.age);
+    o={need:f.expense,have:sup,unit:'萬/月',labels:['每月支出','每月支撐'],head:gap>0?`⚠️ 每月還差約 ${gap.toFixed(1)} 萬；緊急預備金約可撐 ${hold.toFixed(0)} 個月，而離退休還有 ${yrs} 年。`:'✅ 每月支出已被失能給付與其他收入支撐。',
+      checks:[c.dis?'失能險：確認失能等級與每月給付條件':'了解失能險或失能扶助保障——工作能力是家庭最大的資產','家人其他收入能否長期支撐','提早規劃退休帳戶，避免提早動用'],
+      ins:(c.dis?sl('riskIn.disable.disMonthly','失能險每月給付（依保單）',0,10,0.5,' 萬','riskResult()'):'')+sl('riskIn.disable.other','家人其他收入（每月）',0,10,0.5,' 萬','riskResult()')};}
+  return o;}
+function openRisk(id){curRisk=id;go('risk');}
+function renderRisk(){const id=curRisk;if(!id)return;const s=SCN[id],o=riskCompute(id);
+  document.getElementById('riskBody').innerHTML=`<div class="card" style="background:#EEF6FD;border-color:#C9E2F5"><div style="font-size:2.2rem">${s.e}</div><b style="font-size:1.15rem">${s.t}</b><div class="muted">${s.s}</div></div>
+  <h2 class="sec">1️⃣ 你的家庭財務小檔案 <small>可隨時調整</small></h2>
+  <div class="card">${sl('fin.income','家庭每月收入',1,30,0.5,' 萬','riskResult()')}${sl('fin.expense','家庭每月支出',1,20,0.5,' 萬','riskResult()')}${sl('fin.emergency','緊急預備金',0,300,5,' 萬','riskResult()')}${sl('fin.mortgage','房貸每月付款',0,10,0.5,' 萬','riskResult()')}
+  <div class="sl"><div class="lb"><span>目前有的保障（點選）</span></div>${coverChips('renderRisk()')}</div></div>
+  <h2 class="sec">2️⃣ 情境假設 <small>示意，可調整</small></h2>
+  <div class="card">${o.ins}${o.src?`<p class="muted" style="margin:6px 0 0">${o.src}</p>`:''}</div>
+  <h2 class="sec">3️⃣ 模擬結果</h2>
+  <div class="card" id="riskRes"></div>
+  <button class="big b-green" style="margin-top:14px" onclick="finishRisk(event)">${S.riskDone[id]?'✅ 已完成，回到情境列表':'我看完了，完成這個情境 ✓'}</button>
+  <p class="note">示意試算，協助你思考，不構成保險或財務建議。</p>`;
+  riskResult();}
+function riskResult(){const el=document.getElementById('riskRes');if(!el||!curRisk)return;const o=riskCompute(curRisk),mx=Math.max(o.need,o.have,0.001);
+  el.innerHTML=`<div class="headline">${o.head}</div><div class="cmp"><div class="r"><span>${o.labels[0]}</span><div class="t"><i style="width:${o.need/mx*100}%;background:#E8604F"></i></div><span class="v">${o.need.toFixed(1)} ${o.unit}</span></div><div class="r"><span>${o.labels[1]}</span><div class="t"><i style="width:${o.have/mx*100}%;background:#2E9E68"></i></div><span class="v">${o.have.toFixed(1)} ${o.unit}</span></div></div>
+  <b>建議進一步確認的事項</b><ul class="chk">${o.checks.map(c=>`<li>${c}</li>`).join('')}</ul>`;
+  save();}
+function finishRisk(ev){const first=!S.riskDone[curRisk];S.riskDone[curRisk]=true;S.coverDone=true;
+  if(first){addCoins(2);popAt(ev,'+2 🪙');gainBuddy('shield');toast('🛡️ 護護芽加入了！保障準備度已更新');}
+  if(S.reportSeen)S.firstAction=true;checkBadges();go('protect');}
 
-/* ---------- 設定 / 示範 ---------- */
-function openSettings(){
-  openSheet(`<h3>⚙️ 設定與簡報示範</h3><p class="muted">現場展示時，可以用下面的按鈕快速體驗不同天的狀態。</p>
-  <button class="qbtn" onclick="document.documentElement.classList.toggle('xl');toast('已切換字體大小')">🔍 切換特大字</button>
-  <button class="qbtn" onclick="nextDay()">⏩ 快轉到明天（任務重置，活躍天數累積）</button>
-  <button class="qbtn" onclick="addCoins(300);render();closeSheet();toast('🪙 已加入 300 示範幣')">🪙 加 300 示範幣（展示兌換用）</button>
-  <button class="qbtn" onclick="for(let i=0;i<3;i++)spawnSeed();drawMap();closeSheet();toast('🌰 地圖上冒出了種子！')">🌰 在地圖上撒 3 顆種子</button>
-  <button class="qbtn" onclick="resetAll()">🔄 重新開始（清除所有進度）</button>
-  <p class="note">進度只存在這台裝置的瀏覽器中，不會上傳。</p>`);
-}
-function nextDay(){
-  S.day++; S.steps=0; S.done={}; S.flowers=[]; S.seeds=[]; S.activeToday=false; S.heartTo={}; S.famClaimed=false; S.famIdx++;
-  closeSheet(); render(); toast(`☀️ 第 ${S.day} 天早安！今天也慢慢來`);
-}
-function resetAll(){S=fresh();try{localStorage.removeItem(KEY);}catch(e){}closeSheet();if(autoTimer)toggleAuto();onboard();render();}
+/* ================= 退休試算 ================= */
+function renderRetire(){
+  document.getElementById('retInputs').innerHTML=`<b>調整你的數字</b>
+   <div class="sl"><div class="lb"><span>目前年齡</span><b>${S.p.age} 歲</b></div><div class="muted">可在 ⚙️ 編輯個人資料修改</div></div>
+   ${sl('ret.retAge','預計退休年齡',55,70,1,' 歲','retUpdate()')}${sl('ret.assets','目前退休準備資產',0,2000,10,' 萬','retUpdate()')}
+   ${sl('ret.monthly','每月投入退休準備金',0,50000,1000,' 元','retUpdate()')}${sl('ret.need','預計退休後每月生活費',20000,150000,5000,' 元','retUpdate()')}
+   ${sl('ret.other','其他退休收入（勞保／勞退等，每月）',0,60000,1000,' 元','retUpdate()')}${sl('ret.rate','假設年投資報酬率',0,8,0.5,' %','retUpdate()')}
+   ${sl('ret.plan','規劃到幾歲（長壽準備）',80,100,1,' 歲','retUpdate()')}
+   <button class="big b-green" style="margin-top:8px" onclick="finishRetire(event)">${S.retireDone?'✅ 已更新我的退休準備度':'完成試算，更新我的退休準備度'}</button>`;
+  retUpdate();}
+function retUpdate(){const c=retCalc(),r=S.ret;
+  document.getElementById('retOut').innerHTML=`<div class="muted">預估 ${r.retAge} 歲退休時累積資產</div><div class="bignum">${wan(c.fv/1e4)}</div><div class="muted">距離退休還有 ${Math.max(0,c.years)} 年</div>
+  <div class="kpis" style="margin-top:12px"><div class="kpi"><span>退休後需要準備（到 ${r.plan} 歲）</span><b>${wan(c.req/1e4)}</b></div><div class="kpi"><span>${c.gap>0?'目前缺口':'預估盈餘'}</span><b style="color:${c.gap>0?'#C2412F':'#1F7A4E'}">${wan(Math.abs(c.gap)/1e4)}</b></div></div>
+  <div class="card" style="margin-top:10px;background:${c.gap>0?'#FFF4E5':'#EAF7EF'};border-color:${c.gap>0?'#F6D3A6':'#BFE3CC'}"><b>退休規劃提醒</b><div class="muted">${c.gap>0?`每月再多投入約 <b>$${fmt(c.extra)}</b>，就有機會補上缺口${c.runOut?`；照目前的準備，資產大約用到 ${c.runOut} 歲`:''}。也可以考慮延後退休或調整生活費。`:`現在每月持續投入 $${fmt(r.monthly)}，有機會支應到 ${r.plan} 歲。`}記得同時考量通膨與退休後的醫療支出。</div></div>`;
+  const P=c.path,W=320,H=150,mx=Math.max(...P.map(q=>q.v),1),x=a=>20+(a-P[0].a)/(P[P.length-1].a-P[0].a||1)*(W-30),y=v=>H-20-v/mx*(H-40);
+  const line=P.map((q,i)=>`${i?'L':'M'}${x(q.a).toFixed(1)} ${y(q.v).toFixed(1)}`).join(' '),area=line+` L${x(P[P.length-1].a)} ${H-20} L${x(P[0].a)} ${H-20}Z`,rx=x(r.retAge);
+  document.getElementById('retChart').innerHTML=`<b>資產走勢（萬元）</b><svg viewBox="0 0 ${W} ${H}" aria-label="退休資產走勢圖"><path d="${area}" fill="#CDEBD9"/><path d="${line}" fill="none" stroke="#2E9E68" stroke-width="3"/><line x1="${rx}" y1="10" x2="${rx}" y2="${H-20}" stroke="#F2A33A" stroke-width="2" stroke-dasharray="4 4"/><text x="${rx+4}" y="20" font-size="10" fill="#8A4A05" font-weight="700">${r.retAge} 歲退休</text><text x="20" y="${H-6}" font-size="10" fill="#505672">${P[0].a} 歲</text><text x="${W-10}" y="${H-6}" font-size="10" fill="#505672" text-anchor="end">${r.plan} 歲</text><text x="22" y="16" font-size="10" fill="#505672">高點 ${fmt(mx/1e4)} 萬</text></svg>`;
+  save();}
+function finishRetire(ev){const first=!S.retireDone;S.retireDone=true;if(first){addCoins(2);popAt(ev,'+2 🪙');gainBuddy('coin');toast('🏖️ 存存芽加入了！退休準備度已更新');}else toast('已更新退休準備度');if(S.reportSeen)S.firstAction=true;render();checkBadges();}
 
-/* ---------- 開場 ---------- */
-let pickLook=0;
-function onboard(){
-  openSheet(`<div class="center"><div style="display:flex;justify-content:center;gap:4px;height:90px">${['walk','coin','heart'].map(k=>`<div style="width:64px" class="bob">${buddySVG(k)}</div>`).join('')}</div>
-  <h3>遇見 65 歲的自己</h3><p class="muted">給 45+ 的你：沒有分數、沒有考試。<br>每天 3 分鐘，走路、存錢、陪家人，<br>就能孵出芽芽夥伴、收集徽章、換好康。</p>
-  <div style="text-align:left;margin-top:14px"><b>怎麼稱呼你？</b><input type="text" id="nm" placeholder="例如：淑芬" maxlength="8" style="margin-top:6px"></div>
-  <div style="text-align:left;margin-top:12px"><b>選一個你喜歡的顏色</b></div>
-  <div class="looks">${LOOKS.map((c,i)=>`<div class="look ${i===0?'sel':''}" style="background:${c}" onclick="pickLook=${i};document.querySelectorAll('.look').forEach((x,j)=>x.classList.toggle('sel',j===${i}))"></div>`).join('')}</div>
-  <button class="big b-green" style="width:100%" onclick="start()">🌱 開始散步</button></div>`);
-}
-function start(){
-  const v=(document.getElementById('nm').value||'').trim();
-  S.name=v||'你'; S.look=pickLook; S.started=true; S.coins+=5;
-  closeSheet(); render();
-  setTimeout(()=>{hatch('walk');setTimeout(()=>{toast('🎁 見面禮：5 樂活幣');},300);checkBadgesLater();},300);
-}
-function checkBadgesLater(){setTimeout(()=>{checkBadges();},2200);}
+/* ================= 健康快評 ================= */
+const HQ=[['exercise','每週運動或快走 30 分鐘以上的次數',['幾乎沒有','1～2 次','3 次以上']],['sleep','平常的睡眠時間',['常少於 6 小時','6～7 小時','7 小時以上']],['diet','三餐的飲食習慣',['外食多、少蔬菜','偶爾注意','大致均衡']],['check','上一次健康檢查',['超過 3 年或沒做過','2～3 年內','每年都做']]];
+let hqDraft={};
+function openHQ(){hqDraft=Object.assign({},S.healthQ||{});renderHQ();}
+function renderHQ(){openSheet(`<h3>🩺 1 分鐘健康快評</h3><p class="muted">選最接近的就好，只用來計算你的健康準備度。</p>${HQ.map(([k,q,opts])=>`<div class="field"><b>${q}</b><div class="chips">${opts.map((o,i)=>`<button class="chipb ${hqDraft[k]===i?'on':''}" onclick="hqDraft['${k}']=${i};renderHQ()">${o}</button>`).join('')}</div></div>`).join('')}
+  <button class="big b-green" style="margin-top:16px;${Object.keys(hqDraft).length<4?'opacity:.5':''}" onclick="if(Object.keys(hqDraft).length<4){toast('還有 '+(4-Object.keys(hqDraft).length)+' 題沒選喔');return;}saveHQ(event)">完成快評</button>`);}
+function saveHQ(ev){const first=!S.healthQ;S.healthQ=hqDraft;closeSheet();if(first){addCoins(2);gainBuddy('star');toast('🩺 檢檢芽加入了！健康準備度已更新');}if(S.reportSeen)S.firstAction=true;render();checkBadges();}
 
-/* ---------- 畫面 ---------- */
-function renderHeader(){
-  document.getElementById('hdrName').textContent=S.name?`${S.name}的樂活花園`:'我的樂活花園';
-  document.getElementById('hdrSub').textContent=`第 ${S.day} 天・走多少都算 🌱`;
-  document.getElementById('coins').textContent=S.coins.toLocaleString();
-  document.getElementById('coins2').textContent=S.coins.toLocaleString();
-  document.getElementById('days').textContent=S.activeDays;
-  document.getElementById('dot-buddy').classList.toggle('show',S.newBuddy);
-  document.getElementById('dot-badge').classList.toggle('show',S.newBadge);
-}
-function renderWalk(newFlower){
-  drawMap(newFlower);
-  const f=Math.min(S.steps/GOAL,1);
-  document.getElementById('ringArc').setAttribute('stroke-dashoffset',(264*(1-f)).toFixed(1));
-  document.getElementById('steps').textContent=S.steps.toLocaleString();
-  document.getElementById('tasks').innerHTML=TASKS.map(t=>`<div class="task ${S.done[t.id]?'done':''}"><div class="bud">${buddySVG(t.sp)}</div><div class="tx"><b>${t.t}</b><span>${t.s}</span></div><button class="go" onclick="doTask('${t.id}',event)">${S.done[t.id]?'完成 ✓':'+'+t.coin+' 🪙'}</button></div>`).join('');
-  document.getElementById('family').innerHTML=FAMILY.map(m=>`<div class="fam"><div class="em">${m.e}</div><div class="tx"><b>${m.n}</b><span>✅ ${m.acts[S.famIdx%3]}</span></div><button class="heart" onclick="cheer('${m.id}',event)">${S.heartTo[m.id]?'❤️ 已送':'🤍 送愛心'}</button></div>`).join('');
-  const fs=famSteps();
-  document.getElementById('famNum').textContent=`${fs.toLocaleString()} 步`;
-  document.getElementById('famBar').style.width=Math.min(100,fs/200)+'%';
-  document.getElementById('famClaim').style.display=(fs>=20000&&!S.famClaimed)?'flex':'none';
-}
-function renderBuddy(){
-  const party=S.party.slice(-6);
-  document.getElementById('party').innerHTML=party.length?party.map((k,i)=>`<div class="bob" style="animation-delay:${i*.12}s" onclick="petBuddy('${k}')">${buddySVG(k)}</div>`).join(''):'<span class="muted">還沒有夥伴，去散步撿種子吧！</span>';
-  const total=Object.values(S.buddies).reduce((a,b)=>a+b,0);
-  document.getElementById('partyTxt').textContent=`共 ${total} 隻芽芽｜已種下 ${S.totalFlowers} 朵花`;
-  const keys=[...BASIC,'legend'];
-  document.getElementById('dexCount').textContent=`${keys.filter(k=>S.buddies[k]>0).length} / ${keys.length} 種`;
-  document.getElementById('dex').innerHTML=keys.map(k=>{const n=S.buddies[k]||0;return `<div class="bcard ${n?'':'lock'}" onclick="petBuddy('${k}')">${buddySVG(k)}<b>${n?SPECIES[k].name:'？？？'}</b><span>${n?`×${n}｜${SPECIES[k].habit}`:SPECIES[k].habit+'芽'}</span></div>`;}).join('');
-}
-function renderBadges(){
-  const got=BADGES.filter(b=>S.badges[b.id]).length;
-  document.getElementById('badgeSum').textContent=`已收集 ${got} / ${BADGES.length} 枚・每枚 +2 樂活幣`;
-  document.getElementById('badges').innerHTML=BADGES.map(b=>{const [v,m]=b.p(S);const ok=S.badges[b.id];return `<div class="badge ${ok?'':'lock'}" onclick="badgeInfo('${b.id}')"><div class="medal">${b.e}</div><b>${b.n}</b><span>${ok?'已解鎖':`${Math.round(v/m*100)}%`}</span></div>`;}).join('');
-}
-function renderFuture(){
-  const L=level(S);
-  if(STATIONS.find(s=>s.age===S.selStation).need>L)S.selStation=45;
-  document.getElementById('stations').innerHTML=STATIONS.map(s=>`<button class="st ${L>=s.need?'open':''} ${S.selStation===s.age?'sel':''}" onclick="selStation(${s.age})"><div class="dot">${L>=s.need?s.age:'🔒'}</div><small>${s.label}</small></button>`).join('');
-  document.getElementById('scene').innerHTML=futureSVG(S.selStation);
-  document.getElementById('scene').classList.toggle('gold',!!S.equip.frame);
-  document.getElementById('speech').textContent=LINES[S.selStation].replace('{n}',S.name||'你');
-  document.getElementById('hLv').textContent='Lv'+lv(S.health);
-  document.getElementById('wLv').textContent='Lv'+lv(S.wealth+S.family);
-  document.getElementById('hBar').style.width=((S.health%40)/40*100)+'%';
-  document.getElementById('wBar').style.width=(((S.wealth+S.family)%40)/40*100)+'%';
-  const next=STATIONS.find(s=>s.need>L);
-  const tot=S.health+S.wealth+S.family;
-  document.getElementById('hint').innerHTML=next?`<b>🌱 下一章：${next.age} 歲・${next.label}</b><div class="bar gold" style="margin:8px 0"><i style="width:${Math.round(tot/(next.need*100)*100)}%"></i></div><div class="muted">再累積 ${next.need*100-tot} 點活力就能聽 ${next.age} 歲的你說話。散步、存錢、陪家人都算。</div>`:'<b>🌈 人生地圖全部點亮了！</b><div class="muted">95 歲的你想對你說聲謝謝。</div>';
-  const box=document.getElementById('selfieBox');
-  if(S.selfie){box.hidden=false;document.getElementById('selfiePh').innerHTML=`<img src="${S.selfie}" alt="你的照片（示意老化濾鏡）">`;}
-}
+/* ================= 人生報告 ================= */
+function openReport(){S.reportSeen=true;go('report');checkBadges();}
+function renderReport(){const R=readiness(),p=S.p,L=[lvl(R.h),lvl(R.m),lvl(R.r)],c=S.retireDone?retCalc():null;
+  const f={h:R.h==null?'還沒做健康快評。':R.h>=70?'作息與運動習慣很穩定。':R.h>=40?'有開始動起來，睡眠或運動還能再加強。':'健康常被擺在最後，從每天 15 分鐘開始就好。',
+    m:R.m==null?'還沒體驗人生風險情境。':`已準備：${['med','ci','dis','ltc','life'].filter(k=>S.cover[k]).map(k=>({med:'醫療',ci:'重大疾病',dis:'失能',ltc:'長照',life:'壽險'})[k]).join('、')||'尚無商業保障'}；緊急預備金約 ${(S.fin.emergency/S.fin.expense).toFixed(1)} 個月支出。`,
+    r:!c?'還沒做退休試算。':c.gap>0?`預估退休時 ${wan(c.fv/1e4)}，到 ${S.ret.plan} 歲還差約 ${wan(c.gap/1e4)}。`:`預估退休時 ${wan(c.fv/1e4)}，可支應到 ${S.ret.plan} 歲。`};
+  const sug={h:R.h==null?'做一次 1 分鐘健康快評':'每天一個健康小任務，今年預約一次健檢',m:R.m==null?'挑一個最擔心的情境試試看':(!S.cover.ltc?'了解長照與失能保障，':'')+'把緊急預備金存到 6 個月支出',r:!c?'花 3 分鐘做退休試算':c.gap>0?`每月多投入約 $${fmt(c.extra)}，或考慮延後退休`:'維持目前的投入，每年檢視一次'};
+  const strengths=[];if(R.h>=70)strengths.push('健康習慣穩定');if(S.fin.emergency>=6*S.fin.expense)strengths.push('緊急預備金充足');if(c&&c.gap<=0)strengths.push('退休準備跟得上');if(S.p.spouse||S.p.kids>0||S.p.mom.on||S.p.dad.on)strengths.push('有家人可以一起準備');if(!strengths.length)strengths.push('願意開始了解自己，就是最好的起點');
+  const today=new Date();
+  document.getElementById('reportBody').innerHTML=`<div class="hero"><div class="art">${futureSVG(65,true)}</div><div class="tx"><h2>${S.name||'你'}的人生準備報告</h2><p>${today.getFullYear()}/${today.getMonth()+1}/${today.getDate()}｜${p.age} 歲・${p.life}・期待的 65 歲：${WISHES[p.wish].e} ${WISHES[p.wish].n}</p></div></div>
+  <h2 class="sec">📊 三大準備度</h2><div class="rings">${[['健康',R.h,L[0]],['醫療保障',R.m,L[1]],['退休',R.r,L[2]]].map(([n,v,l])=>`<div class="rg">${ringSVG(v,l.c)}<b>${n}</b><span>${l.t}</span></div>`).join('')}</div>
+  <h2 class="sec">🔎 發現與建議</h2>
+  <div class="card rep"><h3>💪 健康 <span class="pill p-g">${L[0].t}</span></h3><div class="muted">${f.h}</div><div style="margin-top:6px;font-size:.9rem">👉 ${sug.h}</div></div>
+  <div class="card rep m"><h3>🛡️ 醫療保障 <span class="pill p-s">${L[1].t}</span></h3><div class="muted">${f.m}</div><div style="margin-top:6px;font-size:.9rem">👉 ${sug.m}</div></div>
+  <div class="card rep r"><h3>🏖️ 退休 <span class="pill p-a">${L[2].t}</span></h3><div class="muted">${f.r}</div><div style="margin-top:6px;font-size:.9rem">👉 ${sug.r}</div></div>
+  <h2 class="sec">🌟 你的優勢</h2><div class="card"><div class="famrow">${strengths.map(x=>`<span>✓ ${x}</span>`).join('')}</div></div>
+  <h2 class="sec">🚀 啟動你的第一個行動</h2>
+  <div class="cta"><button class="big b-green" onclick="startAction('health')">💪 開始我的健康計畫</button><button class="big b-ink" onclick="startAction('protect')">🛡️ 檢視我的家庭保障</button><button class="big b-amber" onclick="startAction('retire')">🏖️ 規劃我的退休生活</button></div>
+  <div class="card" style="margin-top:14px"><b>想和專業顧問聊聊？（完全由你決定）</b>
+   <label class="consent"><input type="checkbox" id="consentChk"> 我同意將這份報告的摘要提供給合作顧問，以便聯繫我。我的健康資料與評估結果不會用於未經同意的行銷。</label>
+   <button class="big b-soft" style="margin-top:10px" onclick="if(document.getElementById('consentChk').checked){toast('📩 已送出，顧問會在你方便的時間聯繫（示意）');S.firstAction=true;checkBadges();}else{toast('需要先勾選同意，才會送出喔');}">預約諮詢（示意）</button></div>
+  <button class="big b-soft" style="margin-top:12px" onclick="copyReport()">📋 複製報告文字（分享給家人）</button>
+  <p class="note">準備度為示意指標，依你在 App 中提供的資料計算，不構成醫療、保險或投資建議。</p>`;}
+function startAction(t){S.firstAction=true;checkBadges();go(t);toast('🚀 第一個行動啟動了！');}
+function copyReport(){const R=readiness();const txt=`${S.name||'我'}的人生準備報告\n健康：${R.h??'尚未評估'}｜醫療保障：${R.m??'尚未評估'}｜退休：${R.r??'尚未評估'}\n下一步：${nextStepText()}\n——來自「遇見 65 歲的自己」`;
+  try{navigator.clipboard.writeText(txt).then(()=>toast('已複製報告文字'),()=>toast('複製失敗，請手動選取'));}catch(e){toast('複製失敗，請手動選取');}}
+
+/* ================= 心情（晚間） ================= */
+const MOOD_HOUR=21;
+function isEvening(){return !!S.demoEvening||new Date().getHours()>=MOOD_HOUR;}
+function prevMood(){return S.moods[S.day-1];}
+function renderMood(){const m=S.moods[S.day],el=document.getElementById('moodCard'),mo=MOODS.find(x=>x.id===m);
+  const btns=`<div class="moods">${MOODS.map(x=>`<button class="mb ${m===x.id?'on':''}" onclick="setMood('${x.id}',event)"><span class="e">${x.e}</span>${x.n}</button>`).join('')}</div>`;
+  const days=[];for(let d=Math.max(1,S.day-6);d<=S.day;d++){const x=MOODS.find(y=>y.id===S.moods[d]);days.push(`<span class="d">${x?x.e:'·'}</span>`);}
+  const week=`<div class="week">最近 7 天 ${days.join('')}</div>`;
+  if(mo){el.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div style="font-size:2.2rem">${mo.e}</div><div><b>今晚的心情：${mo.n}</b><div class="muted">${mo.reply}</div></div></div>${isEvening()?btns:''}${week}`;return;}
+  if(isEvening()){el.innerHTML=`<b>🌙 ${S.name?S.name+'，':''}今天過得如何？</b><div class="muted">睡前選一個最接近的就好，沒有對錯。</div>${btns}${week}`;return;}
+  const pm=MOODS.find(x=>x.id===prevMood());
+  el.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div style="font-size:2rem">🌙</div><div><b>晚上 9 點後，回來說說今天過得如何</b><div class="muted">${pm?`昨晚你選了 ${pm.e}${pm.n}，今天的行動已依昨晚心情推薦。`:'白天先忙沒關係，心情留到睡前再記錄。'}</div></div></div>`;}
+function setMood(id,ev){if(!isEvening()){toast('🌙 晚上 9 點後才能記錄今天的心情');return;}
+  const first=!S.moods[S.day];S.moods[S.day]=id;markActive();if(first){addCoins(1);popAt(ev,'+1 🪙');}
+  if(document.getElementById('moodSheet'))closeSheet();toast(`${MOODS.find(x=>x.id===id).e} 已記下今晚的心情，晚安`);render();checkBadges();}
+function moodSheet(){if(!isEvening())return;openSheet(`<div id="moodSheet"><h3>🌙 晚安，${S.name||'你'}！今天過得如何？</h3><p class="muted">睡前選一個最接近的就好，只有你看得到。明天的行動會依今晚的心情推薦。</p><div class="moods">${MOODS.map(x=>`<button class="mb" onclick="setMood('${x.id}',event)"><span class="e">${x.e}</span>${x.n}</button>`).join('')}</div><button class="big b-soft" style="margin-top:14px" onclick="closeSheet()">今晚先跳過</button></div>`);}
+function moodPromptCheck(){if(!S.started||!isEvening()||S.moods[S.day]||S.moodAsked[S.day])return;if(document.getElementById('ov').classList.contains('on'))return;S.moodAsked[S.day]=true;save();moodSheet();}
+setInterval(()=>{if(S.started){moodPromptCheck();if(document.getElementById('s-home').classList.contains('on'))renderMood();}},60000);
+
+/* ================= 徽章 / 兌換 ================= */
+let badgeQueue=[];
+function checkBadges(){BADGES.forEach(b=>{if(!S.badges[b.id]){const [v,m]=b.p(S);if(v>=m){S.badges[b.id]=true;addCoins(2);badgeQueue.push(b);}}});
+  if(badgeQueue.length&&!document.getElementById('ov').classList.contains('on'))showBadge();save();renderHeader();}
+function showBadge(){const b=badgeQueue.shift();if(!b)return;confetti();openSheet(`<div class="center"><div class="medal jump" style="width:100px;height:100px;font-size:3rem">${b.e}</div><h3>獲得徽章：${b.n}</h3><p class="muted">${b.d}</p><p style="font-weight:900;color:var(--amberDk)">+2 樂活幣</p><button class="big b-green" onclick="closeSheet()">收下 🏅</button></div>`);}
+let shopTab='deco',growthTab='bud';
+function setGrowthTab(t){growthTab=t;['bud','badge','shop'].forEach(k=>document.getElementById('g-'+k).hidden=k!==t);document.querySelectorAll('#gTabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));}
 function setShopTab(t){shopTab=t;renderShop();}
-function renderShop(){
-  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===shopTab));
-  document.getElementById('shopIntro').textContent = shopTab==='deco'
-    ? '換來的裝飾會直接出現在 App 裡：芽芽、花園、地圖和未來的你。'
-    : '金融與醫療生態圈的折扣券，兌換後會出現在下方「我的優惠券」。';
-  document.getElementById('shop').innerHTML=SHOP.filter(it=>it.cat===shopTab).map(it=>{
-    const ok=S.coins>=it.c, own=it.cat==='deco'&&S.owned[it.id], on=own&&!it.once&&S.equip[it.slot];
-    let cls, label;
-    if(own){ if(it.once){cls='own';label='已擁有';} else if(on){cls='eq';label='使用中 ✓';} else {cls='own';label='裝備';} }
-    else { cls=ok?'':'no'; label=ok?'兌換':'還差 '+(it.c-S.coins); }
-    return `<div class="card item"><div class="ic">${it.e}</div><div class="tx"><b>${it.n}</b><span>${it.p}</span><div class="price">${own?'✅ 已兌換':'🪙 '+it.c.toLocaleString()}</div></div><button class="${cls}" onclick="redeem('${it.id}',event)">${label}</button></div>`;
-  }).join('');
+function redeem(id){const it=SHOP.find(x=>x.id===id);
+  if(it.cat==='deco'&&S.owned[id]){if(!it.once){S.equip[it.slot]=!S.equip[it.slot];if(it.slot==='map')mapBuilt=false;toast(S.equip[it.slot]?`✨ 已裝備「${it.n}」`:`已卸下「${it.n}」`);render();}return;}
+  if(S.coins<it.c)return;
+  openSheet(`<div class="center"><div style="font-size:3rem">${it.e}</div><h3>兌換「${it.n}」？</h3><p class="muted">${it.p}<br>將使用 ${it.c} 樂活幣，剩下 ${S.coins-it.c} 幣</p><div class="row" style="margin-top:12px"><button class="big b-soft" onclick="closeSheet()">再想想</button><button class="big b-green" onclick="confirmRedeem('${id}')">確定兌換</button></div></div>`);}
+function confirmRedeem(id){const it=SHOP.find(x=>x.id===id);if(S.coins<it.c||(it.cat==='deco'&&S.owned[id])){closeSheet();return;}
+  S.coins-=it.c;S.redeemCount++;confetti();
+  if(it.cat==='deco'){S.owned[id]=true;if(it.once){gainBuddy('legend');}else{S.equip[it.slot]=true;if(it.slot==='map')mapBuilt=false;}
+    openSheet(`<div class="center"><div class="jump" style="font-size:4rem">${it.e}</div><h3>🎉 取得「${it.n}」！</h3><p class="muted">${it.once?'長壽芽已加入你的散步隊伍。':'已自動裝備，可在兌換區卸下。'}</p><div class="row"><button class="big b-soft" onclick="closeSheet()">好的</button><button class="big b-green" onclick="closeSheet();go('${it.go}')">去看看 👀</button></div></div>`);}
+  else{const code='FM-'+Math.random().toString(36).slice(2,6).toUpperCase()+'-'+(1000+Math.floor(Math.random()*9000));S.tickets.unshift({n:it.n,e:it.e,code,d:`第 ${S.day} 天`});
+    const bars=Array.from({length:34},(_,i)=>`<rect x="${i*6}" y="0" width="${[2,3,1,4][(i*7+code.charCodeAt(i%code.length))%4]}" height="44" fill="#14232E"/>`).join('');
+    openSheet(`<div class="center"><h3>🎉 兌換成功！</h3><div class="ticket" style="flex-direction:column"><div style="font-size:2.4rem">${it.e}</div><b>${it.n}</b><span class="muted">${it.p}</span><svg viewBox="0 0 204 44" style="width:80%;height:44px;margin:8px 0">${bars}</svg><code>${code}</code></div><button class="big b-green" onclick="closeSheet()">好的</button></div>`);}
+  render();checkBadges();}
+
+/* ================= 共用 ================= */
+function addCoins(n){S.coins+=n;}
+function popAt(ev,txt){const x=ev&&ev.clientX!==undefined?ev.clientX:innerWidth/2,y=ev&&ev.clientY!==undefined?ev.clientY:innerHeight/2;const d=document.createElement('div');d.className='pop';d.textContent=txt;d.style.left=x+'px';d.style.top=(y-20)+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),1000);}
+let toastT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2600);}
+function confetti(){const cols=['#E89B3C','#3E9E6A','#F29CB6','#8E9BE8','#FFD25E','#6CCFC2'];for(let i=0;i<40;i++){const c=document.createElement('div');c.className='conf';c.style.left=Math.random()*100+'vw';c.style.background=cols[i%cols.length];c.style.animationDuration=(1.2+Math.random()*1.2)+'s';c.style.animationDelay=(Math.random()*.3)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),2800);}}
+function openSheet(h){document.getElementById('sheet').innerHTML=h;document.getElementById('ov').classList.add('on');}
+function closeSheet(){document.getElementById('ov').classList.remove('on');setTimeout(()=>{if(badgeQueue.length)showBadge();},250);}
+const NAV=['home','health','protect','retire','future'];
+function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('on',x.id==='s-'+s));
+  const navS=s==='risk'?'protect':s;document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===navS));
+  if(s==='future'&&!S.futureGen&&S.started){genFuture();}
+  render();scrollTo({top:0,behavior:'smooth'});}
+
+/* ================= 首次旅程 ================= */
+function journey(){const R=readiness();return [
+  {t:'進入首頁',ok:true},
+  {t:'認識現在的自己',ok:S.started,go:()=>onboard(true)},
+  {t:'生成未來的自己',ok:S.futureGen,go:()=>go('future')},
+  {t:'挑戰一個人生情境',ok:Object.keys(S.riskDone).length>0,go:()=>go('protect')},
+  {t:'完成三大準備評估',ok:R.h!=null&&R.m!=null&&R.r!=null,go:()=>{if(R.h==null)openHQ();else if(R.r==null)go('retire');else go('protect');}},
+  {t:'取得專屬人生報告',ok:S.reportSeen,go:()=>openReport()},
+  {t:'啟動第一個行動',ok:S.firstAction,go:()=>openReport()}];}
+function jGo(){const j=journey().find(x=>!x.ok);if(j&&j.go)j.go();}
+function genFuture(){openSheet(`<div class="center"><h3>✨ AI 正在生成未來的你…</h3><p class="muted">依你的年齡、家庭與期待的 65 歲生活</p><div class="gen"><i></i></div><div style="display:flex;justify-content:center;gap:6px">${[65,75,85].map(a=>`<div style="width:90px;border-radius:14px;overflow:hidden;opacity:.85">${futureSVG(a,true)}</div>`).join('')}</div></div>`);
+  setTimeout(()=>{S.futureGen=true;S.selAge=65;closeSheet();render();checkBadges();toast('🔮 65、75、85 歲的你已經準備好了');},2600);}
+
+/* ================= 設定 / 開場 ================= */
+function openSettings(){openSheet(`<h3>⚙️ 設定與簡報示範</h3>
+  <button class="qbtn" onclick="onboard(true)">✏️ 編輯個人資料（年齡、家庭、生活狀態）</button>
+  <button class="qbtn" onclick="demoFill()">🎬 示範：一鍵完成首次旅程（填入示範資料）</button>
+  <button class="qbtn" onclick="S.demoEvening=!S.demoEvening;save();closeSheet();render();toast(S.demoEvening?'🌙 已切換成晚上 9 點後（示範）':'☀️ 已回到實際時間');if(S.demoEvening)setTimeout(moodSheet,400)">🌙 示範：${S.demoEvening?'回到實際時間':'模擬晚上 9 點後（心情打卡）'}</button>
+  <button class="qbtn" onclick="nextDay()">⏩ 快轉到明天</button>
+  <button class="qbtn" onclick="addCoins(300);closeSheet();render();toast('🪙 已加入 300 示範幣')">🪙 加 300 示範幣</button>
+  <button class="qbtn" onclick="document.documentElement.classList.toggle('xl');toast('已切換字體大小')">🔍 切換特大字</button>
+  <button class="qbtn" onclick="resetAll()">🔄 重新開始（清除所有進度）</button>
+  <p class="note">所有資料只存在這台裝置的瀏覽器中，不會上傳。</p>`);}
+function demoFill(){S.healthQ={exercise:1,sleep:1,diet:0,check:1};S.riskDone={parent:true};S.coverDone=true;S.retireDone=true;S.futureGen=true;closeSheet();render();checkBadges();toast('🎬 已填入示範資料，可直接看人生報告');}
+function nextDay(){S.day++;S.demoEvening=false;S.steps=0;S.done={};S.flowers=[];S.seeds=[];S.activeToday=false;S.heartTo={};S.famClaimed=false;S.famIdx++;closeSheet();render();toast(`☀️ 第 ${S.day} 天早安！今天也慢慢來`);setTimeout(moodPromptCheck,700);}
+function resetAll(){S=fresh();try{localStorage.removeItem(KEY);}catch(e){}mapBuilt=false;closeSheet();if(autoTimer)toggleAuto();render();welcome();}
+let draft=null;
+const LIM={age:[35,64],momAge:[50,105],dadAge:[50,105],kidAge:[0,45]};
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function getD(k){return k==='momAge'?draft.mom.age:k==='dadAge'?draft.dad.age:draft[k];}
+function setD(k,v){if(k==='momAge')draft.mom.age=v;else if(k==='dadAge')draft.dad.age=v;else draft[k]=v;}
+function bump(k,d){const [a,b]=LIM[k];const v=Math.max(a,Math.min(b,getD(k)+d));setD(k,v);document.getElementById('v-'+k).textContent=v+' 歲';}
+function stepper(k){return `<div class="stepper"><button onclick="bump('${k}',-5)">«</button><button onclick="bump('${k}',-1)">−</button><span id="v-${k}">${getD(k)} 歲</span><button onclick="bump('${k}',1)">＋</button><button onclick="bump('${k}',5)">»</button></div>`;}
+function welcome(){openSheet(`<div class="center"><div style="display:flex;justify-content:center;gap:4px;height:84px">${['walk','coin','heart'].map(k=>`<div style="width:60px" class="bob">${buddySVG(k)}</div>`).join('')}</div>
+  <h3 style="font-size:1.4rem">你想知道 65 歲的自己，<br>會過著什麼樣的生活嗎？</h3><p class="muted">健康管理・醫療保障・退休規劃・家庭關係<br>大約 8～10 分鐘，不用填問卷，沒有分數壓力。</p>
+  <button class="big b-green" style="margin-top:12px" onclick="onboard(false)">✨ 開始認識現在的自己</button></div>`);}
+function onboard(edit){const p=S.p;draft={name:edit?S.name:'',look:S.look||0,age:p.age,gender:p.gender,spouse:p.spouse,mom:Object.assign({},p.mom),dad:Object.assign({},p.dad),kids:p.kids,kidAge:p.kidAge,life:p.life,wish:p.wish,edit:!!edit};step1();}
+function step1(){const c=on=>on?'chipb on':'chipb';
+  openSheet(`<h3>${draft.edit?'✏️ 編輯個人資料':'① 認識現在的自己'}</h3><p class="muted">只用來讓「未來的我」說對你的故事，資料只存在這台裝置。</p>
+  <div class="field"><b>怎麼稱呼你？</b><input type="text" id="nm" value="${esc(draft.name)}" placeholder="例如：淑芬" maxlength="8"></div>
+  <div class="field"><b>你今年幾歲？</b>${stepper('age')}</div>
+  <div class="field"><b>性別</b><div class="chips">${[['f','女性'],['m','男性'],['x','不透露']].map(([k,n])=>`<button class="${c(draft.gender===k)}" onclick="draft.name=document.getElementById('nm').value;draft.gender='${k}';step1()">${n}</button>`).join('')}</div></div>
+  <div class="field"><b>目前的生活狀態</b><div class="chips">${LIFES.map(l=>`<button class="${c(draft.life===l)}" onclick="draft.name=document.getElementById('nm').value;draft.life='${l}';step1()">${l}</button>`).join('')}</div></div>
+  <div class="field"><b>喜歡的顏色</b><div class="looks">${LOOKS.map((col,i)=>`<div class="look ${i===draft.look?'sel':''}" style="background:${col}" onclick="draft.look=${i};document.querySelectorAll('.look').forEach((x,j)=>x.classList.toggle('sel',j===${i}))"></div>`).join('')}</div></div>
+  <div class="dots">● ○ ○</div><button class="big b-green" onclick="draft.name=document.getElementById('nm').value;step2()">下一步：家庭狀況 →</button>`);}
+function step2(){const c=on=>on?'chipb on':'chipb';
+  openSheet(`<h3>② 你的家庭狀況</h3><p class="muted">決定家族圈的成員，也讓情境模擬更貼近你。</p>
+  <div class="field"><b>另一半</b><div class="chips"><button class="${c(draft.spouse)}" onclick="draft.spouse=true;step2()">💑 有</button><button class="${c(!draft.spouse)}" onclick="draft.spouse=false;step2()">🙂 目前沒有</button></div></div>
+  <div class="field"><b>父母（點選健在的）</b><div class="prow2"><button class="${c(draft.mom.on)}" onclick="draft.mom.on=!draft.mom.on;step2()">👵 媽媽</button>${draft.mom.on?stepper('momAge'):''}</div><div class="prow2"><button class="${c(draft.dad.on)}" onclick="draft.dad.on=!draft.dad.on;step2()">👴 爸爸</button>${draft.dad.on?stepper('dadAge'):''}</div></div>
+  <div class="field"><b>孩子</b><div class="chips">${[0,1,2,3].map(k=>`<button class="${c(draft.kids===k)}" onclick="draft.kids=${k};step2()">${k===0?'沒有':k===3?'3 個以上':k+' 個'}</button>`).join('')}</div>${draft.kids>0?`<div class="prow2"><span class="muted">${draft.kids>1?'老大':'孩子'}幾歲？</span>${stepper('kidAge')}</div>`:''}</div>
+  <div class="dots">○ ● ○</div><div class="row"><button class="big b-soft" onclick="step1()">← 上一步</button><button class="big b-green" onclick="step3()">下一步 →</button></div>`);}
+function step3(){openSheet(`<h3>③ 你期待的 65 歲生活</h3><p class="muted">選一個最想要的，未來的你會依此出現在不同的場景。</p>
+  <div class="wish" style="margin-top:12px">${Object.entries(WISHES).map(([k,w])=>`<button class="${draft.wish===k?'on':''}" onclick="draft.wish='${k}';step3()"><span class="e">${w.e}</span>${w.n}</button>`).join('')}</div>
+  <div class="dots">○ ○ ●</div><div class="row"><button class="big b-soft" onclick="step2()">← 上一步</button><button class="big b-green" onclick="finishProfile()">${draft.edit?'💾 儲存':'✨ 生成未來的我'}</button></div>`);}
+function finishProfile(){S.name=(draft.name||'').trim();S.look=draft.look;
+  S.p={age:draft.age,gender:draft.gender,spouse:draft.spouse,mom:draft.mom,dad:draft.dad,kids:draft.kids,kidAge:draft.kidAge,life:draft.life,wish:draft.wish};mapBuilt=false;
+  if(draft.edit){closeSheet();render();toast('✅ 已更新，「未來的我」會說你的故事');return;}
+  S.started=true;S.coins+=5;gainBuddy('walk');closeSheet();go('future');}
+
+/* ================= 畫面渲染 ================= */
+function renderHeader(){document.getElementById('hdrName').textContent=S.name?`${S.name}的未來準備`:'遇見 65 歲的自己';
+  document.getElementById('hdrSub').textContent=`第 ${S.day} 天・${S.p.age} 歲・Meet Your Future Self`;
+  document.getElementById('coins').textContent=fmt(S.coins);document.getElementById('coins2').textContent=fmt(S.coins);}
+function renderHome(){const R=readiness(),h=new Date().getHours();
+  document.getElementById('hello').textContent=`${h<11?'早安':h<18?'午安':'晚安'}${S.name?'，'+S.name:''}！今天想為未來做什麼？`;
+  document.getElementById('helloSub').textContent=`距離 65 歲還有 ${Math.max(0,65-S.p.age)} 年，現在開始剛剛好。`;
+  const J=journey(),done=J.filter(x=>x.ok).length,nx=J.find(x=>!x.ok);
+  document.getElementById('journeyCard').innerHTML=done===J.length?`<b>🎉 首次體驗全部完成！</b><div class="muted">之後每天回來做一件小事就好。</div>`
+   :`<div style="display:flex;justify-content:space-between;align-items:center"><b>🧭 第一次體驗旅程</b><span class="pill p-a">${done} / ${J.length}</span></div><div class="bar gold" style="margin:8px 0"><i style="width:${done/J.length*100}%"></i></div><div class="jn">${J.map((x,i)=>`<div class="js ${x.ok?'ok':x===nx?'now':''}"><i>${x.ok?'✓':i+1}</i>${x.t}</div>`).join('')}</div><button class="big b-green" style="margin-top:10px" onclick="jGo()">下一步：${nx.t} →</button>`;
+  document.getElementById('heroArt').innerHTML=futureSVG(65);
+  document.getElementById('rings').innerHTML=[['健康',R.h,'health'],['醫療保障',R.m,'protect'],['退休',R.r,'retire']].map(([n,v,t])=>{const l=lvl(v);return `<button class="rg" onclick="go('${t}')">${ringSVG(v,l.c)}<b>${n}</b><span>${l.t}</span></button>`;}).join('');
+  const pm=prevMood(),recId=pm&&MOOD_REC[pm];let t=recId&&!S.done[recId]?ALL_TASKS.find(x=>x.id===recId):null;
+  if(!t){const low=[['h',R.h??0],['r',R.r??0]].sort((a,b)=>a[1]-b[1])[0][0];t=(low==='r'?R_TASKS:H_TASKS).find(x=>!S.done[x.id])||ALL_TASKS.find(x=>!S.done[x.id]);}
+  document.getElementById('todayAct').innerHTML=t?taskHTML(t,!!recId&&t.id===recId):'<div class="card"><b>今天的行動都完成了 🎉</b><div class="muted">好好休息，也是一種準備。</div></div>';
+  renderMood();
+  const fm=famMembers(),fa=famActs();
+  document.getElementById('homeFamily').innerHTML=`<div class="famrow">${fm.map(m=>`<span>${m.e} ${m.short}</span>`).join('')}</div><div class="muted">你的健康與退休，也會影響整個家庭。一起完成這些準備：</div>${fa.map(a=>`<div class="fact ${S.famDone[a.id]?'ok':''}"><button class="ck" onclick="doFam('${a.id}',event)">${S.famDone[a.id]?'✓':''}</button><span style="flex:1">${a.t}</span><button class="pill p-v" onclick="go('${a.go}')">前往</button></div>`).join('')}`;
+  const tot=Object.values(S.buddies).reduce((a,b)=>a+b,0),bg=Object.keys(S.badges).length;
+  document.getElementById('growthBud').innerHTML=buddySVG(S.party.length?S.party[S.party.length-1]:'walk');
+  document.getElementById('growthTxt').textContent=`${tot} 隻芽芽・${bg} 枚徽章・${fmt(S.coins)} 樂活幣`;}
+function renderHealth(newFlower){drawMap(newFlower);const f=Math.min(S.steps/GOAL,1);
+  document.getElementById('ringArc').setAttribute('stroke-dashoffset',(264*(1-f)).toFixed(1));document.getElementById('steps').textContent=fmt(S.steps);
+  const rec=prevMood()&&MOOD_REC[prevMood()];document.getElementById('hTasks').innerHTML=H_TASKS.map(t=>taskHTML(t,rec===t.id)).join('');
+  const R=readiness();
+  document.getElementById('hqCard').innerHTML=S.healthQ?`<div style="display:flex;align-items:center;gap:12px"><div style="width:76px;flex:none">${ringSVG(R.h,lvl(R.h).c)}</div><div style="flex:1"><b>健康準備度：${lvl(R.h).t}</b><div class="muted">依快評、活動天數、健檢與心情紀錄計算。完成任務會慢慢提升。</div></div></div><button class="big b-soft" style="margin-top:10px" onclick="openHQ()">重新快評</button>`
+    :`<b>花 1 分鐘，了解你的健康習慣</b><div class="muted">4 個問題：運動、睡眠、飲食、健檢。</div><button class="big b-green" style="margin-top:10px" onclick="openHQ()">開始健康快評</button>`;
+  document.getElementById('hBook').innerHTML=[['活躍天數',S.activeDays],['累積步數',fmt(S.totalSteps)],['種下的花',S.totalFlowers],['健檢預約',S.cnt.t_check||0]].map(([n,v])=>`<div><b>${v}</b><span>${n}</span></div>`).join('');
+  const fm=famMembers(),goal=famGoal(),p=S.p;
+  document.getElementById('famTitle').textContent=((p.mom.on||p.dad.on)&&p.kids>0)?'👨‍👩‍👧 家庭健康・三代一起動':'👨‍👩‍👧 家庭健康';
+  document.getElementById('famGoalTxt').textContent=`大家今天一起走 ${fmt(goal)} 步`;
+  document.getElementById('family').innerHTML=fm.map(m=>`<div class="fam"><div class="em">${m.e}</div><div class="tx"><b>${m.n}</b><span>✅ ${m.acts[S.famIdx%3]}</span></div><button class="heart" onclick="cheer('${m.id}',event)">${S.heartTo[m.id]?'❤️ 已送':'🤍 送愛心'}</button></div>`).join('');
+  const fs=famSteps();document.getElementById('famNum').textContent=`${fmt(fs)} 步`;document.getElementById('famBar').style.width=Math.min(100,fs/goal*100)+'%';
+  document.getElementById('famClaim').style.display=(fs>=goal&&!S.famClaimed)?'flex':'none';}
+function renderProtect(){
+  document.getElementById('scnList').innerHTML=Object.entries(SCN).map(([k,s])=>`<button class="sc ${S.riskDone[k]?'ok':''}" onclick="openRisk('${k}')">${S.riskDone[k]?'<span class="tick">✓ 已體驗</span>':''}<span class="e">${s.e}</span><b>${s.t}</b><span>${s.s}</span></button>`).join('');
+  const R=readiness();
+  document.getElementById('coverCard').innerHTML=`<div class="muted" style="margin-bottom:8px">點選你目前有的保障（不用填保單細節）：</div>${coverChips("S.coverDone=true;renderProtectAdvice();save()")}<div class="sl"><div class="lb"><span>緊急預備金</span><b>${wan(S.fin.emergency)}（約 ${(S.fin.emergency/S.fin.expense).toFixed(1)} 個月支出）</b></div></div><div class="muted">預備金與收支可在任一情境中調整。</div>`;
+  renderProtectAdvice();}
+function renderProtectAdvice(){const R=readiness(),c=S.cover,l=lvl(R.m);
+  if(R.m==null){document.getElementById('protectAdvice').innerHTML='<div class="muted">先體驗一個情境，或點選你目前的保障，這裡就會出現你的保障建議。</div>';return;}
+  const gaps=[];if(!c.med)gaps.push('實支實付醫療');if(!c.ci)gaps.push('重大疾病／癌症');if(!c.dis)gaps.push('失能');if(!c.ltc)gaps.push('長照');if(!c.life&&(S.p.kids>0||S.p.spouse))gaps.push('壽險（家人依賴你的收入）');
+  document.getElementById('protectAdvice').innerHTML=`<div style="display:flex;align-items:center;gap:12px"><div style="width:76px;flex:none">${ringSVG(R.m,l.c)}</div><div><b>保障準備度：${l.t}</b><div class="muted">家庭可承受約 ${(S.fin.emergency/S.fin.expense).toFixed(1)} 個月沒有收入。</div></div></div>
+  <ul class="chk" style="margin-top:8px"><li>可能的保障缺口：${gaps.length?gaps.join('、'):'主要保障都已具備'}</li><li>醫療及長照準備方向：先補足緊急預備金，再依情境確認保額</li><li>建議進一步確認：保單是否仍有效、給付條件與受益人</li></ul>
+  <button class="big b-ink" style="margin-top:10px" onclick="openReport()">📄 查看完整人生報告</button>`;}
+function renderFuture(){const ages=[65,75,85];if(!ages.includes(S.selAge))S.selAge=65;
+  document.getElementById('futureSub').textContent=`${S.p.age} 歲的你，${65-S.p.age} 年後會是什麼樣子？點選年齡看看。`;
+  document.getElementById('ages').innerHTML=ages.map(a=>`<button class="ag ${S.selAge===a?'on':''}" onclick="S.selAge=${a};renderFuture();save()"><b>${a}</b><span>${a-S.p.age} 年後</span></button>`).join('');
+  document.getElementById('scene').innerHTML=futureSVG(S.selAge);document.getElementById('scene').classList.toggle('gold',!!S.equip.frame);
+  document.getElementById('topic').textContent=TOPIC[S.selAge];document.getElementById('speech').textContent=futureLine(S.selAge);
+  document.getElementById('qList').innerHTML=QA[S.selAge].map((q,i)=>`<button class="qbtn" onclick="ask(${i})">💭 ${q[0]}</button>`).join('');
+  if(S.selfie){document.getElementById('selfieBox').hidden=false;document.getElementById('selfiePh').innerHTML=`<img src="${S.selfie}" alt="你的照片（示意老化濾鏡）">`;}}
+function ask(i){const q=QA[S.selAge][i];chatPush(q[0],q[1]());}
+function askFree(){const el=document.getElementById('askIn'),v=el.value.trim();if(!v)return;el.value='';
+  let a;if(/健康|運動|走|睡|身體|膝/.test(v))a=QA[75][0][1]();else if(/錢|退休|存|投資/.test(v))a=QA[65][2][1]();else if(/保險|生病|照護|長照|醫療/.test(v))a=QA[85][1][1]();else if(/家|爸|媽|孩子|老公|老婆|另一半/.test(v))a=QA[75][1][1]();else a=`謝謝你問我這個。我想說：${nextStepText()}`;
+  chatPush(esc(v),a);}
+function chatPush(q,a){const box=document.getElementById('chat');box.insertAdjacentHTML('beforeend',`<div class="msg me">${q}</div>`);setTimeout(()=>{box.insertAdjacentHTML('beforeend',`<div class="msg ai">🧓 ${S.selAge} 歲的你：${a}</div>`);box.lastElementChild.scrollIntoView({behavior:'smooth',block:'center'});},450);}
+function speak(){const t=document.getElementById('speech').textContent;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='zh-TW';u.rate=.9;speechSynthesis.speak(u);toast('🔊 播放中…');}catch(e){toast('這個瀏覽器不支援朗讀，請直接閱讀文字 🙂');}}
+function loadSelfie(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=x=>{S.selfie=x.target.result;renderFuture();toast('📸 已放上照片（只存在你的裝置）');};r.readAsDataURL(f);}
+function renderGrowth(){const party=S.party.slice(-6);
+  document.getElementById('party').innerHTML=party.length?party.map((k,i)=>`<div class="bob" style="animation-delay:${i*.12}s" onclick="petBuddy('${k}')">${buddySVG(k)}</div>`).join(''):'<span class="muted">還沒有夥伴</span>';
+  const tot=Object.values(S.buddies).reduce((a,b)=>a+b,0);document.getElementById('partyTxt').textContent=`共 ${tot} 隻芽芽｜已種下 ${S.totalFlowers} 朵花`;
+  const keys=[...BASIC,'legend'];document.getElementById('dexCount').textContent=`${keys.filter(k=>S.buddies[k]>0).length} / ${keys.length} 種`;
+  document.getElementById('dex').innerHTML=keys.map(k=>{const n=S.buddies[k]||0;return `<div class="bcard ${n?'':'lock'}" onclick="petBuddy('${k}')">${buddySVG(k)}<b>${n?SPECIES[k].name:'？？？'}</b><span>${n?`×${n}｜${SPECIES[k].habit}`:SPECIES[k].habit+'芽'}</span></div>`;}).join('');
+  const got=BADGES.filter(b=>S.badges[b.id]).length;document.getElementById('badgeSum').textContent=`已收集 ${got} / ${BADGES.length} 枚・每枚 +2 樂活幣・沒有失敗，只有還沒解鎖`;
+  document.getElementById('badges').innerHTML=BADGES.map(b=>{const [v,m]=b.p(S),ok=S.badges[b.id];return `<div class="badge ${ok?'':'lock'}"><div class="medal">${b.e}</div><b>${b.n}</b><span>${ok?'已解鎖':Math.round(Math.min(1,v/m)*100)+'%'}</span></div>`;}).join('');
+  renderShop();}
+function renderShop(){document.querySelectorAll('#sTabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===shopTab));
+  document.getElementById('shopIntro').textContent=shopTab==='deco'?'換來的裝飾會直接出現在 App 裡。':'金融與醫療生態圈的折扣券，兌換後出現在「我的優惠券」。';
+  document.getElementById('shop').innerHTML=SHOP.filter(it=>it.cat===shopTab).map(it=>{const ok=S.coins>=it.c,own=it.cat==='deco'&&S.owned[it.id],on=own&&!it.once&&S.equip[it.slot];let cls,label;
+    if(own){if(it.once){cls='own';label='已擁有';}else if(on){cls='eq';label='使用中 ✓';}else{cls='own';label='裝備';}}else{cls=ok?'':'no';label=ok?'兌換':'還差 '+(it.c-S.coins);}
+    return `<div class="card item"><div class="ic">${it.e}</div><div class="tx"><b>${it.n}</b><span>${it.p}</span><div class="price">${own?'✅ 已兌換':'🪙 '+it.c}</div></div><button class="${cls}" onclick="redeem('${it.id}')">${label}</button></div>`;}).join('');
   document.getElementById('tixCount').textContent=S.tickets.length?`${S.tickets.length} 張`:'';
-  document.getElementById('tickets').innerHTML=S.tickets.length?S.tickets.map(t=>`<div class="ticket"><div style="font-size:1.8rem">${t.e}</div><div style="flex:1"><b>${t.n}</b><code>${t.code}</code></div><span class="muted">${t.d}</span></div>`).join(''):'<p class="muted">還沒有優惠券。慢慢累積就好，不急 🌱</p>';
-}
-function render(newFlower){renderHeader();renderWalk(newFlower);renderBuddy();renderBadges();renderFuture();renderShop();save();}
+  document.getElementById('tickets').innerHTML=S.tickets.length?S.tickets.map(t=>`<div class="ticket"><div style="font-size:1.8rem">${t.e}</div><div style="flex:1"><b>${t.n}</b><code>${t.code}</code></div><span class="muted">${t.d}</span></div>`).join(''):'<p class="muted">還沒有優惠券，慢慢累積就好 🌱</p>';}
+function render(newFlower){renderHeader();const on=(document.querySelector('.screen.on')||{}).id;
+  renderHome();if(on==='s-health'||newFlower!==undefined)renderHealth(newFlower);else renderHealth();
+  renderProtect();if(on==='s-risk')renderRisk();if(on==='s-retire'||!document.getElementById('retOut').innerHTML)renderRetire();
+  renderFuture();if(on==='s-report')renderReport();renderGrowth();save();}
 
 render();
-if(!S.started)onboard();
+if(!S.started)welcome();else setTimeout(moodPromptCheck,500);
 </script>
 </body>
 </html>
